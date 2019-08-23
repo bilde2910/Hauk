@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="info.varden.hauk">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_icon"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".notify.CopyLinkReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="info.varden.hauk.COPY_LINK" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".notify.StopSharingReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="info.varden.hauk.RETURN_TO_APP" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.LocationPushService" android:enabled="true">
+            <intent-filter>
+                <action android:name="info.varden.hauk.LOCATION_SERVICE" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

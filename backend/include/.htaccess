@@ -1,0 +1,2 @@
+# If running on Apache-like servers, deny browser access to this folder.
+deny from all

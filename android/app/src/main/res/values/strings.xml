@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Hauk</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_heading">Open source location sharing</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_server">Server URL:</string>
+    <string name="label_password">Password:</string>
+    <string name="label_duration">Share duration (min):</string>
+    <string name="label_interval">Update interval (s):</string>
+    <string name="btn_start">Start sharing</string>
+    <string name="btn_stop">Stop sharing</string>
+    <string name="btn_link">Share tracking link</string>
+
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="action_copy">Copy link</string>
+    <string name="action_copied">Copied link from Hauk</string>
+    <string name="action_stop">Stop sharing</string>
+    <string name="notify_title">Location sharing active</string>
+    <string name="notify_body">Hauk is sharing your location to %s</string>
+
+    <string name="prog_title">Connecting</string>
+    <string name="prog_body">Connecting to Hauk...</string>
+
+    <string name="err_client">Invalid settings</string>
+    <string name="err_connect">Connection error</string>
+    <string name="err_server">Server error</string>
+    <string name="err_malformed_url">The server URL you entered is invalid.</string>
+    <string name="err_missing_perms">Location permission is required to use this app.</string>
+    <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
+
+    <string name="ok_title">Connection established</string>
+    <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
+    <string name="ended_title">Sharing ended</string>
+    <string name="ended_message">Your location share has expired.</string>
+
+    <string name="req_perms_title">Permission required</string>
+    <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>
+
+    <string name="share_via">Share via</string>
+    <string name="share_subject">Follow my location on Hauk!</string>
+</resources>
