@@ -17,8 +17,24 @@
 // Trust me, you really should change this unless you intentionally want a
 // public instance that anyone in the world can use freely.
 
-// Leaflet tile URI template for the map frontend.
-"map_tile_uri"      => 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmlsZGUyOTEwIiwiYSI6ImNqaXJmZzZmNTE1cnAzcXQ5cjBnZHB0OWgifQ.gib6DzyCRGN2PfyYJvZybA',
+// Leaflet tile URI template for the map frontend. Here are some examples:
+//
+// - OpenStreetMap directly:
+//      https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+// - Mapbox:
+//      https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=YOUR_ACCESS_TOKEN
+// - Thunderforest:
+//      https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=YOUR_API_KEY
+// - Esri:
+//      https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
+// - OpenMapSurfer:
+//      https://maps.heigit.org/openmapsurfer/tiles/roads/webmercator/{z}/{x}/{y}.png
+// - Hydda (OSM Sweden):
+//      https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png
+//
+// Make sure you have permission to use the source you choose, and also use a
+// proper attribution for that provider.
+"map_tile_uri"      => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 
 // Attribution HTML code to be displayed in the bottom right corner of the map.
 // The default value is suitable for OpenStreetMap tiles.
@@ -26,8 +42,8 @@
 
 // Default and maximum zoom levels allowed on the map (0-20), higher value means
 // closer zooming.
-"default_zoom"      => 20,
-"max_zoom"          => 20,
+"default_zoom"      => 14,
+"max_zoom"          => 19,
 
 // Maximum duration of a single location share, in seconds.
 "max_duration"      => 86400,
