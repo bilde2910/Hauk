@@ -23,8 +23,8 @@ $memcache = memConnect();
 $sid = $_POST["sid"];
 $session = $memcache->get($PREFIX_SESSION.$sid);
 $locdata = $memcache->get($PREFIX_LOCDATA.sessionToID($sid));
-if ($session === false) die("Session expired!\n"); else $session = json_decode($session, 1);
-if ($locdata === false) $locdata = ["l" => []]; else $locdata = json_decode($locdata, 1);
+if ($session === false) die("Session expired!\n");
+if ($locdata === false) $locdata = ["l" => []];
 
 // The location data object contains the sharing interval (i), duration (d) and
 // a location list (l). Each entry in the location list contains a latitude,
@@ -39,7 +39,7 @@ while (count($locdata["l"]) > CONFIG["max_cached_pts"]) array_shift($locdata["l"
 // Check if the session expired; otherwise, return the location data.
 $remain = $session["expire"] - time();
 if ($remain > 0) {
-    $memcache->replace($PREFIX_LOCDATA.sessionToID($sid), json_encode($locdata));
+    $memcache->replace($PREFIX_LOCDATA.sessionToID($sid), $locdata);
     echo "OK\n";
 } else echo "Session expired!\n";
 

@@ -24,15 +24,15 @@ $sid = "";
 do $sid = bin2hex(openssl_random_pseudo_bytes(SESSION_ID_SIZE));
 while ($memcache->get($PREFIX_LOCDATA.sessionToID($sid)) !== false);
 
-$memcache->set($PREFIX_SESSION.$sid, json_encode(array(
+$memcache->set($PREFIX_SESSION.$sid, array(
     "expire" => $expire,
     "interval" => $i
-)), 0, $d);
-$memcache->set($PREFIX_LOCDATA.sessionToID($sid), json_encode(array(
+), $d);
+$memcache->set($PREFIX_LOCDATA.sessionToID($sid), array(
     "i" => $i,
     "x" => $expire,
     "l" => array()
-)), 0, $d);
+), $d);
 
 // Convert the session ID to a link ID and return these two to the client.
 echo "OK\n{$sid}\n".CONFIG["public_url"]."?".sessionToID($sid)."\n";

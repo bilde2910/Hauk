@@ -49,15 +49,24 @@ $PREFIX_LOCDATA = CONFIG["memcached_prefix"]."-locdata-";
 // This is converted to uppercase and the two parts separated by a dash.
 function sessionToID($session) {
     if (!preg_match("/^[0-9a-fA-F]{".(SESSION_ID_SIZE * 2)."}$/", $session)) return false;
-    $s = strtoupper(base_convert(hash("sha256", hex2bin($session)), 16, 36));
+    $s = strtoupper(base_convert(hash("sha256", hex2bin($session));, 16, 36));
     return substr($s, 0, 4)."-".substr($s, -4);
+}
+
+// Hauk maintains compatibility with both `memcache` and `memcached`, meaning we
+// need an abstraction layer between Hauk and the extensions to ensure a unified
+// interface for both. This code loads the correct memcache wrapper.
+if (extension_loaded("memcached")) {
+    include_once(__DIR__."/wrapper/memcached.php");
+} else if (extension_loaded("memcache")) {
+    include_once(__DIR__."/wrapper/memcache.php");
+} else {
+    die("No compatible memcached extension (memcache or memcached) is enabled in your PHP config!\n");
 }
 
 // Returns a memcached instance.
 function memConnect() {
-    $memcache = new Memcache();
-    $memcache->connect(CONFIG["memcached_host"], CONFIG["memcached_port"])
-               or die ("Server could not connect to memcached!\n");
+    $memcache = new MemWrapper(CONFIG["memcached_host"], CONFIG["memcached_port"]);
     return $memcache;
 }
 

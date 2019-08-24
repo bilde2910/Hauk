@@ -11,6 +11,6 @@ $locdata = $memcache->get($PREFIX_LOCDATA.$_GET["id"]);
 
 // If the link data key is not set, the session probably expired.
 if ($locdata === false) die("Invalid session!\n");
-else { header("Content-Type: text/json"); echo $locdata; }
+else { header("Content-Type: text/json"); echo json_encode($locdata); }
 
 ?>
