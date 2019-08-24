@@ -72,6 +72,6 @@
 "velocity_unit"     => KILOMETERS_PER_HOUR,
 
 // The publicly accessible URL to reach Hauk, with trailing slash.
-"public_url"        => 'http://10.0.0.44/'
+"public_url"        => 'https://example.com/'
 
 ); ?>
