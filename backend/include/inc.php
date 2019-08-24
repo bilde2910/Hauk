@@ -49,7 +49,7 @@ $PREFIX_LOCDATA = CONFIG["memcached_prefix"]."-locdata-";
 // This is converted to uppercase and the two parts separated by a dash.
 function sessionToID($session) {
     if (!preg_match("/^[0-9a-fA-F]{".(SESSION_ID_SIZE * 2)."}$/", $session)) return false;
-    $s = strtoupper(base_convert(hash("sha256", hex2bin($session));, 16, 36));
+    $s = strtoupper(base_convert(hash("sha256", hex2bin($session)), 16, 36));
     return substr($s, 0, 4)."-".substr($s, -4);
 }
 
