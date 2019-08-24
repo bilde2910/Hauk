@@ -1,0 +1,17 @@
+Hauk lets you share your location in real-time with friends and family for a
+specified period of time. Meeting up with someone? Send them a Hauk link, and
+they can follow your location live on a map until you arrive to meet them.
+
+This app requires that you have installed the Hauk backend on a server. Please
+see https://github.com/bilde2910/Hauk for backend installation instructions.
+
+Required permissions:
+
+* ACCESS_FINE_LOCATION - for getting your location, so that it can be shared
+* FOREGROUND_SERVICE - for keeping the share running when the app is minimized
+* INTERNET - for communicating with your Hauk backend server
+
+Hauk does not share your location data to anywhere except the Hauk backend
+server you specify within the app. A unique link will be generated for your
+location share when you start sharing; anyone with this link will be able to see
+your location in real-time for as long as you are sharing.
