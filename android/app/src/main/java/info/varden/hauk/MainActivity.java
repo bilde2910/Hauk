@@ -78,8 +78,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Temporarily disable the share button while we attempt to connect to the Hauk backend.
+        // Disable the UI while we attempt to connect to the Hauk backend.
         btnShare.setEnabled(false);
+        txtServer.setEnabled(false);
+        txtPassword.setEnabled(false);
+        txtDuration.setEnabled(false);
+        txtInterval.setEnabled(false);
 
         String server = txtServer.getText().toString();
         final String password = txtPassword.getText().toString();
@@ -293,6 +297,11 @@ public class MainActivity extends AppCompatActivity {
                 btnShare.setEnabled(true);
                 btnShare.setText(R.string.btn_start);
                 btnLink.setEnabled(false);
+
+                txtServer.setEnabled(true);
+                txtPassword.setEnabled(true);
+                txtDuration.setEnabled(true);
+                txtInterval.setEnabled(true);
             }
         };
 
