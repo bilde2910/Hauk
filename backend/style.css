@@ -126,7 +126,7 @@
 
 /* The arrow within the marker div. */
 #arrow {
-    background: url(marker.svg) no-repeat;
+    background: url(./assets/marker.svg) no-repeat;
     background-size: cover;
     width: 36px;
     height: 36px;
