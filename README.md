@@ -21,7 +21,7 @@ phone, and you're good to go!
 
 ## Via Docker Compose
 
-**docker-compose.yaml**
+**docker-compose.yml**
 
 ```yaml
 version: '3.4'
