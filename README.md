@@ -19,6 +19,59 @@ phone, and you're good to go!
 4. Start Memcached and the web server.
 5. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/) on your phone.
 
+## Via Docker Compose
+
+**docker-compose.yaml**
+
+```yaml
+version: '3.4'
+
+services:
+  hauk:
+    image: bilde2910/hauk
+    container_name: hauk
+    volumes:
+      - ./config/hauk:/etc/hauk
+```
+
+Copy the [config.php](https://github.com/bilde2910/Hauk/blob/master/backend/include/config.php) file to the ./config/hauk directory and customize it. Leave the memcached connection details as-is; memcached is included in the Docker image.
+
+The Docker container exposes port 80. For security reasons, you should use a reverse proxy in front of Hauk that can handle TLS termination, and only expose Hauk via HTTPS. If you expose Hauk directly on port 80, or via a reverse proxy on port 80, anyone between the clients and server can intercept and read your location data.
+
+Here's an example config for an nginx instance running in another container. You may want to customize this, especially the TLS settings and ciphers if you want compatibility with older devices.
+
+```nginx
+server {
+    listen 443 ssl;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305';
+    ssl_session_cache shared:SSL:10m;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    ssl_ecdh_curve 'secp521r1:secp384r1';
+    ssl_prefer_server_ciphers on;
+    ssl_session_timeout 10m;
+    ssl_session_tickets off;
+
+    ssl_certificate /etc/letsencrypt/live/hauk.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/hauk.example.com/privkey.pem;
+
+    add_header Referrer-Policy same-origin always;
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Robots-Tag "noindex, nofollow" always;
+
+    server_name hauk.example.com;
+
+    location / {
+        proxy_pass http://hauk:80;
+    }
+}
+```
+
 ## Demo server
 
 If you'd like to see what Hauk can do, download the app and insert connection details for the demo server:
