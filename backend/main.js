@@ -48,19 +48,52 @@ document.getElementById("dismiss").addEventListener("click", function() {
 getJSON("./api/fetch.php?id=" + id, function(data) {
     document.getElementById("mapouter").style.visibility = "visible";
 
+    // The data contains an expiration time. Create a countdown at the top of
+    // the map screen that ends when the share is over.
+    var interval2 = setInterval(function() {
+        var seconds = data.x - Math.round(Date.now() / 1000);
+        if (seconds < 0) {
+            clearInterval(interval2);
+            return;
+        }
+
+        var h = Math.floor(seconds / 3600);
+        var m = Math.floor((seconds % 3600) / 60);
+        var s = seconds % 60;
+
+        var time = "";
+        if (h > 0) time += h + ":";
+        if (h > 0 && m < 10) time += "0";
+        time += m + ":";
+        if (s < 10) time += "0";
+        time += s;
+
+        document.getElementById("countdown").textContent = time;
+    }, 1000);
+
     // The location data contains an interval. Schedule a task that fetches data
     // once per interval time.
     var interval = setInterval(function() {
         // Stop the task if the share has expired.
-        if ((Date.now() / 1000) >= data.x) clearInterval(interval);
+        if ((Date.now() / 1000) >= data.x) {
+            clearInterval(interval);
+            clearInterval(interval2);
+            document.getElementById("countdown").textContent = "Expired";
+            document.getElementById("expired").style.display = "block";
+        }
 
         getJSON("./api/fetch.php?id=" + id, function(data) {
             processUpdate(data);
         }, function() {
             clearInterval(interval);
+            clearInterval(interval2);
+            document.getElementById("countdown").textContent = "Expired";
             document.getElementById("expired").style.display = "block";
         });
     }, data.i * 1000);
+
+
+
     processUpdate(data);
 }, function() {
     document.getElementById("notfound").style.display = "block";

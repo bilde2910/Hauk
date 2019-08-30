@@ -118,6 +118,51 @@
     margin: auto;
 }
 
+/* The notch at the top of the screen that shows the time remaining of the
+   share. Outer container. */
+#notch {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    position: fixed;
+}
+
+/* The left and right triangles. */
+#notch div.tri {
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-style: solid;
+}
+
+/* The left triangle. */
+#notch div.t-left {
+    left: 0.15px;
+    top: 0;
+    border-width: 0 23px 23px 0;
+    border-color: transparent rgba(0,0,0,0.5) transparent transparent;
+}
+
+/* The right triangle. */
+#notch div.t-right {
+    right: 0.15px;
+    top: 0;
+    border-width: 23px 23px 0 0;
+    border-color: rgba(0,0,0,0.5) transparent transparent transparent;
+}
+
+/* The middle part of the notch, with the countdown itself. */
+#notch div.inner {
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    padding: 1.5px;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    margin: 0 23px;
+}
+
 /* The outer marker div. */
 #marker {
     width: 66px;

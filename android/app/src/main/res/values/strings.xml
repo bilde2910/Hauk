@@ -11,7 +11,7 @@
     <string name="label_status">Status:</string>
     <string name="chk_remember">Remember password</string>
     <string name="btn_start">Start sharing</string>
-    <string name="btn_stop">Stop sharing</string>
+    <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Share tracking link</string>
 
     <string name="passwd_title">Remember password?</string>

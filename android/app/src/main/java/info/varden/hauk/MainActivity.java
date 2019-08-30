@@ -23,6 +23,8 @@ import androidx.core.app.ActivityCompat;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import info.varden.hauk.service.LocationPushService;
 
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     // A runnable task that is executed when location sharing stops. It clears the persistent Hauk
     // notification, unregisters the location pusher and resets the UI to a fresh state.
     private StopSharingTask stopTask;
+
+    // A timer that counts down the number of seconds left of the share period.
+    private Timer shareCountdown;
 
     // A runnable task that resets the UI to a fresh state.
     private Runnable resetTask;
@@ -223,16 +228,29 @@ public class MainActivity extends AppCompatActivity {
                             // stop task with these so that they can be canceled when the location
                             // share ends.
                             stopTask.updateTask(pusher);
-                            final Handler handler = new Handler();
 
                             // stopTask is scheduled for expiration, but it could also be called if
                             // the user manually stops the share, or if the app is destroyed.
+                            final Handler handler = new Handler();
                             handler.postDelayed(stopTask, durationSec * 1000L);
 
-                            // Now that sharing is finally active, we can re-enable the start
-                            // button, turn it into a stop button, and inform the user.
+                            // Now that sharing is active, we will turn the start button into a stop
+                            // button with a countdown.
+                            shareCountdown = new Timer();
+                            shareCountdown.scheduleAtFixedRate(new TimerTask() {
+                                private int counter = durationSec;
+
+                                @Override
+                                public void run() {
+                                    if (counter >= 0) {
+                                        btnShare.setText(String.format(getString(R.string.btn_stop), secondsToTime(counter)));
+                                    }
+                                    counter -= 1;
+                                }
+                            }, 0L, 1000L);
+
+                            // Re-enable the start (stop) button and inform the user.
                             btnShare.setEnabled(true);
-                            btnShare.setText(R.string.btn_stop);
                             labelStatusCur.setText(getString(R.string.label_status_wait));
                             labelStatusCur.setTextColor(getColor(R.color.statusWait));
                             diagSvc.showDialog(R.string.ok_title, R.string.ok_message, null);
@@ -342,6 +360,11 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void run() {
+                if (shareCountdown != null) {
+                    shareCountdown.cancel();
+                    shareCountdown.purge();
+                }
+
                 labelStatusCur.setText(getString(R.string.label_status_none));
                 labelStatusCur.setTextColor(getColor(R.color.statusOff));
 
@@ -358,6 +381,7 @@ public class MainActivity extends AppCompatActivity {
 
         diagSvc = new DialogService(this);
         stopTask = new StopSharingTask(this, diagSvc, resetTask);
+        shareCountdown = null;
     }
 
     private void loadPreferences() {
@@ -386,5 +410,20 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("rememberPassword", store);
         editor.putString("password", password);
         editor.apply();
+    }
+
+    private String secondsToTime(int seconds) {
+        int h = seconds / 3600;
+        int m = (seconds % 3600) / 60;
+        int s = seconds % 60;
+
+        StringBuilder sb = new StringBuilder();
+        if (h > 0) sb.append(h + ":");
+        if (h > 0 && m < 10) sb.append("0");
+        sb.append(m + ":");
+        if (s < 10) sb.append("0");
+        sb.append(s);
+
+        return sb.toString();
     }
 }
