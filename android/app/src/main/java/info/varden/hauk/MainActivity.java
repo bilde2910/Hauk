@@ -187,6 +187,13 @@ public class MainActivity extends AppCompatActivity {
                     // A successful session initiation contains "OK" on line 1, the session ID on
                     // line 2, and a publicly sharable tracking link on line 3.
                     String[] data = resp.getData();
+
+                    // Somehow the data array is empty.
+                    if (data.length < 1) {
+                        diagSvc.showDialog(R.string.err_server, R.string.err_empty, resetTask);
+                        return;
+                    }
+
                     if (data[0].equals("OK")) {
                         String session = data[1];
                         viewLink = data[2];

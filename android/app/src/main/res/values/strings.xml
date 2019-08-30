@@ -38,6 +38,7 @@
     <string name="err_malformed_url">The server URL you entered is invalid.</string>
     <string name="err_missing_perms">Location permission is required to use this app.</string>
     <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
+    <string name="err_empty">The server returned an empty response.</string>
 
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
