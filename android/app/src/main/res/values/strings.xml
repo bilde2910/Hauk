@@ -7,9 +7,14 @@
     <string name="label_password">Password:</string>
     <string name="label_duration">Share duration (min):</string>
     <string name="label_interval">Update interval (s):</string>
+    <string name="label_status">Status:</string>
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing</string>
     <string name="btn_link">Share tracking link</string>
+
+    <string name="label_status_none">Location sharing inactive</string>
+    <string name="label_status_wait">Waiting for initial GNSS fix...</string>
+    <string name="label_status_ok">Location sharing active!</string>
 
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>

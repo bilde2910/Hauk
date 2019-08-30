@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtInterval;
     private Button btnShare;
     private Button btnLink;
+    private TextView labelStatusCur;
 
     // The publicly sharable link received from the Hauk server during handshake
     private String viewLink;
@@ -169,6 +171,16 @@ public class MainActivity extends AppCompatActivity {
                             pusher.putExtra("session", session);
                             pusher.putExtra("interval", (long) interval * 1000L);
                             pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
+                            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    // Indicate to the user that GPS data is being received when the
+                                    // location pusher starts receiving GPS data.
+                                    labelStatusCur.setText(getString(R.string.label_status_ok));
+                                    labelStatusCur.setTextColor(getColor(R.color.statusOn));
+                                }
+                            }));
                             if (Build.VERSION.SDK_INT >= 26) {
                                 startForegroundService(pusher);
                             } else {
@@ -189,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
                             // button, turn it into a stop button, and inform the user.
                             btnShare.setEnabled(true);
                             btnShare.setText(R.string.btn_stop);
+                            labelStatusCur.setText(getString(R.string.label_status_wait));
+                            labelStatusCur.setTextColor(getColor(R.color.statusWait));
                             diagSvc.showDialog(R.string.ok_title, R.string.ok_message, null);
                         } else {
                             diagSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
@@ -285,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
         txtInterval = findViewById(R.id.txtInterval);
         btnShare = findViewById(R.id.btnShare);
         btnLink = findViewById(R.id.btnLink);
+        labelStatusCur = findViewById(R.id.labelStatusCur);
 
         resetTask = new Runnable() {
 
@@ -294,6 +309,9 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void run() {
+                labelStatusCur.setText(getString(R.string.label_status_none));
+                labelStatusCur.setTextColor(getColor(R.color.statusOff));
+
                 btnShare.setEnabled(true);
                 btnShare.setText(R.string.btn_start);
                 btnLink.setEnabled(false);

@@ -146,6 +146,29 @@
                             android:ems="10"
                             android:inputType="number" />
                     </TableRow>
+
+                    <!-- The current connection status. -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/labelStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/label_status" />
+
+                        <TextView
+                            android:id="@+id/labelStatusCur"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/statusOff"
+                            android:text="@string/label_status_none" />
+
+                    </TableRow>
                 </TableLayout>
 
                 <Space

@@ -35,6 +35,10 @@ public class LocationPushService extends Service implements LocationListener {
     private String viewUrl;
     // A task that should be run when sharing ends, either automatically or by user request.
     private StopSharingTask stopTask;
+    // A task that should be run when locations start registering. Used to change a label on the
+    // main activity.
+    private Runnable gnssActiveTask;
+    private boolean hasRunActiveTask = false;
 
     private String session;
     private long interval;
@@ -56,6 +60,7 @@ public class LocationPushService extends Service implements LocationListener {
         this.session = intent.getStringExtra("session");
         this.interval = intent.getLongExtra("interval", -1L);
         this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra("stopTask", -1));
+        this.gnssActiveTask = (Runnable) ReceiverDataRegistry.retrieve(intent.getIntExtra("gnssActiveTask", -1));
 
         try {
             // Even though we previously requested location permission, we still have to check for
@@ -87,6 +92,13 @@ public class LocationPushService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        // Notify the main activity that GPS data is now being received, such that the UI can be
+        // updated.
+        if (!hasRunActiveTask) {
+            gnssActiveTask.run();
+            hasRunActiveTask = true;
+        }
+
         HashMap<String, String> data = new HashMap<>();
         data.put("lat", String.valueOf(location.getLatitude()));
         data.put("lon", String.valueOf(location.getLongitude()));
