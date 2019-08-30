@@ -1,0 +1,5 @@
+* Password can now be saved in the app
+* A countdown is displayed for the time remaining of the location share
+* The GPS/GNSS status is now displayed in the app when starting a share
+* Fixed a config-related issue that caused both the app and backend to break
+* Fixed an app crash issue that could occur with broken servers
