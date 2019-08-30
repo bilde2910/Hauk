@@ -74,4 +74,4 @@
 // The publicly accessible URL to reach Hauk, with trailing slash.
 "public_url"        => 'https://example.com/'
 
-); ?>
+);
