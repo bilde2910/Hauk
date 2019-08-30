@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnShare;
     private Button btnLink;
     private TextView labelStatusCur;
+    private CheckBox chkRemember;
 
     // The publicly sharable link received from the Hauk server during handshake
     private String viewLink;
@@ -61,6 +64,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setClassVariables();
         loadPreferences();
+
+        // Add an on checked handler to the password remember checkbox asking the user if they
+        // really want to store their passwords. Passwords can only be saved in plain text, so this
+        // could be a security risk. It's therefore a good idea to inform the user about this.
+        chkRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean checked) {
+                if (checked) {
+                    diagSvc.showDialog(R.string.passwd_title, R.string.passwd_body, new Runnable() {
+                        @Override
+                        public void run() {
+                            // If OK: Save the password right away.
+                            setPassword(true, txtPassword.getText().toString());
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            // If cancel: Undo the change.
+                            chkRemember.setChecked(false);
+                        }
+                    });
+                } else {
+                    setPassword(false, "");
+                }
+            }
+        });
     }
 
     @Override
@@ -95,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
         setPreferences(server, duration, interval);
+
+        // If password saving is enabled, save the password as well.
+        if (chkRemember.isChecked()) setPassword(true, password);
 
         // Create a "full" server address, with a following slash if it is missing. This is used to
         // construct subpaths for the Hauk backend.
@@ -300,6 +332,7 @@ public class MainActivity extends AppCompatActivity {
         btnShare = findViewById(R.id.btnShare);
         btnLink = findViewById(R.id.btnLink);
         labelStatusCur = findViewById(R.id.labelStatusCur);
+        chkRemember = findViewById(R.id.chkRemember);
 
         resetTask = new Runnable() {
 
@@ -332,6 +365,8 @@ public class MainActivity extends AppCompatActivity {
         txtServer.setText(settings.getString("server", ""));
         txtDuration.setText(String.valueOf(settings.getInt("duration", 30)));
         txtInterval.setText(String.valueOf(settings.getInt("interval", 1)));
+        txtPassword.setText(settings.getString("password", ""));
+        chkRemember.setChecked(settings.getBoolean("rememberPassword", false));
     }
 
     private void setPreferences(String server, int duration, int interval) {
@@ -341,6 +376,15 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("server", server);
         editor.putInt("duration", duration);
         editor.putInt("interval", interval);
+        editor.apply();
+    }
+
+    private void setPassword(boolean store, String password) {
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.putBoolean("rememberPassword", store);
+        editor.putString("password", password);
         editor.apply();
     }
 }
