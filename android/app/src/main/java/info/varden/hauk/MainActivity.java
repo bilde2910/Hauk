@@ -70,26 +70,13 @@ public class MainActivity extends AppCompatActivity {
         setClassVariables();
         loadPreferences();
 
-        // Add an on checked handler to the password remember checkbox asking the user if they
-        // really want to store their passwords. Passwords can only be saved in plain text, so this
-        // could be a security risk. It's therefore a good idea to inform the user about this.
+        // Add an on checked handler to the password remember checkbox to save their password
+        // immediately.
         chkRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean checked) {
                 if (checked) {
-                    diagSvc.showDialog(R.string.passwd_title, R.string.passwd_body, new Runnable() {
-                        @Override
-                        public void run() {
-                            // If OK: Save the password right away.
-                            setPassword(true, txtPassword.getText().toString());
-                        }
-                    }, new Runnable() {
-                        @Override
-                        public void run() {
-                            // If cancel: Undo the change.
-                            chkRemember.setChecked(false);
-                        }
-                    });
+                    setPassword(true, txtPassword.getText().toString());
                 } else {
                     setPassword(false, "");
                 }

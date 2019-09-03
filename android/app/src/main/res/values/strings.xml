@@ -14,9 +14,6 @@
     <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Share tracking link</string>
 
-    <string name="passwd_title">Remember password?</string>
-    <string name="passwd_body">If you save your password, it will be saved to the device in plain text. You are advised to use a password that you do not use elsewhere, such as a randomly generated password, if you choose this option.</string>
-
     <string name="label_status_none">Location sharing inactive</string>
     <string name="label_status_wait">Waiting for initial GNSS fix...</string>
     <string name="label_status_ok">Location sharing active!</string>

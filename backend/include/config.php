@@ -16,6 +16,12 @@
 // Default value above is empty string (no password) and is VERY INSECURE.
 // Trust me, you really should change this unless you intentionally want a
 // public instance that anyone in the world can use freely.
+//
+// Also note that users have the option to save the server password locally on
+// their devices using a "Remember password" checkbox. If they choose to do so,
+// the password will be stored in plain text (unhashed) on their devices. You
+// are encouraged to generate a random password to prevent risks associated with
+// credential reuse, should the password somehow be leaked from their devices.
 
 // Leaflet tile URI template for the map frontend. Here are some examples:
 //
