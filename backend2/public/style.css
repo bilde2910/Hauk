@@ -1,0 +1,201 @@
+/* The main stylesheet for the Hauk web view interface. */
+
+* {
+    font-family: sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+/* The map should cover the entire viewport. */
+#mapouter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* Hide by default while we check whether or not the share exists. */
+    visibility: hidden;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Popup covers that should display on top of the map. */
+.cover {
+    position: absolute;
+    width: 80vmin;
+    height: 80vmin;
+    top: 0;
+    left: 50%;
+    z-index: 2000;
+    background-color: #fff;
+    text-align: center;
+    padding: 10vmin;
+    transform: translateX(-50%);
+}
+
+/* Hauk logo. */
+.cover > img {
+    width: 100%;
+}
+
+/* Popup header. */
+.cover > p.header {
+    font-size: 8vmin;
+    font-weight: bold;
+}
+
+/* Popup information. */
+.cover > p.body {
+    font-size: 4vmin;
+}
+
+/* Dialog window that contains a title, message and button. This is the outer
+   box, with a semitransparent black background to provide shading against the
+   map, which it renders on top of. */
+.dialog {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* The actual message dialog itself. */
+.dialog > div {
+    width: 300px;
+    max-width: 80vw;
+    background-color: white;
+    padding: 5px 20px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.dialog p.header {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Ensure the button is big enough to be clicked on all devices. */
+.dialog input[type=button] {
+    font-size: 1em;
+}
+
+/* Display the Hauk logo in the bottom left corner of the map if the viewport is
+   wide enough to accomodate it. If it's so narrow that the Leaflet attribution
+   could be covered by it, display it in the bottom left corner instead, above
+   the attribution. */
+@media (max-width: 700px) {
+    #logo {
+        position: fixed;
+        bottom: 20px;
+        right: 5px;
+        z-index: 1000;
+    }
+}
+@media (min-width: 700.001px) {
+    #logo {
+        position: fixed;
+        bottom: 5px;
+        left: 10px;
+        z-index: 1000;
+    }
+}
+
+#logo div {
+    width: 73.33479px;
+    height: 28.853556px;
+    background: url(./assets/logo.svg) no-repeat;
+    background-size: cover;
+    margin: auto;
+}
+
+/* The notch at the top of the screen that shows the time remaining of the
+   share. Outer container. */
+#notch {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    position: fixed;
+}
+
+/* The left and right triangles. */
+#notch div.tri {
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-style: solid;
+}
+
+/* The left triangle. */
+#notch div.t-left {
+    left: 0.15px;
+    top: 0;
+    border-width: 0 23px 23px 0;
+    border-color: transparent rgba(0,0,0,0.5) transparent transparent;
+}
+
+/* The right triangle. */
+#notch div.t-right {
+    right: 0.15px;
+    top: 0;
+    border-width: 23px 23px 0 0;
+    border-color: rgba(0,0,0,0.5) transparent transparent transparent;
+}
+
+/* The middle part of the notch, with the countdown itself. */
+#notch div.inner {
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    padding: 1.5px;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    margin: 0 23px;
+}
+
+/* The outer marker div. */
+#marker {
+    width: 66px;
+    height: 62px;
+}
+
+/* The arrow within the marker div. */
+#arrow {
+    background: url(./assets/marker.svg) no-repeat;
+    background-size: cover;
+    width: 36px;
+    height: 36px;
+    margin: auto;
+}
+
+/* The velocity indicator on the marker div. */
+#marker p {
+    font-size: 0.9em;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    border-radius: 15px;
+    text-align: center;
+    padding: 2px 0;
+    line-height: 100%;
+    font-family: sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+}
+
+/* Hide the default white box in the top left corner of the marker div. */
+.leaflet-div-icon {
+    background: none;
+    border: none;
+}
