@@ -1,28 +1,3 @@
-CONFIG = {
-  password: 'password',
-  public_url: 'https://localhost:9494',
-  ssl_cert: 'cert.crt',
-  ssl_pkey: 'pkey.pem',
-  port: 9494,
-  bind: '0.0.0.0',
-  session_store: 'sessions.json',
-  max_duration: 86400, # Maximum duration of a single location share, in seconds
-  min_interval: 1, # Minimum time between each location update, in seconds
-  max_cached_pts: 3, # Maximum number of data points stored for each share before old points are deleted. Map clients will see up to this amount of data points when they load the page.
-  max_shown_pts: 100, # Maximum number of data points that may be visible on the map at any time. This is used to draw trails behind the current location map marker. Higher values will show longer trails, but may reduce performance.
-  v_data_points: 2, # Number of seconds of data that should be used to calculate velocity
-  map_tile_uri: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  map_attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-  default_zoom: 14, #(0-20), higher value means closer zooming.
-  max_zoom: 19,
-  trail_color: '#d80037',
-  velocity_unit: {
-    havMod: 6371 * 2 * 3600,
-    mpsMod: 3.6,
-    unit: "km/h"
-  }
-}
-
 #############################################################################################
 # Internal Service Setup
 #############################################################################################
@@ -30,13 +5,18 @@ CONFIG = {
 require 'time'
 require 'json'
 
-SESSIONS = File.exist?(CONFIG[:session_store]) ? JSON.parse(File.read(CONFIG[:session_store]), symbolize_names: true).tap{|s| puts "loaded #{s.size} session(s)"} : {}
+CONFIG = JSON.parse(File.read('config.json'), symbolize_names: true)
 
-at_exit do
-  if CONFIG[:session_store]
-    puts 'saving sessions'
-    SESSIONS.delete_if {|k, v| v[:expire] < Time.now.to_i }
-    File.write(CONFIG[:session_store], SESSIONS.to_json)
+SESSIONS = CONFIG[:use_session_store] && File.exist?(CONFIG[:session_store]) ?
+            JSON.parse(File.read(CONFIG[:session_store]), symbolize_names: true).tap{|s| puts "loaded #{s.size} session(s)"} :
+            {}
+if CONFIG[:use_session_store]
+  at_exit do
+    if CONFIG[:session_store]
+      SESSIONS.delete_if {|k, v| v[:expire] < Time.now.to_i }
+      puts "saving #{SESSIONS.size} session(s)"
+      File.write(CONFIG[:session_store], SESSIONS.to_json)
+    end
   end
 end
 
@@ -89,6 +69,10 @@ def friendly_id
   "#{colors.sample}-#{adjectives.sample}-#{nouns.sample}-#{num}"
 end
 
+before do
+  SESSIONS.delete_if {|k, v| v[:expire] < Time.now.to_i }
+end
+
 #############################################################################################
 # Endpoints
 #############################################################################################
@@ -137,7 +121,6 @@ end
 # Test: curl localhost:9494/api/fetch.php?id=xxxxxx
 get '/api/fetch.php' do
   sid = params[:id] # XXX: not so nice that it's called id here but sid in all other entpoints. wanted to keep compatibility though.
-  SESSIONS.delete_if {|k, v| v[:expire] < Time.now.to_i }
   if SESSIONS[sid.to_sym]
     content_type :json
     {
@@ -163,7 +146,6 @@ post '/api/post.php' do
   speed = params[:spd] ? params[:spd].to_f : nil
   accuracy = params[:acc] ? params[:acc].to_f : nil
   sid = params[:sid]
-  SESSIONS.delete_if {|k, v| v[:expire] < Time.now.to_i }
   if SESSIONS[sid.to_sym]
     SESSIONS[sid.to_sym][:locations] << [lat, lon, time, accuracy, speed]
     SESSIONS[sid.to_sym][:locations].shift(SESSIONS[sid.to_sym][:locations].size - CONFIG[:max_cached_pts]) if SESSIONS[sid.to_sym][:locations].size > CONFIG[:max_cached_pts]

@@ -1,0 +1,25 @@
+{
+  "password": "password",
+  "public_url": "https://localhost:9494",
+  "ssl_cert": "cert.crt",
+  "ssl_pkey": "pkey.pem",
+  "port": 9494,
+  "bind": "0.0.0.0",
+  "session_store": "sessions.json",
+  "use_session_store": false,
+  "max_duration": 86400,
+  "min_interval": 1,
+  "max_cached_pts": 3,
+  "max_shown_pts": 100,
+  "v_data_points": 2,
+  "map_tile_uri": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  "map_attribution": "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>",
+  "default_zoom": 14,
+  "max_zoom": 19,
+  "trail_color": "#d80037",
+  "velocity_unit": {
+    "havMod": 45871200,
+    "mpsMod": 3.6,
+    "unit": "km/h"
+  }
+}
