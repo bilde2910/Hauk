@@ -2,7 +2,6 @@
 # Internal Service Setup
 #############################################################################################
 
-require 'time'
 require 'json'
 
 CONFIG = JSON.parse(File.read('config.json'), symbolize_names: true)
@@ -23,6 +22,7 @@ end
 require 'sinatra'
 require 'webrick/ssl'
 require 'webrick/https'
+require 'digest/md5'
 
 SSL_CERT = CONFIG[:ssl_cert] && File.exist?(CONFIG[:ssl_cert]) ? CONFIG[:ssl_cert] : nil
 SSL_PKEY = CONFIG[:ssl_pkey] && File.exist?(CONFIG[:ssl_pkey]) ? CONFIG[:ssl_pkey] : nil
@@ -61,12 +61,13 @@ end
 set :port, CONFIG[:port] || 9494
 set :bind, CONFIG[:bind] || '0.0.0.0'
 
-def friendly_id
-  colors = ["amber", "beige", "black", "blue", "brown", "cyan", "gold", "green", "grey", "indigo", "lime", "magenta", "olive", "orange", "peach", "pink", "purple", "red", "rose", "silver", "teal", "white", "yellow"]
-  adjectives = ["amazing", "big", "cheeky", "cool", "cosmic", "dirty", "dotted", "easy", "fancy", "fat", "fresh", "fun", "genius", "ginger", "good", "kind", "loud", "mighty", "perky", "quick", "shiny", "short", "skinny", "sleek", "sleepy", "slow", "stinky", "sweet", "tall"]
-  nouns = ["ant", "bee", "cat", "dog", "elk", "fox", "gnu", "hog", "pig", "rat", "yak"]
-  num = rand(10...99)
-  "#{colors.sample}-#{adjectives.sample}-#{nouns.sample}-#{num}"
+def random_friendly_id
+  adjectives = %w(amazing amber beige big black blue brown cheeky cool cosmic cyan dirty dotted easy fancy fat fresh fun genius ginger
+                  gold good green grey indigo kind lime loud magenta mighty olive orange peach perky pink purple quick red rose shiny
+                  short silver skinny sleek sleepy slow stinky sweet tall teal white yellow).shuffle
+  nouns = %w(ant bat bee bird bug bull cat clam cow dog duck eel elk fish fly fox gnu hog mole owl pig ram rat snake wolf worm yak).shuffle
+  digits = 3.times.map{rand(0..9)}.join
+  "#{adjectives.pop}-#{adjectives.pop}-#{nouns.pop}-#{digits}"
 end
 
 before do
@@ -97,7 +98,7 @@ end
 
 # Handles session initiation for Hauk clients.
 # Creates a session ID and associated share URL, and returns these to the client.
-# Test: curl -d 'pwd=password&dur=60&int=1' localhost:9494/api/create.php
+# Test: curl -d 'pwd=password&dur=600&int=1' localhost:9494/api/create.php
 post '/api/create.php' do
   [:pwd, :dur, :int].each { |e| halt(400, "Missing data\n") if !params[e] }
   halt(403, "Incorrect password!\n") if params[:pwd] != CONFIG[:password]
@@ -106,21 +107,21 @@ post '/api/create.php' do
   halt(400, "Share period is too long!\n") if duration > CONFIG[:max_duration]
   halt(400, "Ping interval is too long!\n") if interval > CONFIG[:max_duration]
   halt(400, "Ping interval is too short!\n") if interval < CONFIG[:min_interval]
-  # TODO: create nicer session ids
-  #loop while SESSIONS[ sid = SecureRandom.random_number(2**256).to_s(36).ljust(6,'a')[0...6].to_sym ]
-  loop while SESSIONS[sid = friendly_id.to_sym]
+  loop while SESSIONS[(fid = random_friendly_id; sid = Digest::MD5.hexdigest("#{fid}#{CONFIG[:salt]}").to_sym)]
   SESSIONS[sid] = {
     expire: Time.now.to_i + duration,
     interval: interval,
+    fid: fid,
     locations: []
   }
-  "OK\n#{sid}\n#{CONFIG[:public_url]}?#{sid}\n"
+  "OK\n#{sid}\n#{CONFIG[:public_url]}?#{fid}\n"
 end
 
 # Called by the client to receive location updates. A link ID is required to retrieve data.
 # Test: curl localhost:9494/api/fetch.php?id=xxxxxx
 get '/api/fetch.php' do
-  sid = params[:id] # XXX: not so nice that it's called id here but sid in all other entpoints. wanted to keep compatibility though.
+  fid = params[:id]
+  sid = Digest::MD5.hexdigest("#{fid}#{CONFIG[:salt]}")
   if SESSIONS[sid.to_sym]
     content_type :json
     {

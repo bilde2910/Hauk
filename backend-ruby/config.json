@@ -1,5 +1,6 @@
 {
   "password": "password",
+  "salt": "some random secret salt",
   "public_url": "https://localhost:9494",
   "ssl_cert": "cert.crt",
   "ssl_pkey": "pkey.pem",
