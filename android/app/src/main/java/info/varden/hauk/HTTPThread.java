@@ -71,14 +71,14 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
                     lines.add(line);
                 }
                 br.close();
-                return new Response(null, lines.toArray(new String[lines.size()]));
+                return new Response(null, lines.toArray(new String[lines.size()]), new Version(client.getHeaderField("X-Hauk-Version")));
             } else {
                 // Hauk only returns HTTP 200; any other response should be considered an error.
                 throw new Exception("Received HTTP " + response + " from server!");
             }
         } catch (Exception ex) {
             // If an exception occurred, return no data.
-            return new Response(ex, null);
+            return new Response(ex, null, null);
         }
     }
 
@@ -109,10 +109,12 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
     public static class Response {
         private final Exception ex;
         private final String[] data;
+        private final Version ver;
 
-        private Response(Exception ex, String[] data) {
+        private Response(Exception ex, String[] data, Version ver) {
             this.ex = ex;
             this.data = data;
+            this.ver = ver;
         }
 
         public Exception getException() {
@@ -121,6 +123,10 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
 
         public String[] getData() {
             return this.data;
+        }
+
+        public Version getServerVersion() {
+            return this.ver;
         }
     }
 
