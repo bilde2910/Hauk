@@ -237,7 +237,13 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     if (counter >= 0) {
-                                        btnShare.setText(String.format(getString(R.string.btn_stop), secondsToTime(counter)));
+                                        runOnUiThread(new Runnable() {
+
+                                            @Override
+                                            public void run() {
+                                                btnShare.setText(String.format(getString(R.string.btn_stop), secondsToTime(counter)));
+                                            }
+                                        });
                                     }
                                     counter -= 1;
                                 }
