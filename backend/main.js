@@ -215,6 +215,11 @@ function processUpdate(data) {
         if (eArrow !== null && shares[user].points.length >= 2) {
             var last = shares[user].points.length - 1;
             eArrow.style.transform = "rotate(" + angle(shares[user].points[last - 1], shares[user].points[last]) + "deg)";
+            if (vel.toFixed(1) == "0.0") {
+                eArrow.className = "arrow still-live";
+            } else {
+                eArrow.className = "arrow moving-live";
+            }
         }
 
         // Prune the array of locations so it does not exceed our MAX_POINTS defined
