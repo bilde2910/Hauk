@@ -3,13 +3,8 @@ package info.varden.hauk.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.EditText;
-
-import java.lang.reflect.Type;
 
 import info.varden.hauk.CustomDialogBuilder;
 import info.varden.hauk.R;
