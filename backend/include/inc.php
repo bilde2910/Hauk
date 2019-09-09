@@ -16,24 +16,20 @@ const SESSION_ID_SIZE = 32;
 const LINK_ID_RAND_BYTES = 32;
 const GROUP_PIN_MIN = 100000;
 const GROUP_PIN_MAX = 999999;
-const EARTH_DIAMETER_KM = 6371 * 2;
 
 const KILOMETERS_PER_HOUR = array(
     // Relative distance per second multiplied by number of seconds per hour.
-    "havMod" => EARTH_DIAMETER_KM * 3600,
-    "mpsMod" => 3.6,
+    "mpsMultiplier" => 3.6,
     "unit" => "km/h"
 );
 const MILES_PER_HOUR = array(
     // Same as for KILOMETERS_PER_HOUR, but convert kilometers to miles.
-    "havMod" => EARTH_DIAMETER_KM * 3600 * 0.6213712,
-    "mpsMod" => 3.6 * 0.6213712,
+    "mpsMultiplier" => 3.6 * 0.6213712,
     "unit" => "mph"
 );
 const METERS_PER_SECOND = array(
     // Relative distance per second in kilometers, multiplied by meters per km.
-    "havMod" => EARTH_DIAMETER_KM * 1000,
-    "mpsMod" => 1,
+    "mpsMultiplier" => 1,
     "unit" => "m/s"
 );
 

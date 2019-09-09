@@ -3,6 +3,9 @@
 const SHARE_TYPE_ALONE = 0;
 const SHARE_TYPE_GROUP = 1;
 
+const EARTH_DIAMETER_KM = 6371 * 2;
+const HAV_MOD = EARTH_DIAMETER_KM * 1000;
+
 // Create a Leaflet map.
 var map = L.map('map').setView([0, 0], DEFAULT_ZOOM);
 L.tileLayer(TILE_URI, {
@@ -173,7 +176,7 @@ function processUpdate(data) {
         var vel = 0;
         if (lastPoint !== null && lastPoint.spd !== null && eVelocity !== null) {
             // Prefer client-provided speed if possible.
-            vel = lastPoint.spd * VELOCITY_UNIT.mpsMod;
+            vel = lastPoint.spd * VELOCITY_UNIT.mpsMultiplier;
             eVelocity.textContent = vel.toFixed(1);
         } else if (eVelocity !== null) {
             // If the client didn't provide its speed, calculate it locally from its
@@ -254,7 +257,7 @@ function distance(from, to) {
 // Calculates a velocity using the velocity unit from the config.
 function velocity(distance, intv) {
     if (intv == 0) return 0.0;
-    return distance * VELOCITY_UNIT.havMod / intv;
+    return distance * VELOCITY_UNIT.mpsMultiplier * HAV_MOD / intv;
 }
 
 // Calculates the bearing between two points on a sphere in degrees.
