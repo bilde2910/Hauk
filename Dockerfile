@@ -1,5 +1,6 @@
 FROM    php:apache
-COPY    backend/ /var/www/html/
+COPY    backend-php/ /var/www/html/
+COPY    frontend/ /var/www/html/
 COPY    docker/start.sh .
 
 RUN     apt-get update && \
