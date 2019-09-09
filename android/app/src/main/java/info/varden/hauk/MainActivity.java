@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         selMode.setEnabled(false);
         txtNickname.setEnabled(false);
         txtPIN.setEnabled(false);
+        chkAllowAdopt.setEnabled(false);
 
         String server = txtServer.getText().toString().trim();
         final String password = txtPassword.getText().toString();
@@ -432,24 +433,12 @@ public class MainActivity extends AppCompatActivity {
                  */
                 @Override
                 public void run() {
-                    btnShare.setEnabled(true);
-                    btnLink.setEnabled(false);
+                    resetTask.run();
                     ActivityCompat.requestPermissions(MainActivity.this, new String[] {
                             Manifest.permission.ACCESS_FINE_LOCATION
                     }, MY_PERMISSIONS_REQUEST_FINE_LOCATION);
                 }
-            }, new Runnable() {
-
-                /**
-                 * Function that runs if the user accepts the location request rationale via the
-                 * Cancel button.
-                 */
-                @Override
-                public void run() {
-                    btnShare.setEnabled(true);
-                    btnLink.setEnabled(false);
-                }
-            });
+            }, resetTask);
             return false;
         } else {
             return true;
@@ -509,6 +498,7 @@ public class MainActivity extends AppCompatActivity {
                 selMode.setEnabled(true);
                 txtNickname.setEnabled(true);
                 txtPIN.setEnabled(true);
+                chkAllowAdopt.setEnabled(true);
 
                 layoutGroupPIN.setVisibility(View.GONE);
             }
