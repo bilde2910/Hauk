@@ -1,0 +1,8 @@
+* Added support for group sharing
+* Saving password in the app will no longer prompt for confirmation
+* Map marker is now a circle if the user isn't moving
+* SASL support added for memcached in backend config
+* Support for connecting to memcached via UNIX sockets
+* Old sessions no longer linger in Memcached
+* Significant backend rework/cleanup
+* Fixed crash upon starting a share in Android 6.0 Marshmallow
