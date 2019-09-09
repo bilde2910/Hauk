@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     // A runnable task that resets the UI to a fresh state.
     private Runnable resetTask;
 
+    // A dialog builder that can build a dialog used to adopt existing single-user shares into a
+    // group share.
     private AdoptDialogBuilder adoptBuilder;
 
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 123;
@@ -106,12 +108,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Add elements and an event handler to the sharing mode selector.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sel_mode_opts, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selMode.setAdapter(adapter);
         selMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
+                // This handler determines which UI elements should be visible, based on the user's
+                // selection of sharing modes.
                 switch (selection) {
                     case HaukConst.SHARE_MODE_CREATE_ALONE:
                         rowAllowAdopt.setVisibility(View.VISIBLE);
@@ -248,8 +253,11 @@ public class MainActivity extends AppCompatActivity {
                 Exception e = resp.getException();
                 if (e == null) {
 
+                    // Check if the server is out of date for group shares, if applicable.
                     if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP || actualShareMode == HaukConst.SHARE_MODE_JOIN_GROUP) {
                         if (resp.getServerVersion().olderThan(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
+                            // If the server is indeed out of date, override the sharing mode to
+                            // reflect what was actually created on the server.
                             actualShareMode = HaukConst.SHARE_MODE_CREATE_ALONE;
                             selMode.setSelection(HaukConst.SHARE_MODE_CREATE_ALONE);
                             diagSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), HaukConst.VERSION_COMPAT_GROUP_SHARE, resp.getServerVersion()));
@@ -276,10 +284,13 @@ public class MainActivity extends AppCompatActivity {
 
                                 @Override
                                 public void run() {
+                                    // Show the group PIN on the UI if a new group share was created.
                                     labelShowPin.setText(joinCode);
+                                    layoutGroupPIN.setVisibility(View.VISIBLE);
                                 }
                             });
 
+                            // Create a new adoption dialog builder for this group share.
                             adoptBuilder = new AdoptDialogBuilder(MainActivity.this, serverFull, session, joinCode) {
                                 @Override
                                 public void onSuccess(final String nick) {
@@ -291,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
                                     diagSvc.showDialog(R.string.err_server, ex.getMessage());
                                 }
                             };
-                            layoutGroupPIN.setVisibility(View.VISIBLE);
                         }
 
                         // We now have a link to share, so we enable the link sharing button.
@@ -402,10 +412,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
     }
 
+    /**
+     * On-tap handler for the "what's this" link underneath the checkbox for allowing adoption.
+     * Opens an explanation of adoption.
+     */
     public void explainAdoption(View view) {
         diagSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
     }
 
+    /**
+     * On-tap handler for the "add an existing share" button. Opens a dialog for adding an existing
+     * share to the group.
+     */
     public void adoptShare(View view) {
         String server = txtServer.getText().toString();
         if (!server.endsWith("/")) server = server + "/";

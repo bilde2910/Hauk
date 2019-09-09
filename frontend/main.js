@@ -84,6 +84,8 @@ function setNewInterval(expire, interval) {
         }
 
         getJSON("./api/fetch.php?id=" + id, function(data) {
+            // Recreate the interval timers if the interval or expiration
+            // change.
             if (data.expire != expire || data.interval != interval) {
                 clearInterval(fetchIntv);
                 clearInterval(countIntv);
@@ -91,6 +93,7 @@ function setNewInterval(expire, interval) {
             }
             processUpdate(data);
         }, function() {
+            // On failure to get new location data:
             clearInterval(fetchIntv);
             clearInterval(countIntv);
             document.getElementById("countdown").textContent = "Expired";
@@ -232,6 +235,7 @@ function processUpdate(data) {
             for (var j = 0; j < remove.length; j++) if (remove[j].line !== null) map.removeLayer(remove[j].line);
         }
 
+        // Add the user's nickname if this is a group share.
         var nameE = document.getElementById("nickname-" + shares[user].id);
         if (nameE !== null && multiUser) {
             nameE.textContent = user;

@@ -7,7 +7,12 @@
 include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
 
-requirePOST("sid", "nic", "aid", "pin");
+requirePOST(
+    "sid", // Session ID of adopting user.
+    "nic", // Nickname for the adopted share.
+    "aid", // Link ID of the share to adopt.
+    "pin"  // Group PIN for the share being adopted into.
+);
 
 $memcache = memConnect();
 $nickname = $_POST["nic"];

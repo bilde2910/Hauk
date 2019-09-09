@@ -9,12 +9,18 @@ header("X-Hauk-Version: ".BACKEND_VERSION);
 foreach (array("id") as $field) if (!isset($_GET[$field])) die("Invalid session!\n");
 
 $memcache = memConnect();
+
+// Get the share from the given share ID.
 $share = Share::fromShareID($memcache, $_GET["id"]);
+
 // If the link data key is not set, the session probably expired.
 if (!$share->exists()) {
     die("Invalid session!\n");
 } else {
     header("Content-Type: text/json");
+
+    // Solo and group shares have different internal structures. Figure out the
+    // correct type so that it can be output.
     switch ($share->getType()) {
         case SHARE_TYPE_ALONE:
             $session = $share->getHost();

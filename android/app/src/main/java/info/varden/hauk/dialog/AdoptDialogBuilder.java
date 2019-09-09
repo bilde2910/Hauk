@@ -19,6 +19,11 @@ import info.varden.hauk.CustomDialogBuilder;
 import info.varden.hauk.HTTPThread;
 import info.varden.hauk.R;
 
+/**
+ * A class that builds a dialog with two input boxes for adopting another share into a group share.
+ *
+ * @author Marius Lindvall
+ */
 public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
     private final Context ctx;
     private final String serverURL;
@@ -38,11 +43,17 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
     public abstract void onSuccess(String nick);
     public abstract void onFailure(Exception ex);
 
+    /**
+     * Called when the OK button is clicked in the dialog window.
+     */
     @Override
     public final void onOK() {
+        // Get the user data.
         final String nick = this.diagTxtNick.getText().toString().trim();
         final String adoptID = this.diagTxtShare.getText().toString().trim();
 
+        // Create a processing dialog, since we are interacting with an external server, which can
+        // take some time.
         final ProgressDialog prog = new ProgressDialog(this.ctx);
         prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         prog.setTitle(R.string.prog_adopt_title);
@@ -51,6 +62,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         prog.setCancelable(false);
         prog.show();
 
+        // Send the HTTP request to try and adopt the share.
         HashMap<String, String> data = new HashMap<>();
         data.put("sid", this.sessionID);
         data.put("nic", nick);
@@ -86,13 +98,23 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         req.execute(new HTTPThread.Request(this.serverURL + "api/adopt.php", data));
     }
 
+    /**
+     * Called when the Cancel button is clicked in the dialog window.
+     */
     @Override
     public final void onCancel() {
         return;
     }
 
+    /**
+     * Creates a View that is rendered in the dialog window.
+     *
+     * @param ctx Android application context.
+     * @return A View instance to render on the dialog.
+     */
     @Override
     public final View createView(Context ctx) {
+        // Ensure input boxes fill the entire width of the dialog.
         TableRow.LayoutParams trParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         trParams.weight = 1F;
 
@@ -119,6 +141,8 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // When the share URL text is changed, try to extract the share ID using regex. If
+                // a match is found, replace the entire contents with the match.
                 String urlMatch = "\\?([A-Za-z0-9-]+)";
                 Matcher m = Pattern.compile(urlMatch).matcher(charSequence);
                 if (m.find()) {

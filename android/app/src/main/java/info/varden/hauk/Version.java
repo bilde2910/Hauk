@@ -1,5 +1,10 @@
 package info.varden.hauk;
 
+/**
+ * A class for comparing version strings.
+ *
+ * @author Marius Lindvall
+ */
 public class Version implements Comparable<Version> {
     private final String ver;
 
@@ -29,6 +34,8 @@ public class Version implements Comparable<Version> {
         String[] thisParts = this.ver.split("\\.");
         String[] otherParts = other.ver.split("\\.");
 
+        // Compare each segment of the version to determine if the version is newer, older or the
+        // same as the current version.
         int maxLen = Math.max(thisParts.length, otherParts.length);
         for (int i = 0; i < maxLen; i++) {
             int thisPart = i < thisParts.length ? Integer.parseInt(thisParts[i]) : 0;

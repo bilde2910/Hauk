@@ -5,10 +5,14 @@
 
 const BACKEND_VERSION = "1.1";
 
+// Create mode for create.php. Corresponds with the constants from the Android
+// app in android/app/src/main/java/info/varden/hauk/HaukConst.java.
 const SHARE_MODE_CREATE_ALONE = 0;
 const SHARE_MODE_CREATE_GROUP = 1;
 const SHARE_MODE_JOIN_GROUP = 2;
 
+// Type of share. This is not the same as the create mode above, which only
+// indicates what type of session to create.
 const SHARE_TYPE_ALONE = 0;
 const SHARE_TYPE_GROUP = 1;
 
@@ -78,6 +82,8 @@ foreach (CONFIG_PATHS as $path) {
 
 if (!defined("CONFIG")) die("Unable to find config.php!\n");
 
+// Function that fetches the given config item from the config, or from the
+// defaults as a fallback if not found in config.
 function getConfig($item) {
     if (array_key_exists($item, CONFIG)) return CONFIG[$item];
     if (array_key_exists($item, DEFAULTS)) return DEFAULTS[$item];
@@ -87,11 +93,17 @@ define("PREFIX_SESSION", getConfig("memcached_prefix")."-session-");
 define("PREFIX_LOCDATA", getConfig("memcached_prefix")."-locdata-");
 define("PREFIX_GROUPID", getConfig("memcached_prefix")."-groupid-");
 
+// A base class for location shares. Shares contain a reference to all sessions
+// that broadcasts location data to the share, but does not contain the location
+// data itself. Location data is stored in the session data that the shares
+// point to.
 class Share {
-    protected $memcache;
-    protected $shareID;
-    protected $shareData;
+    protected $memcache;    // A Memcached wrapper.
+    protected $shareID;     // The ID displayed in the public view link.
+    protected $shareData;   // An array containing the share's parameters/data.
 
+    // Creates a Share instance from the given share ID. If not found, a share
+    // will be returned whose ->exists() === false.
     public static function fromShareID($memcache, $shareID) {
         $shareData = $memcache->get(PREFIX_LOCDATA.$shareID);
         if ($shareData === false) return new Share($memcache, false);
@@ -108,6 +120,8 @@ class Share {
         return $share;
     }
 
+    // Creates a Share instance from the given group PIN. If not found, returns
+    // a share whose ->exists() === false.
     public static function fromGroupPIN($memcache, $pin) {
         $linkID = $memcache->get(PREFIX_GROUPID.$pin);
         if ($linkID === false) {
@@ -117,26 +131,35 @@ class Share {
         }
     }
 
+    // For use by base classes only. Constructs a Share instance with the given
+    // share data array, or if null, an empty share template.
     protected function __construct($memcache, $shareData = null) {
         $this->memcache = $memcache;
         if ($shareData === null) {
             $this->shareData = array(
                 "expire" => 0
             );
+            // Generate a new sharing link for our empty share.
             $this->shareID = $this->generateLinkID();
         } else {
             $this->shareData = $shareData;
         }
     }
 
+    // Whether or not the share exists. Returns false if the share was not found
+    // in Memcached. Returns true if the share is newly created but not saved in
+    // Memcached yet.
     public function exists() {
         return $this->shareData !== false;
     }
 
+    // Saves this share to Memcached.
     public function save() {
         if ($this->shareData["expire"] === 0) {
             throw new UnexpectedValueException("Share cannot be indefinite");
         }
+        // If the share has already expired, don't share it; delete it if it
+        // exists instead to clean up Memcached.
         if (!$this->hasExpired()) {
             $this->memcache->set(PREFIX_LOCDATA.$this->shareID, $this->shareData, $this->getExpirationTime());
         } else {
@@ -145,34 +168,41 @@ class Share {
         return $this;
     }
 
+    // Returns the type of share, either SHARE_TYPE_ALONE or SHARE_TYPE_GROUP.
     public function getType() {
         return $this->shareData["type"];
     }
 
+    // Returns the ID of the share, which is also used in the public view link.
     public function getShareID() {
         return $this->shareID;
     }
 
+    // Returns a URL that can be used to track this share's participants.
     public function getViewLink() {
         return getConfig("public_url")."?".$this->shareID;
     }
 
+    // Sets a new expiration time for the share. Does not take effect until
+    // save() is called.
     public function setExpirationTime($expire) {
         $this->shareData["expire"] = $expire;
         return $this;
     }
 
+    // Returns the current expiration time of this share.
     public function getExpirationTime() {
         return $this->shareData["expire"];
     }
 
+    // Returns whether or not this share's expiration time is in the past.
     public function hasExpired() {
         return $this->getExpirationTime() <= time();
     }
 
-    // Function for generating link IDs. The function is:
-    // First and last four digits of the base36 SHA256 sum of random binary data.
-    // This is converted to uppercase and the two parts separated by a dash.
+    // Function for generating link IDs. Uses the first and last four digits of
+    // the base36 SHA256 sum of random binary data. This is converted to
+    // uppercase and the two parts separated by a dash.
     protected function generateLinkID() {
         $s = "";
         do {
@@ -183,7 +213,13 @@ class Share {
     }
 }
 
+// An extension to the Share class for single-user shares. May be instantiated.
+// Single-user shares have a single host user and may be adopted.
 class SoloShare extends Share {
+
+    // Creates a single-user share with the given share data array. The
+    // $shareData argument is for internal use only. To instantiate a new
+    // SoloShare, call this constructor with no share data.
     function __construct($memcache, $shareData = null) {
         parent::__construct($memcache, $shareData);
         if ($shareData === null) {
@@ -193,30 +229,44 @@ class SoloShare extends Share {
         }
     }
 
+    // Deletes this share from Memcached, causing it to immediately end.
     public function end() {
         $this->memcache->delete(PREFIX_LOCDATA.$this->getShareID());
     }
 
+    // Sets whether or not this share can be adopted. Does not take effect until
+    // save() is called.
     public function setAdoptable($adoptable) {
         $this->shareData["adoptable"] = $adoptable;
         return $this;
     }
 
+    // Returns whether or not this share can be adopted by a group share.
     public function isAdoptable() {
         return $this->shareData["adoptable"];
     }
 
+    // Sets the host session of this share. $host must be a Client instance.
+    // Does not take effect until save() is called.
     public function setHost($host) {
         $this->shareData["host"] = $host->getSessionID();
         return $this;
     }
 
+    // Returns the host user of this share as a Client instance. Callers should
+    // verify that its ->exists() === true.
     public function getHost() {
         return new Client($this->memcache, $this->shareData["host"]);
     }
 }
 
+// An extension to the Share base class for group shares. Such shares can have
+// multiple hosts, cannot be adopted, and have a group PIN. May be instantiated.
 class GroupShare extends Share {
+
+    // Creates a group share with the given share data array. The $shareData
+    // argument is for internal use only. To instantiate a new GroupShare, call
+    // this constructor with no share data.
     function __construct($memcache, $shareData = null) {
         parent::__construct($memcache, $shareData);
         if ($shareData === null) {
@@ -226,26 +276,39 @@ class GroupShare extends Share {
         }
     }
 
+    // Saves this share to Memcached.
     public function save() {
         parent::save();
+        // Group shares must additionally save the group PIN to Memcached. This
+        // is so that the correct share ID can be looked up when only the group
+        // PIN is given.
         $this->memcache->set(PREFIX_GROUPID.$this->getGroupPIN(), $this->getShareID(), $this->getExpirationTime());
         return $this;
     }
 
+    // Group shares can never be adopted.
     public function isAdoptable() {
         return false;
     }
 
+    // Returns the group PIN of this share, used to add new participants.
     public function getGroupPIN() {
         return $this->shareData["groupPin"];
     }
 
+    // Adds a new participant host to this group share with a given nickname.
+    // The $host must be a Client instance. Does not take effect until save() is
+    // called.
     public function addHost($nick, $host) {
         $this->shareData["hosts"][$nick] = $host->getSessionID();
+        // If this new host has a later expiration time than the current time,
+        // update that time so that the share doesn't end early.
         $this->setAutoExpirationTime();
         return $this;
     }
 
+    // Removes non-existent host users from the share, and ends the share if no
+    // hosts currently exist.
     public function clean() {
         $hosts = $this->getHosts();
         foreach ($hosts as $nick => $host) {
@@ -257,10 +320,16 @@ class GroupShare extends Share {
             $this->memcache->delete(PREFIX_LOCDATA.$this->getShareID());
             $this->memcache->delete(PREFIX_GROUPID.$this->getGroupPIN());
         } else {
+            // After removing old hosts, the share may turn out to outlive all
+            // of the sessions of the remaining hosts. Override the session
+            // expiration and set it to the latest expiration time of all
+            // remaining sessions.
             $this->setAutoExpirationTime()->save();
         }
     }
 
+    // Returns a list of participants in this share, as a map of nicknames to
+    // Client instances.
     public function getHosts() {
         $hosts = array();
         foreach ($this->shareData["hosts"] as $nick => $sessionID) {
@@ -269,11 +338,14 @@ class GroupShare extends Share {
         return $hosts;
     }
 
+    // Sets the expiration time of this share to the latest expiration time of
+    // all active contributing sessions.
     public function setAutoExpirationTime() {
         $this->shareData["expire"] = $this->getAutoExpirationTime();
         return $this;
     }
 
+    // Determines the latest expiration time of all contributing sessions.
     public function getAutoExpirationTime() {
         $expire = 0;
         $hosts = $this->getHosts();
@@ -285,6 +357,7 @@ class GroupShare extends Share {
         return $expire;
     }
 
+    // Determines the lowest share interval of all contributing sessions.
     public function getAutoInterval() {
         $interval = PHP_INT_MAX;
         $hosts = $this->getHosts();
@@ -296,6 +369,7 @@ class GroupShare extends Share {
         return $interval;
     }
 
+    // Returns a map of nicknames and the users' corresponding coordinates.
     public function getAllPoints() {
         $points = array();
         $hosts = $this->getHosts();
@@ -307,6 +381,7 @@ class GroupShare extends Share {
         return $points;
     }
 
+    // Generates a new 6-digit group PIN.
     private function generateGroupPIN() {
         $pin = 0;
         do $pin = rand(GROUP_PIN_MIN, GROUP_PIN_MAX);
@@ -315,11 +390,16 @@ class GroupShare extends Share {
     }
 }
 
+// A class representing a sharing session. Each session represents one user, and
+// contains all location data for that user.
 class Client {
-    private $memcache;
-    private $sessionID;
-    private $sessionData;
+    private $memcache;      // A Memcached wrapper.
+    private $sessionID;     // The hexadecimal ID of this session.
+    private $sessionData;   // An array containing this session's data.
 
+    // Creates a new Client instance. If $sid is provided, fetches the
+    // corresponding session from Memcached. Otherwise, a new session is
+    // created.
     function __construct($memcache, $sid = null) {
         $this->memcache = $memcache;
         if ($sid === null) {
@@ -329,6 +409,7 @@ class Client {
                 "targets" => array(),
                 "points" => array()
             );
+            // Generate new session IDs for new sessions.
             $this->sessionID = $this->generateSessionID();
         } else {
             $this->sessionData = $memcache->get(PREFIX_SESSION.$sid);
@@ -336,16 +417,23 @@ class Client {
         }
     }
 
+    // Whether or not this session exists in Memcached. Returns false if the
+    // user was constructed from data fetched from Memcached, but it wasn't
+    // found. If the session was just created and hasn't been saved to Memcached
+    // yet, returns true.
     public function exists() {
         return $this->sessionData !== false;
     }
 
+    // Saves the session to Memcached.
     public function save() {
         if ($this->sessionData["interval"] === null) {
             throw new UnexpectedValueException("Session interval is undefined");
         } elseif ($this->sessionData["expire"] === 0) {
             throw new UnexpectedValueException("Session cannot be indefinite");
         }
+        // If the session has already expired, delete it instead of saving it to
+        // clean up Memcached.
         if (!$this->hasExpired()) {
             $this->memcache->set(PREFIX_SESSION.$this->sessionID, $this->sessionData, $this->getExpirationTime());
         } else {
@@ -354,6 +442,9 @@ class Client {
         return $this;
     }
 
+    // Ends the current sharing session. Also ends any attached single-user
+    // shares, and cleans up the user's presence in group shares. (This is why a
+    // list of shares is stored in the "targets" key of each session.)
     public function end() {
         $this->memcache->delete(PREFIX_SESSION.$this->sessionID);
         $targets = $this->getTargets();
@@ -371,37 +462,50 @@ class Client {
         }
     }
 
+    // Returns this session's ID. Used to e.g. push new location updates.
     public function getSessionID() {
         return $this->sessionID;
     }
 
+    // Sets a new expiration time for this session. Does not take effect until
+    // save() is called.
     public function setExpirationTime($expire) {
         $this->sessionData["expire"] = $expire;
         return $this;
     }
 
+    // Gets the current expiration time of this session.
     public function getExpirationTime() {
         return $this->sessionData["expire"];
     }
 
+    // Returns whether or not this session's expiration time is in the past.
     public function hasExpired() {
         return $this->getExpirationTime() <= time();
     }
 
+    // Sets a new sharing interval for this session, in seconds. Does not take
+    // effect until save() is called.
     public function setInterval($interval) {
         $this->sessionData["interval"] = $interval;
         return $this;
     }
 
+    // Gets the current sharing interval of this session, in seconds.
     public function getInterval() {
         return $this->sessionData["interval"];
     }
 
+    // Adds a new share that this session is contributing location data to. Used
+    // so that shares can be cleaned up when end() is called. $share must be a
+    // Share instance. Does not take effect until save() is called.
     public function addTarget($share) {
         $this->sessionData["targets"][] = $share->getShareID();
         return $this;
     }
 
+    // Returns a list of Share instances representing shares that this session
+    // is contributing to.
     public function getTargets() {
         $shares = array();
         foreach ($this->sessionData["targets"] as $shareID) {
@@ -410,6 +514,10 @@ class Client {
         return $shares;
     }
 
+    // Adds a new coordinate point to the session. $point is an array containing
+    // a latitude, longitude, timestamp, accuracy and speed, in that order. The
+    // latter two elements may be null. Does not take effect until save() is
+    // called.
     public function addPoint($point) {
         $this->sessionData["points"][] = $point;
         // Ensure that we don't exceed the maximum number of points stored in
@@ -420,10 +528,12 @@ class Client {
         return $this;
     }
 
+    // Returns a list of all point arrays for this session.
     public function getPoints() {
         return $this->sessionData["points"];
     }
 
+    // Generates a random session ID for new sessions.
     private function generateSessionID() {
         $sid = "";
         do $sid = bin2hex(openssl_random_pseudo_bytes(SESSION_ID_SIZE));
@@ -432,6 +542,8 @@ class Client {
     }
 }
 
+// A header function for requiring certain POST parameters to be present in web
+// requests.
 function requirePOST(...$args) {
     foreach ($args as $field) {
         if (!isset($_POST[$field])) die("Missing data!\n");

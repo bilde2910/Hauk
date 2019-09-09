@@ -7,7 +7,12 @@
 include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
 
-requirePOST("lat", "lon", "time", "sid");
+requirePOST(
+    "lat",  // Current latitude.
+    "lon",  // Current longitude.
+    "time", // Current timestamp.
+    "sid"   // Session ID to post to.
+);
 
 // Perform input validation.
 $lat = floatval($_POST["lat"]);

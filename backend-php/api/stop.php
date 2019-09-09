@@ -6,10 +6,14 @@
 include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
 
-requirePOST("sid");
-$sid = $_POST["sid"];
+requirePOST(
+    "sid" // Session ID to delete.
+);
 
+$sid = $_POST["sid"];
 $memcache = memConnect();
+
+// Fetch the session and tell it to terminate.
 $session = new Client($memcache, $sid);
 if ($session->exists()) $session->end();
 

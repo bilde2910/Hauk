@@ -21,10 +21,22 @@ public class DialogService {
         this.ctx = ctx;
     }
 
+    /**
+     * Shows a dialog box with an OK button.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string resource representing the body of the dialog box.
+     */
     public void showDialog(int title, int message) {
         showDialog(title, this.ctx.getString(message));
     }
 
+    /**
+     * Shows a dialog box with an OK button.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string representing the body of the dialog box.
+     */
     public void showDialog(int title, String message) {
         showDialog(title, message, (Runnable) null);
     }
@@ -107,10 +119,24 @@ public class DialogService {
         dlgAlert.create().show();
     }
 
+    /**
+     * Shows a dialog box with OK and Cancel buttons, with a custom rendered View.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string resource representing the body of the dialog box.
+     * @param builder A dialog builder that builds a View and handles the dialog buttons.
+     */
     public void showDialog(int title, int message, final CustomDialogBuilder builder) {
         showDialog(title, this.ctx.getString(message), builder);
     }
 
+    /**
+     * Shows a dialog box with OK and Cancel buttons, with a custom rendered View.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string representing the body of the dialog box.
+     * @param builder A dialog builder that builds a View and handles the dialog buttons.
+     */
     public void showDialog(int title, String message, final CustomDialogBuilder builder) {
         showDialog(this.ctx.getString(title), message, builder);
     }

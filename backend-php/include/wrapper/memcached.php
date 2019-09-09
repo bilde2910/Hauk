@@ -9,8 +9,12 @@ class MemWrapper {
     private $memcache = null;
 
     function __construct($host, $port) {
+        // If the hostname starts with "unix://", this is a UNIX socket.
+        // The `memcached` extension only needs the full pathname and not the
+        // unix scheme, so we strip the scheme from the path.
         $host = getConfig("memcached_host");
         if (substr($host, 0, 7) == "unix://") $host = substr($host, 7);
+
         $this->memcache = new Memcached();
         if (getConfig("memcached_binary")) {
             $this->memcache->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
