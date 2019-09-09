@@ -11,6 +11,8 @@
 // If you are using `memcache` and need SASL, consider switching to `memcached`.
 "memcached_binary"      => false,
 "memcached_use_sasl"    => false,
+"memcached_sasl_user"   => "",
+"memcached_sasl_pass"   => "",
 
 // A prefix to use for all variables sent to memcached. Useful if you have a
 // shared memcached instance or run multiple instances of Hauk.
