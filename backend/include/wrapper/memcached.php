@@ -9,8 +9,10 @@ class MemWrapper {
     private $memcache = null;
 
     function __construct($host, $port) {
+        $host = CONFIG["memcached_host"];
+        if (substr($host, 0, 7) == "unix://") $host = substr($host, 7);
         $this->memcache = new Memcached();
-        $this->memcache->addServer(CONFIG["memcached_host"], CONFIG["memcached_port"])
+        $this->memcache->addServer($host, CONFIG["memcached_port"])
                    or die ("Server could not connect to memcached!\n");
     }
 

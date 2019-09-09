@@ -1,6 +1,7 @@
 <?php const CONFIG = array(
 
-// Connection to memcached for data storage.
+// Connection to memcached for data storage. To connect via UNIX socket instead
+// of TCP, set host to 'unix:///path/to/memcached.sock' and port to 0.
 "memcached_host"    => 'localhost',
 "memcached_port"    => 11211,
 
