@@ -166,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
         txtNickname.setEnabled(false);
         txtPIN.setEnabled(false);
 
-        String server = txtServer.getText().toString();
+        String server = txtServer.getText().toString().trim();
         final String password = txtPassword.getText().toString();
         int duration = Integer.parseInt(txtDuration.getText().toString());
         final int interval = Integer.parseInt(txtInterval.getText().toString());
-        final String nickname = txtNickname.getText().toString();
+        final String nickname = txtNickname.getText().toString().trim();
         final int shareMode = selMode.getSelectedItemPosition();
         final String groupPin = txtPIN.getText().toString();
         final boolean allowAdoption = chkAllowAdopt.isChecked();
