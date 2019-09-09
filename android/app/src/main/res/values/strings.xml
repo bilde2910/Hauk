@@ -7,16 +7,39 @@
     <string name="label_password">Password:</string>
     <string name="label_duration">Share duration (min):</string>
     <string name="label_interval">Update interval (s):</string>
+    <string name="label_mode">Sharing mode:</string>
+    <string name="label_allow_adopt">Allow adoption:</string>
+    <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
+    <string name="label_explain_adopt">(What\'s this?)</string>
+    <string name="label_nickname">Nickname:</string>
+    <string name="label_pin">Group PIN:</string>
     <string name="label_remember">Password storage:</string>
     <string name="label_status">Status:</string>
+    <string name="label_share_url">Share ID/URL:</string>
     <string name="chk_remember">Remember password</string>
+
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Share tracking link</string>
+    <string name="btn_adopt">Add an existing share</string>
+
+    <string-array name="sel_mode_opts">
+        <item>Share my own location only</item>
+        <item>Create a group share</item>
+        <item>Join a group share</item>
+    </string-array>
 
     <string name="label_status_none">Location sharing inactive</string>
     <string name="label_status_wait">Waiting for initial GNSS fix...</string>
     <string name="label_status_ok">Location sharing active!</string>
+
+    <string name="label_pin_head">YOUR GROUP PIN:</string>
+    <string name="label_pin_help">Share this PIN with the others in your group to let them join your location sharing group</string>
+
+    <string name="explain_adopt_title">Share adoption</string>
+    <string name="explain_adopt_body">Hauk allows you to create location sharing sessions for yourself as well as for a group of people. If someone creates a group share, they get a group code that others can use to join the sharing session.\n\nHowever, the person creating the group share also gets the option to add an already existing location share into their group. This process is called adoption.\n\nYou can decide whether or not you want to allow others to incorporate your location share into their group share by checking this checkbox.\n\nIf you enable this option and share your location to a group of friends, and someone else also wants to share their location, they can create a group share and add you to their map, so both of you appear on the same shared location map. This is useful if you are e.g. driving and cannot use your phone, as adoption of your share by others requires no interaction on your part.</string>
+    <string name="adopt_title">Adopt an existing share</string>
+    <string name="adopt_body">You can adopt an existing individual location share to incorporate it in this group share. Please paste the URL or share ID of the share you wish to adopt (e.g. %s?XXXX-XXXX) and assign a nickname to this share.</string>
 
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
@@ -28,6 +51,8 @@
 
     <string name="prog_title">Connecting</string>
     <string name="prog_body">Connecting to Hauk...</string>
+    <string name="prog_adopt_title">Adopting</string>
+    <string name="prog_adopt_body">Adopting %s...</string>
 
     <string name="err_client">Invalid settings</string>
     <string name="err_connect">Connection error</string>
@@ -37,10 +62,15 @@
     <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
     <string name="err_empty">The server returned an empty response.</string>
 
+    <string name="err_outdated">Server is out of date</string>
+    <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
+
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
     <string name="ended_title">Sharing ended</string>
     <string name="ended_message">Your location share has expired.</string>
+    <string name="adopted_title">Share adopted</string>
+    <string name="adopted_body">%s has been added to your share!</string>
 
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>

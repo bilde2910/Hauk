@@ -1,8 +1,18 @@
-package info.varden.hauk;
+package info.varden.hauk.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.EditText;
+
+import java.lang.reflect.Type;
+
+import info.varden.hauk.CustomDialogBuilder;
+import info.varden.hauk.R;
 
 /**
  * A helper class for creating dialogs on the main activity.
@@ -14,6 +24,14 @@ public class DialogService {
 
     public DialogService(Context ctx) {
         this.ctx = ctx;
+    }
+
+    public void showDialog(int title, int message) {
+        showDialog(title, this.ctx.getString(message));
+    }
+
+    public void showDialog(int title, String message) {
+        showDialog(title, message, (Runnable) null);
     }
 
     /**
@@ -90,6 +108,45 @@ public class DialogService {
                 if (onCancel != null) onCancel.run();
             }
         });
+        dlgAlert.setCancelable(false);
+        dlgAlert.create().show();
+    }
+
+    public void showDialog(int title, int message, final CustomDialogBuilder builder) {
+        showDialog(title, this.ctx.getString(message), builder);
+    }
+
+    public void showDialog(int title, String message, final CustomDialogBuilder builder) {
+        showDialog(this.ctx.getString(title), message, builder);
+    }
+
+    private void showDialog(String title, String message, final CustomDialogBuilder builder) {
+        View view = builder.createView(this.ctx);
+        TypedValue tv = new TypedValue();
+        int padding = 0;
+        if (this.ctx.getTheme().resolveAttribute(R.attr.dialogPreferredPadding, tv, true)) {
+            padding = TypedValue.complexToDimensionPixelSize(tv.data, this.ctx.getResources().getDisplayMetrics());
+            System.out.println(padding);
+        }
+        view.setPadding(padding, padding, padding, 0);
+
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this.ctx);
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(title);
+        dlgAlert.setView(view);
+
+        dlgAlert.setPositiveButton(this.ctx.getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                builder.onOK();
+            }
+        });
+        dlgAlert.setNegativeButton(this.ctx.getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                builder.onCancel();
+            }
+        });
+
         dlgAlert.setCancelable(false);
         dlgAlert.create().show();
     }

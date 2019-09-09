@@ -1,5 +1,8 @@
 // This is the main script file for Hauk's web view client.
 
+const SHARE_TYPE_ALONE = 0;
+const SHARE_TYPE_GROUP = 1;
+
 // Create a Leaflet map.
 var map = L.map('map').setView([0, 0], DEFAULT_ZOOM);
 L.tileLayer(TILE_URI, {
@@ -10,13 +13,8 @@ L.tileLayer(TILE_URI, {
 var circleLayer = L.layerGroup().addTo(map);
 var markerLayer = L.layerGroup().addTo(map);
 
-// A list of points received from the server.
-var points = [];
-
-// The leaflet marker.
-var marker = null;
-var icon = null;
-var circle = null;
+// The leaflet markers and associated data.
+var shares = {};
 
 // Retrieve the sharing link ID from the URL. E.g.
 // https://example.com/?ABCD-1234 --> "ABCD-1234"
@@ -44,16 +42,16 @@ document.getElementById("dismiss").addEventListener("click", function() {
     document.getElementById("expired").style.display = "none";
 });
 
-// Attempt to fetch location data from the server once.
-getJSON("./api/fetch.php?id=" + id, function(data) {
-    document.getElementById("mapouter").style.visibility = "visible";
+var fetchIntv;
+var countIntv;
 
+function setNewInterval(expire, interval) {
     // The data contains an expiration time. Create a countdown at the top of
     // the map screen that ends when the share is over.
-    var interval2 = setInterval(function() {
-        var seconds = data.x - Math.round(Date.now() / 1000);
+    countIntv = setInterval(function() {
+        var seconds = expire - Math.round(Date.now() / 1000);
         if (seconds < 0) {
-            clearInterval(interval2);
+            clearInterval(countIntv);
             return;
         }
 
@@ -73,27 +71,35 @@ getJSON("./api/fetch.php?id=" + id, function(data) {
 
     // The location data contains an interval. Schedule a task that fetches data
     // once per interval time.
-    var interval = setInterval(function() {
+    fetchIntv = setInterval(function() {
         // Stop the task if the share has expired.
-        if ((Date.now() / 1000) >= data.x) {
-            clearInterval(interval);
-            clearInterval(interval2);
+        if ((Date.now() / 1000) >= expire) {
+            clearInterval(fetchIntv);
+            clearInterval(countIntv);
             document.getElementById("countdown").textContent = "Expired";
             document.getElementById("expired").style.display = "block";
         }
 
         getJSON("./api/fetch.php?id=" + id, function(data) {
+            if (data.expire != expire || data.interval != interval) {
+                clearInterval(fetchIntv);
+                clearInterval(countIntv);
+                setNewInterval(data.expire, data.interval);
+            }
             processUpdate(data);
         }, function() {
-            clearInterval(interval);
-            clearInterval(interval2);
+            clearInterval(fetchIntv);
+            clearInterval(countIntv);
             document.getElementById("countdown").textContent = "Expired";
             document.getElementById("expired").style.display = "block";
         });
-    }, data.i * 1000);
+    }, interval * 1000);
+}
 
-
-
+// Attempt to fetch location data from the server once.
+getJSON("./api/fetch.php?id=" + id, function(data) {
+    document.getElementById("mapouter").style.visibility = "visible";
+    setNewInterval(data.expire, data.interval);
     processUpdate(data);
 }, function() {
     document.getElementById("notfound").style.display = "block";
@@ -101,96 +107,129 @@ getJSON("./api/fetch.php?id=" + id, function(data) {
 
 // Parses the data returned from ./api/fetch.php and updates the map marker.
 function processUpdate(data) {
-    // Get the last location received.
-    var lastPoint = points.length > 0 ? points[points.length - 1] : null;
-
-    for (var i = 0; i < data.l.length; i++) {
-        var lat = data.l[i][0];
-        var lon = data.l[i][1];
-        var time = data.l[i][2];
-        var acc = data.l[i][3];
-        var spd = data.l[i][4];
-
-        // Check if the location should be added. Only add new location points
-        // if the point was not recorded before the last recorded point.
-        if (lastPoint === null || time > lastPoint.time) {
-            var line = null;
-            if (marker == null) {
-                // Add a marker to the map if it's not already there.
-                icon = L.divIcon({
-                    html: '<div id="marker"><div id="arrow"></div><p><span id="velocity">0.0</span> ' + VELOCITY_UNIT.unit + '</p></div>',
-                    iconAnchor: [33, 18]
-                });
-                marker = L.marker([lat, lon], {icon: icon, interactive: false}).addTo(markerLayer);
-            } else {
-                // If there is a marker, draw a line from its last location
-                // instead and move the marker.
-                line = L.polyline([marker.getLatLng(), [lat, lon]], {color: TRAIL_COLOR}).addTo(markerLayer);
-                marker.setLatLng([lat, lon]);
-            }
-            // Draw an accuracy circle if GPS accuracy was provided by the
-            // client.
-            if (acc !== null && circle == null) {
-                circle = L.circle([lat, lon], {radius: acc, fillColor: '#d80037', fillOpacity: 0.25, color: '#d80037', opacity: 0.5, interactive: false}).addTo(circleLayer);
-            } else if (circle !== null) {
-                circle.setLatLng([lat, lon]);
-                if (acc !== null) circle.setRadius(acc);
-            }
-            points.push({lat: lat, lon: lon, line: line, time: time, spd: spd, acc: acc});
-            lastPoint = points[points.length - 1];
-        }
+    var users = {};
+    var multiUser = false;
+    if (data.type == SHARE_TYPE_ALONE) {
+        users["User"] = data.points;
+        multiUser = false;
+    } else if (data.type == SHARE_TYPE_GROUP) {
+        users = data.points;
+        multiUser = true;
     }
 
-    var eVelocity = document.getElementById("velocity")
-    if (lastPoint !== null && lastPoint.spd !== null && eVelocity !== null) {
-        // Prefer client-provided speed if possible.
-        eVelocity.textContent = (lastPoint.spd * VELOCITY_UNIT.mpsMod).toFixed(1);
-    } else if (eVelocity !== null) {
-        // If the client didn't provide its speed, calculate it locally from its
-        // list of locations.
-        var dist = 0;
-        var time = 0;
-        var idx = points.length;
+    for (var user in users) {
+        if (!users.hasOwnProperty(user)) continue;
+        var locData = users[user];
 
-        // Iterate over all locations backwards until we either reach our
-        // required VELOCITY_DELTA_TIME, or we run out of points.
-        while (idx > 2) {
-            idx--;
-            var pt1 = points[idx - 1];
-            var pt2 = points[idx];
-            var dTime = pt2.time - pt1.time;
+        if (!shares.hasOwnProperty(user)) shares[user] = {
+            "marker": null,
+            "circle": null,
+            "icon": null,
+            "points": [],
+            "id": Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+        };
 
-            // If the new time does not exceed the VELOCITY_DELTA_TIME, add the
-            // time and distance deltas to the appropriate sum for averaging;
-            // otherwise, break the loop and proceed to calculate.
-            if (time + dTime <= VELOCITY_DELTA_TIME) {
-                time += dTime;
-                dist += distance(pt1, pt2);
-            } else {
-                break;
+        // Get the last location received.
+        var lastPoint = shares[user].points.length > 0 ? shares[user].points[shares[user].points.length - 1] : null;
+
+        for (var i = 0; i < users[user].length; i++) {
+            var lat = users[user][i][0];
+            var lon = users[user][i][1];
+            var time = users[user][i][2];
+            var acc = users[user][i][3];
+            var spd = users[user][i][4];
+
+            // Check if the location should be added. Only add new location points
+            // if the point was not recorded before the last recorded point.
+            if (lastPoint === null || time > lastPoint.time) {
+                var line = null;
+                if (shares[user].marker == null) {
+                    // Add a marker to the map if it's not already there.
+                    shares[user].icon = L.divIcon({
+                        html: '<div class="marker"><div class="arrow moving-live" id="arrow-' + shares[user].id + '"></div><p><span id="nickname-' + shares[user].id + '"></span><span id="velocity-' + shares[user].id + '">0.0</span> ' + VELOCITY_UNIT.unit + '</p></div>',
+                        iconAnchor: [33, 18]
+                    });
+                    shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon, interactive: false}).addTo(markerLayer);
+                } else {
+                    // If there is a marker, draw a line from its last location
+                    // instead and move the marker.
+                    line = L.polyline([shares[user].marker.getLatLng(), [lat, lon]], {color: TRAIL_COLOR}).addTo(markerLayer);
+                    shares[user].marker.setLatLng([lat, lon]);
+                }
+                // Draw an accuracy circle if GPS accuracy was provided by the
+                // client.
+                if (acc !== null && shares[user].circle == null) {
+                    shares[user].circle = L.circle([lat, lon], {radius: acc, fillColor: '#d80037', fillOpacity: 0.25, color: '#d80037', opacity: 0.5, interactive: false}).addTo(circleLayer);
+                } else if (shares[user].circle !== null) {
+                    shares[user].circle.setLatLng([lat, lon]);
+                    if (acc !== null) shares[user].circle.setRadius(acc);
+                }
+                shares[user].points.push({lat: lat, lon: lon, line: line, time: time, spd: spd, acc: acc});
+                lastPoint = shares[user].points[shares[user].points.length - 1];
             }
         }
 
-        // Update the UI with the velocity.
-        eVelocity.textContent = velocity(dist, time);
-    }
+        var eVelocity = document.getElementById("velocity-" + shares[user].id)
+        var vel = 0;
+        if (lastPoint !== null && lastPoint.spd !== null && eVelocity !== null) {
+            // Prefer client-provided speed if possible.
+            vel = lastPoint.spd * VELOCITY_UNIT.mpsMod;
+            eVelocity.textContent = vel.toFixed(1);
+        } else if (eVelocity !== null) {
+            // If the client didn't provide its speed, calculate it locally from its
+            // list of locations.
+            var dist = 0;
+            var time = 0;
+            var idx = shares[user].points.length;
+
+            // Iterate over all locations backwards until we either reach our
+            // required VELOCITY_DELTA_TIME, or we run out of points.
+            while (idx > 2) {
+                idx--;
+                var pt1 = shares[user].points[idx - 1];
+                var pt2 = shares[user].points[idx];
+                var dTime = pt2.time - pt1.time;
+
+                // If the new time does not exceed the VELOCITY_DELTA_TIME, add the
+                // time and distance deltas to the appropriate sum for averaging;
+                // otherwise, break the loop and proceed to calculate.
+                if (time + dTime <= VELOCITY_DELTA_TIME) {
+                    time += dTime;
+                    dist += distance(pt1, pt2);
+                } else {
+                    break;
+                }
+            }
+
+            // Update the UI with the velocity.
+            vel = velocity(dist, time);
+            eVelocity.textContent = vel.toFixed(1);;
+        }
 
 
-    // Follow the marker.
-    if (lastPoint !== null) map.panTo([lastPoint.lat, lastPoint.lon]);
+        // Follow the marker.
+        if (lastPoint !== null) map.panTo([lastPoint.lat, lastPoint.lon]);
 
-    // Rotate the marker to the direction of movement.
-    var eArrow = document.getElementById("arrow");
-    if (eArrow !== null && points.length >= 2) {
-        var last = points.length - 1;
-        eArrow.style.transform = "rotate(" + angle(points[last - 1], points[last]) + "deg)";
-    }
+        // Rotate the marker to the direction of movement.
+        var eArrow = document.getElementById("arrow-" + shares[user].id);
+        if (eArrow !== null && shares[user].points.length >= 2) {
+            var last = shares[user].points.length - 1;
+            eArrow.style.transform = "rotate(" + angle(shares[user].points[last - 1], shares[user].points[last]) + "deg)";
+        }
 
-    // Prune the array of locations so it does not exceed our MAX_POINTS defined
-    // in the config.
-    if (points.length > MAX_POINTS) {
-        var remove = points.splice(0, points.length - MAX_POINTS);
-        for (var j = 0; j < remove.length; j++) if (remove[j].line !== null) map.removeLayer(remove[j].line);
+        // Prune the array of locations so it does not exceed our MAX_POINTS defined
+        // in the config.
+        if (shares[user].points.length > MAX_POINTS) {
+            var remove = shares[user].points.splice(0, shares[user].points.length - MAX_POINTS);
+            for (var j = 0; j < remove.length; j++) if (remove[j].line !== null) map.removeLayer(remove[j].line);
+        }
+
+        var nameE = document.getElementById("nickname-" + shares[user].id);
+        if (nameE !== null && multiUser) {
+            nameE.textContent = user;
+            nameE.innerHTML += "<br />";
+            nameE.style.fontWeight = "bold";
+        }
     }
 }
 
@@ -209,8 +248,8 @@ function distance(from, to) {
 
 // Calculates a velocity using the velocity unit from the config.
 function velocity(distance, intv) {
-    if (intv == 0) return "0.0";
-    return (distance * VELOCITY_UNIT.havMod / intv).toFixed(1);
+    if (intv == 0) return 0.0;
+    return distance * VELOCITY_UNIT.havMod / intv;
 }
 
 // Calculates the bearing between two points on a sphere in degrees.

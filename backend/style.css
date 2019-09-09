@@ -164,22 +164,26 @@
 }
 
 /* The outer marker div. */
-#marker {
+.marker {
     width: 66px;
     height: 62px;
 }
 
 /* The arrow within the marker div. */
-#arrow {
-    background: url(./assets/marker.svg) no-repeat;
+.arrow.moving-live {
+    background-image: url(./assets/markers/moving-live.svg);
+}
+
+.arrow {
     background-size: cover;
+    background-repeat: no-repeat;
     width: 36px;
     height: 36px;
     margin: auto;
 }
 
 /* The velocity indicator on the marker div. */
-#marker p {
+.marker p {
     font-size: 0.9em;
     background-color: rgba(0,0,0,0.5);
     color: white;

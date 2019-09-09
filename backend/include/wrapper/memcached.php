@@ -20,12 +20,12 @@ class MemWrapper {
         return json_decode($data, true);
     }
 
-    function set($key, $data, $duration) {
-        $this->memcache->set($key, json_encode($data), time() + $duration);
+    function set($key, $data, $expire) {
+        $this->memcache->set($key, json_encode($data), $expire);
     }
 
     function replace($key, $data) {
-        $this->memcache->replace($key, json_encode($data));
+        $this->memcache->replace($key, json_encode($data), $expire);
     }
 
     function delete($key) {

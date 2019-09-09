@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import java.util.HashMap;
 
+import info.varden.hauk.dialog.DialogService;
+
 /**
  * This class is a runnable task that will stop location sharing and reset the UI to the state it
  * was in when the app launched. Only one copy of this task exists in the MainActivity class. This

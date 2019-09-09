@@ -6,15 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +32,8 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import info.varden.hauk.dialog.AdoptDialogBuilder;
+import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.service.LocationPushService;
 
 /**
@@ -40,10 +48,21 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPassword;
     private EditText txtDuration;
     private EditText txtInterval;
+    private EditText txtNickname;
+    private EditText txtPIN;
+    private Spinner selMode;
     private Button btnShare;
     private Button btnLink;
     private TextView labelStatusCur;
     private CheckBox chkRemember;
+    private TextView labelAdoptWhatsThis;
+    private CheckBox chkAllowAdopt;
+    private TableRow rowAllowAdopt;
+    private TableRow rowNickname;
+    private TableRow rowPIN;
+
+    private LinearLayout layoutGroupPIN;
+    private TextView labelShowPin;
 
     // The publicly sharable link received from the Hauk server during handshake
     private String viewLink;
@@ -61,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     // A runnable task that resets the UI to a fresh state.
     private Runnable resetTask;
 
+    private AdoptDialogBuilder adoptBuilder;
+
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 123;
 
     @Override
@@ -69,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setClassVariables();
         loadPreferences();
+
+        labelAdoptWhatsThis.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         // Add an on checked handler to the password remember checkbox to save their password
         // immediately.
@@ -80,6 +103,37 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     setPassword(false, "");
                 }
+            }
+        });
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sel_mode_opts, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selMode.setAdapter(adapter);
+        selMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
+                switch (selection) {
+                    case HaukConst.SHARE_MODE_CREATE_ALONE:
+                        rowAllowAdopt.setVisibility(View.VISIBLE);
+                        rowNickname.setVisibility(View.GONE);
+                        rowPIN.setVisibility(View.GONE);
+                        break;
+                    case HaukConst.SHARE_MODE_CREATE_GROUP:
+                        rowAllowAdopt.setVisibility(View.GONE);
+                        rowNickname.setVisibility(View.VISIBLE);
+                        rowPIN.setVisibility(View.GONE);
+                        break;
+                    case HaukConst.SHARE_MODE_JOIN_GROUP:
+                        rowAllowAdopt.setVisibility(View.GONE);
+                        rowNickname.setVisibility(View.VISIBLE);
+                        rowPIN.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -108,14 +162,22 @@ public class MainActivity extends AppCompatActivity {
         txtDuration.setEnabled(false);
         txtInterval.setEnabled(false);
 
+        selMode.setEnabled(false);
+        txtNickname.setEnabled(false);
+        txtPIN.setEnabled(false);
+
         String server = txtServer.getText().toString();
         final String password = txtPassword.getText().toString();
         int duration = Integer.parseInt(txtDuration.getText().toString());
         final int interval = Integer.parseInt(txtInterval.getText().toString());
+        final String nickname = txtNickname.getText().toString();
+        final int shareMode = selMode.getSelectedItemPosition();
+        final String groupPin = txtPIN.getText().toString();
+        final boolean allowAdoption = chkAllowAdopt.isChecked();
 
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
-        setPreferences(server, duration, interval);
+        setPreferences(server, duration, interval, nickname, allowAdoption);
 
         // If password saving is enabled, save the password as well.
         if (chkRemember.isChecked()) setPassword(true, password);
@@ -161,9 +223,23 @@ public class MainActivity extends AppCompatActivity {
         data.put("pwd", password);
         data.put("dur", String.valueOf(durationSec));
         data.put("int", String.valueOf(interval));
+        data.put("mod", String.valueOf(shareMode));
+        switch (shareMode) {
+            case HaukConst.SHARE_MODE_CREATE_ALONE:
+                data.put("ado", allowAdoption ? "1" : "0");
+                break;
+            case HaukConst.SHARE_MODE_CREATE_GROUP:
+                data.put("nic", nickname);
+                break;
+            case HaukConst.SHARE_MODE_JOIN_GROUP:
+                data.put("nic", nickname);
+                data.put("pin", groupPin);
+                break;
+        }
         HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
             @Override
             public void run(HTTPThread.Response resp) {
+                int actualShareMode = shareMode;
                 prog.dismiss();
 
                 // An exception may have occurred, but it cannot be thrown because this is a
@@ -171,9 +247,17 @@ public class MainActivity extends AppCompatActivity {
                 Exception e = resp.getException();
                 if (e == null) {
 
+                    if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP || actualShareMode == HaukConst.SHARE_MODE_JOIN_GROUP) {
+                        if (resp.getServerVersion().olderThan(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
+                            actualShareMode = HaukConst.SHARE_MODE_CREATE_ALONE;
+                            selMode.setSelection(HaukConst.SHARE_MODE_CREATE_ALONE);
+                            diagSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), HaukConst.VERSION_COMPAT_GROUP_SHARE, resp.getServerVersion()));
+                        }
+                    }
+
                     // A successful session initiation contains "OK" on line 1, the session ID on
                     // line 2, and a publicly sharable tracking link on line 3.
-                    String[] data = resp.getData();
+                    final String[] data = resp.getData();
 
                     // Somehow the data array is empty.
                     if (data.length < 1) {
@@ -184,6 +268,30 @@ public class MainActivity extends AppCompatActivity {
                     if (data[0].equals("OK")) {
                         String session = data[1];
                         viewLink = data[2];
+                        if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+                            final String joinCode = data[3];
+
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    labelShowPin.setText(joinCode);
+                                }
+                            });
+
+                            adoptBuilder = new AdoptDialogBuilder(MainActivity.this, serverFull, session, joinCode) {
+                                @Override
+                                public void onSuccess(final String nick) {
+                                    diagSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
+                                }
+
+                                @Override
+                                public void onFailure(final Exception ex) {
+                                    diagSvc.showDialog(R.string.err_server, ex.getMessage());
+                                }
+                            };
+                            layoutGroupPIN.setVisibility(View.VISIBLE);
+                        }
 
                         // We now have a link to share, so we enable the link sharing button.
                         btnLink.setEnabled(true);
@@ -253,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                             btnShare.setEnabled(true);
                             labelStatusCur.setText(getString(R.string.label_status_wait));
                             labelStatusCur.setTextColor(getColor(R.color.statusWait));
-                            diagSvc.showDialog(R.string.ok_title, R.string.ok_message, null);
+                            diagSvc.showDialog(R.string.ok_title, R.string.ok_message);
                         } else {
                             diagSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
                         }
@@ -291,6 +399,16 @@ public class MainActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
         shareIntent.putExtra(Intent.EXTRA_TEXT, viewLink);
         startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
+    }
+
+    public void explainAdoption(View view) {
+        diagSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
+    }
+
+    public void adoptShare(View view) {
+        String server = txtServer.getText().toString();
+        if (!server.endsWith("/")) server = server + "/";
+        diagSvc.showDialog(R.string.adopt_title, String.format(getString(R.string.adopt_body), server), adoptBuilder);
     }
 
     /**
@@ -347,10 +465,21 @@ public class MainActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtPassword);
         txtDuration = findViewById(R.id.txtDuration);
         txtInterval = findViewById(R.id.txtInterval);
+        txtNickname = findViewById(R.id.txtNickname);
+        txtPIN = findViewById(R.id.txtPIN);
+        selMode = findViewById(R.id.selMode);
         btnShare = findViewById(R.id.btnShare);
         btnLink = findViewById(R.id.btnLink);
         labelStatusCur = findViewById(R.id.labelStatusCur);
         chkRemember = findViewById(R.id.chkRemember);
+        labelAdoptWhatsThis = findViewById(R.id.labelAdoptWhatsThis);
+        chkAllowAdopt = findViewById(R.id.chkAllowAdopt);
+        rowAllowAdopt = findViewById(R.id.rowAllowAdopt);
+        rowNickname = findViewById(R.id.rowNickname);
+        rowPIN = findViewById(R.id.rowPIN);
+
+        layoutGroupPIN = findViewById(R.id.layoutGroupPIN);
+        labelShowPin = findViewById(R.id.labelShowPin);
 
         resetTask = new Runnable() {
 
@@ -376,6 +505,12 @@ public class MainActivity extends AppCompatActivity {
                 txtPassword.setEnabled(true);
                 txtDuration.setEnabled(true);
                 txtInterval.setEnabled(true);
+
+                selMode.setEnabled(true);
+                txtNickname.setEnabled(true);
+                txtPIN.setEnabled(true);
+
+                layoutGroupPIN.setVisibility(View.GONE);
             }
         };
 
@@ -390,16 +525,20 @@ public class MainActivity extends AppCompatActivity {
         txtDuration.setText(String.valueOf(settings.getInt("duration", 30)));
         txtInterval.setText(String.valueOf(settings.getInt("interval", 1)));
         txtPassword.setText(settings.getString("password", ""));
+        txtNickname.setText(settings.getString("nickname", ""));
         chkRemember.setChecked(settings.getBoolean("rememberPassword", false));
+        chkAllowAdopt.setChecked(settings.getBoolean("allowAdoption", true));
     }
 
-    private void setPreferences(String server, int duration, int interval) {
+    private void setPreferences(String server, int duration, int interval, String nickname, boolean allowAdoption) {
         SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
         editor.putString("server", server);
         editor.putInt("duration", duration);
         editor.putInt("interval", interval);
+        editor.putString("nickname", nickname);
+        editor.putBoolean("allowAdoption", allowAdoption);
         editor.apply();
     }
 
