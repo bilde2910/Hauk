@@ -9,10 +9,16 @@ class MemWrapper {
     private $memcache = null;
 
     function __construct($host, $port) {
-        $host = CONFIG["memcached_host"];
+        $host = getConfig("memcached_host");
         if (substr($host, 0, 7) == "unix://") $host = substr($host, 7);
         $this->memcache = new Memcached();
-        $this->memcache->addServer($host, CONFIG["memcached_port"])
+        if (getConfig("memcached_binary")) {
+            $this->memcache->setOption(Memcached::OPT_BINARY_PROTOCOL, true);
+            if (getConfig("memcached_use_sasl")) {
+                $this->memcache->setSaslAuthData(getConfig("memcached_sasl_user"), getConfig("memcached_sasl_pass"));
+            }
+        }
+        $this->memcache->addServer($host, getConfig("memcached_port"))
                    or die ("Server could not connect to memcached!\n");
     }
 

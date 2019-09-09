@@ -9,15 +9,15 @@ header("X-Hauk-Version: ".BACKEND_VERSION);
 requirePOST("pwd", "dur", "int");
 
 // Verify that the client is authorized to connect.
-if (!password_verify($_POST["pwd"], CONFIG["password_hash"])) die("Incorrect password!\n");
+if (!password_verify($_POST["pwd"], getConfig("password_hash"))) die("Incorrect password!\n");
 
 // Perform input validation.
 $d = intval($_POST["dur"]);
 $i = floatval($_POST["int"]);
 $mod = isset($_POST["mod"]) ? intval($_POST["mod"]) : SHARE_MODE_CREATE_ALONE;
-if ($d > CONFIG["max_duration"]) die("Share period is too long!\n");
-if ($i > CONFIG["max_duration"]) die("Ping interval is too long!\n");
-if ($i < CONFIG["min_interval"]) die("Ping interval is too short!\n");
+if ($d > getConfig("max_duration")) die("Share period is too long!\n");
+if ($i > getConfig("max_duration")) die("Ping interval is too long!\n");
+if ($i < getConfig("min_interval")) die("Ping interval is too short!\n");
 $expire = time() + $d;
 $adoptable = isset($_POST["ado"]) ? intval($_POST["ado"]) : 0;
 

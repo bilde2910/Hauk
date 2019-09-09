@@ -2,8 +2,15 @@
 
 // Connection to memcached for data storage. To connect via UNIX socket instead
 // of TCP, set host to 'unix:///path/to/memcached.sock' and port to 0.
-"memcached_host"    => 'localhost',
-"memcached_port"    => 11211,
+"memcached_host"        => 'localhost',
+"memcached_port"        => 11211,
+
+// If you use SASL authentication, change both `memcached_binary` and
+// `memcached_use_sasl` to true, and enter your SASL username and password.
+// Note: SASL authentication is only supported in the PHP `memcached` extension!
+// If you are using `memcache` and need SASL, consider switching to `memcached`.
+"memcached_binary"      => false,
+"memcached_use_sasl"    => false,
 
 // A prefix to use for all variables sent to memcached. Useful if you have a
 // shared memcached instance or run multiple instances of Hauk.

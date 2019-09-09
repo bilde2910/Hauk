@@ -37,6 +37,34 @@ const METERS_PER_SECOND = array(
     "unit" => "m/s"
 );
 
+const DEFAULTS = array(
+
+    // This is the default config. This file is used as a fallback for missing
+    // options in config.php.
+
+    "memcached_host"        => 'localhost',
+    "memcached_port"        => 11211,
+    "memcached_binary"      => false,
+    "memcached_use_sasl"    => false,
+    "memcached_sasl_user"   => "",
+    "memcached_sasl_pass"   => "",
+    "memcached_prefix"      => 'hauk',
+    "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
+    "map_tile_uri"          => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    "map_attribution"       => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    "default_zoom"          => 14,
+    "max_zoom"              => 19,
+    "max_duration"          => 86400,
+    "min_interval"          => 1,
+    "max_cached_pts"        => 3,
+    "max_shown_pts"         => 100,
+    "v_data_points"         => 2,
+    "trail_color"           => '#d80037',
+    "velocity_unit"         => KILOMETERS_PER_HOUR,
+    "public_url"            => 'http://10.0.0.44/'
+
+);
+
 // Configuration can be stored either in /etc/hauk/config.php (e.g. Docker
 // installations) or relative to this file as config.php. Only include the first
 // one found from this list.
@@ -53,9 +81,15 @@ foreach (CONFIG_PATHS as $path) {
 }
 
 if (!defined("CONFIG")) die("Unable to find config.php!\n");
-define("PREFIX_SESSION", CONFIG["memcached_prefix"]."-session-");
-define("PREFIX_LOCDATA", CONFIG["memcached_prefix"]."-locdata-");
-define("PREFIX_GROUPID", CONFIG["memcached_prefix"]."-groupid-");
+
+function getConfig($item) {
+    if (array_key_exists($item, CONFIG)) return CONFIG[$item];
+    if (array_key_exists($item, DEFAULTS)) return DEFAULTS[$item];
+}
+
+define("PREFIX_SESSION", getConfig("memcached_prefix")."-session-");
+define("PREFIX_LOCDATA", getConfig("memcached_prefix")."-locdata-");
+define("PREFIX_GROUPID", getConfig("memcached_prefix")."-groupid-");
 
 class Share {
     protected $memcache;
@@ -124,7 +158,7 @@ class Share {
     }
 
     public function getViewLink() {
-        return CONFIG["public_url"]."?".$this->shareID;
+        return getConfig("public_url")."?".$this->shareID;
     }
 
     public function setExpirationTime($expire) {
@@ -384,7 +418,7 @@ class Client {
         $this->sessionData["points"][] = $point;
         // Ensure that we don't exceed the maximum number of points stored in
         // memcached.
-        while (count($this->sessionData["points"]) > CONFIG["max_cached_pts"]) {
+        while (count($this->sessionData["points"]) > getConfig("max_cached_pts")) {
             array_shift($this->sessionData["points"]);
         }
         return $this;
@@ -421,6 +455,6 @@ if (extension_loaded("memcached")) {
 
 // Returns a memcached instance.
 function memConnect() {
-    $memcache = new MemWrapper(CONFIG["memcached_host"], CONFIG["memcached_port"]);
+    $memcache = new MemWrapper(getConfig("memcached_host"), getConfig("memcached_port"));
     return $memcache;
 }

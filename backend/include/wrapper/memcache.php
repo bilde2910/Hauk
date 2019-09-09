@@ -10,7 +10,7 @@ class MemWrapper {
 
     function __construct($host, $port) {
         $this->memcache = new Memcache();
-        $this->memcache->connect(CONFIG["memcached_host"], CONFIG["memcached_port"])
+        $this->memcache->connect(getConfig("memcached_host"), getConfig("memcached_port"))
                    or die ("Server could not connect to memcached!\n");
     }
 
