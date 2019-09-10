@@ -1,8 +1,7 @@
 <?php
 
-// This script is called from the Hauk app to push location updates to the
-// server. Each update contains a location and timestamp from when the location
-// was fetched by the client.
+// This script is called from the Hauk app to adopt an existing single-user
+// share into a group share.
 
 include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
