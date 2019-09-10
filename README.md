@@ -1,4 +1,4 @@
-![Hauk](./backend/assets/logo.svg)
+![Hauk](./frontend/assets/logo.svg "Hauk")
 
 # Hauk
 
@@ -10,14 +10,24 @@ Hauk is a fully open source, self-hosted location sharing service. Install the
 backend code on a PHP-compatible web server, install the companion app on your
 phone, and you're good to go!
 
+## System Requirements
+ 
+- Web server running LEMP or LAMP
+- PHP Memcached or Memcache extension installed on websever.
+- Andriod 6 or above to run the [companion Android app](https://f-droid.org/packages/info.varden.hauk/).
+
+
 ## Installation instructions
 
-1. On your server, install Memcached, PHP and a web server.
-2. Copy everything in the "backend-php" and "frontend" folders in this
-   repository to somewhere in your web root.
-3. Modify include/config.php to your liking.
-4. Start Memcached and the web server.
-5. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/) on your phone.
+1. Copy all files in the `backend-php` and `frontend` folders in this
+   repository directly to a common folder in your web root, for example `var/www/html`. 
+2. Modify `include/config.php` to your liking. Make sure to set a secure hashed password and edit your site's domain in this file.
+3. Start the webserver and make sure Memcached is running.
+4. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/) on your phone and enter your server's settings.
+
+When you visit the webroot you may see an experation notice. Hauk uses randomly generated URL which will be provided by the app. 
+
+
 
 ## Via Docker Compose
 
