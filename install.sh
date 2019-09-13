@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Hauk automatic installation script for Linux servers
 # Copyright (C) 2019 Marius Lindvall under the Apache 2.0 License
