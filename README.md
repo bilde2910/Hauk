@@ -11,23 +11,38 @@ backend code on a PHP-compatible web server, install the companion app on your
 phone, and you're good to go!
 
 ## System Requirements
- 
+
 - Web server running LEMP or LAMP
 - PHP Memcached or Memcache extension installed on websever.
-- Andriod 6 or above to run the [companion Android app](https://f-droid.org/packages/info.varden.hauk/).
-
+- Android 6 or above to run the [companion Android app](https://f-droid.org/packages/info.varden.hauk/).
 
 ## Installation instructions
 
-1. Copy all files in the `backend-php` and `frontend` folders in this
-   repository directly to a common folder in your web root, for example `var/www/html`. 
-2. Modify `include/config.php` to your liking. Make sure to set a secure hashed password and edit your site's domain in this file.
+1. Clone or download this repository:  `git clone https://github.com/bilde2910/Hauk.git`
+2. Run `sudo ./install.sh -c web_root` where `web_root` is the folder you want
+   to install Hauk in, for example `/var/www/html`. Follow the instructions
+   given by the install script. Make sure to set a secure hashed password and
+   edit your site's domain in the configuration file after installation.
 3. Start the webserver and make sure Memcached is running.
-4. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/) on your phone and enter your server's settings.
+4. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
+   on your phone and enter your server's settings.
 
-When you visit the webroot you may see an experation notice. Hauk uses randomly generated URL which will be provided by the app. 
+When you visit the webroot you may see an experation notice. Hauk uses randomly
+generated URL which will be provided by the app.
 
+## Manual installation
 
+If you prefer not to use the install script, you can instead choose to copy the
+files manually.
+
+1. Clone or download this repository: `git clone https://github.com/bilde2910/Hauk.git`
+2. Copy all files in the `backend-php` and `frontend` folders to a common folder
+   in your web root, for example `/var/www/html`.
+3. Modify `include/config.php` to your liking. Make sure to set a secure hashed
+   password and edit your site's domain in this file.
+4. Start the webserver and make sure Memcached is running.
+5. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
+   on your phone and enter your server's settings.
 
 ## Via Docker Compose
 
@@ -86,7 +101,7 @@ server {
 
 If you'd like to see what Hauk can do, download the app and insert connection details for the demo server:
 
-Server: https://apps.varden.info/demo/hauk/
+Server: https://apps.varden.info/demo/hauk/  
 Password: `demo`
 
 Location shares on the demo server is limited to 2 minutes and is only meant for demonstration purposes. Set up your own server to use Hauk to its full extent.
