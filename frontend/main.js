@@ -111,6 +111,20 @@ getJSON("./api/fetch.php?id=" + id, function(data) {
     document.getElementById("notfound").style.display = "block";
 });
 
+// Whether or not an initial location has been received.
+var hasReceivedFirst = false;
+
+// Whether the map has been initially centered.
+var hasInitiated = false;
+
+// The user being followed on the map.
+var following = null;
+
+// Unfollow the user when the map is panned.
+map.on('mousedown', function() {
+    following = null;
+});
+
 // Parses the data returned from ./api/fetch.php and updates the map marker.
 function processUpdate(data) {
     var users = {};
@@ -155,7 +169,12 @@ function processUpdate(data) {
                         html: '<div class="marker"><div class="arrow moving-live" id="arrow-' + shares[user].id + '"></div><p><span id="nickname-' + shares[user].id + '"></span><span id="velocity-' + shares[user].id + '">0.0</span> ' + VELOCITY_UNIT.unit + '</p></div>',
                         iconAnchor: [33, 18]
                     });
-                    shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon, interactive: false}).addTo(markerLayer);
+                    shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon}).on("click", function() {
+                        // Follow the marker if requested.
+                        following = shares[user].id;
+                        var last = shares[user].points[shares[user].points.length - 1];
+                        map.panTo([last.lat, last.lon]);
+                    }).addTo(markerLayer);
                 } else {
                     // If there is a marker, draw a line from its last location
                     // instead and move the marker.
@@ -212,9 +231,17 @@ function processUpdate(data) {
             eVelocity.textContent = vel.toFixed(1);;
         }
 
+        // Flag that the first location has been received, for map centering.
+        if (lastPoint !== null && !hasReceivedFirst) {
+            hasReceivedFirst = true;
+        }
 
-        // Follow the marker.
-        if (lastPoint !== null) map.panTo([lastPoint.lat, lastPoint.lon]);
+        // Move the marker if needed.
+        if (lastPoint !== null && !multiUser && following !== null) {
+            map.panTo([lastPoint.lat, lastPoint.lon]);
+        } else if (lastPoint !== null && multiUser && following == shares[user].id) {
+            map.panTo([lastPoint.lat, lastPoint.lon]);
+        }
 
         // Rotate the marker to the direction of movement.
         var eArrow = document.getElementById("arrow-" + shares[user].id);
@@ -241,6 +268,27 @@ function processUpdate(data) {
             nameE.textContent = user;
             nameE.innerHTML += "<br />";
             nameE.style.fontWeight = "bold";
+        }
+    }
+
+    // On first location update, center the map so it shows all participants.
+    if (hasReceivedFirst && !hasInitiated) {
+        hasInitiated = true;
+        var markers = [];
+        for (var share in shares) {
+            if (!shares.hasOwnProperty(share)) continue;
+            if (shares[share].marker === null) continue;
+            markers.push(shares[share].marker);
+        }
+        var fg = new L.featureGroup(markers);
+        map.fitBounds(fg.getBounds().pad(0.5));
+
+        // Do not exceed the default zoom level.
+        if (map.getZoom() > DEFAULT_ZOOM) map.setZoom(DEFAULT_ZOOM);
+
+        // Auto-follow single-user shares.
+        if (!multiUser) {
+            following = true;
         }
     }
 }
