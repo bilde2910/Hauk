@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="100" height="100" version="1.1" viewBox="0 0 26.458 26.458" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(0 -270.54)">
+        <circle transform="scale(1,-1)" cx="13.229" cy="-283.77" r="12.127" fill="#000">
+            <animate attributeName="opacity" values="0.7;0" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="0;12" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <path d="m18.477 291.85-5.248-3.8398-5.248 3.8398 5.248-16.154 2.624 8.0768z" fill="#d80037">
+            <animate attributeName="fill" values="#555;#d80037;#555" dur="1s" repeatCount="indefinite"/>
+        </path>
+    </g>
+</svg>

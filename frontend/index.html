@@ -51,9 +51,15 @@
         </noscript>
 
         <div class="cover hidden" id="notfound">
-            <img src="./assets/logo.svg">
+            <img src="./assets/logo.svg" class="logo">
             <p class="header">Location expired</p>
             <p class="body">The shared location you tried to access was not found on the server. If this link worked before, the share might have expired.</p>
+        </div>
+
+        <div class="cover hidden" id="searching">
+            <img src="./assets/location-pending.svg" class="pending">
+            <p class="header" style="margin-top:0;">Please wait</p>
+            <p class="body">Sender is waiting for GPS signal</p>
         </div>
 
         <div id="expired" class="dialog hidden">

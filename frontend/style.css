@@ -39,8 +39,13 @@
 }
 
 /* Hauk logo. */
-.cover > img {
+.cover > img.logo {
     width: 100%;
+}
+
+/* Hauk logo. */
+.cover > img.pending {
+    width: 60%;
 }
 
 /* Popup header. */

@@ -102,9 +102,11 @@ function setNewInterval(expire, interval) {
     }, interval * 1000);
 }
 
+var noGPS = document.getElementById("searching");
+
 // Attempt to fetch location data from the server once.
 getJSON("./api/fetch.php?id=" + id, function(data) {
-    document.getElementById("mapouter").style.visibility = "visible";
+    noGPS.style.display = "block";
     setNewInterval(data.expire, data.interval);
     processUpdate(data);
 }, function() {
@@ -274,6 +276,8 @@ function processUpdate(data) {
     // On first location update, center the map so it shows all participants.
     if (hasReceivedFirst && !hasInitiated) {
         hasInitiated = true;
+        noGPS.style.display = "none";
+        document.getElementById("mapouter").style.visibility = "visible";
         var markers = [];
         for (var share in shares) {
             if (!shares.hasOwnProperty(share)) continue;
