@@ -124,6 +124,12 @@
                             android:ems="10"
                             android:inputType="number"
                             android:autofillHints="minutes" />
+
+                        <Spinner
+                            android:id="@+id/selUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:gravity="center_vertical"/>
                     </TableRow>
 
                     <!-- Update interval, in seconds. -->

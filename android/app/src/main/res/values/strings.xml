@@ -5,7 +5,7 @@
     <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Server URL:</string>
     <string name="label_password">Password:</string>
-    <string name="label_duration">Share duration (min):</string>
+    <string name="label_duration">Share duration:</string>
     <string name="label_interval">Update interval (s):</string>
     <string name="label_mode">Sharing mode:</string>
     <string name="label_allow_adopt">Allow adoption:</string>
@@ -27,6 +27,12 @@
         <item>Share my own location only</item>
         <item>Create a group share</item>
         <item>Join a group share</item>
+    </string-array>
+
+    <string-array name="sel_unit_opts">
+        <item>minute(s)</item>
+        <item>hour(s)</item>
+        <item>day(s)</item>
     </string-array>
 
     <string name="label_status_none">Location sharing inactive</string>

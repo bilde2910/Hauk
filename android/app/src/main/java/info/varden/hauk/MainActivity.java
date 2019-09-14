@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtInterval;
     private EditText txtNickname;
     private EditText txtPIN;
+    private Spinner selUnit;
     private Spinner selMode;
     private Button btnShare;
     private Button btnLink;
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setClassVariables();
-        loadPreferences();
 
         labelAdoptWhatsThis.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Add elements and an event handler to the sharing mode selector.
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sel_mode_opts, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        selMode.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adpMode = ArrayAdapter.createFromResource(this, R.array.sel_mode_opts, android.R.layout.simple_spinner_item);
+        adpMode.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selMode.setAdapter(adpMode);
         selMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
@@ -141,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // Add elements to the duration unit selector.
+        ArrayAdapter<CharSequence> adpUnit = ArrayAdapter.createFromResource(this, R.array.sel_unit_opts, android.R.layout.simple_spinner_item);
+        adpUnit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selUnit.setAdapter(adpUnit);
+
+        loadPreferences();
     }
 
     @Override
@@ -167,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         txtDuration.setEnabled(false);
         txtInterval.setEnabled(false);
 
+        selUnit.setEnabled(false);
         selMode.setEnabled(false);
         txtNickname.setEnabled(false);
         txtPIN.setEnabled(false);
@@ -180,10 +188,11 @@ public class MainActivity extends AppCompatActivity {
         final int shareMode = selMode.getSelectedItemPosition();
         final String groupPin = txtPIN.getText().toString();
         final boolean allowAdoption = chkAllowAdopt.isChecked();
+        final int durUnit = selUnit.getSelectedItemPosition();
 
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
-        setPreferences(server, duration, interval, nickname, allowAdoption);
+        setPreferences(server, duration, interval, durUnit, nickname, allowAdoption);
 
         // If password saving is enabled, save the password as well.
         if (chkRemember.isChecked()) setPassword(true, password);
@@ -193,7 +202,17 @@ public class MainActivity extends AppCompatActivity {
         final String serverFull = server.endsWith("/") ? server : server + "/";
 
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
-        final int durationSec = duration * 60;
+        switch (durUnit) {
+            case HaukConst.DURATION_UNIT_MINUTES:
+                duration *= 60;
+                break;
+            case HaukConst.DURATION_UNIT_HOURS:
+                duration *= 3600;
+                break;
+            case HaukConst.DURATION_UNIT_DAYS:
+                duration *= 86400;
+        }
+        final int durationSec = duration;
 
         // Check for location permission and prompt the user if missing. This returns because the
         // checking function creates async dialogs here - the user is prompted to press the button
@@ -474,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
         txtInterval = findViewById(R.id.txtInterval);
         txtNickname = findViewById(R.id.txtNickname);
         txtPIN = findViewById(R.id.txtPIN);
+        selUnit = findViewById(R.id.selUnit);
         selMode = findViewById(R.id.selMode);
         btnShare = findViewById(R.id.btnShare);
         btnLink = findViewById(R.id.btnLink);
@@ -513,6 +533,7 @@ public class MainActivity extends AppCompatActivity {
                 txtDuration.setEnabled(true);
                 txtInterval.setEnabled(true);
 
+                selUnit.setEnabled(true);
                 selMode.setEnabled(true);
                 txtNickname.setEnabled(true);
                 txtPIN.setEnabled(true);
@@ -534,11 +555,12 @@ public class MainActivity extends AppCompatActivity {
         txtInterval.setText(String.valueOf(settings.getInt("interval", 1)));
         txtPassword.setText(settings.getString("password", ""));
         txtNickname.setText(settings.getString("nickname", ""));
+        selUnit.setSelection(settings.getInt("durUnit", HaukConst.DURATION_UNIT_MINUTES));
         chkRemember.setChecked(settings.getBoolean("rememberPassword", false));
         chkAllowAdopt.setChecked(settings.getBoolean("allowAdoption", true));
     }
 
-    private void setPreferences(String server, int duration, int interval, String nickname, boolean allowAdoption) {
+    private void setPreferences(String server, int duration, int interval, int durUnit, String nickname, boolean allowAdoption) {
         SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
@@ -546,6 +568,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("duration", duration);
         editor.putInt("interval", interval);
         editor.putString("nickname", nickname);
+        editor.putInt("durUnit", durUnit);
         editor.putBoolean("allowAdoption", allowAdoption);
         editor.apply();
     }
