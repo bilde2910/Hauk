@@ -1,0 +1,15 @@
+* You can now view your own location on the map (requires HTTPS)
+* Users on the map can now be followed by clicking/tapping on them
+* Users who haven't shared their location in a while are now marked as offline
+* The map now warns you if your connection to the backend is lost
+* There is now a more meaningful screen displayed when there is no GPS data yet on the map
+* You can now select the unit of time (minutes, hours, days) when choosing a share duration
+* Sessions can now be resumed if the app or device crashes
+* User-installed root CAs are now supported, but strongly discouraged to use
+* When viewing the root page of Hauk, there is now an informative page rather than a "Location expired" page
+* The Hauk logo on the map now opens the source repository in a new tab instead of redirecting away from the map
+* The map no longer aggressively centers itself on a user
+* The initial location fix can now use network-based location instead of GPS in cases where GPS connections are unavailable (e.g. indoors)
+* Fixed a bug that caused new shares to end prematurely if created after a previous share was stopped manually before its expiration
+* The Docker container now stops gracefully when shutdown
+* Added an easy to use installation script for the backend
