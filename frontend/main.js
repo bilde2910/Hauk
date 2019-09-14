@@ -13,6 +13,92 @@ L.tileLayer(TILE_URI, {
     maxZoom: MAX_ZOOM
 }).addTo(map);
 
+// For locating the viewer of the map. Watcher is a watchPosition() reference.
+var watcher = null;
+
+// Marker and accuracy circle of the person viewing the map.
+var selfCircle = null;
+var selfMarker = null;
+
+// Create a geolocation control.
+L.control.Locate = L.Control.extend({
+    onAdd: function(map) {
+        var btn = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        var anchor = L.DomUtil.create('a', 'leaflet-control-locate-inactive');
+
+		btn.style.backgroundColor = '#fff';
+        btn.appendChild(anchor);
+
+        anchor.href = '#';
+        anchor.title = 'Show my location';
+        anchor.onclick = function(e) {
+            // Prevent # from appearing in URL.
+            e.preventDefault();
+
+            if (watcher === null) {
+                // If there is no location watcher active, create one.
+                // Update the icon to indicate that the location is pending.
+                anchor.className = 'leaflet-control-locate-pending';
+                watcher = navigator.geolocation.watchPosition(function(pos) {
+                    // If the circle and marker is missing, add it and set the
+                    // location status to active.
+                    if (selfCircle == null && selfMarker == null) {
+                        anchor.className = 'leaflet-control-locate-active';
+                        selfCircle = L.circle([pos.coords.latitude, pos.coords.longitude], {
+                            radius: pos.coords.accuracy,
+                            fillColor: '#1e90ff',
+                            fillOpacity: 0.25,
+                            color: '#1e90ff',
+                            opacity: 0.5,
+                            interactive: false
+                        }).addTo(circleLayer);
+                        var selfIcon = L.divIcon({
+                            html: '<div class="marker"><div class="arrow still-self"></div></div>',
+                            iconAnchor: [33, 18]
+                        });
+                        selfMarker = L.marker([pos.coords.latitude, pos.coords.longitude], {
+                            icon: selfIcon,
+                            interactive: false
+                        }).addTo(markerLayer);
+
+                        // Unfollow any curretly followed user, then pan to the
+                        // device location.
+                        following = null;
+                        map.panTo([pos.coords.latitude, pos.coords.longitude]);
+                    } else {
+                        selfCircle.setLatLng([pos.coords.latitude, pos.coords.longitude]);
+                        selfMarker.setLatLng([pos.coords.latitude, pos.coords.longitude]);
+                        selfCircle.setRadius(pos.coords.accuracy);
+                    }
+                });
+            } else {
+                // If there is already a watcher, clicking the control should
+                // unregister it and hide the user's location.
+                anchor.className = 'leaflet-control-locate-inactive';
+                navigator.geolocation.clearWatch(watcher);
+                watcher = null;
+                circleLayer.removeLayer(selfCircle);
+                markerLayer.removeLayer(selfMarker);
+                selfCircle = null;
+                selfMarker = null;
+            }
+            return false;
+        };
+
+		return btn;
+    }
+});
+
+// Function for spawning the geolocation control.
+L.control.locate = function(opts) {
+    return new L.control.Locate(opts);
+}
+
+// Add the geolocation control to the map if supported by the browser.
+if ("geolocation" in navigator && window.isSecureContext) {
+    L.control.locate({ position: 'topleft' }).addTo(map);
+}
+
 var circleLayer = L.layerGroup().addTo(map);
 var markerLayer = L.layerGroup().addTo(map);
 

@@ -123,6 +123,21 @@
     margin: auto;
 }
 
+.leaflet-control-locate-inactive {
+    background: url(./assets/controls/locate-inactive.svg) no-repeat;
+    background-size: cover;
+}
+
+.leaflet-control-locate-pending {
+    background: url(./assets/controls/locate-pending.svg) no-repeat;
+    background-size: cover;
+}
+
+.leaflet-control-locate-active {
+    background: url(./assets/controls/locate-active.svg) no-repeat;
+    background-size: cover;
+}
+
 /* The notch at the top of the screen that shows the time remaining of the
    share. Outer container. */
 #notch {
@@ -181,6 +196,10 @@
 
 .arrow.still-live {
     background-image: url(./assets/markers/still-live.svg);
+}
+
+.arrow.still-self {
+    background-image: url(./assets/markers/still-self.svg);
 }
 
 .arrow {
