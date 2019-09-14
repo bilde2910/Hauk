@@ -2,6 +2,7 @@ package info.varden.hauk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ public class StopSharingTask implements Runnable {
     private final Context ctx;
     private final DialogService diagSvc;
     private final Runnable resetTask;
+    private final Handler handler;
 
     // The task does not have a notification and pusher until updateTask() is called, and the stop
     // task cannot be executed until that is the case. If this task is executable, then location
@@ -34,10 +36,11 @@ public class StopSharingTask implements Runnable {
     private String baseUrl = null;
     private String session = null;
 
-    protected StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask) {
+    protected StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask, Handler handler) {
         this.ctx = ctx;
         this.diagSvc = diagSvc;
         this.resetTask = resetTask;
+        this.handler = handler;
     }
 
     /**
@@ -111,6 +114,7 @@ public class StopSharingTask implements Runnable {
     }
 
     private void resetApp() {
+        this.handler.removeCallbacksAndMessages(null);
         if (this.activityExists) {
             this.resetTask.run();
             this.diagSvc.showDialog(R.string.ended_title, R.string.ended_message, this.resetTask);

@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
     // A timer that counts down the number of seconds left of the share period.
     private Timer shareCountdown;
 
+    // A handler that cancels the share after expiry
+    private Handler handler;
+
     // A runnable task that resets the UI to a fresh state.
     private Runnable resetTask;
 
@@ -514,7 +517,6 @@ public class MainActivity extends AppCompatActivity {
 
             // stopTask is scheduled for expiration, but it could also be called if
             // the user manually stops the share, or if the app is destroyed.
-            final Handler handler = new Handler();
             handler.postDelayed(stopTask, duration * 1000L);
 
             // Now that sharing is active, we will turn the start button into a stop
@@ -647,6 +649,7 @@ public class MainActivity extends AppCompatActivity {
                 if (shareCountdown != null) {
                     shareCountdown.cancel();
                     shareCountdown.purge();
+                    shareCountdown = null;
                 }
 
                 labelStatusCur.setText(getString(R.string.label_status_none));
@@ -674,7 +677,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         diagSvc = new DialogService(this);
-        stopTask = new StopSharingTask(this, diagSvc, resetTask);
+        handler = new Handler();
+        stopTask = new StopSharingTask(this, diagSvc, resetTask, handler);
         shareCountdown = null;
     }
 
