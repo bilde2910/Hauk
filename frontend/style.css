@@ -94,6 +94,17 @@
     font-size: 1em;
 }
 
+/* Visible on the root page of Hauk. */
+#url {
+    color: #d80037;
+    font-family: monospace;
+    font-size: 5vmin;
+}
+.f-droid {
+    margin-top: 1vmin;
+    width: 50vmin;
+}
+
 /* Display the Hauk logo in the bottom left corner of the map if the viewport is
    wide enough to accomodate it. If it's so narrow that the Leaflet attribution
    could be covered by it, display it in the bottom left corner instead, above

@@ -208,15 +208,22 @@ function setNewInterval(expire, interval) {
 }
 
 var noGPS = document.getElementById("searching");
-
-// Attempt to fetch location data from the server once.
-getJSON("./api/fetch.php?id=" + id, function(data) {
-    noGPS.style.display = "block";
-    setNewInterval(data.expire, data.interval);
-    processUpdate(data);
-}, function() {
-    document.getElementById("notfound").style.display = "block";
-});
+console.log(id);
+if (location.href.indexOf("?") === -1 || id == "") {
+    // If there is no share ID, show the root page.
+    var url = location.href.indexOf("?") === -1 ? location.href : location.href.substring(0, location.href.indexOf("?"));
+    document.getElementById("url").textContent = url;
+    document.getElementById("index").style.display = "block";
+} else {
+    // Attempt to fetch location data from the server once.
+    getJSON("./api/fetch.php?id=" + id, function(data) {
+        noGPS.style.display = "block";
+        setNewInterval(data.expire, data.interval);
+        processUpdate(data);
+    }, function() {
+        document.getElementById("notfound").style.display = "block";
+    });
+}
 
 // Whether or not an initial location has been received.
 var hasReceivedFirst = false;
