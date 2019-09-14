@@ -11,4 +11,6 @@ RUN     apt-get update && \
 EXPOSE  80/tcp
 VOLUME  /etc/hauk
 
-CMD     ["/bin/sh", "start.sh"]
+STOPSIGNAL SIGINT
+RUN     chmod +x ./start.sh
+CMD     ["./start.sh"]
