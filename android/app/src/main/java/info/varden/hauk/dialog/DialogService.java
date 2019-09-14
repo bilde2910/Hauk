@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.util.TypedValue;
 import android.view.View;
 
-import info.varden.hauk.CustomDialogBuilder;
 import info.varden.hauk.R;
 
 /**
@@ -124,10 +123,11 @@ public class DialogService {
      *
      * @param title   A string resource representing the title of the dialog box.
      * @param message A string resource representing the body of the dialog box.
+     * @param buttons The buttons to display on the dialog.
      * @param builder A dialog builder that builds a View and handles the dialog buttons.
      */
-    public void showDialog(int title, int message, final CustomDialogBuilder builder) {
-        showDialog(title, this.ctx.getString(message), builder);
+    public void showDialog(int title, int message, final DialogButtons buttons, final CustomDialogBuilder builder) {
+        showDialog(title, this.ctx.getString(message), buttons, builder);
     }
 
     /**
@@ -135,36 +135,39 @@ public class DialogService {
      *
      * @param title   A string resource representing the title of the dialog box.
      * @param message A string representing the body of the dialog box.
+     * @param buttons The buttons to display on the dialog.
      * @param builder A dialog builder that builds a View and handles the dialog buttons.
      */
-    public void showDialog(int title, String message, final CustomDialogBuilder builder) {
-        showDialog(this.ctx.getString(title), message, builder);
+    public void showDialog(int title, String message, final DialogButtons buttons, final CustomDialogBuilder builder) {
+        showDialog(this.ctx.getString(title), message, buttons, builder);
     }
 
-    private void showDialog(String title, String message, final CustomDialogBuilder builder) {
+    private void showDialog(String title, String message, final DialogButtons buttons, final CustomDialogBuilder builder) {
         View view = builder.createView(this.ctx);
-        TypedValue tv = new TypedValue();
-        int padding = 0;
-        if (this.ctx.getTheme().resolveAttribute(R.attr.dialogPreferredPadding, tv, true)) {
-            padding = TypedValue.complexToDimensionPixelSize(tv.data, this.ctx.getResources().getDisplayMetrics());
-            System.out.println(padding);
+        if (view != null) {
+            TypedValue tv = new TypedValue();
+            int padding = 0;
+            if (this.ctx.getTheme().resolveAttribute(R.attr.dialogPreferredPadding, tv, true)) {
+                padding = TypedValue.complexToDimensionPixelSize(tv.data, this.ctx.getResources().getDisplayMetrics());
+                System.out.println(padding);
+            }
+            view.setPadding(padding, padding, padding, 0);
         }
-        view.setPadding(padding, padding, padding, 0);
 
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this.ctx);
         dlgAlert.setMessage(message);
         dlgAlert.setTitle(title);
-        dlgAlert.setView(view);
+        if (view != null) dlgAlert.setView(view);
 
-        dlgAlert.setPositiveButton(this.ctx.getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
+        dlgAlert.setPositiveButton(this.ctx.getString(buttons.getPositiveButton()), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                builder.onOK();
+                builder.onPositive();
             }
         });
-        dlgAlert.setNegativeButton(this.ctx.getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+        dlgAlert.setNegativeButton(this.ctx.getString(buttons.getNegativeButton()), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                builder.onCancel();
+                builder.onNegative();
             }
         });
 

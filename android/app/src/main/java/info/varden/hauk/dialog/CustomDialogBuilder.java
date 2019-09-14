@@ -1,4 +1,4 @@
-package info.varden.hauk;
+package info.varden.hauk.dialog;
 
 import android.content.Context;
 import android.view.View;
@@ -11,14 +11,14 @@ import android.view.View;
  */
 public abstract class CustomDialogBuilder {
     /**
-     * Fires when the OK button is clicked in the dialog.
+     * Fires when the positive button is clicked in the dialog.
      */
-    public abstract void onOK();
+    public abstract void onPositive();
 
     /**
-     * Fires when the Cancel button is clicked in the dialog.
+     * Fires when the negative button is clicked in the dialog.
      */
-    public abstract void onCancel();
+    public abstract void onNegative();
 
     /**
      * A handler to build a View to display in the dialog box.

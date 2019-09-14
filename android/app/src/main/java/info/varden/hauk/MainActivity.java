@@ -28,11 +28,15 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import info.varden.hauk.dialog.AdoptDialogBuilder;
+import info.varden.hauk.dialog.CustomDialogBuilder;
+import info.varden.hauk.dialog.DialogButtons;
 import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.service.LocationPushService;
@@ -149,12 +153,101 @@ public class MainActivity extends AppCompatActivity {
         selUnit.setAdapter(adpUnit);
 
         loadPreferences();
+        tryResumeShare();
     }
 
     @Override
     protected void onDestroy() {
         stopTask.setActivityDestroyed();
         super.onDestroy();
+    }
+
+    /**
+     * If the app crashed, or phone restarted, Hauk gives the option to resume interrupted shares.
+     * This function checks if any incomplete shares are saved on the phone and asks the user if
+     * they want to resume them.
+     */
+    private void tryResumeShare() {
+        SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
+        if (res.getBoolean("canResume", false)) {
+            // Get session parameters.
+            final String server = res.getString("server", null);
+            final String session = res.getString("session", null);
+            final String viewLink = res.getString("viewLink", null);
+            final int interval = res.getInt("interval", -1);
+            final long expiry = res.getLong("expiry", -1L);
+            final int shareMode = res.getInt("shareMode", -1);
+            final String joinCode = res.getString("joinCode", null);
+
+            // Check that the session is still valid.
+            if (server != null && session != null && viewLink != null && interval > 0 && expiry > System.currentTimeMillis() && shareMode >= 0) {
+
+                // Prompt the user to continue the session.
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+                String expDate = formatter.format(new Date(expiry));
+                diagSvc.showDialog(R.string.resume_title, String.format(getString(R.string.resume_body), viewLink, expDate), DialogButtons.YES_NO, new CustomDialogBuilder() {
+                    @Override
+                    public void onPositive() {
+                        // If yes, do continue the session.
+                        final int duration = (int) (expiry - System.currentTimeMillis()) / 1000;
+                        if (duration > 0) {
+                            MainActivity.this.viewLink = viewLink;
+                            shareLocation(server, session, interval, duration, shareMode, joinCode);
+                        }
+                    }
+
+                    @Override
+                    public void onNegative() {
+                        // If not, clear the resumption data so that the user isn't asked again for
+                        // the share in question.
+                        clearResumableSession();
+                    }
+
+                    @Override
+                    public View createView(Context ctx) {
+                        return null;
+                    }
+                });
+            } else {
+                clearResumableSession();
+            }
+        }
+    }
+
+    /**
+     * Saves session resumption data. This allows shares to be continued if the app crashes or is
+     * otherwise closed.
+     *
+     * @param server    The full server URL with trailing slash.
+     * @param session   The session ID.
+     * @param viewLink  The publicly viewable map link for the share.
+     * @param interval  Interval in seconds between each update.
+     * @param duration  Duration of the share in seconds.
+     * @param shareMode Sharing mode.
+     * @param joinCode  Join code for group shares, or null if not applicable.
+     */
+    private void setSessionResumable(String server, String session, String viewLink, int interval, int duration, int shareMode, String joinCode) {
+        SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
+        SharedPreferences.Editor editor = res.edit();
+        editor.putBoolean("canResume", true);
+        editor.putString("server", server);
+        editor.putString("session", session);
+        editor.putString("viewLink", viewLink);
+        editor.putInt("interval", interval);
+        editor.putLong("expiry", (long) (duration * 1000) + System.currentTimeMillis());
+        editor.putInt("shareMode", shareMode);
+        editor.putString("joinCode", joinCode);
+        editor.apply();
+    }
+
+    /**
+     * Clears saved resumable session data.
+     */
+    private void clearResumableSession() {
+        SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
+        SharedPreferences.Editor editor = res.edit();
+        editor.clear();
+        editor.apply();
     }
 
     /**
@@ -169,17 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Disable the UI while we attempt to connect to the Hauk backend.
-        btnShare.setEnabled(false);
-        txtServer.setEnabled(false);
-        txtPassword.setEnabled(false);
-        txtDuration.setEnabled(false);
-        txtInterval.setEnabled(false);
-
-        selUnit.setEnabled(false);
-        selMode.setEnabled(false);
-        txtNickname.setEnabled(false);
-        txtPIN.setEnabled(false);
-        chkAllowAdopt.setEnabled(false);
+        disableUI();
 
         String server = txtServer.getText().toString().trim();
         final String password = txtPassword.getText().toString();
@@ -297,111 +380,12 @@ public class MainActivity extends AppCompatActivity {
                     if (data[0].equals("OK")) {
                         String session = data[1];
                         viewLink = data[2];
+                        String joinCode = null;
                         if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
-                            final String joinCode = data[3];
-
-                            runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    // Show the group PIN on the UI if a new group share was created.
-                                    labelShowPin.setText(joinCode);
-                                    layoutGroupPIN.setVisibility(View.VISIBLE);
-                                }
-                            });
-
-                            // Create a new adoption dialog builder for this group share.
-                            adoptBuilder = new AdoptDialogBuilder(MainActivity.this, serverFull, session, joinCode) {
-                                @Override
-                                public void onSuccess(final String nick) {
-                                    diagSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
-                                }
-
-                                @Override
-                                public void onFailure(final Exception ex) {
-                                    diagSvc.showDialog(R.string.err_server, ex.getMessage());
-                                }
-                            };
+                            joinCode = data[3];
                         }
-
-                        // We now have a link to share, so we enable the link sharing button.
-                        btnLink.setEnabled(true);
-
-                        // Even though we previously requested location permission, we still have to
-                        // check for it when we actually use the location API (user could have
-                        // disabled it while connecting).
-                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                            // Create a client that receives location updates and pushes these to
-                            // the Hauk backend.
-                            Intent pusher = new Intent(MainActivity.this, LocationPushService.class);
-                            pusher.setAction(LocationPushService.ACTION_ID);
-                            pusher.putExtra("baseUrl", serverFull);
-                            pusher.putExtra("viewUrl", viewLink);
-                            pusher.putExtra("session", session);
-                            pusher.putExtra("interval", (long) interval * 1000L);
-                            pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
-                            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new GNSSActiveHandler() {
-                                @Override
-                                public void onCoarseLocationReceived() {
-                                    // Indicate to the user that GPS data is being received when the
-                                    // location pusher starts receiving GPS data.
-                                    labelStatusCur.setText(getString(R.string.label_status_coarse));
-                                }
-
-                                @Override
-                                public void onAccurateLocationReceived() {
-                                    // Indicate to the user that GPS data is being received when the
-                                    // location pusher starts receiving GPS data.
-                                    labelStatusCur.setText(getString(R.string.label_status_ok));
-                                    labelStatusCur.setTextColor(getColor(R.color.statusOn));
-                                }
-                            }));
-                            if (Build.VERSION.SDK_INT >= 26) {
-                                startForegroundService(pusher);
-                            } else {
-                                startService(pusher);
-                            }
-
-                            // When both the notification and pusher are created, we can update the
-                            // stop task with these so that they can be canceled when the location
-                            // share ends.
-                            stopTask.updateTask(pusher);
-
-                            // stopTask is scheduled for expiration, but it could also be called if
-                            // the user manually stops the share, or if the app is destroyed.
-                            final Handler handler = new Handler();
-                            handler.postDelayed(stopTask, durationSec * 1000L);
-
-                            // Now that sharing is active, we will turn the start button into a stop
-                            // button with a countdown.
-                            shareCountdown = new Timer();
-                            shareCountdown.scheduleAtFixedRate(new TimerTask() {
-                                private int counter = durationSec;
-
-                                @Override
-                                public void run() {
-                                    if (counter >= 0) {
-                                        runOnUiThread(new Runnable() {
-
-                                            @Override
-                                            public void run() {
-                                                btnShare.setText(String.format(getString(R.string.btn_stop), secondsToTime(counter)));
-                                            }
-                                        });
-                                    }
-                                    counter -= 1;
-                                }
-                            }, 0L, 1000L);
-
-                            // Re-enable the start (stop) button and inform the user.
-                            btnShare.setEnabled(true);
-                            labelStatusCur.setText(getString(R.string.label_status_wait));
-                            labelStatusCur.setTextColor(getColor(R.color.statusWait));
-                            diagSvc.showDialog(R.string.ok_title, R.string.ok_message);
-                        } else {
-                            diagSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
-                        }
+                        setSessionResumable(serverFull, session, viewLink, interval, durationSec, actualShareMode, joinCode);
+                        shareLocation(serverFull, session, interval, durationSec, actualShareMode, joinCode);
                     } else {
                         // If the first line of the response is not "OK", an error of some sort has
                         // occurred and should be displayed to the user.
@@ -425,6 +409,143 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         req.execute(new HTTPThread.Request(serverFull + "api/create.php", data));
+    }
+
+    /**
+     * Disables all UI elements that should be read-only while sharing.
+     */
+    private void disableUI() {
+        btnShare.setEnabled(false);
+        txtServer.setEnabled(false);
+        txtPassword.setEnabled(false);
+        txtDuration.setEnabled(false);
+        txtInterval.setEnabled(false);
+
+        selUnit.setEnabled(false);
+        selMode.setEnabled(false);
+        txtNickname.setEnabled(false);
+        txtPIN.setEnabled(false);
+        chkAllowAdopt.setEnabled(false);
+    }
+
+    /**
+     * Executes a location sharing session against the server. This can be a new session, or a
+     * resumed session.
+     *
+     * @param server    The full server URL with trailing slash.
+     * @param session   The session ID.
+     * @param interval  Interval in seconds between each update.
+     * @param duration  Duration of the share in seconds.
+     * @param shareMode Sharing mode.
+     * @param joinCode  Join code for group shares, or null if not applicable.
+     */
+    private void shareLocation(final String server, final String session, final int interval, final int duration, final int shareMode, final String joinCode) {
+        // Disable the UI if it's not already disabled.
+        disableUI();
+
+        if (shareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    // Show the group PIN on the UI if a new group share was created.
+                    labelShowPin.setText(joinCode);
+                    layoutGroupPIN.setVisibility(View.VISIBLE);
+                }
+            });
+
+            // Create a new adoption dialog builder for this group share.
+            adoptBuilder = new AdoptDialogBuilder(MainActivity.this, server, session, joinCode) {
+                @Override
+                public void onSuccess(final String nick) {
+                    diagSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
+                }
+
+                @Override
+                public void onFailure(final Exception ex) {
+                    diagSvc.showDialog(R.string.err_server, ex.getMessage());
+                }
+            };
+        }
+
+        // We now have a link to share, so we enable the link sharing button.
+        btnLink.setEnabled(true);
+
+        // Even though we previously requested location permission, we still have to
+        // check for it when we actually use the location API (user could have
+        // disabled it while connecting).
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            // Create a client that receives location updates and pushes these to
+            // the Hauk backend.
+            Intent pusher = new Intent(MainActivity.this, LocationPushService.class);
+            pusher.setAction(LocationPushService.ACTION_ID);
+            pusher.putExtra("baseUrl", server);
+            pusher.putExtra("viewUrl", viewLink);
+            pusher.putExtra("session", session);
+            pusher.putExtra("interval", (long) interval * 1000L);
+            pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
+            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new GNSSActiveHandler() {
+                @Override
+                public void onCoarseLocationReceived() {
+                    // Indicate to the user that GPS data is being received when the
+                    // location pusher starts receiving GPS data.
+                    labelStatusCur.setText(getString(R.string.label_status_coarse));
+                }
+
+                @Override
+                public void onAccurateLocationReceived() {
+                    // Indicate to the user that GPS data is being received when the
+                    // location pusher starts receiving GPS data.
+                    labelStatusCur.setText(getString(R.string.label_status_ok));
+                    labelStatusCur.setTextColor(getColor(R.color.statusOn));
+                }
+            }));
+            if (Build.VERSION.SDK_INT >= 26) {
+                startForegroundService(pusher);
+            } else {
+                startService(pusher);
+            }
+
+            // When both the notification and pusher are created, we can update the
+            // stop task with these so that they can be canceled when the location
+            // share ends.
+            stopTask.updateTask(pusher);
+
+            // stopTask is scheduled for expiration, but it could also be called if
+            // the user manually stops the share, or if the app is destroyed.
+            final Handler handler = new Handler();
+            handler.postDelayed(stopTask, duration * 1000L);
+
+            // Now that sharing is active, we will turn the start button into a stop
+            // button with a countdown.
+            shareCountdown = new Timer();
+            shareCountdown.scheduleAtFixedRate(new TimerTask() {
+                private int counter = duration;
+
+                @Override
+                public void run() {
+                    if (counter >= 0) {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                btnShare.setText(String.format(getString(R.string.btn_stop), secondsToTime(counter)));
+                            }
+                        });
+                    }
+                    counter -= 1;
+                }
+            }, 0L, 1000L);
+
+            // Re-enable the start (stop) button and inform the user.
+            btnShare.setEnabled(true);
+            labelStatusCur.setText(getString(R.string.label_status_wait));
+            labelStatusCur.setTextColor(getColor(R.color.statusWait));
+            diagSvc.showDialog(R.string.ok_title, R.string.ok_message);
+        } else {
+            diagSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
+        }
     }
 
     /**
@@ -453,7 +574,7 @@ public class MainActivity extends AppCompatActivity {
     public void adoptShare(View view) {
         String server = txtServer.getText().toString();
         if (!server.endsWith("/")) server = server + "/";
-        diagSvc.showDialog(R.string.adopt_title, String.format(getString(R.string.adopt_body), server), adoptBuilder);
+        diagSvc.showDialog(R.string.adopt_title, String.format(getString(R.string.adopt_body), server), DialogButtons.OK_CANCEL, adoptBuilder);
     }
 
     /**
@@ -547,6 +668,8 @@ public class MainActivity extends AppCompatActivity {
                 chkAllowAdopt.setEnabled(true);
 
                 layoutGroupPIN.setVisibility(View.GONE);
+
+                clearResumableSession();
             }
         };
 

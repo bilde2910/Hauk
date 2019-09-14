@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import info.varden.hauk.CustomDialogBuilder;
 import info.varden.hauk.HTTPThread;
 import info.varden.hauk.R;
 
@@ -47,7 +46,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
      * Called when the OK button is clicked in the dialog window.
      */
     @Override
-    public final void onOK() {
+    public final void onPositive() {
         // Get the user data.
         final String nick = this.diagTxtNick.getText().toString().trim();
         final String adoptID = this.diagTxtShare.getText().toString().trim();
@@ -102,7 +101,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
      * Called when the Cancel button is clicked in the dialog window.
      */
     @Override
-    public final void onCancel() {
+    public final void onNegative() {
         return;
     }
 

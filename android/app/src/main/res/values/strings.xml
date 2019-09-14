@@ -50,6 +50,9 @@
 
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+
     <string name="action_copy">Copy link</string>
     <string name="action_copied">Copied link from Hauk</string>
     <string name="action_stop">Stop sharing</string>
@@ -78,6 +81,8 @@
     <string name="ended_message">Your location share has expired.</string>
     <string name="adopted_title">Share adopted</string>
     <string name="adopted_body">%s has been added to your share!</string>
+    <string name="resume_title">Resume session</string>
+    <string name="resume_body">You have an unfinished session:\n\nSession: %s\nExpires: %s\n\nDo you wish to resume this session?</string>
 
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>
