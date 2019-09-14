@@ -57,6 +57,7 @@ const DEFAULTS = array(
     "max_duration"          => 86400,
     "min_interval"          => 1,
     "offline_timeout"       => 30,
+    "request_timeout"       => 10,
     "max_cached_pts"        => 3,
     "max_shown_pts"         => 100,
     "v_data_points"         => 2,

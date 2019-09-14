@@ -16,3 +16,4 @@ var VELOCITY_DELTA_TIME = <?php echo json_encode(getConfig("v_data_points")); ?>
 var TRAIL_COLOR = <?php echo json_encode(getConfig("trail_color")); ?>;
 var VELOCITY_UNIT = <?php echo json_encode(getConfig("velocity_unit")); ?>;
 var OFFLINE_TIMEOUT = <?php echo json_encode(getConfig("offline_timeout")); ?>;
+var REQUEST_TIMEOUT = <?php echo json_encode(getConfig("request_timeout")); ?>;

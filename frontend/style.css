@@ -183,6 +183,21 @@
     margin: 0 23px;
 }
 
+/* Change the color if client is offline. */
+#notch.offline div.t-left {
+    border-color: transparent rgba(165,0,42,0.5) transparent transparent;
+}
+#notch.offline div.t-right {
+    border-color: rgba(165,0,42,0.5) transparent transparent transparent;
+}
+#notch.offline div.inner {
+    display: none;
+}
+#notch.offline div.inner.offline {
+    background-color: rgba(165,0,42,0.5);
+    display: block;
+}
+
 /* The outer marker div. */
 .marker {
     width: 66px;

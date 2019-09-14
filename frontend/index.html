@@ -28,6 +28,7 @@
             <div id="notch">
                 <div class="tri t-left"></div>
                 <div class="inner" id="countdown"></div>
+                <div class="inner hidden offline">Offline</div>
                 <div class="tri t-right"></div>
             </div>
 
@@ -66,7 +67,15 @@
             <div>
                 <p class="header">Share expired</p>
                 <p class="body">This location share has expired.</p>
-                <p class="button"><input type="button" id="dismiss" value="Dismiss"></p>
+                <p class="button"><input type="button" id="dismiss-expired" value="Dismiss"></p>
+            </div>
+        </div>
+
+        <div id="offline" class="dialog hidden">
+            <div>
+                <p class="header">Connection error</p>
+                <p class="body">Connection to the Hauk server was lost. Hauk will try to reconnect in the background. Please check that you have network connectivity.</p>
+                <p class="button"><input type="button" id="dismiss-offline" value="Dismiss"></p>
             </div>
         </div>
 

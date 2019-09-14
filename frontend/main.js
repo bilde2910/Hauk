@@ -110,11 +110,19 @@ var shares = {};
 var id = location.href.substr(location.href.indexOf("?") + 1);
 if (id.indexOf("&") !== -1) id = id.substr(0, id.indexOf("&"));
 
+// Whether the "offline" popup has appeared when the browser is offline.
+var knownOffline = false;
+
 function getJSON(url, callback, invalid) {
     var xhr = new XMLHttpRequest();
+    xhr.timeout = REQUEST_TIMEOUT * 1000;
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status === 200) {
+            // Request successful. Reset offline state and parse the JSON.
+            knownOffline = false;
+            document.getElementById("offline").style.display = "none";
+            document.getElementById("notch").className = "";
             try {
                 var json = JSON.parse(this.responseText);
                 callback(json);
@@ -122,13 +130,24 @@ function getJSON(url, callback, invalid) {
                 console.log(ex);
                 invalid();
             }
+        } else if (this.readyState == 4) {
+            // Requested failed; offline.
+            if (!knownOffline) {
+                knownOffline = true;
+                document.getElementById("offline").style.display = "block";
+                document.getElementById("notch").className = "offline";
+            }
         }
     }
     xhr.send();
 }
 
-document.getElementById("dismiss").addEventListener("click", function() {
+document.getElementById("dismiss-expired").addEventListener("click", function() {
     document.getElementById("expired").style.display = "none";
+});
+
+document.getElementById("dismiss-offline").addEventListener("click", function() {
+    document.getElementById("offline").style.display = "none";
 });
 
 var fetchIntv;
@@ -356,7 +375,7 @@ function processUpdate(data) {
         }
 
         // Gray out the user's location if no data has been received for the
-        // TIMEOUT_DURATION.
+        // OFFLINE_TIMEOUT.
         if (eArrow !== null) {
             var last = shares[user].points.length - 1;
             var point = shares[user].points[last];

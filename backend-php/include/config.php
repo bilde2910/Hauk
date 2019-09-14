@@ -71,6 +71,12 @@
 // before the user is marked "offline" on the map.
 "offline_timeout"   => 30,
 
+// The timeout in seconds for map update requests from the map view. If a web
+// request takes this long without a response, the map viewer is considered
+// offline and will get a warning notifying them that they have lost their
+// network connection.
+"request_timeout"   => 10,
+
 // Maximum number of data points stored for each share before old points are
 // deleted. Map clients will see up to this amount of data points when they load
 // the page.
