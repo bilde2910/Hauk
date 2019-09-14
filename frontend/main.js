@@ -254,7 +254,19 @@ function processUpdate(data) {
                 if (shares[user].marker == null) {
                     // Add a marker to the map if it's not already there.
                     shares[user].icon = L.divIcon({
-                        html: '<div class="marker"><div class="arrow moving-live" id="arrow-' + shares[user].id + '"></div><p><span id="nickname-' + shares[user].id + '"></span><span id="velocity-' + shares[user].id + '">0.0</span> ' + VELOCITY_UNIT.unit + '</p></div>',
+                        html:
+                            '<div class="marker">' +
+                                '<div class="arrow moving-live" id="arrow-' + shares[user].id + '"></div>' +
+                                '<p class="live" id="label-' + shares[user].id + '">' +
+                                    '<span id="nickname-' + shares[user].id + '"></span>' +
+                                    '<span class="velocity">' +
+                                        '<span id="velocity-' + shares[user].id + '">0.0</span> ' +
+                                        VELOCITY_UNIT.unit +
+                                    '</span><span class="offline">' +
+                                        'Offline' +
+                                    '</span>' +
+                                '</p>' +
+                            '</div>',
                         iconAnchor: [33, 18]
                     });
                     shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon}).on("click", function() {
@@ -340,6 +352,30 @@ function processUpdate(data) {
                 eArrow.className = "arrow still-live";
             } else {
                 eArrow.className = "arrow moving-live";
+            }
+        }
+
+        // Gray out the user's location if no data has been received for the
+        // TIMEOUT_DURATION.
+        if (eArrow !== null) {
+            var last = shares[user].points.length - 1;
+            var point = shares[user].points[last];
+            var eLabel = document.getElementById("label-" + shares[user].id);
+
+            if (point.time < (Date.now() / 1000) - OFFLINE_TIMEOUT) {
+                eArrow.className = eArrow.className.split("live").join("dead");
+                eLabel.className = 'dead';
+                shares[user].circle.setStyle({
+                    fillColor: '#555555',
+                    color: '#555555'
+                })
+            } else {
+                eArrow.className = eArrow.className.split("dead").join("live");
+                eLabel.className = 'live';
+                shares[user].circle.setStyle({
+                    fillColor: '#d80037',
+                    color: '#d80037'
+                });
             }
         }
 

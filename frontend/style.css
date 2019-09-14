@@ -194,8 +194,16 @@
     background-image: url(./assets/markers/moving-live.svg);
 }
 
+.arrow.moving-dead {
+    background-image: url(./assets/markers/moving-dead.svg);
+}
+
 .arrow.still-live {
     background-image: url(./assets/markers/still-live.svg);
+}
+
+.arrow.still-dead {
+    background-image: url(./assets/markers/still-dead.svg);
 }
 
 .arrow.still-self {
@@ -213,7 +221,6 @@
 /* The velocity indicator on the marker div. */
 .marker p {
     font-size: 0.9em;
-    background-color: rgba(0,0,0,0.5);
     color: white;
     width: 100%;
     border-radius: 15px;
@@ -224,6 +231,24 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: clip;
+}
+
+/* Location data has been received recently. */
+.marker p.live {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.marker p.live > span.offline {
+    display: none;
+}
+
+/* No location data has been received for a while. */
+.marker p.dead {
+    background-color: rgba(165,0,42,0.5);
+}
+
+.marker p.dead > span.velocity {
+    display: none;
 }
 
 /* Hide the default white box in the top left corner of the marker div. */

@@ -67,6 +67,10 @@
 // Minimum time between each location update, in seconds.
 "min_interval"      => 1,
 
+// The time that should pass without any location updates received, in seconds,
+// before the user is marked "offline" on the map.
+"offline_timeout"   => 30,
+
 // Maximum number of data points stored for each share before old points are
 // deleted. Map clients will see up to this amount of data points when they load
 // the page.
