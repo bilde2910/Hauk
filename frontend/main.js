@@ -275,7 +275,7 @@ function processUpdate(data) {
                     shares[user].icon = L.divIcon({
                         html:
                             '<div class="marker">' +
-                                '<div class="arrow moving-live" id="arrow-' + shares[user].id + '"></div>' +
+                                '<div class="arrow still-live" id="arrow-' + shares[user].id + '"></div>' +
                                 '<p class="live" id="label-' + shares[user].id + '">' +
                                     '<span id="nickname-' + shares[user].id + '"></span>' +
                                     '<span class="velocity">' +

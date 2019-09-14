@@ -37,6 +37,7 @@
 
     <string name="label_status_none">Location sharing inactive</string>
     <string name="label_status_wait">Waiting for initial GNSS fix...</string>
+    <string name="label_status_coarse">Waiting for high accuracy fix...</string>
     <string name="label_status_ok">Location sharing active!</string>
 
     <string name="label_pin_head">YOUR GROUP PIN:</string>

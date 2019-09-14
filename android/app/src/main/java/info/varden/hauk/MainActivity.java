@@ -34,6 +34,7 @@ import java.util.TimerTask;
 
 import info.varden.hauk.dialog.AdoptDialogBuilder;
 import info.varden.hauk.dialog.DialogService;
+import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.service.LocationPushService;
 
 /**
@@ -340,10 +341,16 @@ public class MainActivity extends AppCompatActivity {
                             pusher.putExtra("session", session);
                             pusher.putExtra("interval", (long) interval * 1000L);
                             pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
-                            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new Runnable() {
+                            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new GNSSActiveHandler() {
+                                @Override
+                                public void onCoarseLocationReceived() {
+                                    // Indicate to the user that GPS data is being received when the
+                                    // location pusher starts receiving GPS data.
+                                    labelStatusCur.setText(getString(R.string.label_status_coarse));
+                                }
 
                                 @Override
-                                public void run() {
+                                public void onAccurateLocationReceived() {
                                     // Indicate to the user that GPS data is being received when the
                                     // location pusher starts receiving GPS data.
                                     labelStatusCur.setText(getString(R.string.label_status_ok));

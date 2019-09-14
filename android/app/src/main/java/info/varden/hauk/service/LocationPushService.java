@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.IBinder;
 
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import info.varden.hauk.notify.SharingNotification;
  *
  * @author Marius Lindvall
  */
-public class LocationPushService extends Service implements LocationListener {
+public class LocationPushService extends Service {
 
     public static final String ACTION_ID = "info.varden.hauk.LOCATION_SERVICE";
 
@@ -37,13 +36,17 @@ public class LocationPushService extends Service implements LocationListener {
     private StopSharingTask stopTask;
     // A task that should be run when locations start registering. Used to change a label on the
     // main activity.
-    private Runnable gnssActiveTask;
-    private boolean hasRunActiveTask = false;
+    private GNSSActiveHandler gnssActiveTask;
+    private boolean hasRunCoarseTask = false;
+    private boolean hasRunAccurateTask = false;
 
     private String session;
     private long interval;
 
     private LocationManager locMan;
+
+    private LocationListener listenFine;
+    private LocationListener listenCoarse;
 
     /**
      * Called when the Service is created.
@@ -60,7 +63,7 @@ public class LocationPushService extends Service implements LocationListener {
         this.session = intent.getStringExtra("session");
         this.interval = intent.getLongExtra("interval", -1L);
         this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra("stopTask", -1));
-        this.gnssActiveTask = (Runnable) ReceiverDataRegistry.retrieve(intent.getIntExtra("gnssActiveTask", -1));
+        this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra("gnssActiveTask", -1));
 
         try {
             // Even though we previously requested location permission, we still have to check for
@@ -75,7 +78,40 @@ public class LocationPushService extends Service implements LocationListener {
                 final SharingNotification notify = new SharingNotification(this, this.baseUrl, this.viewUrl, this.stopTask);
                 startForeground(notify.getID(), notify.create());
 
-                locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.interval, 0F, this);
+                this.listenCoarse = new LocationListenerBase() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        if (!hasRunCoarseTask) {
+                            // Notify the main activity that coarse GPS data is now being received,
+                            // such that the UI can be updated.
+                            hasRunCoarseTask = true;
+                            gnssActiveTask.onCoarseLocationReceived();
+                        }
+                        LocationPushService.this.onLocationChanged(location);
+                    }
+                };
+
+                this.listenFine = new LocationListenerBase() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        if (listenCoarse != null) {
+                            // Unregister the coarse location listener, since we are now receiving
+                            // accurate location data.
+                            locMan.removeUpdates(listenCoarse);
+                            listenCoarse = null;
+                        }
+                        if (!hasRunAccurateTask) {
+                            // Notify the main activity that accurate GPS data is now being
+                            // received, such that the UI can be updated.
+                            hasRunAccurateTask = true;
+                            gnssActiveTask.onAccurateLocationReceived();
+                        }
+                        LocationPushService.this.onLocationChanged(location);
+                    }
+                };
+
+                locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.interval, 0F, this.listenCoarse);
+                locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.interval, 0F, this.listenFine);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,20 +121,13 @@ public class LocationPushService extends Service implements LocationListener {
 
     @Override
     public void onDestroy() {
-        locMan.removeUpdates(this);
+        if (this.listenCoarse != null) this.locMan.removeUpdates(this.listenCoarse);
+        this.locMan.removeUpdates(this.listenFine);
         stopForeground(true);
         super.onDestroy();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        // Notify the main activity that GPS data is now being received, such that the UI can be
-        // updated.
-        if (!hasRunActiveTask) {
-            gnssActiveTask.run();
-            hasRunActiveTask = true;
-        }
-
+    private void onLocationChanged(Location location) {
         HashMap<String, String> data = new HashMap<>();
         data.put("lat", String.valueOf(location.getLatitude()));
         data.put("lon", String.valueOf(location.getLongitude()));
@@ -115,15 +144,6 @@ public class LocationPushService extends Service implements LocationListener {
         });
         req.execute(new HTTPThread.Request(this.baseUrl + "api/post.php", data));
     }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {}
-
-    @Override
-    public void onProviderEnabled(String s) {}
-
-    @Override
-    public void onProviderDisabled(String s) {}
 
     @Override
     public IBinder onBind(Intent intent) {
