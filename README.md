@@ -59,7 +59,7 @@ services:
       - ./config/hauk:/etc/hauk
 ```
 
-Copy the [config.php](https://github.com/bilde2910/Hauk/blob/master/backend/include/config.php) file to the ./config/hauk directory and customize it. Leave the memcached connection details as-is; memcached is included in the Docker image.
+Copy the [config.php](https://github.com/bilde2910/Hauk/blob/master/backend-php/include/config.php) file to the ./config/hauk directory and customize it. Leave the memcached connection details as-is; memcached is included in the Docker image.
 
 The Docker container exposes port 80. For security reasons, you should use a reverse proxy in front of Hauk that can handle TLS termination, and only expose Hauk via HTTPS. If you expose Hauk directly on port 80, or via a reverse proxy on port 80, anyone between the clients and server can intercept and read your location data.
 
