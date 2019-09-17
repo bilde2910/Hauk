@@ -28,7 +28,7 @@ fi
 for webroot; do true; done
 
 # If a flag is the last argument, no path is given, so print help and exit
-if [ "$webroot" == "-f" ] || [ "$webroot" == "-c" ]; then
+if [ "$webroot" = "-f" ] || [ "$webroot" = "-c" ]; then
     hauk_help
 fi
 
@@ -40,15 +40,17 @@ useconf=0
 hauk_config() {
     if [ -f "$config" ]; then
         if [ "$1" != "-f" ] && [ "$2" != "-f" ]; then
-            read -e -p "Config file already exists! Overwrite? [y/N]: " repl
-            if [[ "$repl" == [Yy]* ]]; then
-                rm "$config" >/dev/null 2>&1
-                if [ -f "$config" ]; then
-                    echo "You do not have permissions to install the configuration file in"
-                    echo "/etc/hauk. Please run this script as root."
-                    exit 5
-                fi
-            fi
+            read -p "Config file already exists! Overwrite? [y/N]: " repl
+            case "$repl" in
+                [Yy]*)
+                    rm "$config" >/dev/null 2>&1
+                    if [ -f "$config" ]; then
+                        echo "You do not have permissions to install the configuration file in"
+                        echo "/etc/hauk. Please run this script as root."
+                        exit 5
+                    fi
+                    ;;
+            esac
         else
             rm "$config" >/dev/null 2>&1
             if [ -f "$config" ]; then
@@ -74,13 +76,16 @@ hauk_config() {
 
 if ! [ -d "$webroot" ]; then
     if [ "$1" != "-f" ] && [ "$2" != "-f" ]; then
-        read -e -p "Target directory does not exist. Create it? [Y/n]: " empty
-        if [[ "$empty" == [Nn]* ]]; then
-            echo "Aborting..."
-            exit 2
-        else
-            mkdir -p "$webroot" >/dev/null 2>&1
-        fi
+        read -p "Target directory does not exist. Create it? [Y/n]: " empty
+        case "$empty" in
+            [Nn]*)
+                echo "Aborting..."
+                exit 2
+                ;;
+            *)
+                mkdir -p "$webroot" >/dev/null 2>&1
+                ;;
+        esac
     else
         mkdir -p "$webroot" >/dev/null 2>&1
     fi
@@ -97,14 +102,17 @@ if [ "$(ls -A "$webroot")" ]; then
     if [ "$1" != "-f" ] && [ "$2" != "-f" ]; then
         echo "WARNING! Target directory is not empty. If you proceed with the"
         echo "installation, all files in the directory will be deleted."
-        read -e -p "Delete files and continue install? [y/N]: " empty
-        if [[ "$empty" == [Yy]* ]]; then
-            rm -rf "$webroot"
-            mkdir "$webroot"
-        else
-            echo "Aborting..."
-            exit 4
-        fi
+        read -p "Delete files and continue install? [y/N]: " empty
+        case "$empty" in
+            [Yy]*)
+                rm -rf "$webroot"
+                mkdir "$webroot"
+                ;;
+            *)
+                echo "Aborting..."
+                exit 4
+                ;;
+        esac
     else
         rm -rf "$webroot"
         mkdir "$webroot"
@@ -112,10 +120,11 @@ if [ "$(ls -A "$webroot")" ]; then
 fi
 
 if [ "$1" != "-c" ] && [ "$2" != "-c" ]; then
-    read -e -p "Install config file to /etc/hauk? [Y/n]: " empty
-    if ! [[ "$empty" == [Nn]* ]]; then
-        hauk_config
-    fi
+    read -p "Install config file to /etc/hauk? [Y/n]: " empty
+    case "$empty" in
+        [Nn]*) ;;
+        *) hauk_config;;
+    esac
 else
     hauk_config
 fi
@@ -147,8 +156,9 @@ fi
 # If found, prompt to edit the config
 if [ "$editor" ]; then
     echo ""
-    read -e -p "Do you wish to open this file for editing now? [Y/n]: " edit
-    if ! [[ "$edit" == [Nn]* ]]; then
-        "$editor" "$confpath"
-    fi
+    read -p "Do you wish to open this file for editing now? [Y/n]: " edit
+    case "$edit" in
+        [Nn]*) ;;
+        *) "$editor" "$confpath";;
+    esac
 fi
