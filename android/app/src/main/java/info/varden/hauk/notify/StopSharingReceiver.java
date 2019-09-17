@@ -11,7 +11,7 @@ import info.varden.hauk.StopSharingTask;
  */
 public class StopSharingReceiver extends HaukBroadcastReceiver<StopSharingTask> {
 
-    public static final String ACTION_ID = "info.varden.hauk.RETURN_TO_APP";
+    public static final String ACTION_ID = "info.varden.hauk.STOP_SHARING";
 
     @Override
     public String getActionID() {

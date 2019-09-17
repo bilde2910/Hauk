@@ -5,6 +5,7 @@ import android.content.Context;
 
 import androidx.core.app.NotificationCompat;
 
+import info.varden.hauk.MainActivity;
 import info.varden.hauk.R;
 import info.varden.hauk.StopSharingTask;
 
@@ -54,6 +55,7 @@ public class SharingNotification extends HaukNotification {
         // Add "Copy link" and "Stop sharing" buttons to the notification.
         builder.addAction(R.drawable.ic_notify, getContext().getString(R.string.action_copy), new Receiver<>(getContext(), CopyLinkReceiver.class, this.viewUrl).toPending());
         builder.addAction(R.drawable.ic_notify, getContext().getString(R.string.action_stop), new Receiver<>(getContext(), StopSharingReceiver.class, this.stopSharingTask).toPending());
+        builder.setContentIntent(new ReopenIntent(getContext(), MainActivity.class).toPending());
 
         builder.setOngoing(true);
     }

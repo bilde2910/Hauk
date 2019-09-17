@@ -14,7 +14,9 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,7 +29,7 @@
         </receiver>
         <receiver android:name=".notify.StopSharingReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="info.varden.hauk.RETURN_TO_APP" />
+                <action android:name="info.varden.hauk.STOP_SHARING" />
             </intent-filter>
         </receiver>
         <service android:name=".service.LocationPushService" android:enabled="true">
