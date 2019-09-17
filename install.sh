@@ -144,7 +144,7 @@ else
     confpath="$webroot/include/config.php"
 fi
 
-echo "$confpath"
+echo -e "\033[1m$confpath\033[0m"
 
 # Try to get the user's editor
 if [ "$EDITOR" ]; then
