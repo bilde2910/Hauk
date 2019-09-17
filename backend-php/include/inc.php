@@ -21,6 +21,9 @@ const LINK_ID_RAND_BYTES = 32;
 const GROUP_PIN_MIN = 100000;
 const GROUP_PIN_MAX = 999999;
 
+const MEMCACHED = 0;
+const REDIS = 1;
+
 const KILOMETERS_PER_HOUR = array(
     // Relative distance per second multiplied by number of seconds per hour.
     "mpsMultiplier" => 3.6,
@@ -42,6 +45,7 @@ const DEFAULTS = array(
     // This is the default config. This file is used as a fallback for missing
     // options in config.php.
 
+    "storage_backend"       => MEMCACHED,
     "memcached_host"        => 'localhost',
     "memcached_port"        => 11211,
     "memcached_binary"      => false,
@@ -49,6 +53,11 @@ const DEFAULTS = array(
     "memcached_sasl_user"   => "",
     "memcached_sasl_pass"   => "",
     "memcached_prefix"      => 'hauk',
+    "redis_host"            => 'localhost',
+    "redis_port"            => 6379,
+    "redis_use_auth"        => false,
+    "redis_auth"            => '',
+    "redis_prefix"          => 'hauk',
     "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
     "map_tile_uri"          => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     "map_attribution"       => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
@@ -91,9 +100,9 @@ function getConfig($item) {
     if (array_key_exists($item, DEFAULTS)) return DEFAULTS[$item];
 }
 
-define("PREFIX_SESSION", getConfig("memcached_prefix")."-session-");
-define("PREFIX_LOCDATA", getConfig("memcached_prefix")."-locdata-");
-define("PREFIX_GROUPID", getConfig("memcached_prefix")."-groupid-");
+define("PREFIX_SESSION", "-session-");
+define("PREFIX_LOCDATA", "-locdata-");
+define("PREFIX_GROUPID", "-groupid-");
 
 // A base class for location shares. Shares contain a reference to all sessions
 // that broadcasts location data to the share, but does not contain the location
@@ -555,16 +564,30 @@ function requirePOST(...$args) {
 // Hauk maintains compatibility with both `memcache` and `memcached`, meaning we
 // need an abstraction layer between Hauk and the extensions to ensure a unified
 // interface for both. This code loads the correct memcache wrapper.
-if (extension_loaded("memcached")) {
-    include_once(__DIR__."/wrapper/memcached.php");
-} else if (extension_loaded("memcache")) {
-    include_once(__DIR__."/wrapper/memcache.php");
-} else {
-    die("No compatible memcached extension (memcache or memcached) is enabled in your PHP config!\n");
+
+switch (getConfig("storage_backend")) {
+    case MEMCACHED:
+        if (extension_loaded("memcached")) {
+            include_once(__DIR__."/wrapper/memcached.php");
+        } else if (extension_loaded("memcache")) {
+            include_once(__DIR__."/wrapper/memcache.php");
+        } else {
+            die("No compatible memcached extension (memcache or memcached) is enabled in your PHP config!\n");
+        }
+        break;
+    case REDIS:
+        if (extension_loaded("redis")) {
+            include_once(__DIR__."/wrapper/redis.php");
+        } else {
+            die("No compatible redis extension (redis) is enabled in your PHP config!\n");
+        }
+        break;
+    default:
+        die("You have set an invalid storage_backend in Hauk!");
 }
+
 
 // Returns a memcached instance.
 function memConnect() {
-    $memcache = new MemWrapper(getConfig("memcached_host"), getConfig("memcached_port"));
-    return $memcache;
+    return new MemWrapper();
 }

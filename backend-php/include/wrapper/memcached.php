@@ -8,7 +8,7 @@
 class MemWrapper {
     private $memcache = null;
 
-    function __construct($host, $port) {
+    function __construct() {
         // If the hostname starts with "unix://", this is a UNIX socket.
         // The `memcached` extension only needs the full pathname and not the
         // unix scheme, so we strip the scheme from the path.
@@ -27,21 +27,17 @@ class MemWrapper {
     }
 
     function get($key) {
-        $data = $this->memcache->get($key);
+        $data = $this->memcache->get(getConfig("memcached_prefix").$key);
         if ($data === false) return false;
         return json_decode($data, true);
     }
 
     function set($key, $data, $expire) {
-        $this->memcache->set($key, json_encode($data), $expire);
-    }
-
-    function replace($key, $data) {
-        $this->memcache->replace($key, json_encode($data), $expire);
+        $this->memcache->set(getConfig("memcached_prefix").$key, json_encode($data), $expire);
     }
 
     function delete($key) {
-        $this->memcache->delete($key);
+        $this->memcache->delete(getConfig("memcached_prefix").$key);
     }
 }
 

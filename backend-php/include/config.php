@@ -1,5 +1,21 @@
 <?php const CONFIG = array(
 
+// The type of storage backend Hauk will use. Valid values include:
+// MEMCACHED, REDIS
+//
+// For MEMCACHED, you need either the `memcached` or `memcache` extensions
+// enabled in PHP.
+//
+// For REDIS, you need `redis` extension enabled. Note that `redis` depends on
+// `igbinary`, so if you get an error that a redis extension was not found, even
+// though you enabled `redis`, you may have to also install and enable
+// `igbinary` in PHP.
+"storage_backend"       => REDIS,
+
+/*----------------------------------------------------------------------------*\
+|  MEMCACHED SPECIFIC SETTINGS                                                 |
+\*----------------------------------------------------------------------------*/
+
 // Connection to memcached for data storage. To connect via UNIX socket instead
 // of TCP, set host to 'unix:///path/to/memcached.sock' and port to 0.
 "memcached_host"        => 'localhost',
@@ -17,6 +33,28 @@
 // A prefix to use for all variables sent to memcached. Useful if you have a
 // shared memcached instance or run multiple instances of Hauk.
 "memcached_prefix"  => 'hauk',
+
+/*----------------------------------------------------------------------------*\
+|  REDIS SPECIFIC SETTINGS                                                     |
+\*----------------------------------------------------------------------------*/
+
+// Connection to Redis for data storage. To connect via UNIX socket instead of
+// TCP, set host to '/path/to/redis.sock'.
+"redis_host"            => 'localhost',
+"redis_port"            => 6379,
+
+// If you use password authentication in Redis, set `redis_use_auth` to true and
+// enter the password in `redis_auth`.
+"redis_use_auth"        => false,
+"redis_auth"            => '',
+
+// A prefix to use for all variables sent to Redis. Useful if you have a shared
+// Redis instance or run multiple instances of Hauk.
+"redis_prefix"          => 'hauk',
+
+/*----------------------------------------------------------------------------*\
+|  GENERAL SETTINGS                                                            |
+\*----------------------------------------------------------------------------*/
 
 // A hashed password that is required for creating sessions and posting location
 // data to Hauk. To generate this value on the terminal:
