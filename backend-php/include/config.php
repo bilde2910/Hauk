@@ -10,7 +10,7 @@
 // `igbinary`, so if you get an error that a redis extension was not found, even
 // though you enabled `redis`, you may have to also install and enable
 // `igbinary` in PHP.
-"storage_backend"       => REDIS,
+"storage_backend"       => MEMCACHED,
 
 /*----------------------------------------------------------------------------*\
 |  MEMCACHED SPECIFIC SETTINGS                                                 |
