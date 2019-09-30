@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
 import info.varden.hauk.http.AdoptSharePacket;
 import info.varden.hauk.struct.Share;
@@ -120,7 +121,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // When the share URL text is changed, try to extract the share ID using regex. If
                 // a match is found, replace the entire contents with the match.
-                String urlMatch = "\\?([A-Za-z0-9-]+)";
+                String urlMatch = HaukConst.REGEX_ADOPT_ID_FROM_LINK;
                 Matcher m = Pattern.compile(urlMatch).matcher(charSequence);
                 if (m.find()) {
                     diagTxtShare.setText(m.group(1));

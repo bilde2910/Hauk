@@ -75,7 +75,7 @@ public abstract class Packet {
      * Sends the packet.
      */
     public final void send() {
-        HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
+        HTTPThread req = new HTTPThread(this.ctx, new HTTPThread.Callback() {
             @Override
             public void run(HTTPThread.Response resp) {
                 // An exception may have occurred, but it cannot be thrown because this is a
@@ -92,6 +92,8 @@ public abstract class Packet {
                 }
             }
         });
+
+        //noinspection StringConcatenation
         req.execute(new HTTPThread.Request(this.server + this.path, this.params));
     }
 }

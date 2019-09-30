@@ -1,4 +1,6 @@
 <resources>
+    <string name="locale_code">en-US</string>
+
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="label_heading">Open source location sharing</string>
@@ -86,6 +88,7 @@
     <string name="err_missing_perms">Location permission is required to use this app.</string>
     <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
     <string name="err_empty">The server returned an empty response.</string>
+    <string name="err_response_code">Received HTTP %d from server!</string>
 
     <string name="err_outdated">Server is out of date</string>
     <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>

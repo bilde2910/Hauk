@@ -20,7 +20,9 @@ public abstract class HaukNotification {
     private final Context ctx;
     private final int id;
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String NOTIFY_CHANNEL_ID = "hauk";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String NOTIFY_CHANNEL_NAME = "Hauk";
 
     // Whether or not the notification has been despawned.

@@ -2,6 +2,7 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.Version;
@@ -26,12 +27,12 @@ public abstract class AdoptSharePacket extends Packet {
      * @param nickname The nickname that should be assigned to the user when adopted.
      */
     public AdoptSharePacket(Context ctx, Share target, String origin, String nickname) {
-        super(ctx, target.getSession().getServerURL(), "api/adopt.php");
+        super(ctx, target.getSession().getServerURL(), HaukConst.URL_PATH_ADOPT_SHARE);
         this.nickname = nickname;
-        addParameter("sid", target.getSession().getID());
-        addParameter("nic", nickname);
-        addParameter("aid", origin);
-        addParameter("pin", target.getJoinCode());
+        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, target.getSession().getID());
+        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
+        addParameter(HaukConst.PACKET_PARAM_ID_TO_ADOPT, origin);
+        addParameter(HaukConst.PACKET_PARAM_GROUP_PIN, target.getJoinCode());
     }
 
     @Override
@@ -41,7 +42,7 @@ public abstract class AdoptSharePacket extends Packet {
             throw new ServerException(getContext(), R.string.err_empty);
         } else {
             // A successful response always has OK on line 1.
-            if (data[0].equals("OK")) {
+            if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
                 onSuccessfulAdoption(this.nickname);
             } else {
                 // Unknown response.

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import info.varden.hauk.BuildConfig;
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 
@@ -21,7 +22,7 @@ public class ResumableSessions {
 
     public ResumableSessions(Context ctx) {
         this.ctx = ctx;
-        this.prefs = ctx.getSharedPreferences("sessionResumption", Context.MODE_PRIVATE);
+        this.prefs = ctx.getSharedPreferences(HaukConst.SHARED_PREFS_RESUMABLE, Context.MODE_PRIVATE);
     }
 
     /**
@@ -30,16 +31,16 @@ public class ResumableSessions {
      * they want to resume them.
      */
     public void tryResumeShare(ResumeHandler handler) {
-        if (this.prefs.getBoolean("canResume", false)) {
+        if (this.prefs.getBoolean(HaukConst.RESUME_AVAILABLE, false)) {
 
             // Check if the app version that wrote the resumption data is the same as this session
             // to avoid deserialization errors due to incompatibilities.
-            String writeVersion = this.prefs.getString("clientVersion", "");
+            String writeVersion = this.prefs.getString(HaukConst.RESUME_CLIENT_VERSION, "");
             if (writeVersion.equals(BuildConfig.VERSION_NAME)) {
 
                 // Get session parameters.
-                final Session session = new StringSerializer<Session>().deserialize(this.prefs.getString("sessionParams", null));
-                final List<Share> shares = new StringSerializer<ArrayList<Share>>().deserialize(this.prefs.getString("shareParams", null));
+                final Session session = new StringSerializer<Session>().deserialize(this.prefs.getString(HaukConst.RESUME_SESSION_PARAMS, null));
+                final List<Share> shares = new StringSerializer<ArrayList<Share>>().deserialize(this.prefs.getString(HaukConst.RESUME_SHARE_PARAMS, null));
 
                 // Check that the session is still valid.
                 if (session != null && !session.hasExpired() && shares != null && shares.size() > 0) {
@@ -59,9 +60,9 @@ public class ResumableSessions {
      */
     public void setSessionResumable(Session session) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("canResume", true);
-        editor.putString("clientVersion", BuildConfig.VERSION_NAME);
-        editor.putString("sessionParams", new StringSerializer<Session>().serialize(session));
+        editor.putBoolean(HaukConst.RESUME_AVAILABLE, true);
+        editor.putString(HaukConst.RESUME_CLIENT_VERSION, BuildConfig.VERSION_NAME);
+        editor.putString(HaukConst.RESUME_SESSION_PARAMS, new StringSerializer<Session>().serialize(session));
         editor.apply();
     }
 
@@ -74,13 +75,13 @@ public class ResumableSessions {
     public void addShareResumable(Share share) {
         // Get the current list of resumable shares.
         StringSerializer<ArrayList<Share>> serializer = new StringSerializer<>();
-        ArrayList<Share> shares = serializer.deserialize(this.prefs.getString("shareParams", null));
+        ArrayList<Share> shares = serializer.deserialize(this.prefs.getString(HaukConst.RESUME_SHARE_PARAMS, null));
         if (shares == null) shares = new ArrayList<>();
 
         // Add the share and save the updated list.
         shares.add(share);
         SharedPreferences.Editor editor = this.prefs.edit();
-        editor.putString("shareParams", serializer.serialize(shares));
+        editor.putString(HaukConst.RESUME_SHARE_PARAMS, serializer.serialize(shares));
         editor.apply();
     }
 
@@ -92,7 +93,7 @@ public class ResumableSessions {
     public void removeResumableShare(String shareID) {
         // Get the current list of resumable shares.
         StringSerializer<ArrayList<Share>> serializer = new StringSerializer<>();
-        ArrayList<Share> shares = serializer.deserialize(this.prefs.getString("shareParams", null));
+        ArrayList<Share> shares = serializer.deserialize(this.prefs.getString(HaukConst.RESUME_SHARE_PARAMS, null));
         if (shares == null) return;
 
         // Remove the share and save the updated list.
@@ -103,7 +104,7 @@ public class ResumableSessions {
             }
         }
         SharedPreferences.Editor editor = this.prefs.edit();
-        editor.putString("shareParams", serializer.serialize(shares));
+        editor.putString(HaukConst.RESUME_SHARE_PARAMS, serializer.serialize(shares));
         editor.apply();
     }
 

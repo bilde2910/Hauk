@@ -25,15 +25,15 @@ public abstract class LocationUpdatePacket extends Packet {
      * @param location The updated location data obtained from GNSS/network sensors.
      */
     public LocationUpdatePacket(Context ctx, Session session, Location location) {
-        super(ctx, session.getServerURL(), "api/post.php");
-        addParameter("lat", String.valueOf(location.getLatitude()));
-        addParameter("lon", String.valueOf(location.getLongitude()));
-        addParameter("time", String.valueOf((double) System.currentTimeMillis() / 1000D));
-        addParameter("sid", session.getID());
+        super(ctx, session.getServerURL(), HaukConst.URL_PATH_POST_LOCATION);
+        addParameter(HaukConst.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
+        addParameter(HaukConst.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
+        addParameter(HaukConst.PACKET_PARAM_TIMESTAMP, String.valueOf((double) System.currentTimeMillis() / 1000D));
+        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, session.getID());
 
         // Not all devices provide these parameters.
-        if (location.hasSpeed()) addParameter("spd", String.valueOf(location.getSpeed()));
-        if (location.hasAccuracy()) addParameter("acc", String.valueOf(location.getAccuracy()));
+        if (location.hasSpeed()) addParameter(HaukConst.PACKET_PARAM_SPEED, String.valueOf(location.getSpeed()));
+        if (location.hasAccuracy()) addParameter(HaukConst.PACKET_PARAM_ACCURACY, String.valueOf(location.getAccuracy()));
     }
 
     @Override
@@ -43,7 +43,7 @@ public abstract class LocationUpdatePacket extends Packet {
             throw new ServerException(getContext(), R.string.err_empty);
         }
 
-        if (data[0].equals("OK")) {
+        if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
             // If the backend is >= v1.2, post.php returns a list of currently active share links.
             // Update the user interface to include these.
             if (backendVersion.atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {

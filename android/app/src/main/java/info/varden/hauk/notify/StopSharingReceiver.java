@@ -11,6 +11,7 @@ import info.varden.hauk.StopSharingTask;
  */
 public class StopSharingReceiver extends HaukBroadcastReceiver<StopSharingTask> {
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final String ACTION_ID = "info.varden.hauk.STOP_SHARING";
 
     @Override

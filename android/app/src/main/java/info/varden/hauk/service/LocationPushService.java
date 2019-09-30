@@ -10,11 +10,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.IBinder;
 
-import info.varden.hauk.utils.ReceiverDataRegistry;
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.http.LocationUpdatePacket;
 import info.varden.hauk.notify.SharingNotification;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
  * This class is a location listener that POSTs all location updates to Hauk as it receives them. It
@@ -25,6 +26,7 @@ import info.varden.hauk.struct.Share;
  */
 public class LocationPushService extends Service {
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final String ACTION_ID = "info.varden.hauk.LOCATION_SERVICE";
 
     // A task that should be run when sharing ends, either automatically or by user request.
@@ -54,9 +56,9 @@ public class LocationPushService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.share = (Share) ReceiverDataRegistry.retrieve(intent.getIntExtra("share", -1));
-        this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra("stopTask", -1));
-        this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra("gnssActiveTask", -1));
+        this.share = (Share) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_SHARE, -1));
+        this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_STOP_TASK, -1));
+        this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_GNSS_ACTIVE_TASK, -1));
 
         try {
             // Even though we previously requested location permission, we still have to check for

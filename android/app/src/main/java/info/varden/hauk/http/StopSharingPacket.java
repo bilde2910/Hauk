@@ -2,6 +2,7 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
@@ -21,8 +22,8 @@ public abstract class StopSharingPacket extends Packet {
      * @param session The session to delete.
      */
     public StopSharingPacket(Context ctx, Session session) {
-        super(ctx, session.getServerURL(), "api/stop.php");
-        addParameter("sid", session.getID());
+        super(ctx, session.getServerURL(), HaukConst.URL_PATH_STOP_SHARING);
+        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, session.getID());
     }
 
     /**
@@ -32,9 +33,9 @@ public abstract class StopSharingPacket extends Packet {
      * @param share The share to stop.
      */
     public StopSharingPacket(Context ctx, Share share) {
-        super(ctx, share.getSession().getServerURL(), "api/stop.php");
-        addParameter("sid", share.getSession().getID());
-        addParameter("lid", share.getID());
+        super(ctx, share.getSession().getServerURL(), HaukConst.URL_PATH_STOP_SHARING);
+        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, share.getSession().getID());
+        addParameter(HaukConst.PACKET_PARAM_SHARE_ID, share.getID());
     }
 
     @Override
@@ -45,7 +46,7 @@ public abstract class StopSharingPacket extends Packet {
         }
 
         // All successful requests have OK as line 1.
-        if (data[0].equals("OK")) {
+        if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
             onSuccess();
         } else {
             // If the first line of the response is not "OK", an error of some sort has occurred and

@@ -37,7 +37,7 @@ public class DialogService {
      * @param message A string representing the body of the dialog box.
      */
     public void showDialog(int title, String message) {
-        showDialog(title, message, (Runnable) null);
+        showDialog(title, message, null);
     }
 
     /**
@@ -66,7 +66,7 @@ public class DialogService {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this.ctx);
         dlgAlert.setMessage(message);
         dlgAlert.setTitle(title);
-        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        dlgAlert.setPositiveButton(this.ctx.getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (onOK != null) onOK.run();
             }

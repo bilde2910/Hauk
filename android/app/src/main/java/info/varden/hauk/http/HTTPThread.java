@@ -1,5 +1,6 @@
 package info.varden.hauk.http;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -14,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import info.varden.hauk.BuildConfig;
+import info.varden.hauk.HaukConst;
+import info.varden.hauk.R;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.throwable.ServerException;
 
 /**
  * An asynchronous task that POSTs data to a given URL with the given POST fields.
@@ -23,6 +27,9 @@ import info.varden.hauk.struct.Version;
  */
 public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread.Response> {
 
+    // Android application context.
+    private final Context ctx;
+
     // A callback that is called after the request is completed. Contains received data, or errors,
     // if applicable.
     private final Callback callback;
@@ -30,11 +37,13 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
     // This class is only for use by info.varden.hauk.http.Packet. Other classes should always call
     // the relevant packet to perform a request rather than using HTTPThread directly. This
     // constructor is thus package-level private.
-    protected HTTPThread(Callback callback) {
+    protected HTTPThread(Context ctx, Callback callback) {
+        this.ctx = ctx;
         this.callback = callback;
     }
 
     @Override
+    @SuppressWarnings("HardCodedStringLiteral")
     protected Response doInBackground(Request... data) {
         try {
             // Create a URL-encoded data body for the HTTP request. Only the first request in the
@@ -77,10 +86,10 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
                     lines.add(line);
                 }
                 br.close();
-                return new Response(null, lines.toArray(new String[lines.size()]), new Version(client.getHeaderField("X-Hauk-Version")));
+                return new Response(null, lines.toArray(new String[lines.size()]), new Version(client.getHeaderField(HaukConst.HTTP_HEADER_HAUK_VERSION)));
             } else {
                 // Hauk only returns HTTP 200; any other response should be considered an error.
-                throw new Exception("Received HTTP " + response + " from server!");
+                throw new ServerException(String.format(this.ctx.getString(R.string.err_response_code), response));
             }
         } catch (Exception ex) {
             // If an exception occurred, return no data.

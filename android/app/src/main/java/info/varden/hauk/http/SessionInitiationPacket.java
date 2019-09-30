@@ -23,13 +23,13 @@ public abstract class SessionInitiationPacket extends Packet {
     private ShareMode mode;
 
     private SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval) {
-        super(ctx, server, "api/create.php");
+        super(ctx, server, HaukConst.URL_PATH_CREATE_SHARE);
         this.server = server;
         this.durationSec = durationSec;
         this.interval = interval;
-        addParameter("pwd", password);
-        addParameter("dur", String.valueOf(durationSec));
-        addParameter("int", String.valueOf(interval));
+        addParameter(HaukConst.PACKET_PARAM_PASSWORD, password);
+        addParameter(HaukConst.PACKET_PARAM_DURATION, String.valueOf(durationSec));
+        addParameter(HaukConst.PACKET_PARAM_INTERVAL, String.valueOf(interval));
     }
 
     /**
@@ -45,8 +45,8 @@ public abstract class SessionInitiationPacket extends Packet {
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, boolean allowAdoption) {
         this(ctx, server, password, durationSec, interval);
         this.mode = ShareMode.CREATE_ALONE;
-        addParameter("mod", String.valueOf(this.mode.getMode()));
-        addParameter("ado", allowAdoption ? "1" : "0");
+        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
+        addParameter(HaukConst.PACKET_PARAM_ADOPTABLE, allowAdoption ? "1" : "0");
     }
 
     /**
@@ -62,8 +62,8 @@ public abstract class SessionInitiationPacket extends Packet {
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname) {
         this(ctx, server, password, durationSec, interval);
         this.mode = ShareMode.CREATE_GROUP;
-        addParameter("mod", String.valueOf(this.mode.getMode()));
-        addParameter("nic", nickname);
+        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
+        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
     }
 
     /**
@@ -80,9 +80,9 @@ public abstract class SessionInitiationPacket extends Packet {
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname, String groupPin) {
         this(ctx, server, password, durationSec, interval);
         this.mode = ShareMode.JOIN_GROUP;
-        addParameter("mod", String.valueOf(this.mode.getMode()));
-        addParameter("nic", nickname);
-        addParameter("pin", groupPin);
+        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
+        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
+        addParameter(HaukConst.PACKET_PARAM_GROUP_PIN, groupPin);
     }
 
     @Override
@@ -104,7 +104,7 @@ public abstract class SessionInitiationPacket extends Packet {
 
         // A successful session initiation contains "OK" on line 1, the session ID on line 2, and a
         // publicly sharable tracking link on line 3.
-        if (data[0].equals("OK")) {
+        if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
             String sessionID = data[1];
             String viewURL = data[2];
             String joinCode = null;

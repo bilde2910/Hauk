@@ -5,10 +5,10 @@ import android.content.Context;
 
 import androidx.core.app.NotificationCompat;
 
-import info.varden.hauk.ui.MainActivity;
 import info.varden.hauk.R;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.ui.MainActivity;
 
 /**
  * Hauk's persistent notification that prevents Hauk from being stopped while in the background.

@@ -3,6 +3,9 @@ package info.varden.hauk.struct;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import info.varden.hauk.HaukConst;
 
 /**
  * A data structure that contains all data required to maintain a session against a Hauk server.
@@ -45,11 +48,11 @@ public class Session implements Serializable {
     }
 
     public String getExpiryString() {
-        return getExpiryString("yyyy-MM-dd HH:mm:ss z");
+        return getExpiryString(HaukConst.DATE_FORMAT);
     }
 
     public String getExpiryString(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         return formatter.format(getExpiryDate());
     }
 

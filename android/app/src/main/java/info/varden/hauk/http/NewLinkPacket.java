@@ -28,10 +28,10 @@ public abstract class NewLinkPacket extends Packet {
      * @param allowAdoption Whether or not this share should be adoptable.
      */
     public NewLinkPacket(Context ctx, Session session, boolean allowAdoption) {
-        super(ctx, session.getServerURL(), "api/newlink.php");
+        super(ctx, session.getServerURL(), HaukConst.URL_PATH_CREATE_NEW_LINK);
         this.session = session;
-        addParameter("sid", session.getID());
-        addParameter("ado", allowAdoption ? "1" : "0");
+        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, session.getID());
+        addParameter(HaukConst.PACKET_PARAM_ADOPTABLE, allowAdoption ? "1" : "0");
     }
 
     @Override
@@ -43,7 +43,7 @@ public abstract class NewLinkPacket extends Packet {
 
         // A successful session initiation contains "OK" on line 1, the publicly sharable tracking
         // link on line 2, and its ID on line 3.
-        if (data[0].equals("OK")) {
+        if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
             String viewLink = data[1];
             String viewID = data[2];
             onShareCreated(new Share(this.session, viewLink, viewID, ShareMode.CREATE_ALONE));

@@ -39,8 +39,6 @@ import java.util.TimerTask;
 
 import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
-import info.varden.hauk.struct.ShareMode;
-import info.varden.hauk.utils.ReceiverDataRegistry;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.dialog.AdoptDialogBuilder;
 import info.varden.hauk.dialog.CustomDialogBuilder;
@@ -53,7 +51,9 @@ import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.service.LocationPushService;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.utils.ReceiverDataRegistry;
 import info.varden.hauk.utils.ResumableSessions;
 import info.varden.hauk.utils.TimeUtils;
 
@@ -501,9 +501,9 @@ public class MainActivity extends AppCompatActivity {
             // the Hauk backend.
             Intent pusher = new Intent(MainActivity.this, LocationPushService.class);
             pusher.setAction(LocationPushService.ACTION_ID);
-            pusher.putExtra("share", ReceiverDataRegistry.register(share));
-            pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
-            pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new GNSSActiveHandler() {
+            pusher.putExtra(HaukConst.EXTRA_SHARE, ReceiverDataRegistry.register(share));
+            pusher.putExtra(HaukConst.EXTRA_STOP_TASK, ReceiverDataRegistry.register(stopTask));
+            pusher.putExtra(HaukConst.EXTRA_GNSS_ACTIVE_TASK, ReceiverDataRegistry.register(new GNSSActiveHandler() {
                 @Override
                 public void onCoarseLocationReceived() {
                     // Indicate to the user that GPS data is being received when the
@@ -637,6 +637,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                //noinspection HardCodedStringLiteral
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
                 shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
@@ -778,36 +779,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPreferences() {
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
-        txtServer.setText(settings.getString("server", ""));
-        txtDuration.setText(String.valueOf(settings.getInt("duration", 30)));
-        txtInterval.setText(String.valueOf(settings.getInt("interval", 1)));
-        txtPassword.setText(settings.getString("password", ""));
-        txtNickname.setText(settings.getString("nickname", ""));
-        selUnit.setSelection(settings.getInt("durUnit", HaukConst.DURATION_UNIT_MINUTES));
-        chkRemember.setChecked(settings.getBoolean("rememberPassword", false));
-        chkAllowAdopt.setChecked(settings.getBoolean("allowAdoption", true));
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(HaukConst.SHARED_PREFS_CONNECTION, MODE_PRIVATE);
+        txtServer.setText(settings.getString(HaukConst.PREF_SERVER, ""));
+        txtDuration.setText(String.valueOf(settings.getInt(HaukConst.PREF_DURATION, 30)));
+        txtInterval.setText(String.valueOf(settings.getInt(HaukConst.PREF_INTERVAL, 1)));
+        txtPassword.setText(settings.getString(HaukConst.PREF_PASSWORD, ""));
+        txtNickname.setText(settings.getString(HaukConst.PREF_NICKNAME, ""));
+        selUnit.setSelection(settings.getInt(HaukConst.PREF_DURATION_UNIT, HaukConst.DURATION_UNIT_MINUTES));
+        chkRemember.setChecked(settings.getBoolean(HaukConst.PREF_REMEMBER_PASSWORD, false));
+        chkAllowAdopt.setChecked(settings.getBoolean(HaukConst.PREF_ALLOW_ADOPTION, true));
     }
 
     private void setPreferences(String server, int duration, int interval, int durUnit, String nickname, boolean allowAdoption) {
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(HaukConst.SHARED_PREFS_CONNECTION, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
-        editor.putString("server", server);
-        editor.putInt("duration", duration);
-        editor.putInt("interval", interval);
-        editor.putString("nickname", nickname);
-        editor.putInt("durUnit", durUnit);
-        editor.putBoolean("allowAdoption", allowAdoption);
+        editor.putString(HaukConst.PREF_SERVER, server);
+        editor.putInt(HaukConst.PREF_DURATION, duration);
+        editor.putInt(HaukConst.PREF_INTERVAL, interval);
+        editor.putString(HaukConst.PREF_NICKNAME, nickname);
+        editor.putInt(HaukConst.PREF_DURATION_UNIT, durUnit);
+        editor.putBoolean(HaukConst.PREF_ALLOW_ADOPTION, allowAdoption);
         editor.apply();
     }
 
     private void setPassword(boolean store, String password) {
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("connectionPrefs", MODE_PRIVATE);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(HaukConst.SHARED_PREFS_CONNECTION, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
-        editor.putBoolean("rememberPassword", store);
-        editor.putString("password", password);
+        editor.putBoolean(HaukConst.PREF_REMEMBER_PASSWORD, store);
+        editor.putString(HaukConst.PREF_PASSWORD, password);
         editor.apply();
     }
 }
