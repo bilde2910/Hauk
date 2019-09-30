@@ -366,14 +366,38 @@
                     android:text="@string/btn_start"
                     android:onClick="startSharing" />
 
-                <!-- The button that shares the link. -->
+                <!-- The button that adds a new sharing link. -->
                 <Button
                     android:id="@+id/btnLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="@string/btn_link"
-                    android:onClick="shareLink" />
+                    android:text="@string/btn_link" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+
+                <!-- The header above the list of active share links. -->
+                <TextView
+                    android:id="@+id/labelHeadLinks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/label_heading_links"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+
+                <!-- The list of currently active links. Contains instances of the content_link layout. -->
+                <TableLayout
+                    android:id="@+id/tableLinks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TableLayout>
 
             </LinearLayout>
         </ScrollView>

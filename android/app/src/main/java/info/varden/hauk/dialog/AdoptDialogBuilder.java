@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 import info.varden.hauk.HTTPThread;
 import info.varden.hauk.R;
+import info.varden.hauk.struct.Share;
 
 /**
  * A class that builds a dialog with two input boxes for adopting another share into a group share.
@@ -25,15 +26,11 @@ import info.varden.hauk.R;
  */
 public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
     private final Context ctx;
-    private final String serverURL;
-    private final String sessionID;
-    private final String groupPIN;
+    private final Share share;
 
-    public AdoptDialogBuilder(Context ctx, String serverURL, String sessionID, String groupPIN) {
+    public AdoptDialogBuilder(Context ctx, Share share) {
         this.ctx = ctx;
-        this.serverURL = serverURL;
-        this.sessionID = sessionID;
-        this.groupPIN = groupPIN;
+        this.share = share;
     }
 
     private EditText diagTxtShare;
@@ -63,10 +60,10 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
 
         // Send the HTTP request to try and adopt the share.
         HashMap<String, String> data = new HashMap<>();
-        data.put("sid", this.sessionID);
+        data.put("sid", this.share.getSession().getID());
         data.put("nic", nick);
         data.put("aid", adoptID);
-        data.put("pin", this.groupPIN);
+        data.put("pin", this.share.getJoinCode());
 
         HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
             @Override
@@ -94,7 +91,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
                 }
             }
         });
-        req.execute(new HTTPThread.Request(this.serverURL + "api/adopt.php", data));
+        req.execute(new HTTPThread.Request(this.share.getSession().getServerURL() + "api/adopt.php", data));
     }
 
     /**

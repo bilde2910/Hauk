@@ -20,8 +20,13 @@
 
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
-    <string name="btn_link">Share tracking link</string>
+    <string name="btn_link">Create new tracking link</string>
     <string name="btn_adopt">Add an existing share</string>
+
+    <string name="label_heading_links">Currently active links</string>
+    <string name="link_type_solo">Your location only</string>
+    <string name="link_type_group_host">Group share (host)</string>
+    <string name="link_type_group_member">Group share (member)</string>
 
     <string-array name="sel_mode_opts">
         <item>Share my own location only</item>
@@ -48,10 +53,18 @@
     <string name="adopt_title">Adopt an existing share</string>
     <string name="adopt_body">You can adopt an existing individual location share to incorporate it in this group share. Please paste the URL or share ID of the share you wish to adopt (e.g. %s?XXXX-XXXX) and assign a nickname to this share.</string>
 
+    <string name="create_link_title">Create new sharing link</string>
+    <string name="create_link_body">You can create several links to access your shared location. Each link can be stopped individually, allowing fine-grained control over who can see your location at any time.\n\nAny additional links you create this way will be single-user shares that show your location only.</string>
+
+    <string-array name="sel_new_mode_opts">
+        <item>Share my own location only</item>
+    </string-array>
+
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
+    <string name="btn_create">Create</string>
 
     <string name="action_copy">Copy link</string>
     <string name="action_copied">Copied link from Hauk</string>
@@ -63,6 +76,8 @@
     <string name="prog_body">Connecting to Hauk...</string>
     <string name="prog_adopt_title">Adopting</string>
     <string name="prog_adopt_body">Adopting %s...</string>
+    <string name="prog_new_link_title">Creating link</string>
+    <string name="prog_new_link_body">Creating new sharing link...</string>
 
     <string name="err_client">Invalid settings</string>
     <string name="err_connect">Connection error</string>
@@ -82,7 +97,9 @@
     <string name="adopted_title">Share adopted</string>
     <string name="adopted_body">%s has been added to your share!</string>
     <string name="resume_title">Resume session</string>
-    <string name="resume_body">You have an unfinished session:\n\nSession: %s\nExpires: %s\n\nDo you wish to resume this session?</string>
+    <string name="resume_body">You have an unfinished session:\n\nActive sharing link(s): %d\nExpires: %s\n\nDo you wish to resume this session?</string>
+    <string name="link_added_title">Link created</string>
+    <string name="link_added_body">A new link was successfully created for your location share! Click the share button to copy the publicly viewable URL for your share.</string>
 
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>

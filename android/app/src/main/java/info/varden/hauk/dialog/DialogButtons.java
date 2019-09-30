@@ -7,8 +7,9 @@ import info.varden.hauk.R;
  */
 public enum DialogButtons {
 
-    OK_CANCEL   (R.string.btn_ok, R.string.btn_cancel),
-    YES_NO      (R.string.btn_yes, R.string.btn_no);
+    OK_CANCEL       (R.string.btn_ok, R.string.btn_cancel),
+    YES_NO          (R.string.btn_yes, R.string.btn_no),
+    CREATE_CANCEL   (R.string.btn_create, R.string.btn_cancel);
 
     // The dialog has one positive and one negative button.
     private final int positive;

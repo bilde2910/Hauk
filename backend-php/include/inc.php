@@ -3,7 +3,7 @@
 // An include file containing constants and common functions for the Hauk
 // backend. It loads the configuration file and declares it as a constant.
 
-const BACKEND_VERSION = "1.1";
+const BACKEND_VERSION = "1.2";
 
 // Create mode for create.php. Corresponds with the constants from the Android
 // app in android/app/src/main/java/info/varden/hauk/HaukConst.java.
@@ -349,6 +349,14 @@ class GroupShare extends Share {
         return $hosts;
     }
 
+    // Removes a host from the share. After calling, also call ->clean().
+    public function removeHost($session) {
+        while (($key = array_search($session->getSessionID(), $this->shareData["hosts"])) !== false) {
+            unset($this->shareData["hosts"][$nick]);
+        }
+        return $this;
+    }
+
     // Sets the expiration time of this share to the latest expiration time of
     // all active contributing sessions.
     public function setAutoExpirationTime() {
@@ -523,6 +531,21 @@ class Client {
             $shares[] = Share::fromShareID($this->memcache, $shareID);
         }
         return $shares;
+    }
+
+    // Removes a target from the session.
+    public function removeTarget($share) {
+        if (($key = array_search($share->getShareID(), $this->sessionData["targets"])) !== false) {
+            unset($this->sessionData["targets"][$key]);
+            $this->sessionData["targets"] = array_values($this->sessionData["targets"]);
+        }
+        return $this;
+    }
+
+    // Returns a list of share IDs representing shares that this session is
+    // contributing to.
+    public function getTargetIDs() {
+        return $this->sessionData["targets"];
     }
 
     // Adds a new coordinate point to the session. $point is an array containing

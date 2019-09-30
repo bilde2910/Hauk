@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The contents of the dialog window that appears when the user requests to add a new sharing link. -->
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- The sharing mode. Currently, only solo shares are supported. -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:text="@string/label_mode" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:entries="@array/sel_new_mode_opts"
+            android:layout_weight="1" />
+
+    </TableRow>
+
+    <!-- Whether or not to allow adoption by others. -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/label_allow_adopt" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/diagNewLinkChkAdopt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/chk_allow_adopt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:onClick="explainAdoption"
+                android:clickable="true"
+                android:text="@string/label_explain_adopt" />
+
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

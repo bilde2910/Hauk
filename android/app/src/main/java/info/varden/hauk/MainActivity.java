@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -28,9 +30,12 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,6 +45,8 @@ import info.varden.hauk.dialog.DialogButtons;
 import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.service.LocationPushService;
+import info.varden.hauk.struct.Session;
+import info.varden.hauk.struct.Share;
 
 /**
  * The main activity for Hauk.
@@ -66,12 +73,10 @@ public class MainActivity extends AppCompatActivity {
     private TableRow rowAllowAdopt;
     private TableRow rowNickname;
     private TableRow rowPIN;
+    private TableLayout tableLinks;
 
     private LinearLayout layoutGroupPIN;
     private TextView labelShowPin;
-
-    // The publicly sharable link received from the Hauk server during handshake
-    private String viewLink;
 
     // A helper utility class for displaying dialog windows/message boxes.
     private DialogService diagSvc;
@@ -92,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
     // A dialog builder that can build a dialog used to adopt existing single-user shares into a
     // group share.
     private AdoptDialogBuilder adoptBuilder;
+
+    // A list of links displayed on the UI that the client is contributing to, paired with the View
+    // representing the link of that share and its controls in the link list.
+    private HashMap<String, View> shareList;
 
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 123;
 
@@ -173,46 +182,48 @@ public class MainActivity extends AppCompatActivity {
     private void tryResumeShare() {
         SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
         if (res.getBoolean("canResume", false)) {
-            // Get session parameters.
-            final String server = res.getString("server", null);
-            final String session = res.getString("session", null);
-            final String viewLink = res.getString("viewLink", null);
-            final int interval = res.getInt("interval", -1);
-            final long expiry = res.getLong("expiry", -1L);
-            final int shareMode = res.getInt("shareMode", -1);
-            final String joinCode = res.getString("joinCode", null);
 
-            // Check that the session is still valid.
-            if (server != null && session != null && viewLink != null && interval > 0 && expiry > System.currentTimeMillis() && shareMode >= 0) {
+            // Check if the app version that wrote the resumption data is the same as this session
+            // to avoid deserialization errors due to incompatibilities.
+            String writeVersion = res.getString("clientVersion", "");
+            if (writeVersion.equals(BuildConfig.VERSION_NAME)) {
 
-                // Prompt the user to continue the session.
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-                String expDate = formatter.format(new Date(expiry));
-                diagSvc.showDialog(R.string.resume_title, String.format(getString(R.string.resume_body), viewLink, expDate), DialogButtons.YES_NO, new CustomDialogBuilder() {
-                    @Override
-                    public void onPositive() {
-                        // If yes, do continue the session.
-                        final int duration = (int) (expiry - System.currentTimeMillis()) / 1000;
-                        if (duration > 0) {
-                            MainActivity.this.viewLink = viewLink;
-                            shareLocation(server, session, interval, duration, shareMode, joinCode);
+                // Get session parameters.
+                final Session session = new StringSerializer<Session>().deserialize(res.getString("sessionParams", null));
+                final List<Share> shares = new StringSerializer<ArrayList<Share>>().deserialize(res.getString("shareParams", null));
+
+                // Check that the session is still valid.
+                if (session != null && !session.hasExpired() && shares != null && shares.size() > 0) {
+
+                    // Prompt the user to continue the session.
+                    diagSvc.showDialog(R.string.resume_title, String.format(getString(R.string.resume_body), shares.size(), session.getExpiryString()), DialogButtons.YES_NO, new CustomDialogBuilder() {
+
+                        @Override
+                        public void onPositive() {
+                            // If yes, do continue the session.
+                            if (!session.hasExpired()) {
+                                for (Share share : shares) {
+                                    share.setSession(session);
+                                    shareLocation(share);
+                                }
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onNegative() {
-                        // If not, clear the resumption data so that the user isn't asked again for
-                        // the share in question.
-                        clearResumableSession();
-                    }
+                        @Override
+                        public void onNegative() {
+                            // If not, clear the resumption data so that the user isn't asked again for
+                            // the share in question.
+                            clearResumableSession();
+                        }
 
-                    @Override
-                    public View createView(Context ctx) {
-                        return null;
-                    }
-                });
-            } else {
-                clearResumableSession();
+                        @Override
+                        public View createView(Context ctx) {
+                            return null;
+                        }
+                    });
+                } else {
+                    clearResumableSession();
+                }
             }
         }
     }
@@ -221,25 +232,58 @@ public class MainActivity extends AppCompatActivity {
      * Saves session resumption data. This allows shares to be continued if the app crashes or is
      * otherwise closed.
      *
-     * @param server    The full server URL with trailing slash.
-     * @param session   The session ID.
-     * @param viewLink  The publicly viewable map link for the share.
-     * @param interval  Interval in seconds between each update.
-     * @param duration  Duration of the share in seconds.
-     * @param shareMode Sharing mode.
-     * @param joinCode  Join code for group shares, or null if not applicable.
+     * @param session The session to save resumption data for.
      */
-    private void setSessionResumable(String server, String session, String viewLink, int interval, int duration, int shareMode, String joinCode) {
+    private void setSessionResumable(Session session) {
         SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
         SharedPreferences.Editor editor = res.edit();
         editor.putBoolean("canResume", true);
-        editor.putString("server", server);
-        editor.putString("session", session);
-        editor.putString("viewLink", viewLink);
-        editor.putInt("interval", interval);
-        editor.putLong("expiry", (long) (duration * 1000) + System.currentTimeMillis());
-        editor.putInt("shareMode", shareMode);
-        editor.putString("joinCode", joinCode);
+        editor.putString("clientVersion", BuildConfig.VERSION_NAME);
+        editor.putString("sessionParams", new StringSerializer<Session>().serialize(session));
+        editor.apply();
+    }
+
+    /**
+     * Saves share resumption data. This allows the share to be continued if the app crashes or is
+     * otherwise closed.
+     *
+     * @param share The share to save resumption data for.
+     */
+    private void addShareResumable(Share share) {
+        // Get the current list of resumable shares.
+        SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
+        StringSerializer<ArrayList<Share>> serializer = new StringSerializer<>();
+        ArrayList<Share> shares = serializer.deserialize(res.getString("shareParams", null));
+        if (shares == null) shares = new ArrayList<>();
+
+        // Add the share and save the updated list.
+        shares.add(share);
+        SharedPreferences.Editor editor = res.edit();
+        editor.putString("shareParams", serializer.serialize(shares));
+        editor.apply();
+    }
+
+    /**
+     * Removes a share from the list of resumable shares.
+     *
+     * @param shareID The ID of the share to remove.
+     */
+    private void removeResumableShare(String shareID) {
+        // Get the current list of resumable shares.
+        SharedPreferences res = getApplicationContext().getSharedPreferences("sessionResumption", MODE_PRIVATE);
+        StringSerializer<ArrayList<Share>> serializer = new StringSerializer<>();
+        ArrayList<Share> shares = serializer.deserialize(res.getString("shareParams", null));
+        if (shares == null) return;
+
+        // Remove the share and save the updated list.
+        for (Iterator<Share> iter = shares.iterator(); iter.hasNext();) {
+            Share s = iter.next();
+            if (s.getID().equals(shareID)) {
+                iter.remove();
+            }
+        }
+        SharedPreferences.Editor editor = res.edit();
+        editor.putString("shareParams", serializer.serialize(shares));
         editor.apply();
     }
 
@@ -381,14 +425,34 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (data[0].equals("OK")) {
-                        String session = data[1];
-                        viewLink = data[2];
+                        String sid = data[1];
+                        String viewLink = data[2];
                         String joinCode = null;
+                        String viewID = viewLink;
+
+                        // If the share is compatible, fetch the group join code.
                         if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
                             joinCode = data[3];
                         }
-                        setSessionResumable(serverFull, session, viewLink, interval, durationSec, actualShareMode, joinCode);
-                        shareLocation(serverFull, session, interval, durationSec, actualShareMode, joinCode);
+
+                        // If the server sends it, get the internal share ID as well for the list of
+                        // currently active shares in the UI. It is better UX to display this
+                        // instead of the full URL in the list, but fall back to the full URL if
+                        // needed.
+                        if (resp.getServerVersion().atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
+                            if (actualShareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+                                viewID = data[4];
+                            } else {
+                                viewID = data[3];
+                            }
+                        }
+
+                        Session session = new Session(serverFull, resp.getServerVersion(), sid, (long) durationSec * 1000L + System.currentTimeMillis(), interval);
+                        Share share = new Share(session, viewLink, viewID, joinCode, actualShareMode);
+
+                        setSessionResumable(session);
+                        addShareResumable(share);
+                        shareLocation(share);
                     } else {
                         // If the first line of the response is not "OK", an error of some sort has
                         // occurred and should be displayed to the user.
@@ -435,30 +499,25 @@ public class MainActivity extends AppCompatActivity {
      * Executes a location sharing session against the server. This can be a new session, or a
      * resumed session.
      *
-     * @param server    The full server URL with trailing slash.
-     * @param session   The session ID.
-     * @param interval  Interval in seconds between each update.
-     * @param duration  Duration of the share in seconds.
-     * @param shareMode Sharing mode.
-     * @param joinCode  Join code for group shares, or null if not applicable.
+     * @param share The share to run against the server.
      */
-    private void shareLocation(final String server, final String session, final int interval, final int duration, final int shareMode, final String joinCode) {
+    private void shareLocation(final Share share) {
         // Disable the UI if it's not already disabled.
         disableUI();
 
-        if (shareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+        if (share.getShareMode() == HaukConst.SHARE_MODE_CREATE_GROUP) {
             runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
                     // Show the group PIN on the UI if a new group share was created.
-                    labelShowPin.setText(joinCode);
+                    labelShowPin.setText(share.getJoinCode());
                     layoutGroupPIN.setVisibility(View.VISIBLE);
                 }
             });
 
             // Create a new adoption dialog builder for this group share.
-            adoptBuilder = new AdoptDialogBuilder(MainActivity.this, server, session, joinCode) {
+            adoptBuilder = new AdoptDialogBuilder(MainActivity.this, share) {
                 @Override
                 public void onSuccess(final String nick) {
                     diagSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
@@ -471,8 +530,118 @@ public class MainActivity extends AppCompatActivity {
             };
         }
 
-        // We now have a link to share, so we enable the link sharing button.
+        // We now have a link to share, so we enable the additional link creation button. Add an
+        // event handler to handle the user clicking on it.
+        btnLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a dialog that prompts the user for the new share's adoption state.
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.dialog_create_link, null);
+
+                // Inherit the adoption state from the main share/saved preference.
+                final CheckBox chkAdopt = dialogView.findViewById(R.id.diagNewLinkChkAdopt);
+                chkAdopt.setChecked(chkAllowAdopt.isChecked());
+
+                diagSvc.showDialog(R.string.create_link_title, R.string.create_link_body, DialogButtons.CREATE_CANCEL, new CustomDialogBuilder() {
+                    @Override
+                    public void onPositive() {
+                        // Create a progress dialog while creating the link. This could end up
+                        // taking a while (e.g. if the host is unreachable, it will eventually time
+                        // out), and having a progress bar makes for better UX since it visually
+                        // shows that something is actually happening in the background.
+                        final ProgressDialog prog = new ProgressDialog(MainActivity.this);
+                        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        prog.setTitle(R.string.prog_new_link_title);
+                        prog.setMessage(getString(R.string.prog_new_link_body));
+                        prog.setIndeterminate(true);
+                        prog.setCancelable(false);
+                        prog.show();
+
+                        HashMap<String, String> data = new HashMap<>();
+                        data.put("sid", share.getSession().getID());
+                        data.put("ado", chkAdopt.isChecked() ? "1" : "0");
+                        HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
+                            @Override
+                            public void run(HTTPThread.Response resp) {
+                                prog.dismiss();
+
+                                // An exception may have occurred, but it cannot be thrown because
+                                // this is a callback. Instead, the exception (if any) is stored in
+                                // the response object.
+                                Exception e = resp.getException();
+                                if (e == null) {
+
+                                    // A successful session initiation contains "OK" on line 1, the
+                                    // publicly sharable tracking link on line 2, and its ID on line
+                                    // 3.
+                                    final String[] data = resp.getData();
+
+                                    // Somehow the data array is empty.
+                                    if (data.length < 1) {
+                                        diagSvc.showDialog(R.string.err_server, R.string.err_empty);
+                                        return;
+                                    }
+
+                                    if (data[0].equals("OK")) {
+                                        String viewLink = data[1];
+                                        String viewID = data[2];
+                                        final Share newShare = new Share(share.getSession(), viewLink, viewID, HaukConst.SHARE_MODE_CREATE_ALONE);
+                                        addShareResumable(newShare);
+
+                                        // Add the link to the list of active links.
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                addLink(newShare);
+                                            }
+                                        });
+
+                                        // Tell the user that the link was added successfully.
+                                        diagSvc.showDialog(R.string.link_added_title, R.string.link_added_body);
+
+                                    } else {
+                                        // If the first line of the response is not "OK", an error
+                                        // of some sort has occurred and should be displayed to the
+                                        // user.
+                                        StringBuilder err = new StringBuilder();
+                                        for (String line : data) {
+                                            err.append(line);
+                                            err.append("\n");
+                                        }
+                                        diagSvc.showDialog(R.string.err_server, err.toString());
+                                    }
+                                } else if (e instanceof MalformedURLException) {
+                                    e.printStackTrace();
+                                    diagSvc.showDialog(R.string.err_client, R.string.err_malformed_url);
+                                } else if (e instanceof IOException) {
+                                    e.printStackTrace();
+                                    diagSvc.showDialog(R.string.err_connect, e.getMessage());
+                                } else {
+                                    e.printStackTrace();
+                                    diagSvc.showDialog(R.string.err_server, e.getMessage());
+                                }
+                            }
+                        });
+                        req.execute(new HTTPThread.Request(share.getSession().getServerURL() + "api/newlink.php", data));
+                    }
+
+                    @Override
+                    public void onNegative() {
+                        return;
+                    }
+
+                    @Override
+                    public View createView(Context ctx) {
+                        return dialogView;
+                    }
+                });
+            }
+        });
         btnLink.setEnabled(true);
+
+        // Also make sure to add a link row to the table of active links.
+        addLink(share);
 
         // Even though we previously requested location permission, we still have to
         // check for it when we actually use the location API (user could have
@@ -483,10 +652,10 @@ public class MainActivity extends AppCompatActivity {
             // the Hauk backend.
             Intent pusher = new Intent(MainActivity.this, LocationPushService.class);
             pusher.setAction(LocationPushService.ACTION_ID);
-            pusher.putExtra("baseUrl", server);
-            pusher.putExtra("viewUrl", viewLink);
-            pusher.putExtra("session", session);
-            pusher.putExtra("interval", (long) interval * 1000L);
+            pusher.putExtra("baseUrl", share.getSession().getServerURL());
+            pusher.putExtra("viewUrl", share.getViewURL());
+            pusher.putExtra("session", share.getSession().getID());
+            pusher.putExtra("interval", (long) share.getSession().getInterval() * 1000L);
             pusher.putExtra("stopTask", ReceiverDataRegistry.register(stopTask));
             pusher.putExtra("gnssActiveTask", ReceiverDataRegistry.register(new GNSSActiveHandler() {
                 @Override
@@ -503,6 +672,36 @@ public class MainActivity extends AppCompatActivity {
                     labelStatusCur.setText(getString(R.string.label_status_ok));
                     labelStatusCur.setTextColor(getColor(R.color.statusOn));
                 }
+
+                @Override
+                public void onShareListReceived(final String linkFormat, final String[] shareIDs) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<String> currentShares = Arrays.asList(shareIDs);
+                            for (int i = 0; i < currentShares.size(); i++) {
+                                String shareID = currentShares.get(i);
+                                if (!shareList.containsKey(shareID)) {
+                                    // A new share has been added. If the client is suddenly informed of a
+                                    // new share, it is always a group share because that is the only type
+                                    // of shares that can be initiated by a remote user (through adoption).
+                                    Share newShare = new Share(share.getSession(), String.format(linkFormat, shareID), shareID, HaukConst.SHARE_MODE_JOIN_GROUP);
+                                    addLink(newShare);
+                                    addShareResumable(newShare);
+                                }
+                            }
+                            for (Iterator<Map.Entry<String, View>> iter = shareList.entrySet().iterator(); iter.hasNext();) {
+                                Map.Entry<String, View> entry = iter.next();
+                                if (!currentShares.contains(entry.getKey())) {
+                                    // A share has been removed.
+                                    tableLinks.removeView(entry.getValue());
+                                    iter.remove();
+                                    removeResumableShare(entry.getKey());
+                                }
+                            }
+                        }
+                    });
+                }
             }));
             if (Build.VERSION.SDK_INT >= 26) {
                 startForegroundService(pusher);
@@ -517,13 +716,13 @@ public class MainActivity extends AppCompatActivity {
 
             // stopTask is scheduled for expiration, but it could also be called if
             // the user manually stops the share, or if the app is destroyed.
-            handler.postDelayed(stopTask, duration * 1000L);
+            handler.postDelayed(stopTask, share.getSession().getRemainingMillis());
 
             // Now that sharing is active, we will turn the start button into a stop
             // button with a countdown.
             shareCountdown = new Timer();
             shareCountdown.scheduleAtFixedRate(new TimerTask() {
-                private int counter = duration;
+                private int counter = share.getSession().getRemainingSeconds();
 
                 @Override
                 public void run() {
@@ -551,14 +750,60 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * On-tap handler for the "share link" button. Opens a share menu.
+     * Adds a new sharing link to the list of active links.
+     *
+     * @param share The share to add to the list of links.
      */
-    public void shareLink(View view) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
-        shareIntent.putExtra(Intent.EXTRA_TEXT, viewLink);
-        startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
+    private void addLink(final Share share) {
+        // Get the table row layout and inflate it into a view.
+        LayoutInflater inflater = getLayoutInflater();
+        View linkView = inflater.inflate(R.layout.content_link, null);
+
+        // Add an event handler for the stop button. This will stop the given share only.
+        Button btnStop = linkView.findViewById(R.id.linkBtnStop);
+        if (share.getSession().getBackendVersion().atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
+            btnStop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HashMap<String, String> data = new HashMap<>();
+                    data.put("sid", share.getSession().getID());
+                    data.put("lid", share.getID());
+                    HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
+                        @Override
+                        public void run(HTTPThread.Response resp) {
+
+                        }
+                    });
+                    req.execute(new HTTPThread.Request(share.getSession().getServerURL() + "api/stop.php", data));
+                }
+            });
+        } else {
+            btnStop.setVisibility(View.GONE);
+        }
+
+        // Add an event handler for the share button.
+        Button btnShare = linkView.findViewById(R.id.linkBtnShare);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
+                shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
+            }
+        });
+
+        // Update the text on the UI.
+        TextView txtLink = linkView.findViewById(R.id.linkTxtLink);
+        txtLink.setText(share.getID());
+        TextView txtDesc = linkView.findViewById(R.id.linkTxtDesc);
+        txtDesc.setText(getString(share.getLinkType()));
+
+        // Add the view to the list of entries, so it can be removed later if the user stops the
+        // share.
+        shareList.put(share.getID(), linkView);
+        tableLinks.addView(linkView);
     }
 
     /**
@@ -634,9 +879,12 @@ public class MainActivity extends AppCompatActivity {
         rowAllowAdopt = findViewById(R.id.rowAllowAdopt);
         rowNickname = findViewById(R.id.rowNickname);
         rowPIN = findViewById(R.id.rowPIN);
+        tableLinks = findViewById(R.id.tableLinks);
 
         layoutGroupPIN = findViewById(R.id.layoutGroupPIN);
         labelShowPin = findViewById(R.id.labelShowPin);
+
+        shareList = new HashMap<>();
 
         resetTask = new Runnable() {
 
@@ -658,6 +906,7 @@ public class MainActivity extends AppCompatActivity {
                 btnShare.setEnabled(true);
                 btnShare.setText(R.string.btn_start);
                 btnLink.setEnabled(false);
+                btnLink.setOnClickListener(null);
 
                 txtServer.setEnabled(true);
                 txtPassword.setEnabled(true);
@@ -671,6 +920,9 @@ public class MainActivity extends AppCompatActivity {
                 chkAllowAdopt.setEnabled(true);
 
                 layoutGroupPIN.setVisibility(View.GONE);
+
+                tableLinks.removeAllViews();
+                shareList.clear();
 
                 clearResumableSession();
             }

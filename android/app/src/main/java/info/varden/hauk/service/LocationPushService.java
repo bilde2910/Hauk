@@ -13,6 +13,7 @@ import android.os.IBinder;
 import java.util.HashMap;
 
 import info.varden.hauk.HTTPThread;
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.ReceiverDataRegistry;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.notify.SharingNotification;
@@ -42,6 +43,7 @@ public class LocationPushService extends Service {
 
     private String session;
     private long interval;
+    private String[] shares;
 
     private LocationManager locMan;
 
@@ -64,6 +66,7 @@ public class LocationPushService extends Service {
         this.interval = intent.getLongExtra("interval", -1L);
         this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra("stopTask", -1));
         this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra("gnssActiveTask", -1));
+        this.shares = new String[0];
 
         try {
             // Even though we previously requested location permission, we still have to check for
@@ -138,8 +141,24 @@ public class LocationPushService extends Service {
         HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
             @Override
             public void run(HTTPThread.Response resp) {
-                // The response to this HTTP request can be ignored - there is no need for two-way
-                // communication in this case, as the pusher is only meant to push data.
+                if (resp.getException() == null) {
+                    String[] data = resp.getData();
+                    if (data[0].equals("OK")) {
+
+                        // If the backend is >= v1.2, post.php returns a list of currently active
+                        // share links. Update the user interface to include these.
+                        if (resp.getServerVersion().atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
+
+                            // The share link list is comma-separated.
+                            String shareCSV = data[2];
+                            String[] shares = new String[0];
+                            if (shareCSV.length() > 0) {
+                                shares = shareCSV.split(",");
+                            }
+                            gnssActiveTask.onShareListReceived(data[1], shares);
+                        }
+                    }
+                }
             }
         });
         req.execute(new HTTPThread.Request(this.baseUrl + "api/post.php", data));

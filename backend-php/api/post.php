@@ -39,5 +39,5 @@ $session->addPoint([$lat, $lon, $time, $accuracy, $speed])->save();
 if ($session->hasExpired()) {
     echo "Session expired!\n";
 } else {
-    echo "OK\n";
+    echo "OK\n".getConfig("public_url")."?%s\n".implode(",", $session->getTargetIDs())."\n";
 }

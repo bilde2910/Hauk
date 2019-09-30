@@ -71,7 +71,8 @@ switch ($mod) {
         $output = array(
             "OK",
             $host->getSessionID(),
-            $share->getViewLink()
+            $share->getViewLink(),
+            $share->getShareID()
         );
         break;
 
@@ -92,7 +93,8 @@ switch ($mod) {
             "OK",
             $host->getSessionID(),
             $share->getViewLink(),
-            $share->getGroupPIN()
+            $share->getGroupPIN(),
+            $share->getShareID()
         );
         break;
 
@@ -113,7 +115,8 @@ switch ($mod) {
         $output = array(
             "OK",
             $host->getSessionID(),
-            $share->getViewLink()
+            $share->getViewLink(),
+            $share->getShareID()
         );
         break;
 }

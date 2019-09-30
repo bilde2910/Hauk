@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Row representing an active share link in the main UI. -->
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <!-- The link ID. -->
+        <TextView
+            android:id="@+id/linkTxtLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <!-- The type of link this is. -->
+        <TextView
+            android:id="@+id/linkTxtDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!-- The button that stops this share. -->
+    <Button
+        android:id="@+id/linkBtnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_button_stop" />
+
+    <!-- The button to share the given link. -->
+    <Button
+        android:id="@+id/linkBtnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_button_share" />
+
+</TableRow>

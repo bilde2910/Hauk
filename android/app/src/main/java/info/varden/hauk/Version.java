@@ -1,11 +1,13 @@
 package info.varden.hauk;
 
+import java.io.Serializable;
+
 /**
  * A class for comparing version strings.
  *
  * @author Marius Lindvall
  */
-public class Version implements Comparable<Version> {
+public class Version implements Comparable<Version>, Serializable {
     private final String ver;
 
     public Version(String ver) {
@@ -22,11 +24,15 @@ public class Version implements Comparable<Version> {
     }
 
     public boolean atLeast(Version other) {
-        return this.compareTo(other) <= 0;
+        return this.compareTo(other) >= 0;
     }
 
     public boolean atMost(Version other) {
-        return this.compareTo(other) >= 0;
+        return this.compareTo(other) <= 0;
+    }
+
+    public boolean equals(Version other) {
+        return this.compareTo(other) == 0;
     }
 
     @Override
