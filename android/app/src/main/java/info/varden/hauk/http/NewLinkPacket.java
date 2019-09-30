@@ -6,6 +6,7 @@ import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.throwable.ServerException;
 
@@ -45,7 +46,7 @@ public abstract class NewLinkPacket extends Packet {
         if (data[0].equals("OK")) {
             String viewLink = data[1];
             String viewID = data[2];
-            onShareCreated(new Share(this.session, viewLink, viewID, HaukConst.SHARE_MODE_CREATE_ALONE));
+            onShareCreated(new Share(this.session, viewLink, viewID, ShareMode.CREATE_ALONE));
 
         } else {
             // If the first line of the response is not "OK", an error

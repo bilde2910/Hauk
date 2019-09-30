@@ -6,6 +6,7 @@ import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.throwable.ServerException;
 
@@ -19,7 +20,7 @@ public abstract class SessionInitiationPacket extends Packet {
     private final int durationSec;
     private final int interval;
 
-    private int shareMode;
+    private ShareMode mode;
 
     private SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval) {
         super(ctx, server, "api/create.php");
@@ -43,8 +44,8 @@ public abstract class SessionInitiationPacket extends Packet {
      */
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, boolean allowAdoption) {
         this(ctx, server, password, durationSec, interval);
-        this.shareMode = HaukConst.SHARE_MODE_CREATE_ALONE;
-        addParameter("mod", String.valueOf(this.shareMode));
+        this.mode = ShareMode.CREATE_ALONE;
+        addParameter("mod", String.valueOf(this.mode.getMode()));
         addParameter("ado", allowAdoption ? "1" : "0");
     }
 
@@ -60,8 +61,8 @@ public abstract class SessionInitiationPacket extends Packet {
      */
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname) {
         this(ctx, server, password, durationSec, interval);
-        this.shareMode = HaukConst.SHARE_MODE_CREATE_GROUP;
-        addParameter("mod", String.valueOf(this.shareMode));
+        this.mode = ShareMode.CREATE_GROUP;
+        addParameter("mod", String.valueOf(this.mode.getMode()));
         addParameter("nic", nickname);
     }
 
@@ -78,8 +79,8 @@ public abstract class SessionInitiationPacket extends Packet {
      */
     public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname, String groupPin) {
         this(ctx, server, password, durationSec, interval);
-        this.shareMode = HaukConst.SHARE_MODE_JOIN_GROUP;
-        addParameter("mod", String.valueOf(this.shareMode));
+        this.mode = ShareMode.JOIN_GROUP;
+        addParameter("mod", String.valueOf(this.mode.getMode()));
         addParameter("nic", nickname);
         addParameter("pin", groupPin);
     }
@@ -87,11 +88,11 @@ public abstract class SessionInitiationPacket extends Packet {
     @Override
     protected final void onSuccess(String[] data, Version backendVersion) throws ServerException {
         // Check if the server is out of date for group shares, if applicable.
-        if (this.shareMode == HaukConst.SHARE_MODE_CREATE_GROUP || this.shareMode == HaukConst.SHARE_MODE_JOIN_GROUP) {
+        if (this.mode.isGroupType()) {
             if (backendVersion.olderThan(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
                 // If the server is indeed out of date, override the sharing mode to reflect what
                 // was actually created on the server.
-                this.shareMode = HaukConst.SHARE_MODE_CREATE_ALONE;
+                this.mode = ShareMode.CREATE_ALONE;
                 getHandler().onShareModeIncompatible(backendVersion);
             }
         }
@@ -110,7 +111,7 @@ public abstract class SessionInitiationPacket extends Packet {
             String viewID = viewURL;
 
             // If the share is compatible, fetch the group join code.
-            if (this.shareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+            if (this.mode == ShareMode.CREATE_GROUP) {
                 joinCode = data[3];
             }
 
@@ -118,7 +119,7 @@ public abstract class SessionInitiationPacket extends Packet {
             // active shares in the UI. It is better UX to display this instead of the full URL in
             // the list, but fall back to the full URL if needed.
             if (backendVersion.atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
-                if (this.shareMode == HaukConst.SHARE_MODE_CREATE_GROUP) {
+                if (this.mode == ShareMode.CREATE_GROUP) {
                     viewID = data[4];
                 } else {
                     viewID = data[3];
@@ -127,7 +128,7 @@ public abstract class SessionInitiationPacket extends Packet {
 
             // Create a share and pass it upstream.
             Session session = new Session(this.server, backendVersion, sessionID, (long) this.durationSec * 1000L + System.currentTimeMillis(), this.interval);
-            Share share = new Share(session, viewURL, viewID, joinCode, this.shareMode);
+            Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             getHandler().onSessionInitiated(share);
         } else {

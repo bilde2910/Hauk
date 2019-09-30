@@ -39,6 +39,7 @@ import java.util.TimerTask;
 
 import info.varden.hauk.HaukConst;
 import info.varden.hauk.R;
+import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.utils.ReceiverDataRegistry;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.dialog.AdoptDialogBuilder;
@@ -139,18 +140,18 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
                 // This handler determines which UI elements should be visible, based on the user's
                 // selection of sharing modes.
-                switch (selection) {
-                    case HaukConst.SHARE_MODE_CREATE_ALONE:
+                switch (ShareMode.fromMode(selection)) {
+                    case CREATE_ALONE:
                         rowAllowAdopt.setVisibility(View.VISIBLE);
                         rowNickname.setVisibility(View.GONE);
                         rowPIN.setVisibility(View.GONE);
                         break;
-                    case HaukConst.SHARE_MODE_CREATE_GROUP:
+                    case CREATE_GROUP:
                         rowAllowAdopt.setVisibility(View.GONE);
                         rowNickname.setVisibility(View.VISIBLE);
                         rowPIN.setVisibility(View.GONE);
                         break;
-                    case HaukConst.SHARE_MODE_JOIN_GROUP:
+                    case JOIN_GROUP:
                         rowAllowAdopt.setVisibility(View.GONE);
                         rowNickname.setVisibility(View.VISIBLE);
                         rowPIN.setVisibility(View.VISIBLE);
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Integer.parseInt(txtDuration.getText().toString());
         final int interval = Integer.parseInt(txtInterval.getText().toString());
         final String nickname = txtNickname.getText().toString().trim();
-        final int shareMode = selMode.getSelectedItemPosition();
+        final ShareMode mode = ShareMode.fromMode(selMode.getSelectedItemPosition());
         final String groupPin = txtPIN.getText().toString();
         final boolean allowAdoption = chkAllowAdopt.isChecked();
         final int durUnit = selUnit.getSelectedItemPosition();
@@ -310,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onShareModeIncompatible(Version backendVersion) {
-                selMode.setSelection(HaukConst.SHARE_MODE_CREATE_ALONE);
+                selMode.setSelection(ShareMode.CREATE_ALONE.getMode());
                 diagSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), HaukConst.VERSION_COMPAT_GROUP_SHARE, backendVersion));
             }
         };
@@ -319,8 +320,8 @@ public class MainActivity extends AppCompatActivity {
         // and interval to the server and waits for the server to return a session ID to confirm
         // session creation.
         SessionInitiationPacket pkt = null;
-        switch (shareMode) {
-            case HaukConst.SHARE_MODE_CREATE_ALONE:
+        switch (mode) {
+            case CREATE_ALONE:
                 pkt = new SessionInitiationPacket(this, serverFull, password, durationSec, interval, allowAdoption) {
                     @Override
                     public ResponseHandler getHandler() {
@@ -329,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
                 };
                 break;
 
-            case HaukConst.SHARE_MODE_CREATE_GROUP:
+            case CREATE_GROUP:
                 pkt = new SessionInitiationPacket(this, serverFull, password, durationSec, interval, nickname) {
                     @Override
                     public ResponseHandler getHandler() {
@@ -338,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 };
                 break;
 
-            case HaukConst.SHARE_MODE_JOIN_GROUP:
+            case JOIN_GROUP:
                 pkt = new SessionInitiationPacket(this, serverFull, password, durationSec, interval, nickname, groupPin) {
                     @Override
                     public ResponseHandler getHandler() {
@@ -378,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
         // Disable the UI if it's not already disabled.
         disableUI();
 
-        if (share.getShareMode() == HaukConst.SHARE_MODE_CREATE_GROUP) {
+        if (share.getShareMode() == ShareMode.CREATE_GROUP) {
             runOnUiThread(new Runnable() {
 
                 @Override
@@ -530,7 +531,7 @@ public class MainActivity extends AppCompatActivity {
                                     // A new share has been added. If the client is suddenly informed of a
                                     // new share, it is always a group share because that is the only type
                                     // of shares that can be initiated by a remote user (through adoption).
-                                    Share newShare = new Share(share.getSession(), String.format(linkFormat, shareID), shareID, HaukConst.SHARE_MODE_JOIN_GROUP);
+                                    Share newShare = new Share(share.getSession(), String.format(linkFormat, shareID), shareID, ShareMode.JOIN_GROUP);
                                     addLink(newShare);
                                     resumable.addShareResumable(newShare);
                                 }
@@ -647,7 +648,7 @@ public class MainActivity extends AppCompatActivity {
         TextView txtLink = linkView.findViewById(R.id.linkTxtLink);
         txtLink.setText(share.getID());
         TextView txtDesc = linkView.findViewById(R.id.linkTxtDesc);
-        txtDesc.setText(getString(share.getLinkType()));
+        txtDesc.setText(getString(share.getShareMode().getDescriptorResource()));
 
         // Add the view to the list of entries, so it can be removed later if the user stops the
         // share.
