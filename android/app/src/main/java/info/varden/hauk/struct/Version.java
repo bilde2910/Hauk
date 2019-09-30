@@ -1,4 +1,4 @@
-package info.varden.hauk;
+package info.varden.hauk.struct;
 
 import java.io.Serializable;
 

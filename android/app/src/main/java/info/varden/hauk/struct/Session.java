@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import info.varden.hauk.Version;
-
 /**
  * A data structure that contains all data required to maintain a session against a Hauk server.
  *
@@ -67,7 +65,11 @@ public class Session implements Serializable {
         return getExpiryTime() - System.currentTimeMillis();
     }
 
-    public int getInterval() {
+    public int getIntervalSeconds() {
         return this.interval;
+    }
+
+    public long getIntervalMillis() {
+        return (long) getIntervalSeconds() * 1000L;
     }
 }

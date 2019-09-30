@@ -1,5 +1,7 @@
 package info.varden.hauk;
 
+import info.varden.hauk.struct.Version;
+
 /**
  * Constants used in the Hauk app.
  *

@@ -129,6 +129,7 @@
                             android:id="@+id/selUnit"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
+                            android:entries="@array/sel_unit_opts"
                             android:gravity="center_vertical"/>
                     </TableRow>
 
@@ -170,6 +171,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center_vertical"
+                            android:entries="@array/sel_mode_opts"
                             android:layout_weight="1" />
 
                     </TableRow>
@@ -353,8 +355,7 @@
                         android:id="@+id/btnAdopt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btn_adopt"
-                        android:onClick="adoptShare" />
+                        android:text="@string/btn_adopt" />
 
                 </LinearLayout>
 

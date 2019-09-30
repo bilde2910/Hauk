@@ -11,12 +11,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import info.varden.hauk.HTTPThread;
 import info.varden.hauk.R;
+import info.varden.hauk.http.AdoptSharePacket;
 import info.varden.hauk.struct.Share;
 
 /**
@@ -59,39 +58,21 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         prog.show();
 
         // Send the HTTP request to try and adopt the share.
-        HashMap<String, String> data = new HashMap<>();
-        data.put("sid", this.share.getSession().getID());
-        data.put("nic", nick);
-        data.put("aid", adoptID);
-        data.put("pin", this.share.getJoinCode());
-
-        HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
+        AdoptSharePacket pkt = new AdoptSharePacket(this.ctx, this.share, adoptID, nick) {
             @Override
-            public void run(HTTPThread.Response resp) {
+            public void onSuccessfulAdoption(String nickname) {
                 prog.dismiss();
-                Exception e = resp.getException();
-                if (e == null) {
-                    String[] data = resp.getData();
-                    if (data.length < 1) {
-                        onFailure(new Exception(AdoptDialogBuilder.this.ctx.getString(R.string.err_empty)));
-                    } else {
-                        if (data[0].equals("OK")) {
-                            onSuccess(nick);
-                        } else {
-                            StringBuilder err = new StringBuilder();
-                            for (String line : data) {
-                                err.append(line);
-                                err.append("\n");
-                            }
-                            onFailure(new Exception(err.toString()));
-                        }
-                    }
-                } else {
-                    onFailure(e);
-                }
+                AdoptDialogBuilder.this.onSuccess(nickname);
             }
-        });
-        req.execute(new HTTPThread.Request(this.share.getSession().getServerURL() + "api/adopt.php", data));
+
+            @Override
+            protected void onFailure(Exception ex) {
+                prog.dismiss();
+                AdoptDialogBuilder.this.onFailure(ex);
+            }
+        };
+
+        pkt.send();
     }
 
     /**

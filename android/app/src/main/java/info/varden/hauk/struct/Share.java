@@ -6,9 +6,15 @@ import info.varden.hauk.HaukConst;
 
 /**
  * A data structure that contains parameters for a given share.
+ *
+ * @author Marius Lindvall
  */
 public class Share implements Serializable {
+    // The session is transient to avoid it being saved as duplicate when serialized by
+    // ResumableSessions. Instead, the session is attached to each share when recreated using
+    // setSession().
     private transient Session session;
+
     private final String viewURL;
     private final String viewID;
     private final String joinCode;

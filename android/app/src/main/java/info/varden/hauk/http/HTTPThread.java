@@ -1,4 +1,4 @@
-package info.varden.hauk;
+package info.varden.hauk.http;
 
 import android.os.AsyncTask;
 
@@ -13,6 +13,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 
+import info.varden.hauk.BuildConfig;
+import info.varden.hauk.struct.Version;
+
 /**
  * An asynchronous task that POSTs data to a given URL with the given POST fields.
  *
@@ -24,7 +27,10 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
     // if applicable.
     private final Callback callback;
 
-    public HTTPThread(Callback callback) {
+    // This class is only for use by info.varden.hauk.http.Packet. Other classes should always call
+    // the relevant packet to perform a request rather than using HTTPThread directly. This
+    // constructor is thus package-level private.
+    protected HTTPThread(Callback callback) {
         this.callback = callback;
     }
 

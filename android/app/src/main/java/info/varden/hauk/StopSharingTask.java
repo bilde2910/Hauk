@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
-import java.util.HashMap;
-
 import info.varden.hauk.dialog.DialogService;
+import info.varden.hauk.http.StopSharingPacket;
+import info.varden.hauk.struct.Session;
 
 /**
  * This class is a runnable task that will stop location sharing and reset the UI to the state it
@@ -33,8 +33,7 @@ public class StopSharingTask implements Runnable {
 
     // If the user stops sharing early, a request should be sent to the server to erase the session.
     // Store details about the current session here.
-    private String baseUrl = null;
-    private String session = null;
+    private Session session = null;
 
     protected StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask, Handler handler) {
         this.ctx = ctx;
@@ -67,11 +66,9 @@ public class StopSharingTask implements Runnable {
      * register a handler that sends a stop-sharing request to the server when the share should be
      * stopped.
      *
-     * @param baseUrl The base URL of the remote Hauk backend.
      * @param session The session ID provided by the Hauk backend.
      */
-    public void setSession(String baseUrl, String session) {
-        this.baseUrl = baseUrl;
+    public void setSession(Session session) {
         this.session = session;
     }
 
@@ -98,16 +95,20 @@ public class StopSharingTask implements Runnable {
 
         // If a session is currently active, send a cancellation request to the backend to remove
         // session data from the server.
-        if (this.baseUrl != null && this.session != null) {
-            HashMap<String, String> data = new HashMap<>();
-            data.put("sid", this.session);
-            HTTPThread req = new HTTPThread(new HTTPThread.Callback() {
+        if (this.session != null) {
+            StopSharingPacket pkt = new StopSharingPacket(this.ctx, this.session) {
                 @Override
-                public void run(HTTPThread.Response resp) {
+                public void onSuccess() {
                     resetApp();
                 }
-            });
-            req.execute(new HTTPThread.Request(this.baseUrl + "api/stop.php", data));
+
+                @Override
+                protected void onFailure(Exception ex) {
+                    // TODO: Do something meaningful here?
+                    resetApp();
+                }
+            };
+            pkt.send();
         } else {
             resetApp();
         }
