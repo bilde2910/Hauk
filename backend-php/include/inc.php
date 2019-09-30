@@ -352,7 +352,7 @@ class GroupShare extends Share {
     // Removes a host from the share. After calling, also call ->clean().
     public function removeHost($session) {
         while (($key = array_search($session->getSessionID(), $this->shareData["hosts"])) !== false) {
-            unset($this->shareData["hosts"][$nick]);
+            unset($this->shareData["hosts"][$key]);
         }
         return $this;
     }
