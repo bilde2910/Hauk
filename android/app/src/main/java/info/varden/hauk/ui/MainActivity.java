@@ -1,4 +1,4 @@
-package info.varden.hauk;
+package info.varden.hauk.ui;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -37,6 +37,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import info.varden.hauk.HaukConst;
+import info.varden.hauk.R;
+import info.varden.hauk.utils.ReceiverDataRegistry;
+import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.dialog.AdoptDialogBuilder;
 import info.varden.hauk.dialog.CustomDialogBuilder;
 import info.varden.hauk.dialog.DialogButtons;

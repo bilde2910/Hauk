@@ -35,7 +35,7 @@ public class StopSharingTask implements Runnable {
     // Store details about the current session here.
     private Session session = null;
 
-    protected StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask, Handler handler) {
+    public StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask, Handler handler) {
         this.ctx = ctx;
         this.diagSvc = diagSvc;
         this.resetTask = resetTask;

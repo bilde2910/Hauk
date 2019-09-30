@@ -4,7 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import info.varden.hauk.ReceiverDataRegistry;
+import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
  * This class is used to create intents for use in notification buttons that can store an object for

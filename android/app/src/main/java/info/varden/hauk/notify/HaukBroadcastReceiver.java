@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import info.varden.hauk.ReceiverDataRegistry;
+import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
  * A superclass for broadcast receivers, used together with the Receiver class to handle callbacks

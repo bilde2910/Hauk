@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import info.varden.hauk.BuildConfig;
-import info.varden.hauk.StringSerializer;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 

@@ -1,4 +1,4 @@
-package info.varden.hauk;
+package info.varden.hauk.utils;
 
 import android.util.Base64;
 

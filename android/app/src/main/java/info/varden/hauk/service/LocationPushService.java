@@ -10,7 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.IBinder;
 
-import info.varden.hauk.ReceiverDataRegistry;
+import info.varden.hauk.utils.ReceiverDataRegistry;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.http.LocationUpdatePacket;
 import info.varden.hauk.notify.SharingNotification;
