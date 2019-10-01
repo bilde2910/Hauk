@@ -1,6 +1,5 @@
 package info.varden.hauk.notify;
 
-import android.app.NotificationManager;
 import android.content.Context;
 
 import androidx.core.app.NotificationCompat;
@@ -34,11 +33,6 @@ public class SharingNotification extends HaukNotification {
         super(ctx);
         this.share = share;
         this.stopSharingTask = stopSharingTask;
-    }
-
-    @Override
-    public int getImportance() {
-        return NotificationManager.IMPORTANCE_DEFAULT;
     }
 
     @Override

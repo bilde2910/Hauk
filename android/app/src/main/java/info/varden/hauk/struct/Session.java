@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import info.varden.hauk.HaukConst;
+import info.varden.hauk.utils.TimeUtils;
 
 /**
  * A data structure that contains all data required to maintain a session against a Hauk server.
@@ -39,40 +40,39 @@ public class Session implements Serializable {
         return this.sessionID;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public long getExpiryTime() {
         return this.expiry;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Date getExpiryDate() {
         return new Date(getExpiryTime());
     }
 
     public String getExpiryString() {
-        return getExpiryString(HaukConst.DATE_FORMAT);
-    }
-
-    public String getExpiryString(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat(HaukConst.DATE_FORMAT, Locale.getDefault());
         return formatter.format(getExpiryDate());
     }
 
-    public boolean hasExpired() {
-        return System.currentTimeMillis() >= getExpiryTime();
+    public boolean isActive() {
+        return System.currentTimeMillis() < getExpiryTime();
     }
 
     public int getRemainingSeconds() {
-        return (int) (getRemainingMillis() / 1000L);
+        return (int) (getRemainingMillis() / (long) TimeUtils.MILLIS_PER_SECOND);
     }
 
     public long getRemainingMillis() {
         return getExpiryTime() - System.currentTimeMillis();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public int getIntervalSeconds() {
         return this.interval;
     }
 
     public long getIntervalMillis() {
-        return (long) getIntervalSeconds() * 1000L;
+        return (long) getIntervalSeconds() * (long) TimeUtils.MILLIS_PER_SECOND;
     }
 }

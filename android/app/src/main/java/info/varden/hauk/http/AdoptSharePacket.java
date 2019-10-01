@@ -14,7 +14,7 @@ import info.varden.hauk.throwable.ServerException;
  * @author Marius Lindvall
  */
 public abstract class AdoptSharePacket extends Packet {
-    public abstract void onSuccessfulAdoption(String nickname);
+    protected abstract void onSuccessfulAdoption(String nickname);
 
     private final String nickname;
 

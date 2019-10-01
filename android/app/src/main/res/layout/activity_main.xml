@@ -19,7 +19,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp"
@@ -72,6 +72,7 @@
                             android:id="@+id/labelServer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtServer"
                             android:text="@string/label_server" />
 
                         <EditText
@@ -93,6 +94,7 @@
                             android:id="@+id/labelPassword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtPassword"
                             android:text="@string/label_password" />
 
                         <EditText
@@ -114,6 +116,7 @@
                             android:id="@+id/labelDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtDuration"
                             android:text="@string/label_duration" />
 
                         <EditText
@@ -142,6 +145,7 @@
                             android:id="@+id/labelInterval"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtInterval"
                             android:text="@string/label_interval" />
 
                         <EditText
@@ -205,11 +209,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/holo_blue_dark"
-                                android:paddingLeft="30dp"
+                                android:paddingStart="30dp"
+                                android:paddingEnd="0dp"
                                 android:paddingTop="10dp"
                                 android:paddingBottom="5dp"
                                 android:onClick="explainAdoption"
                                 android:clickable="true"
+                                android:focusable="true"
                                 android:text="@string/label_explain_adopt" />
 
                         </LinearLayout>
@@ -228,6 +234,7 @@
                             android:id="@+id/labelNickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtNickname"
                             android:text="@string/label_nickname" />
 
                         <EditText
@@ -251,10 +258,11 @@
                             android:id="@+id/labelPIN"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/txtGroupCode"
                             android:text="@string/label_pin" />
 
                         <EditText
-                            android:id="@+id/txtPIN"
+                            android:id="@+id/txtGroupCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -325,7 +333,7 @@
                         android:gravity="center_horizontal"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:text="@string/label_pin_head" />
 
                     <TextView
@@ -336,7 +344,8 @@
                         android:textSize="55dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold"
-                        android:letterSpacing="0.1"/>
+                        android:letterSpacing="0.1"
+                        tools:ignore="SpUsage" />
 
                     <TextView
                         android:id="@+id/labelShowPinHelp"

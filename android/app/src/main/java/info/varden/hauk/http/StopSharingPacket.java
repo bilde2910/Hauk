@@ -13,7 +13,7 @@ import info.varden.hauk.throwable.ServerException;
  * Packet sent to tell the server to stop a single share or an entire session.
  */
 public abstract class StopSharingPacket extends Packet {
-    public abstract void onSuccess();
+    protected abstract void onSuccess();
 
     /**
      * Creates a request to stop all shares for a given session.

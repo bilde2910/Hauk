@@ -13,9 +13,9 @@ import java.io.Serializable;
  * Helper class that serializes a serializable class to and from Base64-encoded strings for storage
  * in Android shared preferences.
  *
- * @param <T> The serializable class type to cast to when deserializing.
+ * @param <T> The serializable class type to cast to when de-serializing.
  */
-public class StringSerializer<T extends Serializable> {
+class StringSerializer<T extends Serializable> {
     /**
      * Serializes an object instance.
      *
@@ -23,6 +23,7 @@ public class StringSerializer<T extends Serializable> {
      * @return A Base64-encoded representation of the object.
      */
     public String serialize(T obj) {
+        @SuppressWarnings("SpellCheckingInspection")
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeObject(obj);
@@ -33,16 +34,18 @@ public class StringSerializer<T extends Serializable> {
     }
 
     /**
-     * Deserializes an object instance.
+     * Deserialize an object instance.
      *
      * @param pref The Base64-encoded representation of the object.
-     * @return The deserialized object.
+     * @return The de-serialized object.
      */
     public T deserialize(String pref) {
         if (pref == null) return null;
         T obj = null;
+        @SuppressWarnings("SpellCheckingInspection")
         ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(pref, Base64.DEFAULT));
         try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            //noinspection unchecked
             obj = (T) ois.readObject();
         } catch (Exception e) {
             e.printStackTrace();

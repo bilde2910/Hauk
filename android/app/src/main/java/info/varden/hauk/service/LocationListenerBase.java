@@ -9,19 +9,16 @@ import android.os.Bundle;
  *
  * @author Marius Lindvall
  */
-public abstract class LocationListenerBase implements LocationListener {
+abstract class LocationListenerBase implements LocationListener {
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-        return;
     }
 
     @Override
     public void onProviderEnabled(String s) {
-        return;
     }
 
     @Override
     public void onProviderDisabled(String s) {
-        return;
     }
 }

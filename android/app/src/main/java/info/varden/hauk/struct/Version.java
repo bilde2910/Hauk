@@ -1,5 +1,7 @@
 package info.varden.hauk.struct;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
@@ -11,28 +13,12 @@ public class Version implements Comparable<Version>, Serializable {
     private final String ver;
 
     public Version(String ver) {
-        if (ver == null) ver = "1.0";
-        this.ver = ver;
-    }
-
-    public boolean newerThan(Version other) {
-        return this.compareTo(other) > 0;
-    }
-
-    public boolean olderThan(Version other) {
-        return this.compareTo(other) < 0;
+        if (ver == null) this.ver = "1.0";
+        else this.ver = ver;
     }
 
     public boolean atLeast(Version other) {
         return this.compareTo(other) >= 0;
-    }
-
-    public boolean atMost(Version other) {
-        return this.compareTo(other) <= 0;
-    }
-
-    public boolean equals(Version other) {
-        return this.compareTo(other) == 0;
     }
 
     @Override
@@ -53,6 +39,7 @@ public class Version implements Comparable<Version>, Serializable {
         return 0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return this.ver;

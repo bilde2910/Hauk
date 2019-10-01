@@ -17,7 +17,7 @@ import info.varden.hauk.struct.Session;
  */
 public class StopSharingTask implements Runnable {
     private final Context ctx;
-    private final DialogService diagSvc;
+    private final DialogService dialogSvc;
     private final Runnable resetTask;
     private final Handler handler;
 
@@ -35,9 +35,9 @@ public class StopSharingTask implements Runnable {
     // Store details about the current session here.
     private Session session = null;
 
-    public StopSharingTask(Context ctx, DialogService diagSvc, Runnable resetTask, Handler handler) {
+    public StopSharingTask(Context ctx, DialogService dialogSvc, Runnable resetTask, Handler handler) {
         this.ctx = ctx;
-        this.diagSvc = diagSvc;
+        this.dialogSvc = dialogSvc;
         this.resetTask = resetTask;
         this.handler = handler;
     }
@@ -96,7 +96,7 @@ public class StopSharingTask implements Runnable {
         // If a session is currently active, send a cancellation request to the backend to remove
         // session data from the server.
         if (this.session != null) {
-            StopSharingPacket pkt = new StopSharingPacket(this.ctx, this.session) {
+            new StopSharingPacket(this.ctx, this.session) {
                 @Override
                 public void onSuccess() {
                     resetApp();
@@ -107,8 +107,7 @@ public class StopSharingTask implements Runnable {
                     // TODO: Do something meaningful here?
                     resetApp();
                 }
-            };
-            pkt.send();
+            }.send();
         } else {
             resetApp();
         }
@@ -118,7 +117,7 @@ public class StopSharingTask implements Runnable {
         this.handler.removeCallbacksAndMessages(null);
         if (this.activityExists) {
             this.resetTask.run();
-            this.diagSvc.showDialog(R.string.ended_title, R.string.ended_message, this.resetTask);
+            this.dialogSvc.showDialog(R.string.ended_title, R.string.ended_message, this.resetTask);
         } else {
             // If the main activity is already destroyed, there is no reason to keep the app
             // running.

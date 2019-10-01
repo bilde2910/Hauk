@@ -33,11 +33,11 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         this.share = share;
     }
 
-    private EditText diagTxtShare;
-    private EditText diagTxtNick;
+    private EditText dialogTxtShare;
+    private EditText dialogTxtNick;
 
-    public abstract void onSuccess(String nick);
-    public abstract void onFailure(Exception ex);
+    protected abstract void onSuccess(String nick);
+    protected abstract void onFailure(Exception ex);
 
     /**
      * Called when the OK button is clicked in the dialog window.
@@ -45,35 +45,33 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
     @Override
     public final void onPositive() {
         // Get the user data.
-        final String nick = this.diagTxtNick.getText().toString().trim();
-        final String adoptID = this.diagTxtShare.getText().toString().trim();
+        final String nick = this.dialogTxtNick.getText().toString().trim();
+        final String adoptID = this.dialogTxtShare.getText().toString().trim();
 
         // Create a processing dialog, since we are interacting with an external server, which can
         // take some time.
-        final ProgressDialog prog = new ProgressDialog(this.ctx);
-        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        prog.setTitle(R.string.prog_adopt_title);
-        prog.setMessage(String.format(this.ctx.getString(R.string.prog_adopt_body), nick));
-        prog.setIndeterminate(true);
-        prog.setCancelable(false);
-        prog.show();
+        final ProgressDialog progress = new ProgressDialog(this.ctx);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setTitle(R.string.progress_adopt_title);
+        progress.setMessage(String.format(this.ctx.getString(R.string.progress_adopt_body), nick));
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.show();
 
         // Send the HTTP request to try and adopt the share.
-        AdoptSharePacket pkt = new AdoptSharePacket(this.ctx, this.share, adoptID, nick) {
+        new AdoptSharePacket(this.ctx, this.share, adoptID, nick) {
             @Override
             public void onSuccessfulAdoption(String nickname) {
-                prog.dismiss();
+                progress.dismiss();
                 AdoptDialogBuilder.this.onSuccess(nickname);
             }
 
             @Override
             protected void onFailure(Exception ex) {
-                prog.dismiss();
+                progress.dismiss();
                 AdoptDialogBuilder.this.onFailure(ex);
             }
-        };
-
-        pkt.send();
+        }.send();
     }
 
     /**
@@ -81,7 +79,6 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
      */
     @Override
     public final void onNegative() {
-        return;
     }
 
     /**
@@ -108,13 +105,12 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         TextView textNick = new TextView(ctx);
         textNick.setText(R.string.label_nickname);
 
-        diagTxtShare = new EditText(ctx);
-        diagTxtShare.setInputType(InputType.TYPE_CLASS_TEXT);
-        diagTxtShare.setLayoutParams(trParams);
-        diagTxtShare.addTextChangedListener(new TextWatcher() {
+        dialogTxtShare = new EditText(ctx);
+        dialogTxtShare.setInputType(InputType.TYPE_CLASS_TEXT);
+        dialogTxtShare.setLayoutParams(trParams);
+        dialogTxtShare.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                return;
             }
 
             @Override
@@ -124,24 +120,23 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
                 String urlMatch = HaukConst.REGEX_ADOPT_ID_FROM_LINK;
                 Matcher m = Pattern.compile(urlMatch).matcher(charSequence);
                 if (m.find()) {
-                    diagTxtShare.setText(m.group(1));
+                    dialogTxtShare.setText(m.group(1));
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                return;
             }
         });
 
-        diagTxtNick = new EditText(ctx);
-        diagTxtNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        diagTxtNick.setLayoutParams(trParams);
+        dialogTxtNick = new EditText(ctx);
+        dialogTxtNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        dialogTxtNick.setLayoutParams(trParams);
 
         shareRow.addView(textShare);
-        shareRow.addView(diagTxtShare);
+        shareRow.addView(dialogTxtShare);
         nickRow.addView(textNick);
-        nickRow.addView(diagTxtNick);
+        nickRow.addView(dialogTxtNick);
 
         layout.addView(shareRow);
         layout.addView(nickRow);

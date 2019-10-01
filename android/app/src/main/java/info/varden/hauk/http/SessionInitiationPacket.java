@@ -9,12 +9,13 @@ import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.throwable.ServerException;
+import info.varden.hauk.utils.TimeUtils;
 
 /**
  * Packet sent to initiate a sharing session on the server. Creates a share of a given type.
  */
 public abstract class SessionInitiationPacket extends Packet {
-    public abstract ResponseHandler getHandler();
+    protected abstract ResponseHandler getHandler();
 
     private final String server;
     private final int durationSec;
@@ -89,7 +90,7 @@ public abstract class SessionInitiationPacket extends Packet {
     protected final void onSuccess(String[] data, Version backendVersion) throws ServerException {
         // Check if the server is out of date for group shares, if applicable.
         if (this.mode.isGroupType()) {
-            if (backendVersion.olderThan(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
+            if (!backendVersion.atLeast(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
                 // If the server is indeed out of date, override the sharing mode to reflect what
                 // was actually created on the server.
                 this.mode = ShareMode.CREATE_ALONE;
@@ -127,7 +128,7 @@ public abstract class SessionInitiationPacket extends Packet {
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.server, backendVersion, sessionID, (long) this.durationSec * 1000L + System.currentTimeMillis(), this.interval);
+            Session session = new Session(this.server, backendVersion, sessionID, (long) this.durationSec * (long) TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.interval);
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             getHandler().onSessionInitiated(share);

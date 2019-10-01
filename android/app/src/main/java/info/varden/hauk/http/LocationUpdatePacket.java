@@ -8,6 +8,7 @@ import info.varden.hauk.R;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.throwable.ServerException;
+import info.varden.hauk.utils.TimeUtils;
 
 /**
  * Packet that is sent to update the client's location on the map.
@@ -15,7 +16,7 @@ import info.varden.hauk.throwable.ServerException;
  * @author Marius Lindvall
  */
 public abstract class LocationUpdatePacket extends Packet {
-    public abstract void onShareListReceived(String linkFormat, String[] shares);
+    protected abstract void onShareListReceived(String linkFormat, String[] shares);
 
     /**
      * Creates the packet.
@@ -28,7 +29,7 @@ public abstract class LocationUpdatePacket extends Packet {
         super(ctx, session.getServerURL(), HaukConst.URL_PATH_POST_LOCATION);
         addParameter(HaukConst.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
         addParameter(HaukConst.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
-        addParameter(HaukConst.PACKET_PARAM_TIMESTAMP, String.valueOf((double) System.currentTimeMillis() / 1000D));
+        addParameter(HaukConst.PACKET_PARAM_TIMESTAMP, String.valueOf((double) System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND));
         addParameter(HaukConst.PACKET_PARAM_SESSION_ID, session.getID());
 
         // Not all devices provide these parameters.

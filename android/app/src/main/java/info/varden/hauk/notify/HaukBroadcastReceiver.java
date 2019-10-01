@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import info.varden.hauk.HaukConst;
 import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
@@ -27,13 +28,14 @@ public abstract class HaukBroadcastReceiver<T> extends BroadcastReceiver {
      * @param ctx  Android application context.
      * @param data The data object provided to the Receiver class.
      */
-    public abstract void handle(Context ctx, T data);
+    protected abstract void handle(Context ctx, T data);
 
     @Override
     public final void onReceive(Context ctx, Intent intent) {
         // Retrieve the registry index of the data stored for this receiver, then pass that data on
         // to the subclass.
-        int index = intent.getIntExtra(Intent.EXTRA_INDEX, -1);
+        int index = intent.getIntExtra(HaukConst.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, -1);
+        //noinspection unchecked
         handle(ctx, (T) ReceiverDataRegistry.retrieve(index));
     }
 }

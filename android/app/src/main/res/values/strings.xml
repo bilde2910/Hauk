@@ -43,8 +43,8 @@
     </string-array>
 
     <string name="label_status_none">Location sharing inactive</string>
-    <string name="label_status_wait">Waiting for initial GNSS fix...</string>
-    <string name="label_status_coarse">Waiting for high accuracy fix...</string>
+    <string name="label_status_wait">Waiting for initial GNSS fix…</string>
+    <string name="label_status_coarse">Waiting for high accuracy fix…</string>
     <string name="label_status_ok">Location sharing active!</string>
 
     <string name="label_pin_head">YOUR GROUP PIN:</string>
@@ -74,12 +74,12 @@
     <string name="notify_title">Location sharing active</string>
     <string name="notify_body">Hauk is sharing your location to %s</string>
 
-    <string name="prog_title">Connecting</string>
-    <string name="prog_body">Connecting to Hauk...</string>
-    <string name="prog_adopt_title">Adopting</string>
-    <string name="prog_adopt_body">Adopting %s...</string>
-    <string name="prog_new_link_title">Creating link</string>
-    <string name="prog_new_link_body">Creating new sharing link...</string>
+    <string name="progress_connect_title">Connecting</string>
+    <string name="progress_connect_body">Connecting to Hauk…</string>
+    <string name="progress_adopt_title">Adopting</string>
+    <string name="progress_adopt_body">Adopting %s…</string>
+    <string name="progress_new_link_title">Creating link</string>
+    <string name="progress_new_link_body">Creating new sharing link…</string>
 
     <string name="err_client">Invalid settings</string>
     <string name="err_connect">Connection error</string>
@@ -88,7 +88,7 @@
     <string name="err_missing_perms">Location permission is required to use this app.</string>
     <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
     <string name="err_empty">The server returned an empty response.</string>
-    <string name="err_response_code">Received HTTP %d from server!</string>
+    <string name="err_response_code">Received HTTP %s from server!</string>
 
     <string name="err_outdated">Server is out of date</string>
     <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>

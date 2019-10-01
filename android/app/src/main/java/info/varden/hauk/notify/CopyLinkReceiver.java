@@ -24,7 +24,11 @@ public class CopyLinkReceiver extends HaukBroadcastReceiver<String> {
     @Override
     public void handle(Context ctx, String data) {
         // Copy the link to the clipboard.
-        ClipData clip = ClipData.newPlainText(ctx.getString(R.string.action_copied), data);
-        ((ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(clip);
+        try {
+            ClipData clip = ClipData.newPlainText(ctx.getString(R.string.action_copied), data);
+            ((ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(clip);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
     }
 }

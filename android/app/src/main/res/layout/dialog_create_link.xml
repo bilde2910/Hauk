@@ -42,7 +42,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/diagNewLinkChkAdopt"
+                android:id="@+id/dialogNewLinkChkAdopt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/chk_allow_adopt" />
@@ -51,11 +51,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_blue_dark"
-                android:paddingLeft="30dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="5dp"
                 android:onClick="explainAdoption"
                 android:clickable="true"
+                android:focusable="true"
                 android:text="@string/label_explain_adopt" />
 
         </LinearLayout>

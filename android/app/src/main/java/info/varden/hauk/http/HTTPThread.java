@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ import info.varden.hauk.throwable.ServerException;
  */
 public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread.Response> {
 
+    private static final int TIMEOUT = 10000;
+
     // Android application context.
     private final Context ctx;
 
@@ -34,10 +37,10 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
     // if applicable.
     private final Callback callback;
 
-    // This class is only for use by info.varden.hauk.http.Packet. Other classes should always call
-    // the relevant packet to perform a request rather than using HTTPThread directly. This
-    // constructor is thus package-level private.
-    protected HTTPThread(Context ctx, Callback callback) {
+    // This class is only for use by Packet. Other classes should always call the relevant packet to
+    // perform a request rather than using HTTPThread directly. This constructor is thus package-
+    // level private.
+    HTTPThread(Context ctx, Callback callback) {
         this.ctx = ctx;
         this.callback = callback;
     }
@@ -49,7 +52,7 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
             // Create a URL-encoded data body for the HTTP request. Only the first request in the
             // array is ever used.
             StringBuilder sb = new StringBuilder();
-            boolean first = false;
+            boolean first = true;
             for (Map.Entry<String, String> entry : data[0].data.entrySet()) {
                 if (first) first = false;
                 else sb.append("&");
@@ -61,7 +64,7 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
             // Open a connection to the Hauk server and post the data.
             URL url = new URL(data[0].url);
             HttpURLConnection client = (HttpURLConnection) url.openConnection();
-            client.setConnectTimeout(10000);
+            client.setConnectTimeout(TIMEOUT);
             client.setRequestMethod("POST");
             client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             client.setRequestProperty("User-Agent", "Hauk/" + BuildConfig.VERSION_NAME + " " + System.getProperty("http.agent"));
@@ -69,7 +72,7 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
             client.setDoOutput(true);
 
             OutputStream os = client.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             writer.write(sb.toString());
             writer.flush();
             os.close();
@@ -81,15 +84,15 @@ public class HTTPThread extends AsyncTask<HTTPThread.Request, String, HTTPThread
                 // processing the response.
                 String line;
                 ArrayList<String> lines = new ArrayList<>();
-                BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream(), StandardCharsets.UTF_8));
                 while ((line = br.readLine()) != null) {
                     lines.add(line);
                 }
                 br.close();
-                return new Response(null, lines.toArray(new String[lines.size()]), new Version(client.getHeaderField(HaukConst.HTTP_HEADER_HAUK_VERSION)));
+                return new Response(null, lines.toArray(new String[0]), new Version(client.getHeaderField(HaukConst.HTTP_HEADER_HAUK_VERSION)));
             } else {
                 // Hauk only returns HTTP 200; any other response should be considered an error.
-                throw new ServerException(String.format(this.ctx.getString(R.string.err_response_code), response));
+                throw new ServerException(String.format(this.ctx.getString(R.string.err_response_code), String.valueOf(response)));
             }
         } catch (Exception ex) {
             // If an exception occurred, return no data.

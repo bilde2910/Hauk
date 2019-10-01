@@ -1,6 +1,7 @@
 package info.varden.hauk.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,6 +47,7 @@ import info.varden.hauk.dialog.CustomDialogBuilder;
 import info.varden.hauk.dialog.DialogButtons;
 import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.http.NewLinkPacket;
+import info.varden.hauk.http.Packet;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.http.StopSharingPacket;
 import info.varden.hauk.service.GNSSActiveHandler;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtDuration;
     private EditText txtInterval;
     private EditText txtNickname;
-    private EditText txtPIN;
+    private EditText txtGroupCode;
     private Spinner selUnit;
     private Spinner selMode;
     private Button btnShare;
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnAdopt;
 
     // A helper utility class for displaying dialog windows/message boxes.
-    private DialogService diagSvc;
+    private DialogService dialogSvc;
 
     // A helper utility to resume sessions.
     private ResumableSessions resumable;
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     // A list of links displayed on the UI that the client is contributing to, paired with the View
     // representing the link of that share and its controls in the link list.
-    private HashMap<String, View> shareList;
+    private Map<String, View> shareList;
 
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 123;
 
@@ -135,35 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Add an event handler to the sharing mode selector.
-        selMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
-                // This handler determines which UI elements should be visible, based on the user's
-                // selection of sharing modes.
-                switch (ShareMode.fromMode(selection)) {
-                    case CREATE_ALONE:
-                        rowAllowAdopt.setVisibility(View.VISIBLE);
-                        rowNickname.setVisibility(View.GONE);
-                        rowPIN.setVisibility(View.GONE);
-                        break;
-                    case CREATE_GROUP:
-                        rowAllowAdopt.setVisibility(View.GONE);
-                        rowNickname.setVisibility(View.VISIBLE);
-                        rowPIN.setVisibility(View.GONE);
-                        break;
-                    case JOIN_GROUP:
-                        rowAllowAdopt.setVisibility(View.GONE);
-                        rowNickname.setVisibility(View.VISIBLE);
-                        rowPIN.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
+        selMode.setOnItemSelectedListener(new SelectionModeChangedListener());
 
         loadPreferences();
         this.resumable.tryResumeShare(new ResumableSessions.ResumeHandler() {
@@ -171,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSharesFetched(Context ctx, final Session session, final List<Share> shares) {
                 // Prompt the user to continue the session.
-                diagSvc.showDialog(R.string.resume_title, String.format(ctx.getString(R.string.resume_body), shares.size(), session.getExpiryString()), DialogButtons.YES_NO, new CustomDialogBuilder() {
+                dialogSvc.showDialog(R.string.resume_title, String.format(ctx.getString(R.string.resume_body), shares.size(), session.getExpiryString()), DialogButtons.YES_NO, new CustomDialogBuilder() {
 
                     @Override
                     public void onPositive() {
                         // If yes, do continue the session.
-                        if (!session.hasExpired()) {
+                        if (session.isActive()) {
                             for (Share share : shares) {
                                 share.setSession(session);
                                 shareLocation(share);
@@ -209,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * On-tap handler for the "start sharing" and "stop sharing" button.
      */
-    public void startSharing(View view) {
+    public void startSharing(@SuppressWarnings("unused") View view) {
         // If there is an executable stop task, that means that sharing is already active. Shut down
         // the share by running the stop task instead of starting a new share.
         if (stopTask.canExecute()) {
@@ -226,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         final int interval = Integer.parseInt(txtInterval.getText().toString());
         final String nickname = txtNickname.getText().toString().trim();
         final ShareMode mode = ShareMode.fromMode(selMode.getSelectedItemPosition());
-        final String groupPin = txtPIN.getText().toString();
+        final String groupPin = txtGroupCode.getText().toString();
         final boolean allowAdoption = chkAllowAdopt.isChecked();
         final int durUnit = selUnit.getSelectedItemPosition();
 
@@ -237,20 +212,23 @@ public class MainActivity extends AppCompatActivity {
         // If password saving is enabled, save the password as well.
         if (chkRemember.isChecked()) setPassword(true, password);
 
+        assert mode != null;
+
         // Create a "full" server address, with a following slash if it is missing. This is used to
-        // construct subpaths for the Hauk backend.
+        // construct sub-paths for the Hauk backend.
         final String serverFull = server.endsWith("/") ? server : server + "/";
 
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
         switch (durUnit) {
             case HaukConst.DURATION_UNIT_MINUTES:
-                duration *= 60;
+                duration *= TimeUtils.SECONDS_PER_MINUTE;
                 break;
             case HaukConst.DURATION_UNIT_HOURS:
-                duration *= 3600;
+                duration *= TimeUtils.SECONDS_PER_HOUR;
                 break;
             case HaukConst.DURATION_UNIT_DAYS:
-                duration *= 86400;
+                duration *= TimeUtils.SECONDS_PER_DAY;
+                break;
         }
         final int durationSec = duration;
 
@@ -260,12 +238,16 @@ public class MainActivity extends AppCompatActivity {
         if (!hasLocationPermission()) return;
 
         final LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean isGPSEnabled = false;
+        boolean isGPSEnabled;
         try {
+            assert locMan != null;
             isGPSEnabled = locMan.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception ex) {};
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            isGPSEnabled = false;
+        }
         if (!isGPSEnabled) {
-            diagSvc.showDialog(R.string.err_client, R.string.err_location_disabled, resetTask);
+            dialogSvc.showDialog(R.string.err_client, R.string.err_location_disabled, resetTask);
             return;
         }
 
@@ -273,20 +255,20 @@ public class MainActivity extends AppCompatActivity {
         // (e.g. if the host is unreachable, it will eventually time out), and having a progress bar
         // makes for better UX since it visually shows that something is actually happening in the
         // background.
-        final ProgressDialog prog = new ProgressDialog(this);
-        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        prog.setTitle(R.string.prog_title);
-        prog.setMessage(getString(R.string.prog_body));
-        prog.setIndeterminate(true);
-        prog.setCancelable(false);
-        prog.show();
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setTitle(R.string.progress_connect_title);
+        progress.setMessage(getString(R.string.progress_connect_body));
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.show();
 
         // Create a handler for our request to initiate a new session. This is declared separately
         // from the SessionInitiationPackets below to avoid code duplication.
         final SessionInitiationPacket.ResponseHandler handler = new SessionInitiationPacket.ResponseHandler() {
             @Override
             public void onSessionInitiated(Share share) {
-                prog.dismiss();
+                progress.dismiss();
 
                 // Proceed with the location share.
                 resumable.setSessionResumable(share.getSession());
@@ -296,30 +278,30 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception ex) {
-                prog.dismiss();
+                progress.dismiss();
                 if (ex instanceof MalformedURLException) {
                     ex.printStackTrace();
-                    diagSvc.showDialog(R.string.err_client, R.string.err_malformed_url, resetTask);
+                    dialogSvc.showDialog(R.string.err_client, R.string.err_malformed_url, resetTask);
                 } else if (ex instanceof IOException) {
                     ex.printStackTrace();
-                    diagSvc.showDialog(R.string.err_connect, ex.getMessage(), resetTask);
+                    dialogSvc.showDialog(R.string.err_connect, ex.getMessage(), resetTask);
                 } else {
                     ex.printStackTrace();
-                    diagSvc.showDialog(R.string.err_server, ex.getMessage(), resetTask);
+                    dialogSvc.showDialog(R.string.err_server, ex.getMessage(), resetTask);
                 }
             }
 
             @Override
             public void onShareModeIncompatible(Version backendVersion) {
                 selMode.setSelection(ShareMode.CREATE_ALONE.getMode());
-                diagSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), HaukConst.VERSION_COMPAT_GROUP_SHARE, backendVersion));
+                dialogSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), HaukConst.VERSION_COMPAT_GROUP_SHARE, backendVersion));
             }
         };
 
         // Create a handshake request and handle the response. The handshake transmits the duration
         // and interval to the server and waits for the server to return a session ID to confirm
         // session creation.
-        SessionInitiationPacket pkt = null;
+        Packet pkt = null;
         switch (mode) {
             case CREATE_ALONE:
                 pkt = new SessionInitiationPacket(this, serverFull, password, durationSec, interval, allowAdoption) {
@@ -365,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
         selUnit.setEnabled(false);
         selMode.setEnabled(false);
         txtNickname.setEnabled(false);
-        txtPIN.setEnabled(false);
+        txtGroupCode.setEnabled(false);
         chkAllowAdopt.setEnabled(false);
     }
 
@@ -386,23 +368,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     // Show the group PIN on the UI if a new group share was created.
                     labelShowPin.setText(share.getJoinCode());
-                    btnAdopt.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View view) {
-                            diagSvc.showDialog(R.string.adopt_title, String.format(getString(R.string.adopt_body), share.getSession().getServerURL()), DialogButtons.OK_CANCEL, new AdoptDialogBuilder(MainActivity.this, share) {
-                                @Override
-                                public void onSuccess(final String nick) {
-                                    diagSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
-                                }
-
-                                @Override
-                                public void onFailure(final Exception ex) {
-                                    diagSvc.showDialog(R.string.err_server, ex.getMessage());
-                                }
-                            });
-                        }
-                    });
+                    btnAdopt.setOnClickListener(new InitiateAdoptionClickHandler(share));
                     layoutGroupPIN.setVisibility(View.VISIBLE);
                 }
             });
@@ -410,83 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
         // We now have a link to share, so we enable the additional link creation button. Add an
         // event handler to handle the user clicking on it.
-        btnLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // Create a dialog that prompts the user for the new share's adoption state.
-                LayoutInflater inflater = getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.dialog_create_link, null);
-
-                // Inherit the adoption state from the main share/saved preference.
-                final CheckBox chkAdopt = dialogView.findViewById(R.id.diagNewLinkChkAdopt);
-                chkAdopt.setChecked(chkAllowAdopt.isChecked());
-
-                diagSvc.showDialog(R.string.create_link_title, R.string.create_link_body, DialogButtons.CREATE_CANCEL, new CustomDialogBuilder() {
-                    @Override
-                    public void onPositive() {
-                        // Create a progress dialog while creating the link. This could end up
-                        // taking a while (e.g. if the host is unreachable, it will eventually time
-                        // out), and having a progress bar makes for better UX since it visually
-                        // shows that something is actually happening in the background.
-                        final ProgressDialog prog = new ProgressDialog(MainActivity.this);
-                        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        prog.setTitle(R.string.prog_new_link_title);
-                        prog.setMessage(getString(R.string.prog_new_link_body));
-                        prog.setIndeterminate(true);
-                        prog.setCancelable(false);
-                        prog.show();
-
-                        NewLinkPacket pkt = new NewLinkPacket(MainActivity.this, share.getSession(), chkAdopt.isChecked()) {
-
-                            @Override
-                            public void onShareCreated(final Share share) {
-                                prog.dismiss();
-                                resumable.addShareResumable(share);
-
-                                // Add the link to the list of active links.
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        addLink(share);
-                                    }
-                                });
-
-                                // Tell the user that the link was added successfully.
-                                diagSvc.showDialog(R.string.link_added_title, R.string.link_added_body);
-                            }
-
-                            @Override
-                            protected void onFailure(Exception ex) {
-                                prog.dismiss();
-                                if (ex instanceof MalformedURLException) {
-                                    ex.printStackTrace();
-                                    diagSvc.showDialog(R.string.err_client, R.string.err_malformed_url);
-                                } else if (ex instanceof IOException) {
-                                    ex.printStackTrace();
-                                    diagSvc.showDialog(R.string.err_connect, ex.getMessage());
-                                } else {
-                                    ex.printStackTrace();
-                                    diagSvc.showDialog(R.string.err_server, ex.getMessage());
-                                }
-                            }
-                        };
-
-                        pkt.send();
-                    }
-
-                    @Override
-                    public void onNegative() {
-                        return;
-                    }
-
-                    @Override
-                    public View createView(Context ctx) {
-                        return dialogView;
-                    }
-                });
-            }
-        });
+        btnLink.setOnClickListener(new AddLinkClickListener(share.getSession()));
         btnLink.setEnabled(true);
 
         // Also make sure to add a link row to the table of active links.
@@ -536,12 +426,12 @@ public class MainActivity extends AppCompatActivity {
                                     resumable.addShareResumable(newShare);
                                 }
                             }
-                            for (Iterator<Map.Entry<String, View>> iter = shareList.entrySet().iterator(); iter.hasNext();) {
-                                Map.Entry<String, View> entry = iter.next();
+                            for (Iterator<Map.Entry<String, View>> it = shareList.entrySet().iterator(); it.hasNext();) {
+                                Map.Entry<String, View> entry = it.next();
                                 if (!currentShares.contains(entry.getKey())) {
                                     // A share has been removed.
                                     tableLinks.removeView(entry.getValue());
-                                    iter.remove();
+                                    it.remove();
                                     resumable.removeResumableShare(entry.getKey());
                                 }
                             }
@@ -549,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             }));
-            if (Build.VERSION.SDK_INT >= 26) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(pusher);
             } else {
                 startService(pusher);
@@ -583,15 +473,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     counter -= 1;
                 }
-            }, 0L, 1000L);
+            }, 0L, TimeUtils.MILLIS_PER_SECOND);
 
             // Re-enable the start (stop) button and inform the user.
             btnShare.setEnabled(true);
             labelStatusCur.setText(getString(R.string.label_status_wait));
             labelStatusCur.setTextColor(getColor(R.color.statusWait));
-            diagSvc.showDialog(R.string.ok_title, R.string.ok_message);
+            dialogSvc.showDialog(R.string.ok_title, R.string.ok_message);
         } else {
-            diagSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
+            dialogSvc.showDialog(R.string.err_client, R.string.err_missing_perms, resetTask);
         }
     }
 
@@ -600,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param share The share to add to the list of links.
      */
-    private void addLink(final Share share) {
+    private void addLink(Share share) {
         // Get the table row layout and inflate it into a view.
         LayoutInflater inflater = getLayoutInflater();
         View linkView = inflater.inflate(R.layout.content_link, null);
@@ -608,42 +498,14 @@ public class MainActivity extends AppCompatActivity {
         // Add an event handler for the stop button. This will stop the given share only.
         Button btnStop = linkView.findViewById(R.id.linkBtnStop);
         if (share.getSession().getBackendVersion().atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
-            btnStop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    StopSharingPacket pkt = new StopSharingPacket(MainActivity.this, share) {
-                        // TODO: Do something meaningful here?
-
-                        @Override
-                        public void onSuccess() {
-                            return;
-                        }
-
-                        @Override
-                        protected void onFailure(Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    };
-                    pkt.send();
-                }
-            });
+            btnStop.setOnClickListener(new StopLinkClickHandler(share));
         } else {
             btnStop.setVisibility(View.GONE);
         }
 
         // Add an event handler for the share button.
         Button btnShare = linkView.findViewById(R.id.linkBtnShare);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                //noinspection HardCodedStringLiteral
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
-                shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
-                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
-            }
-        });
+        btnShare.setOnClickListener(new ShareLinkClickHandler(share));
 
         // Update the text on the UI.
         TextView txtLink = linkView.findViewById(R.id.linkTxtLink);
@@ -661,8 +523,8 @@ public class MainActivity extends AppCompatActivity {
      * On-tap handler for the "what's this" link underneath the checkbox for allowing adoption.
      * Opens an explanation of adoption.
      */
-    public void explainAdoption(View view) {
-        diagSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
+    public void explainAdoption(@SuppressWarnings("unused") View view) {
+        dialogSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
     }
 
     /**
@@ -678,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
             // Show a rationale first before requesting location permission, giving users the chance
             // to cancel the request if they so desire. Users are informed that they must click the
             // "start sharing" button again after they have granted the permission.
-            diagSvc.showDialog(R.string.req_perms_title, R.string.req_perms_message, new Runnable() {
+            dialogSvc.showDialog(R.string.req_perms_title, R.string.req_perms_message, new Runnable() {
 
                 /**
                  * Function that runs if the user accepts the location request rationale via the
@@ -708,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
         txtDuration = findViewById(R.id.txtDuration);
         txtInterval = findViewById(R.id.txtInterval);
         txtNickname = findViewById(R.id.txtNickname);
-        txtPIN = findViewById(R.id.txtPIN);
+        txtGroupCode = findViewById(R.id.txtGroupCode);
         selUnit = findViewById(R.id.selUnit);
         selMode = findViewById(R.id.selMode);
         btnShare = findViewById(R.id.btnShare);
@@ -758,7 +620,7 @@ public class MainActivity extends AppCompatActivity {
                 selUnit.setEnabled(true);
                 selMode.setEnabled(true);
                 txtNickname.setEnabled(true);
-                txtPIN.setEnabled(true);
+                txtGroupCode.setEnabled(true);
                 chkAllowAdopt.setEnabled(true);
 
                 layoutGroupPIN.setVisibility(View.GONE);
@@ -771,23 +633,23 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        diagSvc = new DialogService(this);
+        dialogSvc = new DialogService(this);
         resumable = new ResumableSessions(this);
         handler = new Handler();
-        stopTask = new StopSharingTask(this, diagSvc, resetTask, handler);
+        stopTask = new StopSharingTask(this, dialogSvc, resetTask, handler);
         shareCountdown = null;
     }
 
     private void loadPreferences() {
         SharedPreferences settings = getApplicationContext().getSharedPreferences(HaukConst.SHARED_PREFS_CONNECTION, MODE_PRIVATE);
-        txtServer.setText(settings.getString(HaukConst.PREF_SERVER, ""));
-        txtDuration.setText(String.valueOf(settings.getInt(HaukConst.PREF_DURATION, 30)));
-        txtInterval.setText(String.valueOf(settings.getInt(HaukConst.PREF_INTERVAL, 1)));
-        txtPassword.setText(settings.getString(HaukConst.PREF_PASSWORD, ""));
-        txtNickname.setText(settings.getString(HaukConst.PREF_NICKNAME, ""));
-        selUnit.setSelection(settings.getInt(HaukConst.PREF_DURATION_UNIT, HaukConst.DURATION_UNIT_MINUTES));
-        chkRemember.setChecked(settings.getBoolean(HaukConst.PREF_REMEMBER_PASSWORD, false));
-        chkAllowAdopt.setChecked(settings.getBoolean(HaukConst.PREF_ALLOW_ADOPTION, true));
+        txtServer.setText(settings.getString(HaukConst.PREF_SERVER, HaukConst.DEFAULT_SERVER));
+        txtDuration.setText(String.valueOf(settings.getInt(HaukConst.PREF_DURATION, HaukConst.DEFAULT_DURATION)));
+        txtInterval.setText(String.valueOf(settings.getInt(HaukConst.PREF_INTERVAL, HaukConst.DEFAULT_INTERVAL)));
+        txtPassword.setText(settings.getString(HaukConst.PREF_PASSWORD, HaukConst.DEFAULT_PASSWORD));
+        txtNickname.setText(settings.getString(HaukConst.PREF_NICKNAME, HaukConst.DEFAULT_NICKNAME));
+        selUnit.setSelection(settings.getInt(HaukConst.PREF_DURATION_UNIT, HaukConst.DEFAULT_DURATION_UNIT));
+        chkRemember.setChecked(settings.getBoolean(HaukConst.PREF_REMEMBER_PASSWORD, HaukConst.DEFAULT_REMEMBER_PASSWORD));
+        chkAllowAdopt.setChecked(settings.getBoolean(HaukConst.PREF_ALLOW_ADOPTION, HaukConst.DEFAULT_ALLOW_ADOPTION));
     }
 
     private void setPreferences(String server, int duration, int interval, int durUnit, String nickname, boolean allowAdoption) {
@@ -810,5 +672,184 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean(HaukConst.PREF_REMEMBER_PASSWORD, store);
         editor.putString(HaukConst.PREF_PASSWORD, password);
         editor.apply();
+    }
+
+    private class StopLinkClickHandler implements View.OnClickListener {
+        private final Share share;
+
+        private StopLinkClickHandler(Share share) {
+            this.share = share;
+        }
+
+        @Override
+        public void onClick(View view) {
+            new StopSharingPacket(MainActivity.this, this.share) {
+                // TODO: Do something meaningful here?
+
+                @Override
+                public void onSuccess() {
+                }
+
+                @Override
+                protected void onFailure(Exception ex) {
+                    ex.printStackTrace();
+                }
+            }.send();
+        }
+    }
+
+    private class ShareLinkClickHandler implements View.OnClickListener {
+        private final Share share;
+
+        private ShareLinkClickHandler(Share share) {
+            this.share = share;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            //noinspection HardCodedStringLiteral
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, this.share.getViewURL());
+            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_via)));
+        }
+    }
+
+    private class InitiateAdoptionClickHandler implements View.OnClickListener {
+        private final Share share;
+
+        private InitiateAdoptionClickHandler(Share share) {
+            this.share = share;
+        }
+
+        @Override
+        public void onClick(View view) {
+            dialogSvc.showDialog(R.string.adopt_title, String.format(getString(R.string.adopt_body), this.share.getSession().getServerURL()), DialogButtons.OK_CANCEL, new AdoptDialogBuilder(MainActivity.this, this.share) {
+                @Override
+                public void onSuccess(final String nick) {
+                    dialogSvc.showDialog(R.string.adopted_title, String.format(getString(R.string.adopted_body), nick));
+                }
+
+                @Override
+                public void onFailure(final Exception ex) {
+                    dialogSvc.showDialog(R.string.err_server, ex.getMessage());
+                }
+            });
+        }
+    }
+
+    private class AddLinkClickListener implements View.OnClickListener {
+        private final Session session;
+
+        private AddLinkClickListener(Session session) {
+            this.session = session;
+        }
+
+        @Override
+        public void onClick(View view) {
+            dialogSvc.showDialog(R.string.create_link_title, R.string.create_link_body, DialogButtons.CREATE_CANCEL, new CustomDialogBuilder() {
+
+                private CheckBox chkAdopt;
+
+                @Override
+                public void onPositive() {
+                    // Create a progress dialog while creating the link. This could end up
+                    // taking a while (e.g. if the host is unreachable, it will eventually time
+                    // out), and having a progress bar makes for better UX since it visually
+                    // shows that something is actually happening in the background.
+                    final ProgressDialog progress = new ProgressDialog(MainActivity.this);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setTitle(R.string.progress_new_link_title);
+                    progress.setMessage(getString(R.string.progress_new_link_body));
+                    progress.setIndeterminate(true);
+                    progress.setCancelable(false);
+                    progress.show();
+
+                    new NewLinkPacket(MainActivity.this, session, chkAdopt.isChecked()) {
+
+                        @Override
+                        public void onShareCreated(final Share share) {
+                            progress.dismiss();
+                            resumable.addShareResumable(share);
+
+                            // Add the link to the list of active links.
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    addLink(share);
+                                }
+                            });
+
+                            // Tell the user that the link was added successfully.
+                            dialogSvc.showDialog(R.string.link_added_title, R.string.link_added_body);
+                        }
+
+                        @Override
+                        protected void onFailure(Exception ex) {
+                            progress.dismiss();
+                            if (ex instanceof MalformedURLException) {
+                                ex.printStackTrace();
+                                dialogSvc.showDialog(R.string.err_client, R.string.err_malformed_url);
+                            } else if (ex instanceof IOException) {
+                                ex.printStackTrace();
+                                dialogSvc.showDialog(R.string.err_connect, ex.getMessage());
+                            } else {
+                                ex.printStackTrace();
+                                dialogSvc.showDialog(R.string.err_server, ex.getMessage());
+                            }
+                        }
+                    }.send();
+                }
+
+                @Override
+                public void onNegative() {
+                }
+
+                @Override
+                public View createView(Context ctx) {
+                    // Create a dialog that prompts the user for the new share's adoption state.
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressWarnings("HardCodedStringLiteral")
+                    @SuppressLint("InflateParams")
+                    View dialogView = inflater.inflate(R.layout.dialog_create_link, null);
+
+                    // Inherit the adoption state from the main share/saved preference.
+                    this.chkAdopt = dialogView.findViewById(R.id.dialogNewLinkChkAdopt);
+                    this.chkAdopt.setChecked(chkAllowAdopt.isChecked());
+
+                    return dialogView;
+                }
+            });
+        }
+    }
+
+    private class SelectionModeChangedListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int selection, long rowId) {
+            // This handler determines which UI elements should be visible, based on the user's
+            // selection of sharing modes.
+            switch (Objects.requireNonNull(ShareMode.fromMode(selection))) {
+                case CREATE_ALONE:
+                    rowAllowAdopt.setVisibility(View.VISIBLE);
+                    rowNickname.setVisibility(View.GONE);
+                    rowPIN.setVisibility(View.GONE);
+                    break;
+                case CREATE_GROUP:
+                    rowAllowAdopt.setVisibility(View.GONE);
+                    rowNickname.setVisibility(View.VISIBLE);
+                    rowPIN.setVisibility(View.GONE);
+                    break;
+                case JOIN_GROUP:
+                    rowAllowAdopt.setVisibility(View.GONE);
+                    rowNickname.setVisibility(View.VISIBLE);
+                    rowPIN.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+        }
     }
 }

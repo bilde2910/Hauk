@@ -13,6 +13,7 @@ import android.os.IBinder;
 import info.varden.hauk.HaukConst;
 import info.varden.hauk.StopSharingTask;
 import info.varden.hauk.http.LocationUpdatePacket;
+import info.varden.hauk.notify.HaukNotification;
 import info.varden.hauk.notify.SharingNotification;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.utils.ReceiverDataRegistry;
@@ -28,9 +29,6 @@ public class LocationPushService extends Service {
 
     @SuppressWarnings("HardCodedStringLiteral")
     public static final String ACTION_ID = "info.varden.hauk.LOCATION_SERVICE";
-
-    // A task that should be run when sharing ends, either automatically or by user request.
-    private StopSharingTask stopTask;
 
     // A task that should be run when locations start registering. Used to change a label on the
     // main activity.
@@ -56,21 +54,22 @@ public class LocationPushService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // A task that should be run when sharing ends, either automatically or by user request.
+        StopSharingTask stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_STOP_TASK, -1));
         this.share = (Share) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_SHARE, -1));
-        this.stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_STOP_TASK, -1));
         this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(HaukConst.EXTRA_GNSS_ACTIVE_TASK, -1));
 
         try {
             // Even though we previously requested location permission, we still have to check for
             // it when we actually use the location API.
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                this.stopTask.setSession(this.share.getSession());
+                stopTask.setSession(this.share.getSession());
 
                 // Create a persistent notification for Hauk. This notification does have some
                 // buttons that let the user interact with Hauk while in the background, but the
                 // real reason we need a notification is so that Android does not kill our app while
                 // it is in the background. Having an active notification stops this from happening.
-                final SharingNotification notify = new SharingNotification(this, this.share, this.stopTask);
+                final HaukNotification notify = new SharingNotification(this, this.share, stopTask);
                 startForeground(notify.getID(), notify.create());
 
                 this.listenCoarse = new LocationListenerBase() {
@@ -123,7 +122,7 @@ public class LocationPushService extends Service {
     }
 
     private void onLocationChanged(Location location) {
-        LocationUpdatePacket pkt = new LocationUpdatePacket(this, this.share.getSession(), location) {
+        new LocationUpdatePacket(this, this.share.getSession(), location) {
             @Override
             public void onShareListReceived(String linkFormat, String[] shares) {
                 gnssActiveTask.onShareListReceived(linkFormat, shares);
@@ -133,8 +132,7 @@ public class LocationPushService extends Service {
             protected void onFailure(Exception ex) {
                 // Errors can be due to intermittent connectivity. Ignore them.
             }
-        };
-        pkt.send();
+        }.send();
     }
 
     @Override

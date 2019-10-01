@@ -1,6 +1,7 @@
 package info.varden.hauk.utils;
 
-import java.util.HashMap;
+import android.util.SparseArray;
+
 import java.util.Random;
 
 /**
@@ -15,8 +16,8 @@ import java.util.Random;
  * @author Marius Lindvall
  */
 public class ReceiverDataRegistry {
-    private static HashMap<Integer, Object> data = new HashMap<>();
-    private static Random random = new Random();
+    private static final SparseArray<Object> data = new SparseArray<>();
+    private static final Random random = new Random();
 
     /**
      * Registers the given object in the registry.
@@ -37,6 +38,8 @@ public class ReceiverDataRegistry {
      * @return The object that was stored in the registry.
      */
     public static Object retrieve(int index) {
-        return data.remove(index);
+        Object obj = data.get(index);
+        data.remove(index);
+        return obj;
     }
 }

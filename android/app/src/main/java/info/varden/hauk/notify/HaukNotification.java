@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import java.util.Random;
@@ -25,12 +26,8 @@ public abstract class HaukNotification {
     @SuppressWarnings("HardCodedStringLiteral")
     private static final String NOTIFY_CHANNEL_NAME = "Hauk";
 
-    // Whether or not the notification has been despawned.
-    private boolean isCanceled;
-
-    public HaukNotification(Context ctx) {
+    HaukNotification(Context ctx) {
         this.ctx = ctx;
-        this.isCanceled = false;
 
         // Generate a random non-zero ID for the notification.
         Random random = new Random();
@@ -39,7 +36,7 @@ public abstract class HaukNotification {
         this.id = id;
     }
 
-    public final Context getContext() {
+    final Context getContext() {
         return this.ctx;
     }
 
@@ -47,8 +44,14 @@ public abstract class HaukNotification {
         return this.id;
     }
 
-    public abstract int getImportance();
-    public abstract void build(NotificationCompat.Builder builder) throws Exception;
+    // For override by subclasses if necessary.
+    @SuppressWarnings({"WeakerAccess", "SameReturnValue"})
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    protected int getImportance() {
+        return NotificationManager.IMPORTANCE_DEFAULT;
+    }
+
+    protected abstract void build(NotificationCompat.Builder builder) throws Exception;
 
     /**
      * Creates a notification instance that can be displayed using NotificationManager.
@@ -63,11 +66,16 @@ public abstract class HaukNotification {
         build(builder);
 
         // On Android >= 8.0, notifications need to be assigned a channel ID.
-        if (Build.VERSION.SDK_INT >= 26) {
-            NotificationChannel channel = new NotificationChannel(NOTIFY_CHANNEL_ID, NOTIFY_CHANNEL_NAME, getImportance());
-            NotificationManager notiMan = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-            notiMan.createNotificationChannel(channel);
-            builder.setChannelId(NOTIFY_CHANNEL_ID);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                NotificationChannel channel = new NotificationChannel(NOTIFY_CHANNEL_ID, NOTIFY_CHANNEL_NAME, getImportance());
+                NotificationManager nManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+                assert nManager != null;
+                nManager.createNotificationChannel(channel);
+                builder.setChannelId(NOTIFY_CHANNEL_ID);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         return builder.build();

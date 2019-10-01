@@ -10,16 +10,16 @@ import android.content.Intent;
  *
  * @author Marius Lindvall
  */
-public class ReopenIntent {
+class ReopenIntent {
     private final Context ctx;
     private final Class<? extends Activity> activity;
 
-    public ReopenIntent(Context ctx, Class <? extends Activity> activity) {
+    ReopenIntent(Context ctx, Class <? extends Activity> activity) {
         this.ctx = ctx;
         this.activity = activity;
     }
 
-    public PendingIntent toPending() {
+    PendingIntent toPending() {
         Intent intent = new Intent(this.ctx, this.activity);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return PendingIntent.getActivity(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

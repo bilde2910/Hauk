@@ -13,6 +13,7 @@ import info.varden.hauk.R;
  *
  * @author Marius Lindvall
  */
+@SuppressWarnings("WeakerAccess")
 public class DialogService {
     private final Context ctx;
 

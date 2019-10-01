@@ -16,7 +16,7 @@ import info.varden.hauk.throwable.ServerException;
  * @author Marius Lindvall
  */
 public abstract class NewLinkPacket extends Packet {
-    public abstract void onShareCreated(Share share);
+    protected abstract void onShareCreated(Share share);
 
     private final Session session;
 

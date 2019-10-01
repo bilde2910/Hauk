@@ -28,6 +28,16 @@ public final class HaukConst {
     public static final String PREF_REMEMBER_PASSWORD = "rememberPassword";
     public static final String PREF_ALLOW_ADOPTION = "allowAdoption";
 
+    // Default values.
+    public static final String DEFAULT_SERVER = "";
+    public static final String DEFAULT_PASSWORD = "";
+    public static final int DEFAULT_DURATION = 30;
+    public static final int DEFAULT_INTERVAL = 1;
+    public static final String DEFAULT_NICKNAME = "";
+    public static final int DEFAULT_DURATION_UNIT = DURATION_UNIT_MINUTES;
+    public static final boolean DEFAULT_REMEMBER_PASSWORD = false;
+    public static final boolean DEFAULT_ALLOW_ADOPTION = true;
+
     // Keys for use in session resumption preferences.
     public static final String RESUME_AVAILABLE = "canResume";
     public static final String RESUME_CLIENT_VERSION = "clientVersion";
@@ -44,6 +54,7 @@ public final class HaukConst {
     public static final String EXTRA_SHARE = "share";
     public static final String EXTRA_STOP_TASK = "stopTask";
     public static final String EXTRA_GNSS_ACTIVE_TASK = "gnssActiveTask";
+    public static final String EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX = "dataRegistryIndex";
 
     // Backend URLs.
     public static final String URL_PATH_ADOPT_SHARE = "api/adopt.php";

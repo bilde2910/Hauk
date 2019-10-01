@@ -43,7 +43,7 @@ public class ResumableSessions {
                 final List<Share> shares = new StringSerializer<ArrayList<Share>>().deserialize(this.prefs.getString(HaukConst.RESUME_SHARE_PARAMS, null));
 
                 // Check that the session is still valid.
-                if (session != null && !session.hasExpired() && shares != null && shares.size() > 0) {
+                if (session != null && session.isActive() && shares != null && shares.size() > 0) {
                     handler.onSharesFetched(this.ctx, session, shares);
                 } else {
                     clearResumableSession();
@@ -97,10 +97,9 @@ public class ResumableSessions {
         if (shares == null) return;
 
         // Remove the share and save the updated list.
-        for (Iterator<Share> iter = shares.iterator(); iter.hasNext();) {
-            Share s = iter.next();
-            if (s.getID().equals(shareID)) {
-                iter.remove();
+        for (Iterator<Share> it = shares.iterator(); it.hasNext();) {
+            if (it.next().getID().equals(shareID)) {
+                it.remove();
             }
         }
         SharedPreferences.Editor editor = this.prefs.edit();

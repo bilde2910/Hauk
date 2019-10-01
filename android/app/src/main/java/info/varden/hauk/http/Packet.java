@@ -41,13 +41,13 @@ public abstract class Packet {
     protected abstract void onFailure(Exception ex);
 
     /**
-     * Base contructor for a packet.
+     * Base constructor for a packet.
      *
      * @param ctx    Android application context.
      * @param server The full Hauk server base URL, including trailing slash.
      * @param path   The path underneath the base URL that should be called.
      */
-    protected Packet(Context ctx, String server, String path) {
+    Packet(Context ctx, String server, String path) {
         this.params = new HashMap<>();
         this.ctx = ctx;
         this.server = server;
@@ -60,14 +60,14 @@ public abstract class Packet {
      * @param key   The parameter key.
      * @param value The parameter value.
      */
-    protected void addParameter(String key, String value) {
+    void addParameter(String key, String value) {
         this.params.put(key, value);
     }
 
     /**
      * Returns Android application context for usage in e.g. creating ServerExceptions.
      */
-    protected Context getContext() {
+    Context getContext() {
         return this.ctx;
     }
 
@@ -75,7 +75,7 @@ public abstract class Packet {
      * Sends the packet.
      */
     public final void send() {
-        HTTPThread req = new HTTPThread(this.ctx, new HTTPThread.Callback() {
+        new HTTPThread(this.ctx, new HTTPThread.Callback() {
             @Override
             public void run(HTTPThread.Response resp) {
                 // An exception may have occurred, but it cannot be thrown because this is a
@@ -91,9 +91,6 @@ public abstract class Packet {
                     onFailure(e);
                 }
             }
-        });
-
-        //noinspection StringConcatenation
-        req.execute(new HTTPThread.Request(this.server + this.path, this.params));
+        }).execute(new HTTPThread.Request(this.server + this.path, this.params));
     }
 }
