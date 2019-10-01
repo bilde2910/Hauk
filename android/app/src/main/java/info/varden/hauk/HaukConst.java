@@ -59,7 +59,7 @@ public final class HaukConst {
     // Backend URLs.
     public static final String URL_PATH_ADOPT_SHARE = "api/adopt.php";
     public static final String URL_PATH_CREATE_SHARE = "api/create.php";
-    public static final String URL_PATH_CREATE_NEW_LINK = "api/newlink.php";
+    public static final String URL_PATH_CREATE_NEW_LINK = "api/new-link.php";
     public static final String URL_PATH_POST_LOCATION = "api/post.php";
     public static final String URL_PATH_STOP_SHARING = "api/stop.php";
 
