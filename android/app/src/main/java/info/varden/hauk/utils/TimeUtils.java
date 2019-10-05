@@ -24,11 +24,17 @@ public enum TimeUtils {
      */
     @SuppressWarnings("StringConcatenationInsideStringBufferAppend")
     public static String secondsToTime(long seconds) {
-        long hours = seconds / SECONDS_PER_HOUR;
-        long min = (seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
-        long sec = seconds % SECONDS_PER_MINUTE;
-
+        long inputSec = seconds;
         StringBuilder sb = new StringBuilder();
+        if (seconds < 0) {
+            sb.append("-");
+            inputSec *= -1;
+        }
+
+        long hours = inputSec / SECONDS_PER_HOUR;
+        long min = (inputSec % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
+        long sec = inputSec % SECONDS_PER_MINUTE;
+
         if (hours > 0) sb.append(hours + ":");
         if (hours > 0 && min < 10) sb.append("0");
         sb.append(min + ":");
