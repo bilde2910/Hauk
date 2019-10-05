@@ -7,410 +7,388 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-            <LinearLayout
+            <!-- Logo displayed at the top of the activity. -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:contentDescription="@string/img_alt_logo"
+                app:srcCompat="@drawable/ic_logo" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="19dp" />
+
+            <!-- Heading displayed underneath the Hauk logo. -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp">
+                android:gravity="center"
+                android:text="@string/label_heading"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <!-- Logo displayed at the top of the activity. -->
-                <ImageView
-                    android:id="@+id/imgLogo"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/label_source_link" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="19dp" />
+
+            <!-- Connection preferences. -->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Server URL. -->
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="143dp"
-                    android:contentDescription="@string/img_alt_logo"
-                    app:srcCompat="@drawable/ic_logo" />
+                    android:layout_height="match_parent">
 
-                <Space
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtServer"
+                        android:text="@string/label_server" />
+
+                    <EditText
+                        android:id="@+id/txtServer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="uri"
+                        android:ems="10"
+                        android:inputType="textUri" />
+                </TableRow>
+
+                <!-- Server password. -->
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="19dp" />
+                    android:layout_height="match_parent">
 
-                <!-- Heading displayed underneath the Hauk logo. -->
-                <TextView
-                    android:id="@+id/labelHeading"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtPassword"
+                        android:text="@string/label_password" />
+
+                    <EditText
+                        android:id="@+id/txtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:autofillHints="password" />
+                </TableRow>
+
+                <!-- Share duration, in minutes. -->
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/label_heading"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/labelSourceLink"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtDuration"
+                        android:text="@string/label_duration" />
+
+                    <EditText
+                        android:id="@+id/txtDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:autofillHints="minutes" />
+
+                    <Spinner
+                        android:id="@+id/selUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:entries="@array/sel_unit_opts"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+
+                <!-- Update interval, in seconds. -->
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/label_source_link" />
+                    android:layout_height="match_parent">
 
-                <Space
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtInterval"
+                        android:text="@string/label_interval" />
+
+                    <EditText
+                        android:id="@+id/txtInterval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="seconds"
+                        android:ems="10"
+                        android:inputType="number" />
+                </TableRow>
+
+                <!-- The sharing mode (alone or group share). -->
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="19dp" />
+                    android:layout_height="match_parent">
 
-                <!-- Connection preferences. -->
-                <TableLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_mode" />
+
+                    <Spinner
+                        android:id="@+id/selMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:entries="@array/sel_mode_opts"
+                        android:layout_weight="1" />
+
+                </TableRow>
+
+                <!-- If doing a solo share, whether or not to allow adoption by others. -->
+                <TableRow
+                    android:id="@+id/rowAllowAdopt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <!-- Server URL. -->
-                    <TableRow
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/label_allow_adopt" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelServer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtServer"
-                            android:text="@string/label_server" />
-
-                        <EditText
-                            android:id="@+id/txtServer"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:autofillHints="uri"
-                            android:ems="10"
-                            android:inputType="textUri" />
-                    </TableRow>
-
-                    <!-- Server password. -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelPassword"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtPassword"
-                            android:text="@string/label_password" />
-
-                        <EditText
-                            android:id="@+id/txtPassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="textPassword"
-                            android:autofillHints="password" />
-                    </TableRow>
-
-                    <!-- Share duration, in minutes. -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelDuration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtDuration"
-                            android:text="@string/label_duration" />
-
-                        <EditText
-                            android:id="@+id/txtDuration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="number"
-                            android:autofillHints="minutes" />
-
-                        <Spinner
-                            android:id="@+id/selUnit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:entries="@array/sel_unit_opts"
-                            android:gravity="center_vertical"/>
-                    </TableRow>
-
-                    <!-- Update interval, in seconds. -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelInterval"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtInterval"
-                            android:text="@string/label_interval" />
-
-                        <EditText
-                            android:id="@+id/txtInterval"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:autofillHints="seconds"
-                            android:ems="10"
-                            android:inputType="number" />
-                    </TableRow>
-
-                    <!-- The sharing mode (alone or group share). -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelMode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:gravity="center_vertical"
-                            android:text="@string/label_mode" />
-
-                        <Spinner
-                            android:id="@+id/selMode"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:gravity="center_vertical"
-                            android:entries="@array/sel_mode_opts"
-                            android:layout_weight="1" />
-
-                    </TableRow>
-
-                    <!-- If doing a solo share, whether or not to allow adoption by others. -->
-                    <TableRow
-                        android:id="@+id/rowAllowAdopt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelAllowAdopt"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/label_allow_adopt" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <CheckBox
-                                android:id="@+id/chkAllowAdopt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/chk_allow_adopt" />
-
-                            <TextView
-                                android:id="@+id/labelAdoptWhatsThis"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/holo_blue_dark"
-                                android:paddingStart="30dp"
-                                android:paddingEnd="0dp"
-                                android:paddingTop="10dp"
-                                android:paddingBottom="5dp"
-                                android:onClick="explainAdoption"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:text="@string/label_explain_adopt" />
-
-                        </LinearLayout>
-
-
-                    </TableRow>
-
-                    <!-- Current nickname if doing a group share. -->
-                    <TableRow
-                        android:id="@+id/rowNickname"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelNickname"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtNickname"
-                            android:text="@string/label_nickname" />
-
-                        <EditText
-                            android:id="@+id/txtNickname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:autofillHints="nickname"
-                            android:ems="10"
-                            android:inputType="textPersonName" />
-                    </TableRow>
-
-                    <!-- Join PIN, if joining a group share. -->
-                    <TableRow
-                        android:id="@+id/rowPIN"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelPIN"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@id/txtGroupCode"
-                            android:text="@string/label_pin" />
-
-                        <EditText
-                            android:id="@+id/txtGroupCode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:autofillHints="code"
-                            android:maxLength="6"
-                            android:ems="10"
-                            android:inputType="number" />
-                    </TableRow>
-
-                    <!-- Whether or not to save the server password. -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/labelRemember"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_remember" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <CheckBox
-                            android:id="@+id/chkRemember"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:text="@string/chk_remember" />
-                    </TableRow>
-
-                    <!-- The current connection status. -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                            android:id="@+id/chkAllowAdopt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/chk_allow_adopt" />
 
                         <TextView
-                            android:id="@+id/labelStatus"
+                            android:id="@+id/labelAdoptWhatsThis"
                             android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:gravity="center_vertical"
-                            android:text="@string/label_status" />
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="0dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:onClick="explainAdoption"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@string/label_explain_adopt" />
 
-                        <TextView
-                            android:id="@+id/labelStatusCur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:gravity="center_vertical"
-                            android:textStyle="bold"
-                            android:textColor="@color/statusOff"
-                            android:text="@string/label_status_none" />
+                    </LinearLayout>
 
-                    </TableRow>
-                </TableLayout>
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp" />
+                </TableRow>
 
-                <LinearLayout
-                    android:id="@+id/layoutGroupPIN"
+                <!-- Current nickname if doing a group share. -->
+                <TableRow
+                    android:id="@+id/rowNickname"
                     android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/labelShowPinHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtNickname"
+                        android:text="@string/label_nickname" />
+
+                    <EditText
+                        android:id="@+id/txtNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_weight="1"
+                        android:autofillHints="nickname"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                </TableRow>
+
+                <!-- Join PIN, if joining a group share. -->
+                <TableRow
+                    android:id="@+id/rowPIN"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtGroupCode"
+                        android:text="@string/label_pin" />
+
+                    <EditText
+                        android:id="@+id/txtGroupCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="code"
+                        android:maxLength="6"
+                        android:ems="10"
+                        android:inputType="number" />
+                </TableRow>
+
+                <!-- Whether or not to save the server password. -->
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_remember" />
+
+                    <CheckBox
+                        android:id="@+id/chkRemember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/chk_remember" />
+                </TableRow>
+
+                <!-- The current connection status. -->
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_status" />
+
+                    <TextView
+                        android:id="@+id/labelStatusCur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
                         android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:text="@string/label_pin_head" />
+                        android:textColor="@color/statusOff"
+                        android:text="@string/label_status_none" />
 
-                    <TextView
-                        android:id="@+id/labelShowPin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:textSize="55dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textStyle="bold"
-                        android:letterSpacing="0.1"
-                        tools:ignore="SpUsage" />
+                </TableRow>
+            </TableLayout>
 
-                    <TextView
-                        android:id="@+id/labelShowPinHelp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/label_pin_help" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp" />
+            <LinearLayout
+                android:id="@+id/layoutGroupPIN"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                    <!-- The button to adopt another's location share. -->
-                    <Button
-                        android:id="@+id/btnAdopt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_adopt" />
-
-                </LinearLayout>
-
-                <!-- The button that starts and stops the location sharing. -->
-                <Button
-                    android:id="@+id/btnShare"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/btn_start"
-                    android:onClick="startSharing" />
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="@string/label_pin_head" />
 
-                <!-- The button that adds a new sharing link. -->
-                <Button
-                    android:id="@+id/btnLink"
+                <TextView
+                    android:id="@+id/labelShowPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:text="@string/btn_link" />
+                    android:gravity="center_horizontal"
+                    android:textSize="55dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:textIsSelectable="true"
+                    tools:ignore="SpUsage" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/label_pin_help" />
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="25dp" />
 
-                <!-- The header above the list of active share links. -->
-                <TextView
-                    android:id="@+id/labelHeadLinks"
+                <!-- The button to adopt another's location share. -->
+                <Button
+                    android:id="@+id/btnAdopt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/label_heading_links"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
-
-                <!-- The list of currently active links. Contains instances of the content_link layout. -->
-                <TableLayout
-                    android:id="@+id/tableLinks"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </TableLayout>
+                    android:text="@string/btn_adopt" />
 
             </LinearLayout>
-        </ScrollView>
-    </FrameLayout>
+
+            <!-- The button that starts and stops the location sharing. -->
+            <Button
+                android:id="@+id/btnShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_start"
+                android:onClick="startSharing" />
+
+            <!-- The button that adds a new sharing link. -->
+            <Button
+                android:id="@+id/btnLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/btn_link" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <!-- The header above the list of active share links. -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/label_heading_links"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <!-- The list of currently active links. Contains instances of the content_link layout. -->
+            <TableLayout
+                android:id="@+id/tableLinks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

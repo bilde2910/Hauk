@@ -5,21 +5,26 @@ import android.content.Context;
 import androidx.core.app.NotificationCompat;
 
 import info.varden.hauk.R;
-import info.varden.hauk.StopSharingTask;
+import info.varden.hauk.manager.StopSharingTask;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.ui.MainActivity;
+import info.varden.hauk.utils.Log;
 
 /**
  * Hauk's persistent notification that prevents Hauk from being stopped while in the background.
  *
  * @author Marius Lindvall
  */
-public class SharingNotification extends HaukNotification {
-    // The share that this notification represents.
+public final class SharingNotification extends HaukNotification {
+    /**
+     * The share that this notification represents.
+     */
     private final Share share;
 
-    // A task to be executed when sharing stops. In the case of this notification, it is executed if
-    // the user taps the "Stop sharing" button on the notification.
+    /**
+     * A task to be executed when sharing stops. In the case of this notification, it is executed if
+     * the user taps the "Stop sharing" button on the notification.
+     */
     private final StopSharingTask stopSharingTask;
 
     /**
@@ -37,6 +42,7 @@ public class SharingNotification extends HaukNotification {
 
     @Override
     public void build(NotificationCompat.Builder builder) throws Exception {
+        Log.v("Building sharing notification"); //NON-NLS
         builder.setContentTitle(getContext().getString(R.string.notify_title));
         builder.setContentText(String.format(getContext().getString(R.string.notify_body), this.share.getSession().getServerURL()));
         builder.setSmallIcon(R.drawable.ic_notify);

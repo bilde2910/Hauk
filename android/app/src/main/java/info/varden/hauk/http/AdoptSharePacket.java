@@ -2,11 +2,10 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
-import info.varden.hauk.HaukConst;
+import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.Version;
-import info.varden.hauk.throwable.ServerException;
 
 /**
  * Packet representing the action of adopting a solo share into a group share.
@@ -14,8 +13,16 @@ import info.varden.hauk.throwable.ServerException;
  * @author Marius Lindvall
  */
 public abstract class AdoptSharePacket extends Packet {
+    /**
+     * Called when the user is adopted.
+     *
+     * @param nickname The nickname assigned to the user.
+     */
     protected abstract void onSuccessfulAdoption(String nickname);
 
+    /**
+     * The assigned nickname of the user to adopt.
+     */
     private final String nickname;
 
     /**
@@ -27,12 +34,12 @@ public abstract class AdoptSharePacket extends Packet {
      * @param nickname The nickname that should be assigned to the user when adopted.
      */
     public AdoptSharePacket(Context ctx, Share target, String origin, String nickname) {
-        super(ctx, target.getSession().getServerURL(), HaukConst.URL_PATH_ADOPT_SHARE);
+        super(ctx, target.getSession().getServerURL(), Constants.URL_PATH_ADOPT_SHARE);
         this.nickname = nickname;
-        addParameter(HaukConst.PACKET_PARAM_SESSION_ID, target.getSession().getID());
-        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
-        addParameter(HaukConst.PACKET_PARAM_ID_TO_ADOPT, origin);
-        addParameter(HaukConst.PACKET_PARAM_GROUP_PIN, target.getJoinCode());
+        setParameter(Constants.PACKET_PARAM_SESSION_ID, target.getSession().getID());
+        setParameter(Constants.PACKET_PARAM_NICKNAME, nickname);
+        setParameter(Constants.PACKET_PARAM_ID_TO_ADOPT, origin);
+        setParameter(Constants.PACKET_PARAM_GROUP_PIN, target.getJoinCode());
     }
 
     @Override
@@ -42,14 +49,14 @@ public abstract class AdoptSharePacket extends Packet {
             throw new ServerException(getContext(), R.string.err_empty);
         } else {
             // A successful response always has OK on line 1.
-            if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
+            if (data[0].equals(Constants.PACKET_RESPONSE_OK)) {
                 onSuccessfulAdoption(this.nickname);
             } else {
                 // Unknown response.
                 StringBuilder err = new StringBuilder();
                 for (String line : data) {
                     err.append(line);
-                    err.append("\n");
+                    err.append(System.lineSeparator());
                 }
                 throw new ServerException(err.toString());
             }

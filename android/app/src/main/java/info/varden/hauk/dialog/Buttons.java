@@ -4,8 +4,10 @@ import info.varden.hauk.R;
 
 /**
  * Selection of dialog buttons for custom dialogs.
+ *
+ * @author Marius Lindvall
  */
-public enum DialogButtons {
+public enum Buttons {
 
     OK_CANCEL       (R.string.btn_ok, R.string.btn_cancel),
     YES_NO          (R.string.btn_yes, R.string.btn_no),
@@ -15,15 +17,21 @@ public enum DialogButtons {
     private final int positive;
     private final int negative;
 
-    DialogButtons(int positive, int negative) {
+    Buttons(int positive, int negative) {
         this.positive = positive;
         this.negative = negative;
     }
 
+    /**
+     * Returns a strings resource ID that corresponds to this button set's positive button.
+     */
     public int getPositiveButton() {
         return this.positive;
     }
 
+    /**
+     * Returns a strings resource ID that corresponds to this button set's negative button.
+     */
     public int getNegativeButton() {
         return this.negative;
     }

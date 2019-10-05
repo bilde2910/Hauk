@@ -2,99 +2,92 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
-import info.varden.hauk.HaukConst;
+import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
-import info.varden.hauk.throwable.ServerException;
 import info.varden.hauk.utils.TimeUtils;
 
 /**
  * Packet sent to initiate a sharing session on the server. Creates a share of a given type.
+ *
+ * @author Marius Lindvall
  */
-public abstract class SessionInitiationPacket extends Packet {
-    protected abstract ResponseHandler getHandler();
+public class SessionInitiationPacket extends Packet {
+    private final InitParameters params;
+    private final ResponseHandler handler;
 
-    private final String server;
-    private final int durationSec;
-    private final int interval;
-
+    /**
+     * The sharing mode for the initial share that the session is being created for. Determined by
+     * which constructor is called.
+     */
     private ShareMode mode;
 
-    private SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval) {
-        super(ctx, server, HaukConst.URL_PATH_CREATE_SHARE);
-        this.server = server;
-        this.durationSec = durationSec;
-        this.interval = interval;
-        addParameter(HaukConst.PACKET_PARAM_PASSWORD, password);
-        addParameter(HaukConst.PACKET_PARAM_DURATION, String.valueOf(durationSec));
-        addParameter(HaukConst.PACKET_PARAM_INTERVAL, String.valueOf(interval));
+    private SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler) {
+        super(ctx, params.getServerURL(), Constants.URL_PATH_CREATE_SHARE);
+        this.params = params;
+        this.handler = handler;
+        setParameter(Constants.PACKET_PARAM_PASSWORD, params.getPassword());
+        setParameter(Constants.PACKET_PARAM_DURATION, String.valueOf(params.getDuration()));
+        setParameter(Constants.PACKET_PARAM_INTERVAL, String.valueOf(params.getInterval()));
     }
 
     /**
      * Creates a packet and designates it as a request to create a single-user share.
      *
      * @param ctx           Android application context.
-     * @param server        The full base URL for the Hauk server.
-     * @param password      The password defined in the backend config.
-     * @param durationSec   The duration of the sharing session, in seconds.
-     * @param interval      The interval between each location update, in seconds.
+     * @param params        Session initiation parameters.
      * @param allowAdoption Whether or not to allow this share to be adopted into a group share.
      */
-    public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, boolean allowAdoption) {
-        this(ctx, server, password, durationSec, interval);
+    public SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler, AdoptabilityPreference allowAdoption) {
+        this(ctx, params, handler);
         this.mode = ShareMode.CREATE_ALONE;
-        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
-        addParameter(HaukConst.PACKET_PARAM_ADOPTABLE, allowAdoption ? "1" : "0");
+        setParameter(Constants.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getIndex()));
+        setParameter(Constants.PACKET_PARAM_ADOPTABLE, allowAdoption == AdoptabilityPreference.ALLOW_ADOPTION ? "1" : "0");
     }
 
     /**
      * Creates a packet and designates it as a request to create a group share.
      *
-     * @param ctx         Android application context.
-     * @param server      The full base URL for the Hauk server.
-     * @param password    The password defined in the backend config.
-     * @param durationSec The duration of the sharing session, in seconds.
-     * @param interval    The interval between each location update, in seconds.
-     * @param nickname    The nickname to display on the map.
+     * @param ctx      Android application context.
+     * @param params   Session initiation parameters.
+     * @param nickname The nickname to display on the map.
      */
-    public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname) {
-        this(ctx, server, password, durationSec, interval);
+    public SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler, String nickname) {
+        this(ctx, params, handler);
         this.mode = ShareMode.CREATE_GROUP;
-        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
-        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
+        setParameter(Constants.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getIndex()));
+        setParameter(Constants.PACKET_PARAM_NICKNAME, nickname);
     }
 
     /**
      * Creates a packet and designates it as a request to join an existing group share.
      *
-     * @param ctx         Android application context.
-     * @param server      The full base URL for the Hauk server.
-     * @param password    The password defined in the backend config.
-     * @param durationSec The duration of the sharing session, in seconds.
-     * @param interval    The interval between each location update, in seconds.
-     * @param nickname    The nickname to display on the map.
+     * @param ctx      Android application context.
+     * @param params   Session initiation parameters.
+     * @param nickname The nickname to display on the map.
      * @param groupPin    The PIN code to join the group.
      */
-    public SessionInitiationPacket(Context ctx, String server, String password, int durationSec, int interval, String nickname, String groupPin) {
-        this(ctx, server, password, durationSec, interval);
+    public SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler, String nickname, String groupPin) {
+        this(ctx, params, handler);
         this.mode = ShareMode.JOIN_GROUP;
-        addParameter(HaukConst.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getMode()));
-        addParameter(HaukConst.PACKET_PARAM_NICKNAME, nickname);
-        addParameter(HaukConst.PACKET_PARAM_GROUP_PIN, groupPin);
+        setParameter(Constants.PACKET_PARAM_SHARE_MODE, String.valueOf(this.mode.getIndex()));
+        setParameter(Constants.PACKET_PARAM_NICKNAME, nickname);
+        setParameter(Constants.PACKET_PARAM_GROUP_PIN, groupPin);
     }
 
     @Override
     protected final void onSuccess(String[] data, Version backendVersion) throws ServerException {
         // Check if the server is out of date for group shares, if applicable.
         if (this.mode.isGroupType()) {
-            if (!backendVersion.atLeast(HaukConst.VERSION_COMPAT_GROUP_SHARE)) {
+            if (!backendVersion.isAtLeast(Constants.VERSION_COMPAT_GROUP_SHARE)) {
                 // If the server is indeed out of date, override the sharing mode to reflect what
                 // was actually created on the server.
                 this.mode = ShareMode.CREATE_ALONE;
-                getHandler().onShareModeIncompatible(backendVersion);
+                this.handler.onShareModeIncompatible(this.mode, backendVersion);
             }
         }
 
@@ -105,7 +98,7 @@ public abstract class SessionInitiationPacket extends Packet {
 
         // A successful session initiation contains "OK" on line 1, the session ID on line 2, and a
         // publicly sharable tracking link on line 3.
-        if (data[0].equals(HaukConst.PACKET_RESPONSE_OK)) {
+        if (data[0].equals(Constants.PACKET_RESPONSE_OK)) {
             String sessionID = data[1];
             String viewURL = data[2];
             String joinCode = null;
@@ -119,26 +112,22 @@ public abstract class SessionInitiationPacket extends Packet {
             // If the server sends it, get the internal share ID as well for the list of currently
             // active shares in the UI. It is better UX to display this instead of the full URL in
             // the list, but fall back to the full URL if needed.
-            if (backendVersion.atLeast(HaukConst.VERSION_COMPAT_VIEW_ID)) {
-                if (this.mode == ShareMode.CREATE_GROUP) {
-                    viewID = data[4];
-                } else {
-                    viewID = data[3];
-                }
+            if (backendVersion.isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
+                viewID = this.mode == ShareMode.CREATE_GROUP ? data[4] : data[3];
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.server, backendVersion, sessionID, (long) this.durationSec * (long) TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.interval);
+            Session session = new Session(this.params.getServerURL(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval());
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
-            getHandler().onSessionInitiated(share);
+            this.handler.onSessionInitiated(share);
         } else {
             // If the first line of the response is not "OK", an error of some sort has occurred and
             // should be displayed to the user.
             StringBuilder err = new StringBuilder();
             for (String line : data) {
                 err.append(line);
-                err.append("\n");
+                err.append(System.lineSeparator());
             }
             throw new ServerException(err.toString());
         }
@@ -146,7 +135,7 @@ public abstract class SessionInitiationPacket extends Packet {
 
     @Override
     protected final void onFailure(Exception ex) {
-        getHandler().onFailure(ex);
+        this.handler.onFailure(ex);
     }
 
     /**
@@ -155,9 +144,64 @@ public abstract class SessionInitiationPacket extends Packet {
      * us to have a single instance of the handler instead of having to reimplement the handlers for
      * all types of shares.
      */
-    public interface ResponseHandler {
+    public interface ResponseHandler extends FailureHandler {
+        /**
+         * Called when the session is successfully initiated.
+         *
+         * @param share The share that the session was created for. A {@link Session} can be
+         *              extracted using {@code share.getSession()}.
+         */
         void onSessionInitiated(Share share);
-        void onFailure(Exception ex);
-        void onShareModeIncompatible(Version backendVersion);
+
+        /**
+         * Called if the share mode was forcibly downgraded because the backend doesn't support the
+         * provided share mode.
+         *
+         * @param downgradeTo    The share mode that is used instead of the requested mode.
+         * @param backendVersion The Hauk backend version.
+         */
+        void onShareModeIncompatible(ShareMode downgradeTo, Version backendVersion);
+    }
+
+    /**
+     * Contains initialization parameters that are shared for all constructors of this packet. Used
+     * to prevent bloated constructors with a large number of duplicate parameters.
+     */
+    public static final class InitParameters {
+        private final String server;
+        private final String password;
+        private final int duration;
+        private final int interval;
+
+        /**
+         * Declares initialization parameters for a session initiation request.
+         *
+         * @param server   The full URL to the server to create a session on.
+         * @param password The backend password.
+         * @param duration The duration, in seconds, to run the share for.
+         * @param interval The interval, in seconds, between each sent location update.
+         */
+        public InitParameters(String server, String password, int duration, int interval) {
+            this.server = server;
+            this.password = password;
+            this.duration = duration;
+            this.interval = interval;
+        }
+
+        String getServerURL() {
+            return this.server;
+        }
+
+        String getPassword() {
+            return this.password;
+        }
+
+        int getDuration() {
+            return this.duration;
+        }
+
+        int getInterval() {
+            return this.interval;
+        }
     }
 }

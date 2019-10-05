@@ -4,7 +4,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import info.varden.hauk.HaukConst;
+import java.lang.reflect.InvocationTargetException;
+
+import info.varden.hauk.Constants;
 import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
@@ -15,7 +17,7 @@ import info.varden.hauk.utils.ReceiverDataRegistry;
  * @author Marius Lindvall
  * @param <T> The type of data to be passed to the receiving listener.
  */
-class Receiver<T> {
+final class Receiver<T> {
     private final Class<? extends HaukBroadcastReceiver<T>> receiver;
     private final Context ctx;
     private final T data;
@@ -39,18 +41,21 @@ class Receiver<T> {
      * @return A PendingIntent for use in a notification action.
      * @throws InstantiationException if the broadcast receiver cannot be instantiated.
      * @throws IllegalAccessException if the broadcast receiver hides the action ID function.
+     * @throws NoSuchMethodException if the broadcast receiver does not have a constructor.
+     * @throws InvocationTargetException if the constructor itself throws an exception.
      */
-    PendingIntent toPending() throws InstantiationException, IllegalAccessException {
+    @SuppressWarnings("MethodWithTooExceptionsDeclared")
+    PendingIntent toPending() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         // Create a new intent for the receiver.
         Intent intent = new Intent(this.ctx, this.receiver);
 
         // Retrieve the action ID from the broadcast receiver class.
-        intent.setAction(this.receiver.newInstance().getActionID());
+        intent.setAction(this.receiver.getConstructor().newInstance().getActionID());
 
         // Store the provided data in the registry for later retrieval, and pass the data index to
         // the intent.
-        intent.putExtra(HaukConst.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, ReceiverDataRegistry.register(this.data));
+        intent.putExtra(Constants.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, ReceiverDataRegistry.register(this.data));
 
-        return PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

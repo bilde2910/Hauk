@@ -2,6 +2,7 @@
 <!-- Row representing an active share link in the main UI. -->
 <TableRow
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,13 +19,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorPrimaryDark"
+            tools:ignore="SelectableText" />
 
         <!-- The type of link this is. -->
         <TextView
             android:id="@+id/linkTxtDesc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="SelectableText" />
 
     </LinearLayout>
 
@@ -33,17 +36,17 @@
         android:id="@+id/linkBtnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop"
+        android:text="@string/btn_stop_short"
         android:drawablePadding="8dp"
-        android:drawableLeft="@drawable/ic_button_stop" />
+        android:drawableStart="@drawable/ic_button_stop" />
 
     <!-- The button to share the given link. -->
     <Button
         android:id="@+id/linkBtnShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share"
+        android:text="@string/btn_share_short"
         android:drawablePadding="8dp"
-        android:drawableLeft="@drawable/ic_button_share" />
+        android:drawableStart="@drawable/ic_button_share" />
 
 </TableRow>

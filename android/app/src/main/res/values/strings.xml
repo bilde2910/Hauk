@@ -25,6 +25,9 @@
     <string name="btn_link">Create new tracking link</string>
     <string name="btn_adopt">Add an existing share</string>
 
+    <string name="btn_stop_short">Stop</string>
+    <string name="btn_share_short">Share</string>
+
     <string name="label_heading_links">Currently active links</string>
     <string name="link_type_solo">Your location only</string>
     <string name="link_type_group_host">Group share (host)</string>

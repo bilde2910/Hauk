@@ -3,6 +3,8 @@ package info.varden.hauk.service;
 import android.location.LocationListener;
 import android.os.Bundle;
 
+import info.varden.hauk.utils.Log;
+
 /**
  * Location listener base class for Hauk. The purpose of this class is to remove unnecessary empty
  * function bodies from LocationPushService's source code.
@@ -11,14 +13,17 @@ import android.os.Bundle;
  */
 abstract class LocationListenerBase implements LocationListener {
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public final void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.v("Location status changed for provider %s, status=%s", provider, status); //NON-NLS
     }
 
     @Override
-    public void onProviderEnabled(String s) {
+    public final void onProviderEnabled(String provider) {
+        Log.i("Location provider %s was enabled", provider); //NON-NLS
     }
 
     @Override
-    public void onProviderDisabled(String s) {
+    public final void onProviderDisabled(String provider) {
+        Log.w("Location provider %s was disabled", provider); //NON-NLS
     }
 }

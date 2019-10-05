@@ -3,22 +3,24 @@ package info.varden.hauk.dialog;
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 /**
  * A base class used as a handler to build custom Views and handle events for custom dialogs in the
  * DialogService.
  *
  * @author Marius Lindvall
  */
-public abstract class CustomDialogBuilder {
+public interface CustomDialogBuilder {
     /**
      * Fires when the positive button is clicked in the dialog.
      */
-    public abstract void onPositive();
+    void onPositive();
 
     /**
      * Fires when the negative button is clicked in the dialog.
      */
-    public abstract void onNegative();
+    void onNegative();
 
     /**
      * A handler to build a View to display in the dialog box.
@@ -26,5 +28,6 @@ public abstract class CustomDialogBuilder {
      * @param ctx Android application context.
      * @return A View to display in the dialog box.
      */
-    public abstract View createView(Context ctx);
+    @Nullable
+    View createView(Context ctx);
 }

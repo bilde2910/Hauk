@@ -1,4 +1,4 @@
-package info.varden.hauk.throwable;
+package info.varden.hauk.http;
 
 import android.content.Context;
 
@@ -8,21 +8,25 @@ import android.content.Context;
  *
  * @author Marius Lindvall
  */
-public class ServerException extends Exception {
+class ServerException extends Exception {
+    private static final long serialVersionUID = 2879124634145201633L;
+
     /**
      * Create the exception with a String message.
+     *
      * @param message The error message.
      */
-    public ServerException(String message) {
+    ServerException(String message) {
         super(message);
     }
 
     /**
      * Create the exception with a resource reference.
+     *
      * @param ctx     Android application context.
      * @param message Reference to the error message in strings.xml.
      */
-    public ServerException(Context ctx, int message) {
+    ServerException(Context ctx, @SuppressWarnings("SameParameterValue") int message) {
         this(ctx.getString(message));
     }
 }

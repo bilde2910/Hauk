@@ -6,19 +6,26 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import java.util.Random;
 
+import info.varden.hauk.utils.Log;
+
 /**
- * A base class for all Hauk notifications. Handles registration into the notification registry and
- * various internally required calls.
+ * A base class for all Hauk notifications.
  *
  * @author Marius Lindvall
  */
 public abstract class HaukNotification {
+    /**
+     * Android application context.
+     */
     private final Context ctx;
+
+    /**
+     * A unique ID used for this notification.
+     */
     private final int id;
 
     @SuppressWarnings("HardCodedStringLiteral")
@@ -44,13 +51,13 @@ public abstract class HaukNotification {
         return this.id;
     }
 
-    // For override by subclasses if necessary.
-    @SuppressWarnings({"WeakerAccess", "SameReturnValue"})
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    protected int getImportance() {
-        return NotificationManager.IMPORTANCE_DEFAULT;
-    }
-
+    /**
+     * Called when the notification is being created. Use to build the notification and its
+     * contents.
+     *
+     * @param builder A notification builder instance for the notification being created.
+     * @throws Exception if an exception was thrown during the notification build process.
+     */
     protected abstract void build(NotificationCompat.Builder builder) throws Exception;
 
     /**
@@ -60,7 +67,8 @@ public abstract class HaukNotification {
      * @throws Exception if an exception was thrown during the notification build process.
      */
     public final Notification create() throws Exception {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, NOTIFY_CHANNEL_ID);
+        Log.d("Creating notification"); //NON-NLS
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this.ctx, NOTIFY_CHANNEL_ID);
 
         // Pass construction on to the subclass.
         build(builder);
@@ -68,13 +76,14 @@ public abstract class HaukNotification {
         // On Android >= 8.0, notifications need to be assigned a channel ID.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             try {
-                NotificationChannel channel = new NotificationChannel(NOTIFY_CHANNEL_ID, NOTIFY_CHANNEL_NAME, getImportance());
-                NotificationManager nManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+                Log.d("Android version O+ detected; setting notification channel"); //NON-NLS
+                NotificationChannel channel = new NotificationChannel(NOTIFY_CHANNEL_ID, NOTIFY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationManager nManager = (NotificationManager) this.ctx.getSystemService(Context.NOTIFICATION_SERVICE);
                 assert nManager != null;
                 nManager.createNotificationChannel(channel);
                 builder.setChannelId(NOTIFY_CHANNEL_ID);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                Log.e("Failed to set notification channel; notification may not be displayed", ex); //NON-NLS
             }
         }
 

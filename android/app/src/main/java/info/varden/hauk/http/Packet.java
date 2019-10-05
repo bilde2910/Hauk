@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.HashMap;
 
 import info.varden.hauk.struct.Version;
-import info.varden.hauk.throwable.ServerException;
+import info.varden.hauk.utils.Log;
 
 /**
  * Base class for all communication packets used to send data to the server. Should be extended by
@@ -60,14 +60,14 @@ public abstract class Packet {
      * @param key   The parameter key.
      * @param value The parameter value.
      */
-    void addParameter(String key, String value) {
+    final void setParameter(String key, String value) {
         this.params.put(key, value);
     }
 
     /**
      * Returns Android application context for usage in e.g. creating ServerExceptions.
      */
-    Context getContext() {
+    final Context getContext() {
         return this.ctx;
     }
 
@@ -75,9 +75,12 @@ public abstract class Packet {
      * Sends the packet.
      */
     public final void send() {
-        new HTTPThread(this.ctx, new HTTPThread.Callback() {
+        Log.v("Sending packet of type %s", getClass().getName()); //NON-NLS
+        new ConnectionThread(new ConnectionThread.Callback() {
             @Override
-            public void run(HTTPThread.Response resp) {
+            public void run(ConnectionThread.Response resp) {
+                Log.v("Received as response to packet %s", resp); //NON-NLS
+
                 // An exception may have occurred, but it cannot be thrown because this is a
                 // callback. Instead, the exception (if any) is stored in the response object.
                 Exception e = resp.getException();
@@ -91,6 +94,6 @@ public abstract class Packet {
                     onFailure(e);
                 }
             }
-        }).execute(new HTTPThread.Request(this.server + this.path, this.params));
+        }).execute(new ConnectionThread.Request(this.ctx, this.server + this.path, this.params));
     }
 }

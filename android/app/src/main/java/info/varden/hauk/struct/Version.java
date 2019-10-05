@@ -9,22 +9,34 @@ import java.io.Serializable;
  *
  * @author Marius Lindvall
  */
-public class Version implements Comparable<Version>, Serializable {
+public final class Version implements Comparable<Version>, Serializable {
+    private static final long serialVersionUID = 3855294306995801704L;
+
+    /**
+     * The version number in question.
+     */
     private final String ver;
 
     public Version(String ver) {
-        if (ver == null) this.ver = "1.0";
-        else this.ver = ver;
+        // Version defaults to 1.0 if null, as 1.0.x backends did not return an X-Hauk-Version
+        // header.
+        this.ver = ver != null ? ver : "1.0";
     }
 
-    public boolean atLeast(Version other) {
+    /**
+     * Checks whether or not this version number is equal to or greater than the version number
+     * passed as the argument to this function.
+     *
+     * @param other The version to compare to.
+     */
+    public boolean isAtLeast(Version other) {
         return this.compareTo(other) >= 0;
     }
 
     @Override
     public int compareTo(Version other) {
         String[] thisParts = this.ver.split("\\.");
-        String[] otherParts = other.ver.split("\\.");
+        String[] otherParts = other.toString().split("\\.");
 
         // Compare each segment of the version to determine if the version is newer, older or the
         // same as the current version.
@@ -37,6 +49,17 @@ public class Version implements Comparable<Version>, Serializable {
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Version)) return false;
+        return compareTo((Version) obj) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.ver.hashCode();
     }
 
     @NonNull

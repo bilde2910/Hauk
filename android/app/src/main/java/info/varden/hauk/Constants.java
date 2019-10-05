@@ -1,6 +1,7 @@
 package info.varden.hauk;
 
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.utils.Preference;
 
 /**
  * Constants used in the Hauk app.
@@ -8,7 +9,9 @@ import info.varden.hauk.struct.Version;
  * @author Marius Lindvall
  */
 @SuppressWarnings("HardCodedStringLiteral")
-public final class HaukConst {
+public enum Constants {
+    ;
+
     // Duration units.
     public static final int DURATION_UNIT_MINUTES = 0;
     public static final int DURATION_UNIT_HOURS = 1;
@@ -19,24 +22,14 @@ public final class HaukConst {
     public static final String SHARED_PREFS_RESUMABLE = "sessionResumption";
 
     // Keys for use in stored server preferences.
-    public static final String PREF_SERVER = "server";
-    public static final String PREF_PASSWORD = "password";
-    public static final String PREF_DURATION = "duration";
-    public static final String PREF_INTERVAL = "interval";
-    public static final String PREF_NICKNAME = "nickname";
-    public static final String PREF_DURATION_UNIT = "durUnit";
-    public static final String PREF_REMEMBER_PASSWORD = "rememberPassword";
-    public static final String PREF_ALLOW_ADOPTION = "allowAdoption";
-
-    // Default values.
-    public static final String DEFAULT_SERVER = "";
-    public static final String DEFAULT_PASSWORD = "";
-    public static final int DEFAULT_DURATION = 30;
-    public static final int DEFAULT_INTERVAL = 1;
-    public static final String DEFAULT_NICKNAME = "";
-    public static final int DEFAULT_DURATION_UNIT = DURATION_UNIT_MINUTES;
-    public static final boolean DEFAULT_REMEMBER_PASSWORD = false;
-    public static final boolean DEFAULT_ALLOW_ADOPTION = true;
+    public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
+    public static final Preference<String> PREF_PASSWORD = new Preference.String("password", "");
+    public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
+    public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
+    public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
+    public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
+    public static final Preference<Boolean> PREF_REMEMBER_PASSWORD = new Preference.Boolean("rememberPassword", false);
+    public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
 
     // Keys for use in session resumption preferences.
     public static final String RESUME_AVAILABLE = "canResume";

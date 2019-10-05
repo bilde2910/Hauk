@@ -15,7 +15,9 @@ import java.util.Random;
  *
  * @author Marius Lindvall
  */
-public class ReceiverDataRegistry {
+public enum ReceiverDataRegistry {
+    ;
+
     private static final SparseArray<Object> data = new SparseArray<>();
     private static final Random random = new Random();
 

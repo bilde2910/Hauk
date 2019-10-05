@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -14,29 +15,54 @@ import android.widget.TextView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import info.varden.hauk.HaukConst;
+import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.http.AdoptSharePacket;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.utils.Log;
 
 /**
  * A class that builds a dialog with two input boxes for adopting another share into a group share.
  *
  * @author Marius Lindvall
  */
-public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
+public abstract class AdoptDialogBuilder implements CustomDialogBuilder {
     private final Context ctx;
     private final Share share;
 
-    public AdoptDialogBuilder(Context ctx, Share share) {
+    /**
+     * Constructs the builder.
+     *
+     * @param ctx   Android application context.
+     * @param share The share that should be adopted into.
+     */
+    protected AdoptDialogBuilder(Context ctx, Share share) {
         this.ctx = ctx;
         this.share = share;
     }
 
+    /**
+     * The text input box that will contain the sharing link entered or pasted by the user.
+     */
     private EditText dialogTxtShare;
+
+    /**
+     * The text input box that will contain the adopted user's nickname.
+     */
     private EditText dialogTxtNick;
 
+    /**
+     * Called if the share was successfully adopted.
+     *
+     * @param nick The nickname assigned to the share by the user.
+     */
     protected abstract void onSuccess(String nick);
+
+    /**
+     * Called if the share could not be adopted.
+     *
+     * @param ex An exception indicating the reason why the share could not be adopted.
+     */
     protected abstract void onFailure(Exception ex);
 
     /**
@@ -45,8 +71,10 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
     @Override
     public final void onPositive() {
         // Get the user data.
-        final String nick = this.dialogTxtNick.getText().toString().trim();
-        final String adoptID = this.dialogTxtShare.getText().toString().trim();
+        String nick = this.dialogTxtNick.getText().toString().trim();
+        String adoptID = this.dialogTxtShare.getText().toString().trim();
+
+        Log.v("User initiated adoption with nick=%s, id=%s", nick, adoptID); //NON-NLS
 
         // Create a processing dialog, since we are interacting with an external server, which can
         // take some time.
@@ -62,12 +90,14 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         new AdoptSharePacket(this.ctx, this.share, adoptID, nick) {
             @Override
             public void onSuccessfulAdoption(String nickname) {
+                Log.i("Adoption was successful for nick=%s", nickname); //NON-NLS
                 progress.dismiss();
                 AdoptDialogBuilder.this.onSuccess(nickname);
             }
 
             @Override
             protected void onFailure(Exception ex) {
+                Log.w("Adoption failed", ex); //NON-NLS
                 progress.dismiss();
                 AdoptDialogBuilder.this.onFailure(ex);
             }
@@ -79,6 +109,7 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
      */
     @Override
     public final void onNegative() {
+        Log.v("User aborted adoption"); //NON-NLS
     }
 
     /**
@@ -89,9 +120,10 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
      */
     @Override
     public final View createView(Context ctx) {
+        // TODO: Inflate this instead
         // Ensure input boxes fill the entire width of the dialog.
-        TableRow.LayoutParams trParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        trParams.weight = 1F;
+        TableRow.LayoutParams trParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT);
+        trParams.weight = 1.0F;
 
         TableLayout layout = new TableLayout(ctx);
         TableRow shareRow = new TableRow(ctx);
@@ -105,42 +137,57 @@ public abstract class AdoptDialogBuilder extends CustomDialogBuilder {
         TextView textNick = new TextView(ctx);
         textNick.setText(R.string.label_nickname);
 
-        dialogTxtShare = new EditText(ctx);
-        dialogTxtShare.setInputType(InputType.TYPE_CLASS_TEXT);
-        dialogTxtShare.setLayoutParams(trParams);
-        dialogTxtShare.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+        this.dialogTxtShare = new EditText(ctx);
+        this.dialogTxtShare.setInputType(InputType.TYPE_CLASS_TEXT);
+        this.dialogTxtShare.setLayoutParams(trParams);
+        this.dialogTxtShare.addTextChangedListener(new LinkIDMatchReplacementListener(this.dialogTxtShare));
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // When the share URL text is changed, try to extract the share ID using regex. If
-                // a match is found, replace the entire contents with the match.
-                String urlMatch = HaukConst.REGEX_ADOPT_ID_FROM_LINK;
-                Matcher m = Pattern.compile(urlMatch).matcher(charSequence);
-                if (m.find()) {
-                    dialogTxtShare.setText(m.group(1));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        dialogTxtNick = new EditText(ctx);
-        dialogTxtNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        dialogTxtNick.setLayoutParams(trParams);
+        this.dialogTxtNick = new EditText(ctx);
+        this.dialogTxtNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        this.dialogTxtNick.setLayoutParams(trParams);
 
         shareRow.addView(textShare);
-        shareRow.addView(dialogTxtShare);
+        shareRow.addView(this.dialogTxtShare);
         nickRow.addView(textNick);
-        nickRow.addView(dialogTxtNick);
+        nickRow.addView(this.dialogTxtNick);
 
         layout.addView(shareRow);
         layout.addView(nickRow);
 
         return layout;
+    }
+
+    /**
+     * A watcher class that watches a text input box and replaces its contents with the
+     * corresponding link ID if a view link is entered or pasted into the box by the user.
+     */
+    private static final class LinkIDMatchReplacementListener implements TextWatcher {
+        /**
+         * The text input box that should be watched and updated.
+         */
+        private final EditText inputBox;
+
+        private LinkIDMatchReplacementListener(EditText inputBox) {
+            this.inputBox = inputBox;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            // When the share URL text is changed, try to extract the share ID using regex. If
+            // a match is found, replace the entire contents with the match.
+            Matcher matcher = Pattern.compile(Constants.REGEX_ADOPT_ID_FROM_LINK).matcher(charSequence);
+            if (matcher.find()) {
+                Log.i("Found possible link ID %s in URL %s; replacing", matcher.group(1), charSequence); //NON-NLS
+                this.inputBox.setText(matcher.group(1));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
     }
 }

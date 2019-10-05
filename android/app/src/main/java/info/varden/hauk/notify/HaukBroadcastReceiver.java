@@ -4,7 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import info.varden.hauk.HaukConst;
+import info.varden.hauk.Constants;
+import info.varden.hauk.utils.Log;
 import info.varden.hauk.utils.ReceiverDataRegistry;
 
 /**
@@ -16,26 +17,37 @@ import info.varden.hauk.utils.ReceiverDataRegistry;
  * @param <T> The type of data this broadcast receiver is capable of processing.
  */
 public abstract class HaukBroadcastReceiver<T> extends BroadcastReceiver {
+    private final String actionID;
+
     /**
-     * A function that provides a unique broadcast action ID that this receiver should handle.
+     * Creates the receiver.
      *
-     * @return A broadcast activity ID.
+     * @param actionID A unique broadcast action ID that this receiver should handle.
      */
-    public abstract String getActionID();
+    protected HaukBroadcastReceiver(String actionID) {
+        this.actionID = actionID;
+    }
 
     /**
      * Callback for handling the broadcast data.
+     *
      * @param ctx  Android application context.
      * @param data The data object provided to the Receiver class.
      */
     protected abstract void handle(Context ctx, T data);
 
+    public final String getActionID() {
+        return this.actionID;
+    }
+
     @Override
-    public final void onReceive(Context ctx, Intent intent) {
+    public final void onReceive(Context context, Intent intent) {
         // Retrieve the registry index of the data stored for this receiver, then pass that data on
         // to the subclass.
-        int index = intent.getIntExtra(HaukConst.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, -1);
+        int index = intent.getIntExtra(Constants.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, -1);
         //noinspection unchecked
-        handle(ctx, (T) ReceiverDataRegistry.retrieve(index));
+        T data = (T) ReceiverDataRegistry.retrieve(index);
+        Log.v("Received broadcast for class %s; fetched stored data of type %s; calling handler", getClass().getName(), data.getClass().getName()); //NON-NLS
+        handle(context, data);
     }
 }

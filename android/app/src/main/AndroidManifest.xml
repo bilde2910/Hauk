@@ -13,7 +13,8 @@
         android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop"
@@ -23,17 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".notify.CopyLinkReceiver" android:exported="true">
+        <receiver android:name=".notify.CopyLinkReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="info.varden.hauk.COPY_LINK" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".notify.StopSharingReceiver" android:exported="true">
+        <receiver android:name=".notify.StopSharingReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="info.varden.hauk.STOP_SHARING" />
             </intent-filter>
         </receiver>
-        <service android:name=".service.LocationPushService" android:enabled="true">
+        <service android:name=".service.LocationPushService" android:exported="false" android:enabled="true">
             <intent-filter>
                 <action android:name="info.varden.hauk.LOCATION_SERVICE" />
             </intent-filter>
