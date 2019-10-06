@@ -319,7 +319,7 @@ public abstract class SessionManager {
      * @param share The share to stop.
      */
     public final void stopSharing(final Share share) {
-        new StopSharingPacket(this.ctx, share.getSession()) {
+        new StopSharingPacket(this.ctx, share) {
             @Override
             public void onSuccess() {
                 Log.i("Share %s was successfully stopped", share); //NON-NLS
