@@ -1,9 +1,8 @@
 package info.varden.hauk.ui.listener;
 
-import android.content.Context;
 import android.view.View;
 
-import info.varden.hauk.http.StopSharingPacket;
+import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.utils.Log;
 
@@ -18,41 +17,21 @@ public final class StopLinkClickListener implements View.OnClickListener {
     /**
      * Android application context.
      */
-    private final Context ctx;
+    private final SessionManager manager;
 
     /**
      * The share to share the link for.
      */
     private final Share share;
 
-    public StopLinkClickListener(Context ctx, Share share) {
-        this.ctx = ctx;
+    public StopLinkClickListener(SessionManager manager, Share share) {
+        this.manager = manager;
         this.share = share;
     }
 
     @Override
     public void onClick(View view) {
         Log.i("User requested to stop sharing %s", this.share); //NON-NLS
-        new AssociatedPacket().send();
-    }
-
-    /**
-     * The packet sent to the server to request that sharing is stopped.
-     */
-    private final class AssociatedPacket extends StopSharingPacket {
-        private AssociatedPacket() {
-            super(StopLinkClickListener.this.ctx, StopLinkClickListener.this.share);
-        }
-
-        @Override
-        public void onSuccess() {
-            // TODO: Do something meaningful here?
-            Log.i("Share %s was successfully stopped", StopLinkClickListener.this.share); //NON-NLS
-        }
-
-        @Override
-        protected void onFailure(Exception ex) {
-            Log.e("Share %s could not be stopped", ex, StopLinkClickListener.this.share); //NON-NLS
-        }
+        this.manager.stopSharing(this.share);
     }
 }

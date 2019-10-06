@@ -19,6 +19,7 @@ import info.varden.hauk.Constants;
 import info.varden.hauk.caching.ResumableSessions;
 import info.varden.hauk.caching.ResumePrompt;
 import info.varden.hauk.http.SessionInitiationPacket;
+import info.varden.hauk.http.StopSharingPacket;
 import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.service.LocationPushService;
 import info.varden.hauk.struct.AdoptabilityPreference;
@@ -310,6 +311,30 @@ public abstract class SessionManager {
         for (ShareListener listener : this.upstreamShareListeners) {
             listener.onShareJoined(share);
         }
+    }
+
+    /**
+     * Requests that a single share is stopped.
+     *
+     * @param share The share to stop.
+     */
+    public final void stopSharing(final Share share) {
+        new StopSharingPacket(this.ctx, share.getSession()) {
+            @Override
+            public void onSuccess() {
+                Log.i("Share %s was successfully stopped", share); //NON-NLS
+                SessionManager.this.resumable.clearResumableShare(share.getID());
+                SessionManager.this.knownShares.remove(share.getID());
+                for (ShareListener listener : SessionManager.this.upstreamShareListeners) {
+                    listener.onShareParted(share);
+                }
+            }
+
+            @Override
+            protected void onFailure(Exception ex) {
+                Log.e("Share %s could not be stopped", ex, share); //NON-NLS
+            }
+        }.send();
     }
 
     /**

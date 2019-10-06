@@ -256,7 +256,6 @@ public final class MainActivity extends AppCompatActivity {
         this.uiStopTask = new StopSharingUICallback(this, this.uiResetTask);
         this.shareCountdown = new TextViewCountdownRunner((TextView) findViewById(R.id.btnShare), getString(R.string.btn_stop));
         this.dialogSvc = new DialogService(this);
-        this.linkList = new ShareLinkLayoutManager(this, (ViewGroup) findViewById(R.id.tableLinks));
 
         this.manager = new SessionManager(this, this.uiStopTask) {
             @Override
@@ -272,7 +271,7 @@ public final class MainActivity extends AppCompatActivity {
         this.manager.attachShareListener(new ShareListenerImpl());
         this.manager.attachSessionListener(new SessionListenerImpl());
 
-
+        this.linkList = new ShareLinkLayoutManager(this, this.manager, (ViewGroup) findViewById(R.id.tableLinks));
     }
 
     /**

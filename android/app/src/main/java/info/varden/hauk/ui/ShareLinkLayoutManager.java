@@ -12,6 +12,7 @@ import java.util.Map;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.ui.listener.ShareLinkClickListener;
 import info.varden.hauk.ui.listener.StopLinkClickListener;
@@ -30,6 +31,11 @@ final class ShareLinkLayoutManager {
     private final Activity act;
 
     /**
+     * The session manager to call upon to stop sharing specific links.
+     */
+    private final SessionManager manager;
+
+    /**
      * The parent layout that should contain the list of links.
      */
     private final ViewGroup linkLayout;
@@ -40,8 +46,9 @@ final class ShareLinkLayoutManager {
      */
     private final Map<Share, View> shareViewMap;
 
-    ShareLinkLayoutManager(Activity act, ViewGroup linkLayout) {
+    ShareLinkLayoutManager(Activity act, SessionManager manager, ViewGroup linkLayout) {
         this.act = act;
+        this.manager = manager;
         this.linkLayout = linkLayout;
         this.shareViewMap = new HashMap<>();
         removeAll();
@@ -98,7 +105,7 @@ final class ShareLinkLayoutManager {
             Button btnStop = linkView.findViewById(R.id.linkBtnStop);
             if (this.share.getSession().getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
                 Log.i("Server is compatible with individual share termination"); //NON-NLS
-                btnStop.setOnClickListener(new StopLinkClickListener(ShareLinkLayoutManager.this.act, this.share));
+                btnStop.setOnClickListener(new StopLinkClickListener(ShareLinkLayoutManager.this.manager, this.share));
             } else {
                 Log.i("Server is not compatible with individual share termination"); //NON-NLS
                 btnStop.setVisibility(View.GONE);
