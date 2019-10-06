@@ -1,0 +1,8 @@
+* You can now create and individually share and control multiple different sharing links for the same session (#30)
+* Group shares can now be left if you were adopted without having to stop your entire session
+* App can now only be used in portrait mode, in order to fix a bug causing the app to break if the device was rotated
+* Tapping the body of the Hauk notification now opens the app (#27)
+* Redis can be used instead of Memcached (#13)
+* The sample config file was renamed from config.php to config-sample.php (#39)
+* Fixed the installation script not working in environments without bash (#36)
+* The install script now highlights the configuration file path (#36)
