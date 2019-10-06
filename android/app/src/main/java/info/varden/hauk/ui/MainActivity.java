@@ -349,6 +349,7 @@ public final class MainActivity extends AppCompatActivity {
             MainActivity.this.shareCountdown.stop();
 
             Button btnShare = findViewById(R.id.btnShare);
+            btnShare.setEnabled(true);
             btnShare.setText(R.string.btn_start);
 
             Button btnLink = findViewById(R.id.btnLink);
@@ -417,18 +418,21 @@ public final class MainActivity extends AppCompatActivity {
     private final class SessionListenerImpl implements SessionListener {
         @Override
         public void onSessionCreated(Session session) {
-            // We now have a link to share, so we enable the additional link creation button. Add an
-            // event handler to handle the user clicking on it.
-            boolean allowNewLinkAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
-            Button btnLink = findViewById(R.id.btnLink);
-            Log.d("Adding event handler for add-link button"); //NON-NLS
-            btnLink.setOnClickListener(new AddLinkClickListener(MainActivity.this, session, allowNewLinkAdoption) {
-                @Override
-                public void onShareCreated(Share share) {
-                    MainActivity.this.manager.shareLocation(share);
-                }
-            });
-            btnLink.setEnabled(true);
+            // We now have a link to share, so we enable the additional link creation button if the backend supports it. Add an event handler to handle the user clicking on it.
+            if (session.getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
+                boolean allowNewLinkAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
+                Button btnLink = findViewById(R.id.btnLink);
+                Log.d("Adding event handler for add-link button"); //NON-NLS
+                btnLink.setOnClickListener(new AddLinkClickListener(MainActivity.this, session, allowNewLinkAdoption) {
+                    @Override
+                    public void onShareCreated(Share share) {
+                        MainActivity.this.manager.shareLocation(share);
+                    }
+                });
+                btnLink.setEnabled(true);
+            } else {
+                Log.w("Backend is outdated and does not support adding additional links. Button will remain disabled."); //NON-NLS
+            }
 
             // Now that sharing is active, we will turn the start button into a stop
             // button with a countdown.
