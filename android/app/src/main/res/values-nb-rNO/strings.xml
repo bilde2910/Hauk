@@ -65,13 +65,13 @@
     <string name="link_type_group_member">Gruppedeling (medlem)</string>
     <string name="label_pin_head">DIN GRUPPEKODE:</string>
     <string name="label_pin_help">Del denne koden med de andre i gruppen din for å la dem koble seg på og bli med i delingsgruppen</string>
-    <string name="explain_adopt_body">Hauk lar deg lage delingssesjoner for deg selv i tillegg til for grupper. Hvis noen lager en gruppe, får de en kode som andre kan bruke til å bli med på å dele posisjonen sin til gruppen.
-\n
-\nPersonen som oppretter gruppen har også mulighet til å legge til en eksisterende enkeltperson som allerede deler posisjonen sin inn i gruppen. Denne prosessen kalles for adopsjon.
-\n
-\nDu kan bestemme om du ønsker å la andre flette delingen din inn i en gruppe ved å krysse av i denne boksen.
-\n
-\nHvis du aktiverer dette og deler posisjonen din med en gjeng med venner, og noen andre i gjengen også ønsker å dele posisjonen sin, kan de opprette en delingsgruppe og legge deg til på kartet sitt, slik at dere begge dukker opp på samme kart. Dette kan være nyttig hvis du f.eks. kjører bil og ikke kan bruke telefonen din, siden adopsjon av delingen av andre din ikke krever noen handling fra deg.</string>
+    <string name="explain_adopt_body">Hauk lar deg lage delingssesjoner for deg selv i tillegg til for grupper. Hvis noen lager en gruppe, får de en kode som andre kan bruke til å bli med på å dele posisjonen sin til gruppen. 
+\n 
+\nPersonen som oppretter gruppen har også mulighet til å legge til en eksisterende enkeltperson som allerede deler posisjonen sin inn i gruppen. Denne prosessen kalles for adopsjon. 
+\n 
+\nDu kan bestemme om du ønsker å la andre flette delingen din inn i en gruppe ved å krysse av i denne boksen. 
+\n 
+\nHvis du aktiverer dette og deler posisjonen din med en gjeng med venner, og noen andre i gjengen også ønsker å dele posisjonen sin, kan de opprette en delingsgruppe og legge deg til på kartet sitt, slik at dere begge dukker opp på samme kart. Dette kan være nyttig hvis du f.eks. kjører bil og ikke kan bruke telefonen din, siden adopsjon av delingen din av andre ikke krever noen handling fra deg.</string>
     <string name="err_location_disabled">Stedstjenester er deaktivert. Vennligst aktiver høynøyaktighetsposisjonstjenester for å dele posisjonen din.</string>
     <string name="err_outdated">Serveren er utdatert</string>
     <string name="err_ver_group">Serveren støtter ikke delingsgrupper. Delingsgrupper støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din ble omgjort til en én-persons-sesjon.</string>
