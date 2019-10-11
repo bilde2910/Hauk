@@ -40,6 +40,8 @@ const METERS_PER_SECOND = array(
     "unit" => "m/s"
 );
 
+include(__DIR__."/lang/en/texts.php");
+
 const DEFAULTS = array(
 
     // This is the default config. This file is used as a fallback for missing
@@ -91,7 +93,7 @@ foreach (CONFIG_PATHS as $path) {
     }
 }
 
-if (!defined("CONFIG")) die("Unable to find config.php!\n");
+if (!defined("CONFIG")) die($LANG['config_missing']."\n");
 
 // Function that fetches the given config item from the config, or from the
 // defaults as a fallback if not found in config.
@@ -595,18 +597,18 @@ switch (getConfig("storage_backend")) {
         } else if (extension_loaded("memcache")) {
             include_once(__DIR__."/wrapper/memcache.php");
         } else {
-            die("No compatible memcached extension (memcache or memcached) is enabled in your PHP config!\n");
+            die($LANG['no_memcached_ext']."\n");
         }
         break;
     case REDIS:
         if (extension_loaded("redis")) {
             include_once(__DIR__."/wrapper/redis.php");
         } else {
-            die("No compatible redis extension (redis) is enabled in your PHP config!\n");
+            die($LANG['no_redis_ext']."\n");
         }
         break;
     default:
-        die("You have set an invalid storage_backend in Hauk!");
+        die($LANG['invalid_storage']."\n");
 }
 
 

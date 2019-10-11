@@ -6,7 +6,7 @@
 include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
 
-foreach (array("id") as $field) if (!isset($_GET[$field])) die("Invalid session!\n");
+foreach (array("id") as $field) if (!isset($_GET[$field])) die($LANG['session_invalid']."\n");
 
 $memcache = memConnect();
 
@@ -15,7 +15,7 @@ $share = Share::fromShareID($memcache, $_GET["id"]);
 
 // If the link data key is not set, the session probably expired.
 if (!$share->exists()) {
-    die("Invalid session!\n");
+    die($LANG['session_invalid']."\n");
 } else {
     header("Content-Type: text/json");
 
@@ -24,7 +24,7 @@ if (!$share->exists()) {
     switch ($share->getType()) {
         case SHARE_TYPE_ALONE:
             $session = $share->getHost();
-            if (!$session->exists()) die("Invalid session!\n");
+            if (!$session->exists()) die($LANG['session_invalid']."\n");
             echo json_encode(array(
                 "type" => $share->getType(),
                 "expire" => $share->getExpirationTime(),

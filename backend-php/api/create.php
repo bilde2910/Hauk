@@ -13,15 +13,15 @@ requirePOST(
 );
 
 // Verify that the client is authorized to connect.
-if (!password_verify($_POST["pwd"], getConfig("password_hash"))) die("Incorrect password!\n");
+if (!password_verify($_POST["pwd"], getConfig("password_hash"))) die($LANG['incorrect_password']."\n");
 
 // Perform input validation.
 $d = intval($_POST["dur"]);
 $i = floatval($_POST["int"]);
 $mod = isset($_POST["mod"]) ? intval($_POST["mod"]) : SHARE_MODE_CREATE_ALONE;
-if ($d > getConfig("max_duration")) die("Share period is too long!\n");
-if ($i > getConfig("max_duration")) die("Ping interval is too long!\n");
-if ($i < getConfig("min_interval")) die("Ping interval is too short!\n");
+if ($d > getConfig("max_duration")) die($LANG['share_too_long']."\n");
+if ($i > getConfig("max_duration")) die($LANG['interval_too_long']."\n");
+if ($i < getConfig("min_interval")) die($LANG['interval_too_short']."\n");
 
 // Adopting a share means incorporating it into another group share. It is
 // enabled by default in the app, but users are free to change this.
@@ -53,7 +53,7 @@ $host
     ->save();
 
 // This is the default output.
-$output = array("Unsupported share mode!");
+$output = array($LANG['share_mode_unsupported']);
 
 switch ($mod) {
     case SHARE_MODE_CREATE_ALONE:
@@ -104,7 +104,7 @@ switch ($mod) {
 
         // Fetch an existing group share by its group PIN and add the new host.
         $share = Share::fromGroupPIN($memcache, $pin);
-        if (!$share->exists()) die("Invalid group PIN!\n");
+        if (!$share->exists()) die($LANG['group_pin_invalid']."\n");
         $share
             ->addHost($nickname, $host)
             ->save();

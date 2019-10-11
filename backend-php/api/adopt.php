@@ -19,19 +19,19 @@ $nickname = $_POST["nic"];
 // Retrieve the session data from memcached.
 $sid = $_POST["sid"];
 $session = new Client($memcache, $sid);
-if (!$session->exists()) die("Session expired!\n");
+if (!$session->exists()) die($LANG['session_expired']."\n");
 
 // Retrieve adopted share data from memcached.
 $shid = $_POST["aid"];
 $share = Share::fromShareID($memcache, $shid);
-if (!$share->exists()) die("The given share does not exist!\n");
-if (!$share->getType() === SHARE_TYPE_ALONE) die("You cannot adopt group shares!\n");
-if (!$share->isAdoptable()) die("The host of the given share does not permit adoption!\n");
+if (!$share->exists()) die($LANG['share_not_found']."\n");
+if (!$share->getType() === SHARE_TYPE_ALONE) die($LANG['group_share_not_adoptable']."\n");
+if (!$share->isAdoptable()) die($LANG['share_adoption_not_allowed']."\n");
 
 // Retrieve the target share.
 $pin = $_POST["pin"];
 $target = Share::fromGroupPIN($memcache, $pin);
-if (!$target->exists()) die("Session expired!\n");
+if (!$target->exists()) die($LANG['session_expired']."\n");
 
 // Join the shares.
 $target->addHost($nickname, $share->getHost())->save();

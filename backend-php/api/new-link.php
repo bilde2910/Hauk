@@ -16,7 +16,7 @@ $memcache = memConnect();
 // Retrieve the session data from memcached.
 $sid = $_POST["sid"];
 $session = new Client($memcache, $sid);
-if (!$session->exists()) die("Session expired!\n");
+if (!$session->exists()) die($LANG['session_expired']."\n");
 
 // Create a new solo share and set its arguments.
 $share = new SoloShare($memcache);
