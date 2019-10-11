@@ -15,4 +15,3 @@ $LANG['share_mode_unsupported'] = 'Unsupported share mode!';
 $LANG['group_pin_invalid'] = 'Invalid group PIN!';
 $LANG['session_invalid'] = 'Invalid session!';
 $LANG['location_invalid'] = 'Invalid location!';
-?>
