@@ -1,2 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_password">Passord:</string>
+    <string name="label_duration">Varighet:</string>
+    <string name="label_heading">Åpen løsning for posisjonsdeling</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_allow_adopt">Tillat adopsjon:</string>
+    <string name="label_explain_adopt">(Hva er dette\?)</string>
+    <string name="label_nickname">Kallenavn:</string>
+    <string name="label_pin">Gruppekode:</string>
+    <string name="label_remember">Passordlagring:</string>
+    <string name="label_status">Status:</string>
+    <string name="label_share_url">Delings-ID/link:</string>
+    <string name="chk_remember">Husk passord</string>
+    <string name="btn_start">Start deling</string>
+    <string name="btn_stop">Stopp deling [%s]</string>
+    <string name="btn_adopt">Legg til en eksisterende sesjon</string>
+    <string name="btn_stop_short">Stopp</string>
+    <string name="btn_share_short">Del</string>
+    <string name="label_heading_links">Aktive delinger</string>
+    <string name="link_type_solo">Bare deg</string>
+    <string name="link_type_group_host">Gruppedeling (leder)</string>
+    <string name="label_status_none">Lokasjonsdeling inaktiv</string>
+    <string name="label_status_wait">Venter på første GNSS-posisjon…</string>
+    <string name="label_status_coarse">Venter på nøyaktig posisjon…</string>
+    <string name="label_status_ok">Lokasjonsdeling aktiv!</string>
+    <string name="explain_adopt_title">Delingsadopsjon</string>
+    <string name="adopt_title">Adoptér en annens deling</string>
+    <string name="adopt_body">Du kan adoptere en annen persons delte posisjon for å integrere ham/henne i denne gruppen. Lim inn linken eller delings-IDen til den personen du ønsker å adoptere (f.eks. %s\?XXXX-XXXX) og tildel ham/henne et kallenavn.</string>
+    <string name="create_link_title">Lag en ny delingslink</string>
+    <string name="create_link_body">Du kan lage flere delingslinker som andre kan bruke til å få tilgang til den delte posisjonen din. Hver link kan stoppes individuelt, noe som gir deg detaljert kontroll over hvem som kan se posisjonen din til enhver tid.
+\n
+\nAndre linker du oppretter på denne måten vil være én-persons-delinger og de vil kun vise din posisjon.</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Avbryt</string>
+    <string name="btn_yes">Ja</string>
+    <string name="btn_no">Nei</string>
+    <string name="btn_create">Opprett</string>
+    <string name="action_copy">Kopiér link</string>
+    <string name="action_copied">Link kopiert fra Hauk</string>
+    <string name="action_stop">Stopp deling</string>
+    <string name="notify_title">Posisjonsdeling aktiv</string>
+    <string name="notify_body">Hauk deler posisjonen din til %s</string>
+    <string name="progress_connect_title">Kobler til</string>
+    <string name="progress_connect_body">Kobler til Hauk…</string>
+    <string name="progress_adopt_title">Adopterer</string>
+    <string name="progress_adopt_body">Adopterer %s…</string>
+    <string name="progress_new_link_title">Oppretter link</string>
+    <string name="progress_new_link_body">Oppretter en ny delingslink…</string>
+    <string name="err_client">Ugyldige innstillinger</string>
+    <string name="err_connect">Tilkoblingsfeil</string>
+    <string name="err_server">Serverfeil</string>
+    <string name="err_malformed_url">Serveradressen du skrev inn er ugyldig.</string>
+    <string name="err_missing_perms">Tilgang til stedstjenester kreves for å bruke denne appen.</string>
+    <string name="err_empty">Serveren returnerte en tom respons.</string>
+    <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
+    <string name="locale_code">nb-NO</string>
+    <string name="app_name">Hauk</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_server">Serveradresse:</string>
+    <string name="label_interval">Intervall (sek):</string>
+    <string name="label_mode">Delingsmodus:</string>
+    <string name="chk_allow_adopt">La andre legge meg til i en delingsgruppe når jeg deler posisjonen min</string>
+    <string name="btn_link">Lag en ny delingslink</string>
+    <string name="link_type_group_member">Gruppedeling (medlem)</string>
+    <string name="label_pin_head">DIN GRUPPEKODE:</string>
+    <string name="label_pin_help">Del denne koden med de andre i gruppen din for å la dem koble seg på og bli med i delingsgruppen</string>
+    <string name="explain_adopt_body">Hauk lar deg lage delingssesjoner for deg selv i tillegg til for grupper. Hvis noen lager en gruppe, får de en kode som andre kan bruke til å bli med på å dele posisjonen sin til gruppen.
+\n
+\nPersonen som oppretter gruppen har også mulighet til å legge til en eksisterende enkeltperson som allerede deler posisjonen sin inn i gruppen. Denne prosessen kalles for adopsjon.
+\n
+\nDu kan bestemme om du ønsker å la andre flette delingen din inn i en gruppe ved å krysse av i denne boksen.
+\n
+\nHvis du aktiverer dette og deler posisjonen din med en gjeng med venner, og noen andre i gjengen også ønsker å dele posisjonen sin, kan de opprette en delingsgruppe og legge deg til på kartet sitt, slik at dere begge dukker opp på samme kart. Dette kan være nyttig hvis du f.eks. kjører bil og ikke kan bruke telefonen din, siden adopsjon av delingen av andre din ikke krever noen handling fra deg.</string>
+    <string name="err_location_disabled">Stedstjenester er deaktivert. Vennligst aktiver høynøyaktighetsposisjonstjenester for å dele posisjonen din.</string>
+    <string name="err_outdated">Serveren er utdatert</string>
+    <string name="err_ver_group">Serveren støtter ikke delingsgrupper. Delingsgrupper støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din ble omgjort til en én-persons-sesjon.</string>
+    <string name="ok_title">Oppkobling vellykket</string>
+    <string name="ok_message">Posisjonen din blir delt! Klikk på del-knappen for å kopiere visningslinken for delingen din.</string>
+    <string name="ended_title">Deling avsluttet</string>
+    <string name="ended_message">Sesjonen din har utløpt.</string>
+    <string name="adopted_title">Deling adoptert</string>
+    <string name="adopted_body">%s ble lagt til i gruppen din!</string>
+    <string name="resume_title">Gjenoppta sesjon</string>
+    <string name="resume_body">Du har en påbegynt sesjon som ikke er avsluttet:
+\n
+\nAktive linker: %d
+\nUtløper: %s
+\n
+\nØnsker du å gjenoppta denne sesjonen\?</string>
+    <string name="link_added_title">Link opprettet</string>
+    <string name="link_added_body">En ny link ble opprettet for delingen din! Klikk på del-knappen for å kopiere visningslinken for delingen din.</string>
+    <string name="req_perms_title">Tilgang kreves</string>
+    <string name="req_perms_message">Denne appen krever tilgang til stedstjenester for å fungere, men denne tilgangen har ikke blitt gitt enda. Vennligst godta følgende tilgangsforespørsel, og klikk på startknappen for å prøve på nytt.</string>
+    <string name="share_via">Del via</string>
+    <string name="share_subject">Følg posisjonen min på Hauk!</string>
+</resources>
