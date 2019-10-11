@@ -1,1 +1,16 @@
-{}
+{
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on-no.png",
+    "btn_dismiss": "Lukk",
+    "status_offline": "Fråkopla",
+    "status_expired": "Gått ut",
+    "dialog_connection_body": "Tilkoplinga til Hauk-serveren forsvann. Hauk vil prøva å kopla til igjen i bakgrunnen. Vennlegast sjekk at du er tilkopla nett.",
+    "dialog_connection_head": "Tilkoplingsfeil",
+    "dialog_expired_body": "Den delte posisjonen du følgde har gått ut.",
+    "dialog_expired_head": "Deling gått ut",
+    "point_app_to": "Skriv inn følgjande link i Hauk-appen for å dela posisjonen din:",
+    "gnss_signal_body": "Sendar ventar på GPS-signal",
+    "gnss_signal_head": "Ver vennleg og vent",
+    "expired_body": "Den delte posisjonen du prøvde å opna vart ikkje funne på serveren. Viss denne linken verkte tidlegare, kan det hendet at delingen har gått ut.",
+    "expired_head": "Posisjon gått ut",
+    "page_title": "Hauk"
+}
