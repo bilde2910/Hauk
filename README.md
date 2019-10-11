@@ -114,3 +114,16 @@ Server: https://apps.varden.info/demo/hauk/
 Password: `demo`
 
 Location shares on the demo server is limited to 2 minutes and is only meant for demonstration purposes. Set up your own server to use Hauk to its full extent.
+
+## Translators
+
+Hauk depends on volunteers to translate the project. Want to help out? Head over to the [translation portal](https://traduki.varden.info/engage/hauk/) to get started. If your language isn't listed, feel free to [create an issue](https://github.com/bilde2910/Hauk/issues/new) requesting it.
+
+[![Translation status](https://traduki.varden.info/widgets/hauk/-/287x66-white.png)](https://traduki.varden.info/engage/hauk/)
+
+**Norwegian Bokmål** - Marius Lindvall  
+**Norwegian Nynorsk** - Marius Lindvall
+
+### Translation status
+
+[![Translation status](https://traduki.varden.info/widgets/hauk/-/multi-red.svg)](https://traduki.varden.info/engage/hauk/)
