@@ -6,6 +6,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/bilde2910/Hauk)](https://github.com/bilde2910/Hauk/issues)
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/svg-badge.svg)](https://traduki.varden.info/engage/hauk/)
 [![GitHub stars](https://img.shields.io/github/stars/bilde2910/Hauk)](https://github.com/bilde2910/Hauk/stargazers)
+[![F-Droid](https://img.shields.io/f-droid/v/info.varden.hauk)](https://f-droid.org/packages/info.varden.hauk/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/bilde2910/Hauk)](https://github.com/bilde2910/Hauk/releases)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/bilde2910/Hauk)
 [![Docker hub](https://img.shields.io/docker/pulls/bilde2910/hauk.svg)](https://hub.docker.com/r/bilde2910/hauk)
 
