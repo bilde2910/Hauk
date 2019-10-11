@@ -1,0 +1,16 @@
+{
+    "page_title": "Hauk",
+    "expired_head": "Location expired",
+    "expired_body": "The shared location you tried to access was not found on the server. If this link worked before, the share might have expired.",
+    "gnss_signal_head": "Please wait",
+    "gnss_signal_body": "Sender is waiting for GPS signal",
+    "point_app_to": "Point the Hauk app to this server to share your location:",
+    "dialog_expired_head": "Share expired",
+    "dialog_expired_body": "This location share has expired.",
+    "dialog_connection_head": "Connection error",
+    "dialog_connection_body": "Connection to the Hauk server was lost. Hauk will try to reconnect in the background. Please check that you have network connectivity.",
+    "status_expired": "Expired",
+    "status_offline": "Offline",
+    "btn_dismiss": "Dismiss",
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+}

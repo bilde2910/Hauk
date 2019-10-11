@@ -6,6 +6,62 @@ const SHARE_TYPE_GROUP = 1;
 const EARTH_DIAMETER_KM = 6371 * 2;
 const HAV_MOD = EARTH_DIAMETER_KM * 1000;
 
+// Find preferred language.
+var locales = ['en'];
+var prefLang = 'en';
+if (navigator.languages) {
+    for (var i = navigator.languages.length - 1; i >= 0; i--) {
+        for (var j = 0; j < locales.length; j++) {
+            if (navigator.languages[i] == locales[j]) {
+                prefLang = locales[j].split('-').join('_');
+            }
+        }
+    }
+}
+
+// Load localization English as fallback.
+var LANG = {};
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        LANG = JSON.parse(this.responseText);
+        // Overwrite the L10N data with localizations for the preferred language.
+        if (prefLang != 'en') {
+            var xhr2 = new XMLHttpRequest();
+            xhr2.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    for (var key in data) {
+                        if (!data.hasOwnProperty(key)) continue;
+                        LANG[key] = data[key];
+                    }
+                    localizeHTML();
+                }
+            };
+            xhr2.open('GET', './assets/lang/' + prefLang + '.json', true);
+            xhr2.send();
+        } else {
+            localizeHTML();
+        }
+    }
+};
+xhr.open('GET', './assets/lang/en.json', true);
+xhr.send();
+
+function localizeHTML() {
+    // Put localized strings in HTML.
+    var tags = document.querySelectorAll('[data-i18n]');
+    for (var key in tags) {
+        if (!tags.hasOwnProperty(key)) continue;
+        var i18nKey = tags[key].getAttribute('data-i18n');
+        if (tags[key].hasAttribute('data-i18n-attr')) {
+            tags[key].setAttribute(tags[key].getAttribute('data-i18n-attr'), LANG[i18nKey]);
+        } else {
+            tags[key].textContent = LANG[i18nKey];
+        }
+    }
+}
+
 // Create a Leaflet map.
 var map = L.map('map').setView([0, 0], DEFAULT_ZOOM);
 L.tileLayer(TILE_URI, {
@@ -184,7 +240,7 @@ function setNewInterval(expire, interval) {
         if ((Date.now() / 1000) >= expire) {
             clearInterval(fetchIntv);
             clearInterval(countIntv);
-            document.getElementById("countdown").textContent = "Expired";
+            document.getElementById("countdown").textContent = LANG["status_expired"];
             document.getElementById("expired").style.display = "block";
         }
 
@@ -201,7 +257,7 @@ function setNewInterval(expire, interval) {
             // On failure to get new location data:
             clearInterval(fetchIntv);
             clearInterval(countIntv);
-            document.getElementById("countdown").textContent = "Expired";
+            document.getElementById("countdown").textContent = LANG["status_expired"];
             document.getElementById("expired").style.display = "block";
         });
     }, interval * 1000);

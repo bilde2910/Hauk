@@ -13,7 +13,7 @@
         <link rel="icon" type="image/png" href="./assets/favicon.png">
         <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
         <script src="./dynamic.js.php"></script>
-        <title>Hauk</title>
+        <title data-i18n="page_title">Hauk</title>
 
         <!-- The page should not be scalable, since users can just zoom in on
              the map itself directly. -->
@@ -28,7 +28,7 @@
             <div id="notch">
                 <div class="tri t-left"></div>
                 <div class="inner" id="countdown"></div>
-                <div class="inner hidden offline">Offline</div>
+                <div class="inner hidden offline" data-i18n="status_offline"></div>
                 <div class="tri t-right"></div>
             </div>
 
@@ -53,40 +53,41 @@
 
         <div class="cover hidden" id="notfound">
             <img src="./assets/logo.svg" class="logo">
-            <p class="header">Location expired</p>
-            <p class="body">The shared location you tried to access was not found on the server. If this link worked before, the share might have expired.</p>
+            <p class="header" data-i18n="expired_head"></p>
+            <p class="body" data-i18n="expired_body"></p>
         </div>
 
         <div class="cover hidden" id="searching">
             <img src="./assets/location-pending.svg" class="pending">
-            <p class="header" style="margin-top:0;">Please wait</p>
-            <p class="body">Sender is waiting for GPS signal</p>
+            <p class="header" style="margin-top:0;" data-i18n="gnss_signal_head"></p>
+            <p class="body" data-i18n="gnss_signal_body"></p>
         </div>
 
         <div class="cover hidden" id="index">
             <img src="./assets/logo.svg" class="logo">
-            <p class="body" style="margin-top:7vmin;">Point the Hauk app to this server to share your location:</p>
+            <p class="body" style="margin-top:7vmin;" data-i18n="point_app_to"></p>
             <p class="body" id="url">https://localhost/</p>
             <p class="body"><a href="https://f-droid.org/packages/info.varden.hauk">
-                <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-                alt="Get it on F-Droid"
-                class="f-droid">
+                <img data-i18n="f_droid_badge_url"
+                     data-i18n-attr="src"
+                     alt="Get it on F-Droid"
+                     class="f-droid">
             </a></p>
         </div>
 
         <div id="expired" class="dialog hidden">
             <div>
-                <p class="header">Share expired</p>
-                <p class="body">This location share has expired.</p>
-                <p class="button"><input type="button" id="dismiss-expired" value="Dismiss"></p>
+                <p class="header" data-i18n="dialog_expired_head"></p>
+                <p class="body" data-i18n="dialog_expired_body"></p>
+                <p class="button"><input type="button" id="dismiss-expired" data-i18n-attr="value" data-i18n="btn_dismiss"></p>
             </div>
         </div>
 
         <div id="offline" class="dialog hidden">
             <div>
-                <p class="header">Connection error</p>
-                <p class="body">Connection to the Hauk server was lost. Hauk will try to reconnect in the background. Please check that you have network connectivity.</p>
-                <p class="button"><input type="button" id="dismiss-offline" value="Dismiss"></p>
+                <p class="header" data-i18n="dialog_connection_head"></p>
+                <p class="body" data-i18n="dialog_connection_body"></p>
+                <p class="button"><input type="button" id="dismiss-offline" data-i18n-attr="value" data-i18n="btn_dismiss"></p>
             </div>
         </div>
 
