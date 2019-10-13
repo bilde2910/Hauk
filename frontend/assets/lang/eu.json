@@ -1,1 +1,16 @@
-{}
+{
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
+    "btn_dismiss": "Baztertu",
+    "status_offline": "Deskonektatuta",
+    "status_expired": "Iraungita",
+    "dialog_connection_body": "Hauk zerbitzariarekin konexioa galdu da. Hauk bigarren planoan konektatzen saiatuko da. Egiaztatu baduzula sarera konexioa.",
+    "dialog_connection_head": "Konexio errorea",
+    "dialog_expired_body": "Kokaleku partekatze honek iraungi du.",
+    "dialog_expired_head": "Partekatzea iraungita",
+    "point_app_to": "Zuzendu Hauk aplikazioa zerbitzari honetara kokalekua partekatzeko:",
+    "gnss_signal_body": "Igorlea GPS seinalearen zain dago",
+    "gnss_signal_head": "Itxaron mesedez",
+    "expired_body": "Atzitzen saiatu zaren partekatutako kokalekua ez da zerbitzarian aurkitu. Esteka honek lehen funtzionatzen bazuen, agian partekatzeak iraungi du.",
+    "expired_head": "Kokalekua iraungita",
+    "page_title": "Hauk"
+}
