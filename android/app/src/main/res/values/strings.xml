@@ -33,17 +33,13 @@
     <string name="link_type_group_host">Group share (host)</string>
     <string name="link_type_group_member">Group share (member)</string>
 
-    <string-array name="sel_mode_opts">
-        <item>Share my own location only</item>
-        <item>Create a group share</item>
-        <item>Join a group share</item>
-    </string-array>
+    <string name="sel_mode_opt_alone">Share my own location only</string>
+    <string name="sel_mode_opt_create_group">Create a group share</string>
+    <string name="sel_mode_opt_join_group">Join a group share</string>
 
-    <string-array name="sel_unit_opts">
-        <item>minute(s)</item>
-        <item>hour(s)</item>
-        <item>day(s)</item>
-    </string-array>
+    <string name="sel_unit_opt_minutes">minute(s)</string>
+    <string name="sel_unit_opt_hours">hour(s)</string>
+    <string name="sel_unit_opt_days">day(s)</string>
 
     <string name="label_status_none">Location sharing inactive</string>
     <string name="label_status_wait">Waiting for initial GNSS fix…</string>
@@ -60,10 +56,6 @@
 
     <string name="create_link_title">Create new sharing link</string>
     <string name="create_link_body">You can create several links to access your shared location. Each link can be stopped individually, allowing fine-grained control over who can see your location at any time.\n\nAny additional links you create this way will be single-user shares that show your location only.</string>
-
-    <string-array name="sel_new_mode_opts">
-        <item>Share my own location only</item>
-    </string-array>
 
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>

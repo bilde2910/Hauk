@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sel_mode_opts">
+        <item>@string/sel_mode_opt_alone</item>
+        <item>@string/sel_mode_opt_create_group</item>
+        <item>@string/sel_mode_opt_join_group</item>
+    </string-array>
+
+    <string-array name="sel_unit_opts">
+        <item>@string/sel_unit_opt_minutes</item>
+        <item>@string/sel_unit_opt_hours</item>
+        <item>@string/sel_unit_opt_days</item>
+    </string-array>
+
+    <string-array name="sel_new_mode_opts">
+        <item>@string/sel_mode_opt_alone</item>
+    </string-array>
+</resources>
