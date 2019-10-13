@@ -1,2 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_heading">Kode irekiko kokaleku partekatzea</string>
+    <string name="label_status_none">Kokaleku partekatzea inaktibo</string>
+    <string name="btn_ok">Ados</string>
+    <string name="err_malformed_url">Sartu duzun zerbitzari URL-a baliogabea da.</string>
+    <string name="req_perms_message">Aplikazio honek zure kokalekua atzitzeko baimena behar du funtzionatzeko, baina baimen hau ez da oraindik eman. Onartu hurrengo baimen eskaera eta gero sakatu hasi botoia berriro saiatzeko.</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_server">Zerbitzariaren URLa:</string>
+    <string name="label_password">Pasahitza:</string>
+    <string name="label_duration">Partekatzearen iraupena:</string>
+    <string name="label_interval">Eguneraketa tartea (s):</string>
+    <string name="label_mode">Partekatze modua:</string>
+    <string name="label_allow_adopt">Baimendu adopzioa:</string>
+    <string name="label_explain_adopt">(Zer da hau\?)</string>
+    <string name="label_nickname">Ezizena:</string>
+    <string name="label_pin">Taldearen PIN-a:</string>
+    <string name="label_remember">Pasahitzaren biltegiratzea:</string>
+    <string name="label_status">Egoera:</string>
+    <string name="label_share_url">Partekatzearen ID/URL-a:</string>
+    <string name="chk_remember">Gogoratu pasahitza</string>
+    <string name="btn_start">Hasi partekatzen</string>
+    <string name="btn_adopt">Gehitu badagoen partekatze bat</string>
+    <string name="btn_stop_short">Gelditu</string>
+    <string name="btn_stop">Gelditu partekatzea [%s]</string>
+    <string name="btn_share_short">Partekatu</string>
+    <string name="label_heading_links">Orain aktibo dauden estekak</string>
+    <string name="link_type_solo">Zure kokalekua soilik</string>
+    <string name="link_type_group_member">Taldeko partekatzea (kidea)</string>
+    <string name="sel_mode_opt_alone">Partekatu nire kokalekua soilik</string>
+    <string name="sel_mode_opt_create_group">Sortu talde partekatzea</string>
+    <string name="sel_mode_opt_join_group">Elkartu talde partekatzera</string>
+    <string name="sel_unit_opt_minutes">minutu</string>
+    <string name="sel_unit_opt_hours">ordu</string>
+    <string name="sel_unit_opt_days">egun</string>
+    <string name="label_status_wait">Lehen GNSS eguneratzearen zain…</string>
+    <string name="label_status_coarse">Zehaztasun handiko eguneratzearen zain…</string>
+    <string name="label_pin_head">ZURE TALDE PIN-a:</string>
+    <string name="explain_adopt_title">Partekatu adopzioa</string>
+    <string name="adopt_title">Adoptatu badagoen partekatze bat</string>
+    <string name="adopt_body">Badagoen kokaleku partekatze bat adoptatu dezakezu eta talde partekatze honetara gehitu. Itsatsi adoptatu nahi duzun partekatzearen URL-a edo ID-a (adib. %s\?XXXX-XXXX) eta eman ezizen bat partekatze horri.</string>
+    <string name="create_link_title">Sortu partekatze esteka berria</string>
+    <string name="create_link_body">Zure partekatutako kokalekua atzitzeko hainbat esteka sortu ditzakezu. Esteka bakoitza indibidualki gelditu daiteke, honela zure kokalekua nork eta noiz ikusi dezakeen erabaki dezakezu.
+\n
+\nHonela sortzen dituzun esteka gehigarriak erabiltzaile bakar batentzako estekak izango dira, soilik zure kokalekua erakusten dutenak.</string>
+    <string name="btn_yes">Bai</string>
+    <string name="btn_no">Ez</string>
+    <string name="btn_create">Sortu</string>
+    <string name="action_copy">Kopiatu esteka</string>
+    <string name="action_stop">Gelditu partekatzea</string>
+    <string name="notify_title">Kokaleku partekatzea aktibo</string>
+    <string name="notify_body">Hauk zure kokalekua hona partekatzen du: %s</string>
+    <string name="progress_connect_title">Konektatzen</string>
+    <string name="progress_adopt_title">Adoptatzen</string>
+    <string name="progress_adopt_body">%s adoptatzen…</string>
+    <string name="progress_new_link_title">Esteka sortzen</string>
+    <string name="progress_new_link_body">Partekatze esteka berria sortzen…</string>
+    <string name="err_client">Ezarpen baliogabeak</string>
+    <string name="err_connect">Konexio errorea</string>
+    <string name="err_server">Zerbitzari errorea</string>
+    <string name="err_missing_perms">Kokalekua atzitzeko baimena behar da aplikazio hau erabiltzeko.</string>
+    <string name="err_empty">Zerbitzariak erantzun hutsa igorri du.</string>
+    <string name="err_response_code">HTTP %s jaso da zerbitzaritik!</string>
+    <string name="err_outdated">Zerbitzaria zaharkituta dago</string>
+    <string name="ok_title">Konexioa ezarrita</string>
+    <string name="ok_message">Kokaleku partekatzea aktiboa! Sakatu partekatu botoia zure partekatzearen URL publikoa kopiatzeko.</string>
+    <string name="ended_title">Partekatzea amaitu da</string>
+    <string name="ended_message">Zure kokaleku partekatzeak iraungi du.</string>
+    <string name="adopted_title">Partekatzea adoptatuta</string>
+    <string name="adopted_body">% gehitu da zure partekatzera!</string>
+    <string name="resume_title">Berrekin saioa</string>
+    <string name="link_added_title">Esteka sortuta</string>
+    <string name="link_added_body">Esteka berri bat sortu da zure kokalekua partekatzeko! Sakatu partekatu botoia zure partekatzearen URL publikoa kopiatzeko.</string>
+    <string name="req_perms_title">Baimena behar da</string>
+    <string name="chk_allow_adopt">Baimendu besteek nire partekatzea talde partekatze batera gehitzea</string>
+    <string name="label_status_ok">Kokaleku partekatzea aktibo!</string>
+    <string name="btn_cancel">Utzi</string>
+    <string name="err_location_disabled">Kokaleku zerbitzuak desgaituta daude. Gaitu Zehaztasun handiko kokaleku zerbitzua zure kokalekua partekatzeko.</string>
+    <string name="share_via">Partekatu honen bidez</string>
+    <string name="share_subject">Jarraitu nire kokalekua Hauk bidez!</string>
+    <string name="locale_code">eu</string>
+    <string name="btn_link">Sortu jarraipenerako esteka berria</string>
+    <string name="label_pin_help">Partekatu PIN hau taldeko beste kideekin zure kokaleku partekatze taldera elkartzea ahalbidetzeko</string>
+    <string name="action_copied">Esteka kopiatuta Hauk aplikaziotik</string>
+    <string name="err_ver_group">Zerbitzariak ez ditu talde partekatzeak onartzen. Talde partekatzeak %s bertsiotik gora onartzen dira, zerbitzari honek %s bertsioa darabil. Zure partekatzea partekatze indibiduala bihurtu da.</string>
+    <string name="app_name">Hauk</string>
+    <string name="link_type_group_host">Taldeko partekatzea (ostalaria)</string>
+    <string name="explain_adopt_body">Hauk aplikazioak kokaleku partekatze saioak sortzea ahalbidetzen dizu, zuretzat edo talde batentzat. Inork talde partekatze bat sortzen badu, besteek partekatze taldera elkartzeko erabili dezaketen talde kode bat jasoko du.
+\n
+\nBestalde, taldea sortzen duen pertsona badagoen partekatze bat gehitu dezake taldera. Prozesu honi adopzioa deitzen zaio.
+\n
+\nBesteek zure partekatzea bere taldera gehitu dezaketen erabaki dezakezu egiaztaketa-koadro honen bidez.
+\n
+\nAukera hau gaitzen baduzu eta zure kokalekua partekatzen baduzu lagun talde batekin, eta beste inork bere kokalekua partekatu nahi badu, talde partekatze bat sortu dezake eta zurea bere mapara gehitu, horrela biak agertuko zarete partekatutako kokaleku mapa berean. Hau erabilgarria da adibidez gidatzen ari zarela telefonoa erabiltzerik ez baduzu, besteek zure partekatzea adoptatzeak ez duelako zure ekintzarik eskatzen.</string>
+    <string name="progress_connect_body">Hauk zerbitzarira konektatzen…</string>
+    <string name="resume_body">Amaitu gabeko saio bat duzu:
+\n
+\nPartekatze esteka aktiboa: %d
+\nIraungitzea: %s
+\n
+\nSaio hau berreskuratu nahi duzu\?</string>
+    <string name="img_alt_logo">Hauk</string>
+</resources>
