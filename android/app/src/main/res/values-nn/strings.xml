@@ -94,4 +94,10 @@
     <string name="img_alt_logo">Hauk</string>
     <string name="chk_allow_adopt">La andre legga meg til i ein delingsgruppe når eg deler posisjonen min</string>
     <string name="btn_adopt">Legg til ein eksisterande sesjon</string>
+    <string name="sel_mode_opt_join_group">Bli med i ein delingsgruppe</string>
+    <string name="sel_mode_opt_alone">Berre del min eigen posisjon</string>
+    <string name="sel_mode_opt_create_group">Lag ein delingsgruppe</string>
+    <string name="sel_unit_opt_minutes">minutt</string>
+    <string name="sel_unit_opt_hours">tim(ar)</string>
+    <string name="sel_unit_opt_days">dag(ar)</string>
 </resources>
