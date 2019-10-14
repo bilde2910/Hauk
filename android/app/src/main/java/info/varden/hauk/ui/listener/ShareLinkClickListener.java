@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.utils.Log;
@@ -35,8 +36,7 @@ public final class ShareLinkClickListener implements View.OnClickListener {
     public void onClick(View view) {
         Log.i("User requested to share %s", this.share); //NON-NLS
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        //noinspection HardCodedStringLiteral
-        shareIntent.setType("text/plain");
+        shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, this.ctx.getString(R.string.share_subject));
         shareIntent.putExtra(Intent.EXTRA_TEXT, this.share.getViewURL());
         this.ctx.startActivity(Intent.createChooser(shareIntent, this.ctx.getString(R.string.share_via)));

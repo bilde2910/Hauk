@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="info.varden.hauk">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,6 +25,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".global.ui.AuthorizationActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <receiver
+            android:name=".global.Receiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="info.varden.hauk.START_ALONE_THEN_SHARE_VIA" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".notify.CopyLinkReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="info.varden.hauk.COPY_LINK" />

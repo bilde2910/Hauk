@@ -102,6 +102,10 @@
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>
 
-    <string name="share_via">Share via</string>
+    <string name="share_via">Share Hauk link via</string>
     <string name="share_subject">Follow my location on Hauk!</string>
+
+    <string name="authorize_header">Broadcast authorization request</string>
+    <string name="authorize_body">Hauk received and blocked an attempt to create a new location sharing session from a broadcast source which identified itself as</string>
+    <string name="authorize_question">Do you wish to allow sessions to be created from broadcasts with this identification in the future?</string>
 </resources>

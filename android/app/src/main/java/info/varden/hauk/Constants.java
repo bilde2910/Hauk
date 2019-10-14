@@ -20,6 +20,7 @@ public enum Constants {
     // Shared preferences dictionaries.
     public static final String SHARED_PREFS_CONNECTION = "connectionPrefs";
     public static final String SHARED_PREFS_RESUMABLE = "sessionResumption";
+    public static final String SHARED_PREFS_AUTHORIZATIONS = "broadcastAuthorizations";
 
     // Keys for use in stored server preferences.
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
@@ -48,6 +49,15 @@ public enum Constants {
     public static final String EXTRA_STOP_TASK = "stopTask";
     public static final String EXTRA_GNSS_ACTIVE_TASK = "gnssActiveTask";
     public static final String EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX = "dataRegistryIndex";
+    public static final String EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER = "source";
+    public static final String EXTRA_SESSION_SERVER_URL = "server";
+    public static final String EXTRA_SESSION_PASSWORD = "password";
+    public static final String EXTRA_SESSION_DURATION = "duration";
+    public static final String EXTRA_SESSION_INTERVAL = "interval";
+    public static final String EXTRA_SESSION_ALLOW_ADOPT = "adoptable";
+
+    // Content types for intents.
+    public static final String INTENT_TYPE_COPY_LINK = "text/plain";
 
     // Backend URLs.
     public static final String URL_PATH_ADOPT_SHARE = "api/adopt.php";
