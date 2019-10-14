@@ -62,13 +62,6 @@ function localizeHTML() {
     }
 }
 
-// Create a Leaflet map.
-var map = L.map('map').setView([0, 0], DEFAULT_ZOOM);
-L.tileLayer(TILE_URI, {
-    attribution: ATTRIBUTION,
-    maxZoom: MAX_ZOOM
-}).addTo(map);
-
 // For locating the viewer of the map. Watcher is a watchPosition() reference.
 var watcher = null;
 
@@ -150,13 +143,29 @@ L.control.locate = function(opts) {
     return new L.control.Locate(opts);
 }
 
-// Add the geolocation control to the map if supported by the browser.
-if ("geolocation" in navigator && window.isSecureContext) {
-    L.control.locate({ position: 'topleft' }).addTo(map);
-}
+var map, circleLayer, markerLayer;
 
-var circleLayer = L.layerGroup().addTo(map);
-var markerLayer = L.layerGroup().addTo(map);
+function initMap() {
+    // Create a Leaflet map.
+    map = L.map('map').setView([0, 0], DEFAULT_ZOOM);
+    L.tileLayer(TILE_URI, {
+        attribution: ATTRIBUTION,
+        maxZoom: MAX_ZOOM
+    }).addTo(map);
+
+    // Add the geolocation control to the map if supported by the browser.
+    if ("geolocation" in navigator && window.isSecureContext) {
+        L.control.locate({ position: 'topleft' }).addTo(map);
+    }
+
+    circleLayer = L.layerGroup().addTo(map);
+    markerLayer = L.layerGroup().addTo(map);
+
+    // Unfollow the user when the map is panned.
+    map.on('mousedown', function() {
+        following = null;
+    });
+}
 
 // The leaflet markers and associated data.
 var shares = {};
@@ -273,6 +282,8 @@ if (location.href.indexOf("?") === -1 || id == "") {
 } else {
     // Attempt to fetch location data from the server once.
     getJSON("./api/fetch.php?id=" + id, function(data) {
+        // Initialize the Leaflet map.
+        initMap();
         noGPS.style.display = "block";
         setNewInterval(data.expire, data.interval);
         processUpdate(data);
@@ -289,11 +300,6 @@ var hasInitiated = false;
 
 // The user being followed on the map.
 var following = null;
-
-// Unfollow the user when the map is panned.
-map.on('mousedown', function() {
-    following = null;
-});
 
 // Parses the data returned from ./api/fetch.php and updates the map marker.
 function processUpdate(data) {
