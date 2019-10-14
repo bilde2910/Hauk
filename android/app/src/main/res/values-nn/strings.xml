@@ -78,7 +78,7 @@
     <string name="link_added_body">Ein ny link vart oppretta for delingen din! Klikk på del-knappen for å kopiera visningslinken for delingen din.</string>
     <string name="req_perms_title">Tilgang krevjast</string>
     <string name="req_perms_message">Denne appen krev tilgang til stadtenester for å fungera, men denne tilgangen har ikkje vorte gitt endå. Ver vennleg og godta følgjande tilgangsførespurnad, og klikk på startknappen for å prøva på nytt.</string>
-    <string name="share_via">Del via</string>
+    <string name="share_via">Del Hauk-lenkje via</string>
     <string name="share_subject">Følg posisjonen min på Hauk!</string>
     <string name="err_missing_perms">Tilgang til stadtenester krevjast for å bruka denne appen.</string>
     <string name="locale_code">nn-NO</string>
@@ -100,4 +100,7 @@
     <string name="sel_unit_opt_minutes">minutt</string>
     <string name="sel_unit_opt_hours">tim(ar)</string>
     <string name="sel_unit_opt_days">dag(ar)</string>
+    <string name="authorize_question">Ønskjer du å tillata at delingssesjoner kan startast frå kringkastinger med denne identifikasjonen ved seinare høve\?</string>
+    <string name="authorize_body">Hauk fekk og blokkerte eit forsøk på å starta ein delingssesjon frå ein kringkastingskjelde som identifiserte seg som</string>
+    <string name="authorize_header">Godkjenningsførespurnad</string>
 </resources>
