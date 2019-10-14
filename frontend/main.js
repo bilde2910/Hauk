@@ -183,42 +183,65 @@ function getJSON(url, callback, invalid) {
     xhr.timeout = REQUEST_TIMEOUT * 1000;
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status === 200) {
-            // Request successful. Reset offline state and parse the JSON.
-            knownOffline = false;
-            document.getElementById("offline").style.display = "none";
-            document.getElementById("notch").className = "";
-            try {
-                var json = JSON.parse(this.responseText);
-                callback(json);
-            } catch (ex) {
-                console.log(ex);
-                invalid();
-            }
-        } else if (this.readyState == 4) {
-            // Requested failed; offline.
-            if (!knownOffline) {
-                knownOffline = true;
-                document.getElementById("offline").style.display = "block";
-                document.getElementById("notch").className = "offline";
+        if (this.readyState == 4) {
+            var offlineE = document.getElementById("offline");
+            var notchE = document.getElementById("notch");
+            if (this.status === 200) {
+                // Request successful. Reset offline state and parse the JSON.
+                knownOffline = false;
+                if (offlineE !== null) {
+                    document.getElementById("offline").style.display = "none";
+                }
+                if (notchE !== null) {
+                    document.getElementById("notch").className = "";
+                }
+                try {
+                    var json = JSON.parse(this.responseText);
+                    callback(json);
+                } catch (ex) {
+                    console.log(ex);
+                    invalid();
+                }
+            } else {
+                // Requested failed; offline.
+                if (!knownOffline) {
+                    knownOffline = true;
+                    if (offlineE !== null) {
+                        document.getElementById("offline").style.display = "block";
+                    }
+                    if (notchE !== null) {
+                        document.getElementById("notch").className = "offline";
+                    }
+                }
             }
         }
     }
     xhr.send();
 }
 
-document.getElementById("dismiss-expired").addEventListener("click", function() {
-    document.getElementById("expired").style.display = "none";
-});
+var dismissExpiredE = document.getElementById("dismiss-expired");
+if (dismissExpiredE !== null) {
+    dismissExpiredE.addEventListener("click", function() {
+        var expiredE = document.getElementById("expired");
+        if (expiredE !== null) expiredE.style.display = "none";
+    });
+}
 
-document.getElementById("dismiss-offline").addEventListener("click", function() {
-    document.getElementById("offline").style.display = "none";
-});
+var dismissOfflineE = document.getElementById("dismiss-offline");
+if (dismissOfflineE !== null) {
+    dismissOfflineE.addEventListener("click", function() {
+        var offlineE = document.getElementById("offline");
+        if (offlineE !== null) offlineE.style.display = "none";
+    });
+}
 
 var fetchIntv;
 var countIntv;
 
 function setNewInterval(expire, interval) {
+    var countdownE = document.getElementById("countdown");
+    var expiredE = document.getElementById("expired");
+
     // The data contains an expiration time. Create a countdown at the top of
     // the map screen that ends when the share is over.
     countIntv = setInterval(function() {
@@ -239,7 +262,7 @@ function setNewInterval(expire, interval) {
         if (s < 10) time += "0";
         time += s;
 
-        document.getElementById("countdown").textContent = time;
+        if (countdownE !== null) countdownE.textContent = time;
     }, 1000);
 
     // The location data contains an interval. Schedule a task that fetches data
@@ -249,8 +272,8 @@ function setNewInterval(expire, interval) {
         if ((Date.now() / 1000) >= expire) {
             clearInterval(fetchIntv);
             clearInterval(countIntv);
-            document.getElementById("countdown").textContent = LANG["status_expired"];
-            document.getElementById("expired").style.display = "block";
+            if (countdownE !== null) countdownE.textContent = LANG["status_expired"];
+            if (expiredE !== null) expiredE.style.display = "block";
         }
 
         getJSON("./api/fetch.php?id=" + id, function(data) {
@@ -266,8 +289,8 @@ function setNewInterval(expire, interval) {
             // On failure to get new location data:
             clearInterval(fetchIntv);
             clearInterval(countIntv);
-            document.getElementById("countdown").textContent = LANG["status_expired"];
-            document.getElementById("expired").style.display = "block";
+            if (countdownE !== null) countdownE.textContent = LANG["status_expired"];
+            if (expiredE !== null) expiredE.style.display = "block";
         });
     }, interval * 1000);
 }
@@ -277,8 +300,11 @@ console.log(id);
 if (location.href.indexOf("?") === -1 || id == "") {
     // If there is no share ID, show the root page.
     var url = location.href.indexOf("?") === -1 ? location.href : location.href.substring(0, location.href.indexOf("?"));
-    document.getElementById("url").textContent = url;
-    document.getElementById("index").style.display = "block";
+
+    var urlE = document.getElementById("url");
+    var indexE = document.getElementById("index");
+    if (urlE !== null) urlE.textContent = url;
+    if (indexE !== null) indexE.style.display = "block";
 } else {
     // Attempt to fetch location data from the server once.
     getJSON("./api/fetch.php?id=" + id, function(data) {
@@ -288,7 +314,8 @@ if (location.href.indexOf("?") === -1 || id == "") {
         setNewInterval(data.expire, data.interval);
         processUpdate(data);
     }, function() {
-        document.getElementById("notfound").style.display = "block";
+        var notFoundE = document.getElementById("notfound");
+        if (notFoundE !== null) notFoundE.style.display = "block";
     });
 }
 
@@ -452,14 +479,14 @@ function processUpdate(data) {
 
             if (point.time < (Date.now() / 1000) - OFFLINE_TIMEOUT) {
                 eArrow.className = eArrow.className.split("live").join("dead");
-                eLabel.className = 'dead';
+                if (eLabel !== null) eLabel.className = 'dead';
                 shares[user].circle.setStyle({
                     fillColor: '#555555',
                     color: '#555555'
                 })
             } else {
                 eArrow.className = eArrow.className.split("dead").join("live");
-                eLabel.className = 'live';
+                if (eLabel !== null) eLabel.className = 'live';
                 shares[user].circle.setStyle({
                     fillColor: '#d80037',
                     color: '#d80037'
@@ -487,7 +514,10 @@ function processUpdate(data) {
     if (hasReceivedFirst && !hasInitiated) {
         hasInitiated = true;
         noGPS.style.display = "none";
-        document.getElementById("mapouter").style.visibility = "visible";
+        var mapOuterE = document.getElementById("mapouter");
+        if (mapOuterE !== null) {
+            mapOuterE.style.visibility = "visible";
+        }
         var markers = [];
         for (var share in shares) {
             if (!shares.hasOwnProperty(share)) continue;
