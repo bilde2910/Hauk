@@ -4,7 +4,7 @@
 // entries needed for clientside processing.
 
 include("./include/inc.php");
-header("Content-Type: text/javascript");
+header("Content-Type: text/javascript; charset=utf-8");
 
 ?>
 var TILE_URI = <?php echo json_encode(getConfig("map_tile_uri")); ?>;
