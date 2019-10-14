@@ -92,7 +92,7 @@
     <string name="link_added_body">En ny link ble opprettet for delingen din! Klikk på del-knappen for å kopiere visningslinken for delingen din.</string>
     <string name="req_perms_title">Tilgang kreves</string>
     <string name="req_perms_message">Denne appen krever tilgang til stedstjenester for å fungere, men denne tilgangen har ikke blitt gitt enda. Vennligst godta følgende tilgangsforespørsel, og klikk på startknappen for å prøve på nytt.</string>
-    <string name="share_via">Del via</string>
+    <string name="share_via">Del Hauk-lenke via</string>
     <string name="share_subject">Følg posisjonen min på Hauk!</string>
     <string name="sel_mode_opt_alone">Bare del min egen posisjon</string>
     <string name="sel_mode_opt_create_group">Lag en delingsgruppe</string>
@@ -100,4 +100,7 @@
     <string name="sel_unit_opt_hours">time(r)</string>
     <string name="sel_unit_opt_days">dag(er)</string>
     <string name="sel_mode_opt_join_group">Bli med i en delingsgruppe</string>
+    <string name="authorize_question">Ønsker du å tillate at delingssesjoner kan startes fra kringkastinger med denne identifikasjonen ved senere anledninger\?</string>
+    <string name="authorize_body">Hauk mottok og blokkerte et forsøk på å starte en delingssesjon fra en kringkastingskilde som identifiserte seg som</string>
+    <string name="authorize_header">Godkjenningsforespørsel</string>
 </resources>
