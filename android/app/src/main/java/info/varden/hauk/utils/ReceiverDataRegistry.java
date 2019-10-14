@@ -34,14 +34,25 @@ public enum ReceiverDataRegistry {
     }
 
     /**
-     * Retrieves an object from the registry given its index.
+     * Retrieves an object from the registry given its index and deletes the object.
      *
      * @param index The index obtained when registering the object using register().
      * @return The object that was stored in the registry.
      */
     public static Object retrieve(int index) {
+        return retrieve(index, false);
+    }
+
+    /**
+     * Retrieves an object from the registry given its index.
+     *
+     * @param index The index obtained when registering the object using register().
+     * @param keep  Whether or not to keep the object in the registry after retrieval.
+     * @return The object that was stored in the registry.
+     */
+    public static Object retrieve(int index, boolean keep) {
         Object obj = data.get(index);
-        data.remove(index);
+        if (!keep) data.remove(index);
         return obj;
     }
 }

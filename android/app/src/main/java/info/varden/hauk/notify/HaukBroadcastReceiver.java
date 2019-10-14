@@ -46,7 +46,7 @@ public abstract class HaukBroadcastReceiver<T> extends BroadcastReceiver {
         // to the subclass.
         int index = intent.getIntExtra(Constants.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, -1);
         //noinspection unchecked
-        T data = (T) ReceiverDataRegistry.retrieve(index);
+        T data = (T) ReceiverDataRegistry.retrieve(index, true);
         Log.v("Received broadcast for class %s; fetched stored data of type %s; calling handler", getClass().getName(), data.getClass().getName()); //NON-NLS
         handle(context, data);
     }
