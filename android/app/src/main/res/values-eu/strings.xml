@@ -67,7 +67,7 @@
     <string name="ended_title">Partekatzea amaitu da</string>
     <string name="ended_message">Zure kokaleku partekatzeak iraungi du.</string>
     <string name="adopted_title">Partekatzea adoptatuta</string>
-    <string name="adopted_body">% gehitu da zure partekatzera!</string>
+    <string name="adopted_body">%s gehitu da zure partekatzera!</string>
     <string name="resume_title">Berrekin saioa</string>
     <string name="link_added_title">Esteka sortuta</string>
     <string name="link_added_body">Esteka berri bat sortu da zure kokalekua partekatzeko! Sakatu partekatu botoia zure partekatzearen URL publikoa kopiatzeko.</string>
