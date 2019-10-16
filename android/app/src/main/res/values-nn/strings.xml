@@ -103,4 +103,14 @@
     <string name="authorize_question">Ønskjer du å tillata at delingssesjoner kan startast frå kringkastinger med denne identifikasjonen ved seinare høve\?</string>
     <string name="authorize_body">Hauk fekk og blokkerte eit forsøk på å starta ein delingssesjon frå ein kringkastingskjelde som identifiserte seg som</string>
     <string name="authorize_header">Godkjenningsførespurnad</string>
+    <string name="btn_show_settings">Åpne innstillinger</string>
+    <string name="btn_dismiss">Lukk</string>
+    <string name="battery_savings_body">Det ser ut til at du bruker ein %s-eining. Desse einingane har særleg strenge batterisparingsinnstillingar som kan hindra Hauk frå å senda posisjonsoppdateringar medan programmet køyrer i bakgrunnen.
+\n
+\nDu blir oppfordra til å tilsjå at Hauk er unnateke frå batterisparing for å hindra at appen sluttar å verka utan forvarsel.
+\n
+\nDenne meldinga vil ikkje visast igjen.</string>
+    <string name="battery_savings_title">Aggressiv batterisparing</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
 </resources>
