@@ -28,14 +28,21 @@
         android:layout_height="wrap_content"
         android:text="@string/authorize_body" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
     <!-- Identifier will be displayed here. -->
     <TextView
         android:id="@+id/authorizeIdentifier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
-        android:paddingVertical="10dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <!-- Question prompting the user to authorize the source. -->
     <TextView
