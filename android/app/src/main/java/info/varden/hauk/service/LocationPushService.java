@@ -139,9 +139,7 @@ public final class LocationPushService extends Service {
                     }
                 };
 
-                Log.i("Requesting location updates from device location services"); //NON-NLS
-                this.locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenCoarse);
-                this.locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenFine);
+                attachToLocationServices();
             } else {
                 Log.e("Location permission that was granted earlier has been rejected - sharing aborted"); //NON-NLS
             }
@@ -161,6 +159,22 @@ public final class LocationPushService extends Service {
         this.locMan.removeUpdates(this.listenFine);
         stopForeground(true);
         super.onDestroy();
+    }
+
+    /**
+     * Attaches the listeners to the location manager to request updates.
+     *
+     * @throws SecurityException If location permission is missing.
+     */
+    private void attachToLocationServices() throws SecurityException {
+        Log.i("Requesting location updates from device location services"); //NON-NLS
+        try {
+            this.locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenCoarse);
+        } catch (IllegalArgumentException ex) {
+            Log.w("Coarse location provider does not exist!", ex); //NON-NLS
+            this.listenCoarse = null;
+        }
+        this.locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenFine);
     }
 
     /**
