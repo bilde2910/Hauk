@@ -62,6 +62,8 @@
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="btn_create">Create</string>
+    <string name="btn_show_settings">Open settings</string>
+    <string name="btn_dismiss">Dismiss</string>
 
     <string name="action_copy">Copy link</string>
     <string name="action_copied">Copied link from Hauk</string>
@@ -101,6 +103,11 @@
 
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>
+
+    <string name="battery_savings_title">Aggressive battery savings</string>
+    <string name="battery_savings_body">You appear to be using a %s device. These devices have particularly strict battery saving settings that can prevent Hauk from sending location updates in the background.\n\nIt is recommended that you ensure Hauk is exempted from battery savings to ensure that the app does not unexpectedly stop working.\n\nThis message will not be displayed again.</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
 
     <string name="share_via">Share Hauk link via</string>
     <string name="share_subject">Follow my location on Hauk!</string>

@@ -5,6 +5,8 @@
       <w>backends</w>
       <w>gnss</w>
       <w>hauk</w>
+      <w>huawei</w>
+      <w>oneplus</w>
       <w>resumable</w>
       <w>sharedpref</w>
       <w>varden</w>

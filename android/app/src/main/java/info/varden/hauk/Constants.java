@@ -21,6 +21,7 @@ public enum Constants {
     public static final String SHARED_PREFS_CONNECTION = "connectionPrefs";
     public static final String SHARED_PREFS_RESUMABLE = "sessionResumption";
     public static final String SHARED_PREFS_AUTHORIZATIONS = "broadcastAuthorizations";
+    public static final String SHARED_PREFS_DEVICE_SPECS = "deviceSpecs";
 
     // Keys for use in stored server preferences.
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
@@ -37,6 +38,9 @@ public enum Constants {
     public static final String RESUME_CLIENT_VERSION = "clientVersion";
     public static final String RESUME_SESSION_PARAMS = "sessionParams";
     public static final String RESUME_SHARE_PARAMS = "shareParams";
+
+    // Keys for use in device spec preferences.
+    public static final String DEVICE_PREF_WARNED_BATTERY_SAVINGS = "hasPromptedBatterySavings";
 
     // Regular expression for extracting a share ID from a URL when adopting a share.
     public static final String REGEX_ADOPT_ID_FROM_LINK = "\\?([A-Za-z0-9-]+)";

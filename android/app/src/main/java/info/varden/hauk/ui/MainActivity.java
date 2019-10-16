@@ -37,6 +37,7 @@ import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
+import info.varden.hauk.system.powersaving.DeviceChecker;
 import info.varden.hauk.ui.listener.AddLinkClickListener;
 import info.varden.hauk.ui.listener.InitiateAdoptionClickListener;
 import info.varden.hauk.ui.listener.RememberPasswordPreferenceChangedListener;
@@ -127,6 +128,9 @@ public final class MainActivity extends AppCompatActivity {
                 );
             }
         });
+
+        // Check for aggressive power saving devices and warn the user if applicable.
+        new DeviceChecker(this).performCheck();
     }
 
     @Override
