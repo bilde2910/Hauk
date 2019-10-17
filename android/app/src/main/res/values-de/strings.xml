@@ -25,7 +25,7 @@
     <string name="label_status_ok">Teilen der Position aktiv!</string>
     <string name="chk_allow_adopt">Anderen erlauben, meine Position einem Gruppenshare hinzuzufügen</string>
     <string name="label_share_url">ID/URL teilen:</string>
-    <string name="label_remember">Passwort speichern:</string>
+    <string name="label_remember">Passwortspeicher:</string>
     <string name="chk_remember">Passwort speichern</string>
     <string name="btn_share_short">Teilen</string>
     <string name="link_type_group_member">Gruppenposition (Mitglied)</string>
@@ -40,4 +40,77 @@
     <string name="label_pin_head">DEIN GRUPPEN PIN:</string>
     <string name="sel_mode_opt_join_group">Einer Gruppenposition beitreten</string>
     <string name="label_pin_help">Teile diesen PIN mit anderen in der Gruppe, damit diese Deiner Gruppenposition beitreten können</string>
+    <string name="notify_body">Hauk teilt deinen Standort mit %s</string>
+    <string name="err_server">Server fehler</string>
+    <string name="explain_adopt_title">Adoption teilen</string>
+    <string name="adopt_title">Bestehende Freigabe adoptieren</string>
+    <string name="err_connect">Verbindungsfehler</string>
+    <string name="err_malformed_url">Die eingegebene Server-URL ist ungültig.</string>
+    <string name="err_missing_perms">Für die Nutzung der App ist die Berechtigung für die Standortfreigabe notwendig.</string>
+    <string name="err_empty">Der Server gibt eine leere Antwort zurück.</string>
+    <string name="err_response_code">HTTP %s vom Server erhalten!</string>
+    <string name="err_outdated">Der Server ist veraltet</string>
+    <string name="ok_title">Verbindung hergestellt</string>
+    <string name="ok_message">Die Standortfreigabe ist aktiv! Klicken Sie auf die Schaltfläche \"Freigabe\", um die öffentlich zugängliche URL für Ihre Freigabe zu kopieren.</string>
+    <string name="ended_title">Teilen beendet</string>
+    <string name="ended_message">Ihre Standortfreigabe ist abgelaufen.</string>
+    <string name="adopted_title">Freigabe adoptiert</string>
+    <string name="adopted_body">%s wurde zu deiner Freigabe hinzugefügt!</string>
+    <string name="resume_title">Sitzung fortsetzen</string>
+    <string name="link_added_title">Link erstellt</string>
+    <string name="link_added_body">Ein neuer Link wurde erfolgreich für Ihre Standortbeteiligung erstellt! Klicken Sie auf die Schaltfläche \"Freigabe\", um die öffentlich zugängliche URL für Ihre Freigabe zu kopieren.</string>
+    <string name="req_perms_title">Berechtigung benötigt</string>
+    <string name="err_location_disabled">Standortdienste sind deaktiviert. Bitte aktivieren Sie die präzisen Ortungsdienste, um Ihren Standort zu teilen.</string>
+    <string name="create_link_title">Neuen Freigabelink erstellen</string>
+    <string name="err_ver_group">Der Server unterstützt keine Gruppenfreigaben. Gruppenfreigaben werden ab Version %s unterstützt; auf dem Server läuft derzeit die Version %s. Deine Freigabe wurde in eine individuelle Freigabe umgewandelt.</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Abbrechen</string>
+    <string name="btn_yes">Ja</string>
+    <string name="btn_no">Nein</string>
+    <string name="btn_create">Erstellen</string>
+    <string name="btn_show_settings">Einstellungen öffnen</string>
+    <string name="btn_dismiss">Verwerfen</string>
+    <string name="action_copy">Link kopieren</string>
+    <string name="action_copied">Kopierter link von Hauk</string>
+    <string name="action_stop">Teilen stoppen</string>
+    <string name="notify_title">Standortfreigabe aktiv</string>
+    <string name="progress_connect_title">Verbinden</string>
+    <string name="progress_connect_body">Verbinde zu Hauk…</string>
+    <string name="progress_adopt_title">Adoption</string>
+    <string name="progress_adopt_body">Adoption %s…</string>
+    <string name="progress_new_link_title">Link erstellen</string>
+    <string name="progress_new_link_body">Neuen Freigabelink erstellen…</string>
+    <string name="err_client">Falsche Einstellungen</string>
+    <string name="locale_code">en-US</string>
+    <string name="resume_body">Du hast eine unvollendete Sitzung:
+\n
+\nAktive Freigabelinks: %d
+\nAblaufdatum: %s
+\n
+\nMöchten Sie diese Sitzung wieder aufnehmen\?</string>
+    <string name="explain_adopt_body">Hauk ermöglicht es, Location-Sharing-Sitzungen sowohl für sich selbst als auch für eine Gruppe von Personen zu erstellen. Wenn jemand eine Gruppenfreigabe erstellt, erhält er einen Gruppencode, mit dem andere an der Freigabesitzung teilnehmen können.
+\n
+\nDie Person, die die Gruppenfreigabe erstellt, erhält jedoch auch die Möglichkeit, eine bereits vorhandene Standortfreigabe in ihre Gruppe aufzunehmen. Dieser Prozess wird als Adoption bezeichnet.
+\n
+\nSie können entscheiden, ob Sie anderen erlauben möchten, Ihre Standortfreigabe in ihre Gruppenfreigabe aufzunehmen, indem Sie das Kontrollkästchen aktivieren.
+\n
+\nWenn Sie diese Option aktivieren und Ihren Standort für eine Gruppe von Freunden freigeben, und jemand anderes möchte auch seinen Standort freigeben, kann er eine Gruppenfreigabe erstellen und Sie zu seiner Karte hinzufügen, so dass Sie beide auf derselben freigegebenen Standortkarte erscheinen. Dies ist nützlich, wenn Sie z. B. Auto fahren und Ihr Telefon nicht benutzen können, da die Übernahme Ihrer Freigabe durch andere keine Interaktion Ihrerseits erfordert.</string>
+    <string name="adopt_body">Sie können eine vorhandene Standortfreigabe übernehmen, um sie in diese Gruppenfreigabe zu integrieren. Bitte fügen Sie die URL oder Freigabe-ID der Freigabe ein, die Sie übernehmen möchten (z.B. %s\?XXXX-XXXX) und weisen Sie dieser Freigabe einen Spitznamen zu.</string>
+    <string name="req_perms_message">Diese App benötigt Zugriff auf Ihren Standort, um zu funktionieren, aber diese Berechtigung wurde noch nicht erteilt. Bitte genehmigen Sie die folgende Berechtigungsanfrage und klicken Sie dann erneut auf die Schaltfläche Start, um es erneut zu versuchen.</string>
+    <string name="battery_savings_title">Aggressive Batterieeinsparungen</string>
+    <string name="battery_savings_body">Du scheinst ein %s-Gerät zu benutzen. Diese Geräte verfügen über besonders strenge Akkuspareinstellungen, die verhindern können, dass Hauk im Hintergrund Standortaktualisierungen sendet.
+\n
+\nStellen Sie sicher, dass Hauk von den Batterieeinsparungen ausgenommen ist, damit die App nicht unerwartet ausfällt.
+\n
+\nDiese Meldung wird nicht mehr angezeigt.</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="share_via">Hauk-Link teilen über</string>
+    <string name="share_subject">Folge meinem Standort auf Hauk!</string>
+    <string name="authorize_header">Broadcast Berechtigungsanfrage</string>
+    <string name="authorize_body">Hauk erhielt und blockierte einen Versuch, eine neue Location-Sharing-Sitzung von einer broadcast Quelle zu erstellen, die sich als</string>
+    <string name="authorize_question">Möchten Sie erlauben, dass in Zukunft aus broadcasts mit dieser Identifikation Sitzungen erstellt werden\?</string>
+    <string name="create_link_body">Sie können mehrere Links erstellen, um auf Ihren gemeinsamen Standort zuzugreifen. Jede Verbindung kann einzeln gestoppt werden, so dass Sie jederzeit genau steuern können, wer Ihren Standort sehen kann.
+\n
+\nAlle zusätzlichen Links, die Sie auf diese Weise erstellen, sind einzelne Standortfreigaben, die nur Ihren Standort anzeigen.</string>
 </resources>
