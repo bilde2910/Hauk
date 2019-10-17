@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
-    <string name="label_heading">Open Source teilen der Position</string>
+    <string name="label_heading">Teilen Ihrer Position mit Open Source Software</string>
     <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Server URL:</string>
     <string name="label_password">Passwort:</string>
@@ -36,8 +36,8 @@
     <string name="label_allow_adopt">Übernahme erlauben:</string>
     <string name="label_explain_adopt">(Was ist das\?)</string>
     <string name="label_pin">Gruppen PIN:</string>
-    <string name="label_nickname">Nickname:</string>
+    <string name="label_nickname">Spitzname:</string>
     <string name="label_pin_head">DEIN GRUPPEN PIN:</string>
     <string name="sel_mode_opt_join_group">Einer Gruppenposition beitreten</string>
-    <string name="label_pin_help">Teile diesen PIN mit anderen in der Gruppe, damit diese deiner Gruppenposition beitreten können</string>
+    <string name="label_pin_help">Teile diesen PIN mit anderen in der Gruppe, damit diese Deiner Gruppenposition beitreten können</string>
 </resources>
