@@ -39,4 +39,5 @@
     <string name="label_nickname">Nickname:</string>
     <string name="label_pin_head">DEIN GRUPPEN PIN:</string>
     <string name="sel_mode_opt_join_group">Einer Gruppenposition beitreten</string>
+    <string name="label_pin_help">Teile diesen PIN mit anderen in der Gruppe, damit diese deiner Gruppenposition beitreten können</string>
 </resources>
