@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Hauk</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_heading">Open Source teilen der Position</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_server">Server URL:</string>
+</resources>
