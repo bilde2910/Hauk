@@ -149,9 +149,9 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             for (Map.Entry<String, String> entry : this.data.entrySet()) {
                 if (first) first = false;
                 else sb.append("&");
-                sb.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.toString()));
+                sb.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()));
                 sb.append("=");
-                sb.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString()));
+                sb.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name()));
             }
             return sb.toString();
         }
