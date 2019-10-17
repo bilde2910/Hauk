@@ -17,11 +17,11 @@
     <string name="sel_mode_opt_alone">Nur meine eigene Position teilen</string>
     <string name="sel_mode_opt_create_group">Gruppenposition erstellen</string>
     <string name="sel_unit_opt_minutes">Minute(n)</string>
-    <string name="link_type_solo">Nur deine Position</string>
+    <string name="link_type_solo">Nur Deine Position</string>
     <string name="sel_unit_opt_hours">Stunde(n)</string>
     <string name="sel_unit_opt_days">Tag(e)</string>
-    <string name="label_status_none">Teilen der Position aktiv</string>
-    <string name="label_status_wait">Wart auf initialen GNSS-fix…</string>
+    <string name="label_status_none">Teilen der Position inaktiv</string>
+    <string name="label_status_wait">Warte auf initialen GNSS-Fix…</string>
     <string name="label_status_ok">Teilen der Position aktiv!</string>
     <string name="chk_allow_adopt">Anderen erlauben, meine Position einem Gruppenshare hinzuzufügen</string>
     <string name="label_share_url">ID/URL teilen:</string>
@@ -29,7 +29,7 @@
     <string name="chk_remember">Passwort speichern</string>
     <string name="btn_share_short">Teilen</string>
     <string name="link_type_group_member">Gruppenposition (Mitglied)</string>
-    <string name="label_status_coarse">Warte auf präzisen fix…</string>
+    <string name="label_status_coarse">Warte auf Präzisions-Fix…</string>
     <string name="label_duration">Freigabedauer:</string>
     <string name="label_interval">Aktualisierungsintervall (s):</string>
     <string name="label_mode">Freigabemodus:</string>
@@ -38,4 +38,5 @@
     <string name="label_pin">Gruppen PIN:</string>
     <string name="label_nickname">Nickname:</string>
     <string name="label_pin_head">DEIN GRUPPEN PIN:</string>
+    <string name="sel_mode_opt_join_group">Einer Gruppenposition beitreten</string>
 </resources>
