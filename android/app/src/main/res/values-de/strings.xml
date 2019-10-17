@@ -37,4 +37,5 @@
     <string name="label_explain_adopt">(Was ist das\?)</string>
     <string name="label_pin">Gruppen PIN:</string>
     <string name="label_nickname">Nickname:</string>
+    <string name="label_pin_head">DEIN GRUPPEN PIN:</string>
 </resources>
