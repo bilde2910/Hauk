@@ -5,4 +5,5 @@
     <string name="label_heading">Open Source teilen der Position</string>
     <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Server URL:</string>
+    <string name="label_password">Passwort:</string>
 </resources>
