@@ -1,0 +1,10 @@
+For full changelog, see https://github.com/bilde2910/Hauk/releases
+
+* Added localizations for Basque, German, Norwegian Bokmål and Norwegian Nynorsk
+* Support for starting shares via Tasker (see wiki on GitHub for how-to) (#37)
+* Fixed an issue that caused some devices to never get a location fix (#42)
+* Fixed app not working at all on some devices (#45)
+* App no longer crashes if you tap "Copy link" in the Hauk notification more than once
+* Huawei and OnePlus users with stock ROM are now warned on first app launch about possible battery savings issues (#34)
+* Map no longer loads in the background if the share URL is invalid (#41)
+* Frontend is more resilient against unsupported changes in HTML (#40)
