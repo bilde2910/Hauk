@@ -1,1 +1,16 @@
-{}
+{
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
+    "btn_dismiss": "Verwerfen",
+    "status_offline": "Offline",
+    "status_expired": "Abgelaufen",
+    "dialog_connection_body": "Die Verbindung zum Hauk-Server wurde unterbrochen. Hauk wird versuchen, sich im Hintergrund wieder zu verbinden. Bitte prüfen Sie, ob Sie über eine Netzwerkverbindung verfügen.",
+    "dialog_connection_head": "Verbindungsfehler",
+    "dialog_expired_body": "Diese Standortfreigabe ist abgelaufen.",
+    "dialog_expired_head": "Freigabe abgelaufen",
+    "point_app_to": "In der Hauk App diese URL eingeben, um Ihren Standort zu teilen:",
+    "gnss_signal_body": "Der Sender wartet auf ein GPS-Signal",
+    "gnss_signal_head": "Bitte warten",
+    "expired_body": "Die Standortfreigabe, auf die Sie zugreifen wollen, wurde nicht auf dem Server gefunden. Wenn dieser Link zuvor funktioniert hat, ist die Freigabe möglicherweise abgelaufen.",
+    "expired_head": "Standortfreigabe abgelaufen",
+    "page_title": "Hauk"
+}
