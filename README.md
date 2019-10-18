@@ -131,6 +131,6 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 
 ## Donate
 
-My projects are all ad-free and I do not earn any kind of money during the hours I spend developing them. Donations mean a lot to me because they help fund costs associated with this website, and because they serve as an incentive to further work on my projects.
+Hauk is an ad-free, open source project, and I am not doing this for financial gain. Thus, my time spent making this is unpaid. I do however accept donations from anyone who appreciates my work enough that they feel inclined to compensate me, no matter the amount. Donations mean a lot to me, as they help cover costs associated with server upkeep, domains and hosting, and general cost of living, and they serve as an incentive for me to keep working on open-source projects.
 
-https://varden.info/donate.php
+If you wish to donate to me, you may check out my [donations page](https://varden.info/donate.php) on my website.
