@@ -133,4 +133,4 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 
 My projects are all ad-free and I do not earn any kind of money during the hours I spend developing them. Donations mean a lot to me because they help fund costs associated with this website, and because they serve as an incentive to further work on my projects.
 
-<add your donation link>
+https://varden.info/donate.php
