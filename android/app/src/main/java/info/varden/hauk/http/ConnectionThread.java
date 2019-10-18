@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 import info.varden.hauk.BuildConfig;
@@ -67,6 +68,7 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             HttpURLConnection client = (HttpURLConnection) url.openConnection();
             client.setConnectTimeout(TIMEOUT);
             client.setRequestMethod("POST");
+            client.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
             client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             client.setRequestProperty("User-Agent", "Hauk/" + BuildConfig.VERSION_NAME + " " + System.getProperty("http.agent"));
             client.setDoInput(true);

@@ -4,6 +4,7 @@
 // backend. It loads the configuration file and declares it as a constant.
 
 const BACKEND_VERSION = "1.2";
+const LANGUAGES = ["de", "en", "eu", "nb_NO", "nn"];
 
 // Create mode for create.php. Corresponds with the constants from the Android
 // app in android/app/src/main/java/info/varden/hauk/HaukConst.java.
@@ -40,7 +41,50 @@ const METERS_PER_SECOND = array(
     "unit" => "m/s"
 );
 
+// Load fallback language.
 include(__DIR__."/lang/en/texts.php");
+
+// Load the preferred language.
+$acceptLang = str_replace("-", "_", filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE"));
+if ($acceptLang) {
+
+    // Split the Accept-Language header into an array of possible languages.
+    preg_match_all("/(([a-z]{1,8})(_([a-zA-Z]{1,8}))?)(\s*;\s*q\s*=\s*([01](\.\d{0,3})?))?\s*(,|$)/i", $acceptLang, $clientReq, PREG_SET_ORDER);
+
+    // Convert the full language name-country code list into a list of supported
+    // language that just has the language code, for fallback purposes.
+    $shortLangs = array();
+    foreach (LANGUAGES as $longLang) {
+        $shortLangs[] = substr($longLang, 0, 2);
+    }
+
+    // Set a default language.
+    $best = "en";
+    $qval = 0;
+
+    foreach ($clientReq as $lang) {
+        $code = $lang[1]; // E.g. "en-US"
+        $short = $lang[2]; // E.g. "en"
+        $q = empty($lang[6]) ? 1.0 : floatval($lang[6]);
+        if ($q > $qval && in_array($code, LANGUAGES)) {
+            // Check if the language is better than the one we've chosen so far.
+            $best = $code;
+            $qval = $q;
+        } elseif (($q * 0.9) > $qval && in_array($short, $shortLangs)) {
+            // Check if the language without its country code is better, but
+            // assign it a lower priority.
+            $index = array_search($short, $shortLangs);
+            $best = LANGUAGES[$index];
+            $qval = $q * 0.9;
+        }
+    }
+
+    // Only load the new language if it's not English (which we've loaded
+    // already).
+    if ($best != "en") {
+        include(__DIR__."/lang/{$best}/texts.php");
+    }
+}
 
 const DEFAULTS = array(
 

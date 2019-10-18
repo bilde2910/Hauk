@@ -81,7 +81,6 @@
     <string name="share_via">Del Hauk-lenkje via</string>
     <string name="share_subject">Følg posisjonen min på Hauk!</string>
     <string name="err_missing_perms">Tilgang til stadtenester krevjast for å bruka denne appen.</string>
-    <string name="locale_code">nn-NO</string>
     <string name="label_pin_help">Del denne koden med dei andre i gruppa di for å la dei kopla seg på og bli med i delingsgruppa</string>
     <string name="app_name">Hauk</string>
     <string name="explain_adopt_body">Hauk lèt deg laga delingssesjoner for deg sjølv i tillegg til for grupper. Viss nokon lagar ei gruppe, får dei ein kode som andre kan bruka til å bli med på å dela posisjonen sin til gruppa. 

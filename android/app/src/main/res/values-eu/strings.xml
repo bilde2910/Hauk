@@ -78,7 +78,6 @@
     <string name="err_location_disabled">Kokaleku zerbitzuak desgaituta daude. Gaitu Zehaztasun handiko kokaleku zerbitzua zure kokalekua partekatzeko.</string>
     <string name="share_via">Partekatu honen bidez</string>
     <string name="share_subject">Jarraitu nire kokalekua Hauk bidez!</string>
-    <string name="locale_code">eu</string>
     <string name="btn_link">Sortu jarraipenerako esteka berria</string>
     <string name="label_pin_help">Partekatu PIN hau taldeko beste kideekin zure kokaleku partekatze taldera elkartzea ahalbidetzeko</string>
     <string name="action_copied">Esteka kopiatuta Hauk aplikaziotik</string>

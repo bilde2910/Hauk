@@ -81,7 +81,6 @@
     <string name="progress_new_link_title">Link erstellen</string>
     <string name="progress_new_link_body">Neuen Freigabelink erstellen…</string>
     <string name="err_client">Falsche Einstellungen</string>
-    <string name="locale_code">de</string>
     <string name="resume_body">Du hast eine unvollendete Sitzung:
 \n
 \nAktive Freigabelinks: %d

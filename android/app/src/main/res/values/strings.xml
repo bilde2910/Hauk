@@ -1,6 +1,4 @@
 <resources>
-    <string name="locale_code">en-US</string>
-
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="label_heading">Open source location sharing</string>
