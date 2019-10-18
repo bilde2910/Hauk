@@ -122,8 +122,9 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/287x66-white.png)](https://traduki.varden.info/engage/hauk/)
 
 **Basque** - osoitz  
-**Norwegian Bokmål** - Marius Lindvall  
-**Norwegian Nynorsk** - Marius Lindvall
+**German** - natrius and hurradiegams  
+**Norwegian Bokmål** - bilde2910  
+**Norwegian Nynorsk** - bilde2910
 
 ### Translation status
 
