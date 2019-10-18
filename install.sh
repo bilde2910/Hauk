@@ -132,18 +132,18 @@ fi
 cp -R backend-php/* "$webroot"
 cp -R frontend/* "$webroot"
 
-echo ""
-echo -e "\033[1m\033[92mInstallation complete!\033[0m"
-echo "Before you use Hauk, make sure to change Hauk's configuration."
-echo "The configuration file can be found at:"
-
 # Determine the path in which config is saved
 if [ "$useconf" -eq 1 ]; then
     confpath=/etc/hauk/config.php
 else
     confpath="$webroot/include/config.php"
+    cp backend-php/include/config-sample.php "$confpath" >/dev/null 2>&1
 fi
 
+echo ""
+echo -e "\033[1m\033[92mInstallation complete!\033[0m"
+echo "Before you use Hauk, make sure to change Hauk's configuration."
+echo "The configuration file can be found at:"
 echo -e "\033[1m$confpath\033[0m"
 
 # Try to get the user's editor
