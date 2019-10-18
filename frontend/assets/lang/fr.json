@@ -1,1 +1,15 @@
-{}
+{
+    "page_title": "Hauk",
+    "btn_dismiss": "Annuler",
+    "status_offline": "Hors ligne",
+    "status_expired": "Expiré",
+    "dialog_connection_body": "La connection avec le serveur Hauk a été perdue. Hauk essayera de se reconnecter en tâche de fond. Veuillez vérifier votre connexion réseau.",
+    "dialog_connection_head": "Erreur de connection",
+    "dialog_expired_body": "Ce partage de localisation a expiré.",
+    "dialog_expired_head": "Partage expiré",
+    "point_app_to": "Renseignez ce serveur dans votre application Hauk pour partager votre localisation:",
+    "gnss_signal_body": "La source manque de signal GPS",
+    "gnss_signal_head": "Veuillez patienter",
+    "expired_body": "La localisation que vous recherchez n'a pas été trouvée. Si ce lien fonctionnait, le partage de localisation a peut-être expiré.",
+    "expired_head": "Localisation expirée"
+}
