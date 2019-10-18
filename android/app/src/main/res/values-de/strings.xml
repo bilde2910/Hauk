@@ -109,7 +109,7 @@
     <string name="share_subject">Folge meinem Standort auf Hauk!</string>
     <string name="authorize_header">Broadcast Berechtigungsanfrage</string>
     <string name="authorize_body">Hauk erhielt und blockierte einen Versuch, eine neue Location-Sharing-Sitzung von einer broadcast Quelle zu erstellen, die sich als</string>
-    <string name="authorize_question">Möchten Sie erlauben, dass in Zukunft aus broadcasts mit dieser Identifikation Sitzungen erstellt werden\?</string>
+    <string name="authorize_question">Möchten Sie zulassen, dass in Zukunft aus Broadcasts mit dieser ID weitere Sitzungen erstellt werden können\?</string>
     <string name="create_link_body">Sie können mehrere Links erstellen, um auf Ihren gemeinsamen Standort zuzugreifen. Jede Verbindung kann einzeln gestoppt werden, so dass Sie jederzeit genau steuern können, wer Ihren Standort sehen kann.
 \n
 \nAlle zusätzlichen Links, die Sie auf diese Weise erstellen, sind einzelne Standortfreigaben, die nur Ihren Standort anzeigen.</string>
