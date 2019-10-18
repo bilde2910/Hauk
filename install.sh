@@ -64,7 +64,7 @@ hauk_config() {
         if ! [ -d "$confdir" ]; then
             mkdir -p "$confdir" >/dev/null 2>&1
         fi
-        cp backend-php/include/config.php "$config" >/dev/null 2>&1
+        cp backend-php/include/config-sample.php "$config" >/dev/null 2>&1
     fi
     if ! [ -f "$config" ]; then
         echo "You do not have permissions to install the configuration file in"
