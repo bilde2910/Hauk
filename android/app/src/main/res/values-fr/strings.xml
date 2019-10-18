@@ -1,2 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_server">URL du serveur :</string>
+    <string name="label_duration">Durée du partage :</string>
+    <string name="label_interval">Intervalle de mise à jour (s) :</string>
+    <string name="label_mode">Mode de partage :</string>
+    <string name="label_explain_adopt">(Qu\'est-ce que c\'est\?)</string>
+    <string name="label_nickname">Surnom :</string>
+    <string name="label_pin">Groupe PIN :</string>
+    <string name="label_remember">Stockage du mot de passe :</string>
+    <string name="label_status">Statut :</string>
+    <string name="label_share_url">URL/ID de partage :</string>
+    <string name="chk_remember">Enregistrer le mot de passe</string>
+    <string name="btn_start">Commencer le partage</string>
+    <string name="btn_link">Créer un nouveau lien de suivi</string>
+    <string name="btn_adopt">Ajouter un partage existant</string>
+    <string name="btn_stop_short">Arrêt</string>
+    <string name="btn_share_short">Partage</string>
+    <string name="link_type_solo">Votre localisation seule</string>
+    <string name="link_type_group_host">Partage de groupe (hôte)</string>
+    <string name="link_type_group_member">Partage de groupe (membre)</string>
+    <string name="sel_mode_opt_alone">Partager seulement ma localisation</string>
+    <string name="sel_mode_opt_create_group">Créer un groupe de partage</string>
+    <string name="sel_mode_opt_join_group">Joindre un partage de groupe</string>
+    <string name="sel_unit_opt_hours">heure(s)</string>
+    <string name="sel_unit_opt_days">jour(s)</string>
+    <string name="label_status_none">Partage de localisation inactif</string>
+    <string name="label_pin_head">VOTRE PIN DE GROUPE :</string>
+    <string name="explain_adopt_title">Partager l\'ajout</string>
+    <string name="label_heading">Logiciel libre de partage de localisation</string>
+    <string name="label_password">Mot de passe :</string>
+    <string name="btn_stop">Arrêter le partage [%s]</string>
+    <string name="label_heading_links">Liens actuellement actifs</string>
+    <string name="label_status_ok">Partage de localisation actif!</string>
+    <string name="label_pin_help">Partager ce PIN avec les autres membres du groupe pour qu\'il rejoignent votre groupe de partage de location</string>
+</resources>
