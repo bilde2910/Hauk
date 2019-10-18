@@ -128,3 +128,9 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 ### Translation status
 
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/multi-red.svg)](https://traduki.varden.info/engage/hauk/)
+
+## Donate
+
+My projects are all ad-free and I do not earn any kind of money during the hours I spend developing them. Donations mean a lot to me because they help fund costs associated with this website, and because they serve as an incentive to further work on my projects.
+
+<add your donation link>
