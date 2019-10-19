@@ -45,4 +45,63 @@
 \nSi vous ajouter cette option et partagez votre localisation à un groupe d\'amis, et qu\'une autre personne veut partager sa localisation, elle peut créer un groupe de partage et vous ajouter à sa carte, ainsi les deux personnes apparaîtront sur la carte de localisation partagée. Ceci peut être utile si par exemple vous conduisez et ne pouvez pas utiliser votre téléphone, car l\'ajout de partager par d\'autres personnes ne nécessite aucune action de votre part.</string>
     <string name="adopt_title">Ajouter un partage existant</string>
     <string name="label_status_wait">En attente de fix GNSS…</string>
+    <string name="battery_savings_body">Vous semblez utiliser un appareil %s. Ces appareils ont des paramètres d\'économie de batterie stricts, qui peuvent empêcher Hauk d\'envoyer des mises à jour de votre localisation en tâche de fond.
+\n
+\nIl est recommande de s\'assurer qu\'Hauk n\'est pas dans ces économies de batterie pour s\'assurer que l\'app ne s\'arrête pas de fonctionner inopinément.
+\n
+\nCe message ne sera pas montré de nouveau.</string>
+    <string name="adopt_body">Vous pouvez ajotuer un partage existant pour l\'ajouter ensuite dans ce groupe de partage. Veuillez coller l\'URL ou l\'ID de partage du partage que vous souhaitez ajouter ( ex: %s\?XXXX-XXXX ) et assigner un nom à ce partage.</string>
+    <string name="create_link_title">Créer un nouveau lien de partage</string>
+    <string name="btn_cancel">Annuler</string>
+    <string name="btn_yes">Oui</string>
+    <string name="btn_no">Non</string>
+    <string name="btn_create">Créer</string>
+    <string name="btn_show_settings">Paramètres ouverts</string>
+    <string name="btn_dismiss">Annuler</string>
+    <string name="action_copy">Lien à copier</string>
+    <string name="action_copied">Lien copié d\'Hauk</string>
+    <string name="action_stop">Arrêter le partage</string>
+    <string name="notify_title">Partage de localisation actif</string>
+    <string name="notify_body">"Hauk partage votre  localisation à %s"</string>
+    <string name="progress_connect_title">Connexion</string>
+    <string name="progress_connect_body">Connexion à Hauk…</string>
+    <string name="progress_adopt_title">Ajout</string>
+    <string name="progress_adopt_body">Ajout de %s…</string>
+    <string name="progress_new_link_title">Création du lien</string>
+    <string name="err_client">Paramètres invalides</string>
+    <string name="err_connect">Erreur de connexion</string>
+    <string name="err_server">Erreur serveur</string>
+    <string name="err_malformed_url">L\'URL de serveur entrée est invalide.</string>
+    <string name="err_location_disabled">Services de localisations désaticvés. Veuillez les activer pour partager votre localisation.</string>
+    <string name="err_empty">Le serveur a retourné une réponse vide.</string>
+    <string name="err_outdated">Serveur obsolète</string>
+    <string name="ok_title">Connexion établie</string>
+    <string name="ok_message">Partage de connexion actif! Cliquez le bouton de partage pour copier l\'URL publique pour votre partage.</string>
+    <string name="ended_title">Partage terminé</string>
+    <string name="ended_message">Votre partage de localisation a expiré.</string>
+    <string name="adopted_title">Partage ajouté</string>
+    <string name="share_via">Partager le lien Hauk via</string>
+    <string name="share_subject">Suis ma localisation sur Hauk !</string>
+    <string name="authorize_header">Requête d\'authorisation de broadcast</string>
+    <string name="authorize_body">Hauk a reçu et bloqué une tentative de créer une nouvelle session de partage de localisation depuis une source de broadcast identifiée comme</string>
+    <string name="authorize_question">Souhaitez-vous permettre les sessions d\'être créées à partir de broadcast ayant cette identité dans le futur \?</string>
+    <string name="adopted_body">%s a été ajouté à votre partage !</string>
+    <string name="resume_title">Reprendre la session</string>
+    <string name="resume_body">Vous avez une session en cours:
+\n
+\nLien(s) de partage actif(s): %d
+\nExpirés : %s
+\n
+\nSouhaitez-vous reprendre cette session \?</string>
+    <string name="link_added_title">Lien créé</string>
+    <string name="req_perms_title">Nécessite permission</string>
+    <string name="req_perms_message">Cette app nécessite votre localisation pour fonctionner, mais cette permission n\'a pas encore été donnée. Veuillez donner la requête de permission suivante, puis cliquez le bouton démarrer pour recommencer.</string>
+    <string name="battery_savings_title">Economie de batterie aggressive</string>
+    <string name="create_link_body">Vous pouvez créer plusieurs liens d\'accès à votre partage de localisation. Chaque lien peut être arrêté individuellement, permettant un contrôle granulaire des personnes pouvant voir votre localisation à tout moment.
+\n
+\nChaque nouveau lien que vous créez de cette manière sera de type partage unique qui montre votre localisation uniquement.</string>
+    <string name="progress_new_link_body">Création d\'un nouveau lien de partage…</string>
+    <string name="err_missing_perms">Cette app nécessite la permission de localisation.</string>
+    <string name="err_response_code">Reçu HTTP %s du serveur !</string>
+    <string name="err_ver_group">Ce serveur ne supporte pas les partages de groupe. Les partages de groupe sont possible à partir de la version %s; ce serveur est actuellement en version %s. Votre partage a été converti en un partage individuel.</string>
 </resources>
