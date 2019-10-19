@@ -1,1 +1,16 @@
-{}
+{
+    "dialog_expired_body": "De locatiedeling is verlopen.",
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on-nl.png",
+    "btn_dismiss": "Sluiten",
+    "status_offline": "Offline",
+    "status_expired": "Verlopen",
+    "dialog_connection_body": "De verbinding met de Hauk server is verbroken. Hauk zal proberen om opnieuw te verbinden in de achtergrond. Controleer alstublieft dat u een werkende internetverbinding heeft.",
+    "dialog_connection_head": "Verbindingsfout",
+    "dialog_expired_head": "Locatiedeling verlopen",
+    "point_app_to": "Stuur de Hauk app naar deze server om uw locatie te delen:",
+    "gnss_signal_body": "Verzender is aan het wachten op GPS signaal",
+    "gnss_signal_head": "Wacht alstublieft",
+    "expired_body": "The locatiedeling die u probeerde te bekijken kon niet gevonden worden op de server. Als deze link eerder wel werkte, dan zou de sessie verlopen kunnen zijn.",
+    "expired_head": "Locatie verlopen",
+    "page_title": "Hauk"
+}
