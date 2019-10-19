@@ -36,4 +36,13 @@
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="explain_adopt_body">Hauk vous permet de partager votre localisation pour vous-même ou pour un groupe de personnes. Si une personne crée un partage de groupe, elle obtient un code groupe que d\'autres peuvent utiliser pour rejoindre le partage de localisation.
+\n
+\nCependant, la personne qui crée le partage de groupe a également l\'option d\'ajouter un partage de localisation existant dans le groupe de partage. Cette procédure est appelée l\'ajout de partage.
+\n
+\nVous pouvez décider si d\'autres ont la possibilité d\'ajouter votre partage de localisation dans leur groupe de partage en cochant cette option.
+\n
+\nSi vous ajouter cette option et partagez votre localisation à un groupe d\'amis, et qu\'une autre personne veut partager sa localisation, elle peut créer un groupe de partage et vous ajouter à sa carte, ainsi les deux personnes apparaîtront sur la carte de localisation partagée. Ceci peut être utile si par exemple vous conduisez et ne pouvez pas utiliser votre téléphone, car l\'ajout de partager par d\'autres personnes ne nécessite aucune action de votre part.</string>
+    <string name="adopt_title">Ajouter un partage existant</string>
+    <string name="label_status_wait">En attente de fix GNSS...</string>
 </resources>
