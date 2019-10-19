@@ -1,2 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="err_response_code">HTTP %s ontvangen van server!</string>
+    <string name="label_pin_help">Deel deze PIN met anderen in uw groep zodat zij uw locatie kunnen volgen</string>
+    <string name="err_ver_group">De server ondersteund geen groepsdelingen. Groepsdelingen zijn ondersteund vanaf versie %s; de server draait op dit moment versie %s. Uw locatiedeling is omgezet in een individuele deling.</string>
+    <string name="label_heading">Open source locatie deling</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_server">Server URL:</string>
+    <string name="label_password">Wachtwoord:</string>
+    <string name="label_duration">Deelduratie:</string>
+    <string name="label_interval">Updatefrequentie (s):</string>
+    <string name="label_mode">Deelmodus:</string>
+    <string name="label_explain_adopt">(Wat is dit\?)</string>
+    <string name="label_nickname">Bijnaam:</string>
+    <string name="label_pin">Groep PIN:</string>
+    <string name="label_remember">Wachtwoord opslag:</string>
+    <string name="label_status">Status:</string>
+    <string name="label_allow_adopt">Toevoegen aan groep toestaan:</string>
+    <string name="label_share_url">Deel ID/URL:</string>
+    <string name="chk_remember">Onthoud wachtwoord</string>
+    <string name="btn_start">Start met delen</string>
+    <string name="btn_stop">Stop met delen van [%s]</string>
+    <string name="btn_link">Creëer nieuwe volg link</string>
+    <string name="btn_adopt">Voeg een bestaande deling toe</string>
+    <string name="btn_stop_short">Stop</string>
+    <string name="btn_share_short">Delen</string>
+    <string name="link_type_solo">Alleen uw locatie</string>
+    <string name="link_type_group_host">Groepsdeling (organisator)</string>
+    <string name="link_type_group_member">Groepsdeling (deelnemer)</string>
+    <string name="sel_mode_opt_alone">Deel alleen mijn locatie</string>
+    <string name="sel_mode_opt_create_group">Maak een groepsdeling aan</string>
+    <string name="sel_unit_opt_minutes">minuten</string>
+    <string name="sel_unit_opt_hours">uren</string>
+    <string name="sel_unit_opt_days">dagen</string>
+    <string name="label_status_none">Locatie delen inactief</string>
+    <string name="label_status_coarse">Wachten op fix met hoge nauwkeurigheid…</string>
+    <string name="label_status_ok">Locatie delen actief!</string>
+    <string name="label_pin_head">UW GROEP PIN:</string>
+    <string name="explain_adopt_title">Deling adoptatie</string>
+    <string name="adopt_title">Een bestaande deling adopteren</string>
+    <string name="adopt_body">U kunt een bestaande individuele locatiedeling toevoegen aan deze groepsdeling. Voer daarvoor alstublieft de URL of deel ID van de locatie in die u wilt adopteren (bijvoorbeeld %s\?XXXX-XXXX) en wijs een bijnaam toe aan deze locatiedeling.</string>
+    <string name="create_link_title">Creëer nieuwe deel link</string>
+    <string name="create_link_body">U kunt meerdere links creëren waarmee uw locatie bekeken kan worden. Elke link kan individueel uitgezet worden, om op elk moment precieze controle te hebben over wie uw locatie kan zien.
+\n
+\nElke link die u op deze manier creëert zal alleen uw locatie tonen en niet die van anderen.</string>
+    <string name="btn_ok">Oké</string>
+    <string name="btn_cancel">Annuleer</string>
+    <string name="btn_yes">Ja</string>
+    <string name="btn_no">Nee</string>
+    <string name="btn_create">Creëer</string>
+    <string name="btn_show_settings">Open instellingen</string>
+    <string name="btn_dismiss">Sluiten</string>
+    <string name="action_copy">Kopieer link</string>
+    <string name="action_stop">Stop met delen</string>
+    <string name="notify_title">Locatie delen actief</string>
+    <string name="notify_body">Hauk deelt uw locatie op %s</string>
+    <string name="progress_connect_body">Verbinden met Hauk…</string>
+    <string name="progress_adopt_title">Adopteren</string>
+    <string name="progress_adopt_body">Adopteren van %s…</string>
+    <string name="progress_new_link_title">Link creëren</string>
+    <string name="progress_new_link_body">Nieuwe deel link aan het creëren…</string>
+    <string name="err_client">Ongeldige instellingen</string>
+    <string name="err_connect">Verbindingsfout</string>
+    <string name="err_server">Serverfout</string>
+    <string name="err_missing_perms">Locatietoestemming is vereist om deze app te gebruiken.</string>
+    <string name="err_empty">De server heeft een leeg antwoord geretourneerd.</string>
+    <string name="err_outdated">Server is verouderd</string>
+    <string name="ok_title">Verbinding gemaakt</string>
+    <string name="ended_title">Delen beëindigd</string>
+    <string name="ended_message">Uw locatiedeling is verlopen.</string>
+    <string name="adopted_title">Locatiedeling geadopteerd</string>
+    <string name="adopted_body">%s is toegevoegd aan uw groepsdeling!</string>
+    <string name="resume_title">Sessie hervatten</string>
+    <string name="req_perms_title">Toestemming vereist</string>
+    <string name="link_added_title">Link gecreëerd</string>
+    <string name="req_perms_message">Deze app vereist toegang tot uw locatie om te functioneren, maar deze toestemming is nog niet verleend. Sta alstublieft het volgende toestemmingsverzoek toe, en klik daarna op de startknop om het opnieuw te proberen.</string>
+    <string name="explain_adopt_body">Hauk staat u toe om locatiedelingssessies aan te maken voor uzelf alsook voor een groep. Als iemand een groepsdeling aanmaakt, krijgen zij een groepscode die anderen kunnen gebruiken om aan de groepssessie deel te nemen.
+\n
+\nMaar de persoon die de groep aanmaakt, krijgt ook een optie om een al bestaande deling toe te voegen aan de groep. Dit proces heet \"adoptie\".
+\n
+\nU kunt zelf bepalen of anderen uw locatiedeling mogen toevoegen aan een groep of niet middels deze checkbox.
+\n
+\nAls u deze optie aanzet en uw locatie deelt met vrienden of iemand die zijn locatie ook wilt delen, dan kunnen zij een groep aanmaken en uw locatie toevoegen aan de groep. Dan kunnen jullie elkaar op dezelfde gedeelde kaart zien. Dit is bijvoorbeeld handig als u aan het rijden bent, omdat u dan niet zelf uw telefoon hoeft te gebruiken om aan een groep deel te nemen.</string>
+    <string name="battery_savings_title">Agressieve batterijbesparingen</string>
+    <string name="manufacturer_huawei">Hauwei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="share_via">Deel Hauk link via</string>
+    <string name="share_subject">Volg mijn locatie op Hauk!</string>
+    <string name="authorize_header">Intentie autorisatieverzoek</string>
+    <string name="authorize_body">Hauk ontving en blokkeerde een poging om een nieuwe locatiedelingssessie aan te maken van een bron die zichzelf identificeerde als</string>
+    <string name="authorize_question">Wil u toestaan dat in de toekomst sessies gecreëerd kunnen worden via intentiezendingen met deze identificatie\?</string>
+    <string name="app_name">Hauk</string>
+    <string name="action_copied">Hauk link gekopieerd</string>
+    <string name="ok_message">Locatie delen is actief! Klik de deel knop om de publieke URL van uw locatiedeling te kopiëren.</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="progress_connect_title">Verbinden</string>
+    <string name="resume_body">U heeft een onafgemaakte sessie:
+\n
+\nActieve deel links: %d
+\nVerloopt op: %s
+\n
+\nWilt u deze sessie hervatten\?</string>
+    <string name="chk_allow_adopt">Toestaan dat anderen mijn locatie aan een groep mogen toevoegen</string>
+    <string name="err_malformed_url">De ingevoerde server URL is ongeldig.</string>
+    <string name="link_added_body">Een nieuwe link is succesvol aangemaakt voor uw locatiedeling! klik op de deel knop om de publiek bekijkbare URL voor uw deling te kopiëren.</string>
+    <string name="label_heading_links">Momenteel actieve links</string>
+    <string name="sel_mode_opt_join_group">Neem deel aan een groepsdeling</string>
+    <string name="label_status_wait">Wachten op initiële GNSS fix…</string>
+    <string name="err_location_disabled">Locatiediensten zijn uitgeschakeld. Schakel alstublieft locatiediensten in om uw locatie te delen.</string>
+    <string name="battery_savings_body">Het lijkt erop dat u een apparaat van %s gebruikt. Deze apparaten hebben bijzonder strikte batterijbesparingsinstellingen die kunnen voorkomen dat Hauk in de achtergrond locatieupdates kan sturen.
+\n
+\nHet wordt aanbevolen dat u ervoor zorgt dat Hauk is vrijgesteld van batterijbesparingen om ervoor te zorgen dat de app niet onverwachts stopt met werken.
+\n
+\nDit bericht zal niet opnieuw getoond worden.</string>
+</resources>
