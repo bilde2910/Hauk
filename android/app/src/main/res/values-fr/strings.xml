@@ -33,4 +33,7 @@
     <string name="label_heading_links">Liens actuellement actifs</string>
     <string name="label_status_ok">Partage de localisation actif!</string>
     <string name="label_pin_help">Partager ce PIN avec les autres membres du groupe pour qu\'il rejoignent votre groupe de partage de location</string>
+    <string name="app_name">Hauk</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
 </resources>
