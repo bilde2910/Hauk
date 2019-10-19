@@ -11,5 +11,6 @@
     "gnss_signal_body": "La source manque de signal GPS",
     "gnss_signal_head": "Veuillez patienter",
     "expired_body": "La localisation que vous recherchez n'a pas été trouvée. Si ce lien fonctionnait, le partage de localisation a peut-être expiré.",
-    "expired_head": "Localisation expirée"
+    "expired_head": "Localisation expirée",
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on-fr.png"
 }
