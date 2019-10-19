@@ -44,5 +44,5 @@
 \n
 \nSi vous ajouter cette option et partagez votre localisation à un groupe d\'amis, et qu\'une autre personne veut partager sa localisation, elle peut créer un groupe de partage et vous ajouter à sa carte, ainsi les deux personnes apparaîtront sur la carte de localisation partagée. Ceci peut être utile si par exemple vous conduisez et ne pouvez pas utiliser votre téléphone, car l\'ajout de partager par d\'autres personnes ne nécessite aucune action de votre part.</string>
     <string name="adopt_title">Ajouter un partage existant</string>
-    <string name="label_status_wait">En attente de fix GNSS...</string>
+    <string name="label_status_wait">En attente de fix GNSS…</string>
 </resources>
