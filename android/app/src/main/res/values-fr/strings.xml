@@ -104,4 +104,12 @@
     <string name="err_missing_perms">Cette app nécessite la permission de localisation.</string>
     <string name="err_response_code">Reçu HTTP %s du serveur !</string>
     <string name="err_ver_group">Ce serveur ne supporte pas les partages de groupe. Les partages de groupe sont possible à partir de la version %s; ce serveur est actuellement en version %s. Votre partage a été converti en un partage individuel.</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="link_added_body">Un nouveau lien a été créé avec succès pour votre partage de localisation ! Cliquez sur le bouton de partage pour copier l\'URL publique de votre partage.</string>
+    <string name="btn_ok">OK</string>
+    <string name="label_status_coarse">En attente de correctif…</string>
+    <string name="sel_unit_opt_minutes">minute(s)</string>
+    <string name="label_allow_adopt">Authoriser l\'ajout de partage :</string>
+    <string name="chk_allow_adopt">Authoriser d\'autres personnes à ajouter mon partage dans un groupe de partage</string>
 </resources>
