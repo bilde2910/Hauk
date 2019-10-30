@@ -3,6 +3,7 @@ package info.varden.hauk.ui;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -420,7 +421,7 @@ public final class MainActivity extends AppCompatActivity {
      */
     private final class SessionListenerImpl implements SessionListener {
         @Override
-        public void onSessionCreated(Session session) {
+        public void onSessionCreated(Session session, final Share share) {
             // We now have a link to share, so we enable the additional link creation button if the backend supports it. Add an event handler to handle the user clicking on it.
             if (session.getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
                 boolean allowNewLinkAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
@@ -445,7 +446,29 @@ public final class MainActivity extends AppCompatActivity {
             // Re-enable the start (stop) button and inform the user.
             findViewById(R.id.btnShare).setEnabled(true);
 
-            MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message);
+            MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.OK_SHARE, new CustomDialogBuilder() {
+                @Override
+                public void onPositive() {
+                    // OK button
+                }
+
+                @Override
+                public void onNegative() {
+                    // Share button
+                    Log.i("User requested to share %s", share); //NON-NLS
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, MainActivity.this.getString(R.string.share_subject));
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
+                    MainActivity.this.startActivity(Intent.createChooser(shareIntent, MainActivity.this.getString(R.string.share_via)));
+                }
+
+                @Nullable
+                @Override
+                public View createView(Context ctx) {
+                    return null;
+                }
+            });
         }
 
         @Override

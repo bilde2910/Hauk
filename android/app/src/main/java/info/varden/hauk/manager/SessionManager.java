@@ -387,7 +387,7 @@ public abstract class SessionManager {
                 listener.onStarted();
             }
             for (SessionListener listener : this.upstreamSessionListeners) {
-                listener.onSessionCreated(share.getSession());
+                listener.onSessionCreated(share.getSession(), share);
             }
         } else {
             Log.w("Location permission has not been granted; sharing will not commence"); //NON-NLS
