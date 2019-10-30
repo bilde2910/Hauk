@@ -20,9 +20,34 @@ import info.varden.hauk.system.launcher.Launcher;
  */
 public enum Device {
     @SuppressWarnings({"HardCodedStringLiteral", "SpellCheckingInspection"})
-    HUAWEI(1, R.string.manufacturer_huawei, Pattern.compile("^FRD-[A-Z0-9]+$"), new ComponentLauncher("com.huawei.systemmanager", ".optimize.process.ProtectActivity")),
-    @SuppressWarnings({"HardCodedStringLiteral"})
-    ONEPLUS(2, R.string.manufacturer_oneplus, Pattern.compile("^ONEPLUS "), new ActionLauncher("com.android.settings.action.BACKGROUND_OPTIMIZE"));
+    HUAWEI(1,
+            R.string.manufacturer_huawei,
+            Build.DISPLAY,
+            Pattern.compile("^FRD-[A-Z0-9]+$"),
+            new ComponentLauncher(
+                    "com.huawei.systemmanager",
+                    ".optimize.process.ProtectActivity"
+            )
+    ),
+    @SuppressWarnings("HardCodedStringLiteral")
+    ONEPLUS(2,
+            R.string.manufacturer_oneplus,
+            Build.DISPLAY,
+            Pattern.compile("^ONEPLUS "),
+            new ActionLauncher(
+                    "com.android.settings.action.BACKGROUND_OPTIMIZE"
+            )
+    ),
+    @SuppressWarnings("HardCodedStringLiteral")
+    XIAOMI(3,
+            R.string.manufacturer_xiaomi,
+            Build.HOST,
+            Pattern.compile("-miui-"),
+            new ComponentLauncher(
+                    "com.miui.powerkeeper",
+                    ".ui.HiddenAppsContainerManagementActivity"
+            )
+    );
 
     /**
      * A unique internal identifier for this device.
@@ -35,6 +60,11 @@ public enum Device {
     private final int manufacturer;
 
     /**
+     * The build property against which matching should be performed.
+     */
+    private final String buildProp;
+
+    /**
      * A regular expression matched against the build number of the device, used to identify the
      * device ROM.
      */
@@ -45,9 +75,10 @@ public enum Device {
      */
     private final Launcher launcher;
 
-    Device(int id, int manufacturer, Pattern buildRegex, Launcher launcher) {
+    Device(int id, int manufacturer, String buildProp, Pattern buildRegex, Launcher launcher) {
         this.id = id;
         this.manufacturer = manufacturer;
+        this.buildProp = buildProp;
         this.buildRegex = buildRegex;
         this.launcher = launcher;
     }
@@ -56,7 +87,7 @@ public enum Device {
      * Checks whether or not the given device matches the device the app is currently running on.
      */
     public boolean matches() {
-        return this.buildRegex.matcher(Build.DISPLAY).find();
+        return this.buildRegex.matcher(this.buildProp).find();
     }
 
     /**
@@ -81,6 +112,7 @@ public enum Device {
         return "Device{"
                 + "id=" + this.id
                 + ",manufacturer=" + this.manufacturer
+                + ",buildProp=" + this.buildProp
                 + ",pattern=" + this.buildRegex
                 + ",launchSpec=" + this.launcher
                 + "}";

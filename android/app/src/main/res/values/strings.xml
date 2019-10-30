@@ -106,6 +106,7 @@
     <string name="battery_savings_body">You appear to be using a %s device. These devices have particularly strict battery saving settings that can prevent Hauk from sending location updates in the background.\n\nIt is recommended that you ensure Hauk is exempted from battery savings to ensure that the app does not unexpectedly stop working.\n\nThis message will not be displayed again.</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
 
     <string name="share_via">Share Hauk link via</string>
     <string name="share_subject">Follow my location on Hauk!</string>

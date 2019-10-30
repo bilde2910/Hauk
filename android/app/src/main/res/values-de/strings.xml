@@ -104,6 +104,7 @@
 \nDiese Meldung wird nicht mehr angezeigt.</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="share_via">Hauk-Link teilen über</string>
     <string name="share_subject">Folge meinem Standort auf Hauk!</string>
     <string name="authorize_header">Broadcast Berechtigungsanfrage</string>

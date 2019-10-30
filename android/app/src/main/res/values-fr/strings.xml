@@ -106,6 +106,7 @@
     <string name="err_ver_group">Ce serveur ne supporte pas les partages de groupe. Les partages de groupe sont possible à partir de la version %s; ce serveur est actuellement en version %s. Votre partage a été converti en un partage individuel.</string>
     <string name="manufacturer_oneplus">OnePlus</string>
     <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="link_added_body">Un nouveau lien a été créé avec succès pour votre partage de localisation ! Cliquez sur le bouton de partage pour copier l\'URL publique de votre partage.</string>
     <string name="btn_ok">OK</string>
     <string name="label_status_coarse">En attente de correctif…</string>

@@ -110,6 +110,7 @@
 \nDenne meldingen vil ikke vises igjen.</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="btn_show_settings">Åpne innstillinger</string>
     <string name="btn_dismiss">Lukk</string>
 </resources>

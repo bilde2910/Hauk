@@ -84,6 +84,7 @@
     <string name="battery_savings_title">Agressieve batterijbesparingen</string>
     <string name="manufacturer_huawei">Hauwei</string>
     <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="share_via">Deel Hauk link via</string>
     <string name="share_subject">Volg mijn locatie op Hauk!</string>
     <string name="authorize_header">Intentie autorisatieverzoek</string>
