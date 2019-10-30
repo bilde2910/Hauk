@@ -4,4 +4,7 @@
     <exclude
         domain="sharedpref"
         path="sessionResumption.xml" />
+    <exclude
+        domain="sharedpref"
+        path="deviceSpecs.xml" />
 </full-backup-content>
