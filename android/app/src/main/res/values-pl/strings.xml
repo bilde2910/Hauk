@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_pin_help">Podaj ten PIN osobom, które mają dołączyć do grupy</string>
+    <string name="label_pin_head">PIN TWOJEJ GRUPY:</string>
+    <string name="label_status_ok">Udostępnianie lokalizacji jest włączone!</string>
+    <string name="label_status_coarse">Oczekiwanie na dokładną lokalizację…</string>
+    <string name="label_status_wait">Oczekiwanie na sygnał GPS…</string>
+    <string name="label_status_none">Udostępnianie lokalizacji jest wyłączone</string>
+    <string name="sel_unit_opt_days">dni</string>
+    <string name="sel_unit_opt_hours">godzin</string>
+    <string name="sel_unit_opt_minutes">minut</string>
+    <string name="sel_mode_opt_join_group">Dołącz do grupy</string>
+    <string name="sel_mode_opt_create_group">Stwórz grupę</string>
+    <string name="sel_mode_opt_alone">Udostępniaj tylko moją lokalizację</string>
+    <string name="link_type_group_member">Udostępnianie grupowe (członek)</string>
+    <string name="link_type_group_host">Udostępnianie grupowe (gospodarz)</string>
+    <string name="link_type_solo">Tylko twoja lokalizacja</string>
+    <string name="label_heading_links">Aktywne linki</string>
+    <string name="btn_stop_short">Stop</string>
+    <string name="btn_link">Stwórz nowy link</string>
+    <string name="btn_stop">Zatrzymaj udostępnianie [%s]</string>
+    <string name="btn_start">Rozpocznij udostępnianie</string>
+    <string name="chk_remember">Pamiętaj hasło</string>
+    <string name="label_status">Status:</string>
+    <string name="label_pin">PIN grupy:</string>
+    <string name="label_nickname">Pseudonim:</string>
+    <string name="label_explain_adopt">(Co to jest\?)</string>
+    <string name="chk_allow_adopt">Pozwól innym na dołączenie mnie do swojej grupy</string>
+    <string name="label_allow_adopt">Zezwól na dołączenie do grupy:</string>
+    <string name="label_mode">Tryb udostępniania:</string>
+    <string name="label_interval">Okres aktualizacji pozycji (s):</string>
+    <string name="label_duration">Czas udostępniania:</string>
+    <string name="label_password">Hasło:</string>
+    <string name="label_server">URL serwera:</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_heading">Otwarte oprogramowanie do udostępniania lokalizacji</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="app_name">Hauk</string>
+</resources>
