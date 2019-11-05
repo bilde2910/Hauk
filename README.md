@@ -117,7 +117,7 @@ Location shares on the demo server is limited to 2 minutes and is only meant for
 
 ## Translators
 
-Hauk depends on volunteers to translate the project. Want to help out? Head over to the [translation portal](https://traduki.varden.info/engage/hauk/) to get started. If your language isn't listed, feel free to [create an issue](https://github.com/bilde2910/Hauk/issues/new) requesting it.
+Hauk depends on volunteers to translate the project. Want to help out? Head over to the [translation portal](https://traduki.varden.info/engage/hauk/) to get started.
 
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/287x66-white.png)](https://traduki.varden.info/engage/hauk/)
 
