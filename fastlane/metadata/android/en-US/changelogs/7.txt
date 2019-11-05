@@ -1,0 +1,7 @@
+For full changelog, see https://github.com/bilde2910/Hauk/releases
+
+* Added localizations for Dutch, French and Polish (partial)
+* The share link can now be shared immediately upon session establishment (#51)
+* Xiaomi users with stock ROM are now also warned on first app launch about possible battery savings issues (#34)
+* Launcher icon now scales properly (#52)
+* Fixed an install script issue (#47)
