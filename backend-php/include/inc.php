@@ -4,7 +4,7 @@
 // backend. It loads the configuration file and declares it as a constant.
 
 const BACKEND_VERSION = "1.3";
-const LANGUAGES = ["de", "en", "eu", "nb_NO", "nn"];
+const LANGUAGES = ["de", "en", "eu", "fr", "nb_NO", "nl", "nn"];
 
 // Create mode for create.php. Corresponds with the constants from the Android
 // app in android/app/src/main/java/info/varden/hauk/HaukConst.java.
