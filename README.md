@@ -126,7 +126,8 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 **French** - thifranc  
 **German** - natrius and hurradiegams  
 **Norwegian Bokmål** - bilde2910  
-**Norwegian Nynorsk** - bilde2910
+**Norwegian Nynorsk** - bilde2910  
+**Polish** - krystiancha
 
 ### Translation status
 
