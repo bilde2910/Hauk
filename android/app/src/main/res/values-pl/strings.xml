@@ -26,7 +26,6 @@
     <string name="label_nickname">Pseudonim:</string>
     <string name="label_explain_adopt">(Co to znaczy\?)</string>
     <string name="chk_allow_adopt">Pozwalam innym na dołączenie mnie do swojej grupy</string>
-    <string name="label_allow_adopt"></string>
     <string name="label_mode">Tryb udostępniania:</string>
     <string name="label_interval">Okres aktualizacji pozycji (s):</string>
     <string name="label_duration">Czas udostępniania:</string>
@@ -51,7 +50,6 @@
     <string name="resume_title">Wznów sesję</string>
     <string name="ended_title">Udostępnianie zakończone</string>
     <string name="ended_message">Twoje udostępnianie zakończyło się.</string>
-    <string name="label_remember"></string>
     <string name="label_share_url">ID/URL sesji:</string>
     <string name="btn_share_short">Udostępnij</string>
     <string name="btn_adopt">Dołącz osobę do grupy</string>
