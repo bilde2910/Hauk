@@ -1,2 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="progress_adopt_body">Добавление %s…</string>
+    <string name="progress_new_link_body">Создаем новую ссылку на шару…</string>
+    <string name="err_client">Ошибка в настройках</string>
+    <string name="err_connect">Ошибка подключения</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="share_subject">Следите за моим местопложением в Hauk!</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
+    <string name="err_empty">Сервер вернул пустой ответ.</string>
+    <string name="err_response_code">Получили HTTP %s от сервера!</string>
+    <string name="err_outdated">Сервер устарел</string>
+    <string name="label_server">URL Сервера:</string>
+    <string name="label_password">Пароль:</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_duration">Время жизни шары:</string>
+    <string name="label_interval">Интервал обновления (сек):</string>
+    <string name="app_name">Hauk</string>
+    <string name="label_explain_adopt">(Что это\?)</string>
+    <string name="label_nickname">Ник:</string>
+    <string name="label_pin">Групповой PIN:</string>
+    <string name="label_remember">Сохранять пароль:</string>
+    <string name="label_status">Статус:</string>
+    <string name="label_share_url">ID/URL шары:</string>
+    <string name="chk_remember">Запомнить пароль</string>
+    <string name="btn_start">Старт сессии</string>
+    <string name="btn_stop">Остановить сессию [%s]</string>
+    <string name="btn_adopt">Добавить существующую шару</string>
+    <string name="btn_share_short">Шара</string>
+    <string name="link_type_group_member">Групповая шара (участник)</string>
+    <string name="sel_unit_opt_minutes">минут</string>
+    <string name="sel_unit_opt_hours">часов</string>
+    <string name="sel_unit_opt_days">дней</string>
+    <string name="label_status_none">Шаринг местоположения не работает</string>
+    <string name="label_status_ok">Шаринг местоположения включен!</string>
+    <string name="explain_adopt_title">Присоединение к шаре</string>
+    <string name="ok_title">Соединение установлено</string>
+    <string name="adopted_title">Шара добавлена</string>
+    <string name="adopted_body">%s была добавлена в вашу шару!</string>
+    <string name="resume_title">Возобновить сессию</string>
+    <string name="link_added_title">Ссылка создана</string>
+    <string name="req_perms_title">Необходимо разрешение</string>
+    <string name="battery_savings_title">Агрессивное энергосбережение</string>
+    <string name="adopt_title">Добавить существующую шару</string>
+    <string name="create_link_title">Создать новую ссылку на шару</string>
+    <string name="btn_cancel">Отмена</string>
+    <string name="btn_yes">Да</string>
+    <string name="btn_no">Нет</string>
+    <string name="btn_create">Создать</string>
+    <string name="btn_show_settings">Открыть настройки</string>
+    <string name="btn_dismiss">Окэ</string>
+    <string name="action_copy">Скопировать ссылку</string>
+    <string name="action_copied">Скопированная ссылка из Hauk</string>
+    <string name="action_stop">Остановить шаринг</string>
+    <string name="notify_title">Шаринг местоположения активен</string>
+    <string name="notify_body">Hauk шарит ваше местоположение %s</string>
+    <string name="btn_ok">OK</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_mode">Режим шары:</string>
+    <string name="chk_allow_adopt">Другие пользователи могут добавлять мою сессию к своей</string>
+    <string name="label_allow_adopt">Разрешить добавление:</string>
+    <string name="btn_link">Создать новую tracking-ссылку</string>
+    <string name="btn_stop_short">Стоп</string>
+    <string name="label_heading_links">Активные ссылки сейчас</string>
+    <string name="link_type_solo">Только ваше местоположение</string>
+    <string name="link_type_group_host">Групповая шара (создатель)</string>
+    <string name="sel_mode_opt_alone">Поделится только моим местоположением</string>
+    <string name="sel_mode_opt_create_group">Создать групповую шару</string>
+    <string name="sel_mode_opt_join_group">Присоединиться к групповой шаре</string>
+    <string name="label_status_wait">Ждем вычисления местоположения …</string>
+    <string name="label_status_coarse">Ждем вычисления высокоточного местоположения…</string>
+    <string name="label_pin_head">ВАШ ГРУППОВОЙ PIN:</string>
+    <string name="label_pin_help">Поделитесь этим PINом с другими что бы они могли присоединиться к группе</string>
+    <string name="progress_connect_title">Соединение</string>
+    <string name="progress_connect_body">Подключаемся к Hauk…</string>
+    <string name="progress_adopt_title">Добавление</string>
+    <string name="progress_new_link_title">Создаем ссылку</string>
+    <string name="err_server">Ошибка на стороне сервера</string>
+    <string name="authorize_body">Hauk получил и заблокировал попытку создания новой сессии от широковещательного источника, который был определен как</string>
+    <string name="authorize_question">Хотите разрешить создание сессий от широковещаний с таким же идентификатором в будущем\?</string>
+    <string name="err_malformed_url">URL сервера неверный.</string>
+    <string name="label_heading">Делимся местоположением c помощью открытого ПО</string>
+    <string name="err_missing_perms">Необходимы разрешения для использования местоположения для этого приложения.</string>
+    <string name="err_location_disabled">Сервисы геолокации запрещены/выключены. Пожалуйста, включите высокоточную геолокацию, что бы делится своим местоположением.</string>
+    <string name="err_ver_group">Сервер не поддерживает групповые шары. Групповые шары поддерживаются в версии %s и выше; текущая версия сервера %s. Ваша шара конвертирована в индивидуальную.</string>
+    <string name="create_link_body">Вы можете создать несколько ссылок на сессию. Каждая ссылка может быть отключена индивидуально, что позволяет более точно контролировать кто может видить ваше местоположение
+\n
+\nВсе дополнительные ссылки которые вы создаете этим путём будут однопользовательскими и будут показывать только ваше местоположение.</string>
+    <string name="ok_message">Шаринг местоположения активен! Нажмите кнопку поделится что бы скопировать публично доступный URL для вашей шары.</string>
+    <string name="ended_title">Шаринг закончен</string>
+    <string name="ended_message">Ваша шара устарела.</string>
+    <string name="resume_body">У вас есть незавершенные сессии:
+\n
+\nАктивные ссылки на шары: %d
+\nИстекает: %s
+\n
+\nХотите возобновить сессию\?</string>
+    <string name="link_added_body">Новая ссылка создана для вашей шары. Нажмите кнопку поделитя что бы скопировать публично доступный URL для вашей шары.</string>
+    <string name="req_perms_message">Это приложение требует доступа к информации о вашем местоположении, но вы еще не дали разрешения на это. Пожалуйста подтвердите следующий запрос на получение разрешения, затем попробуйте нажать кнопку старт снова.</string>
+    <string name="battery_savings_body">Кажется вы используете устройство %s. Такие устройства используют довольно консервативные настройки энергосбережения, которые мешают Hauk посылать информацию о местопложении в фоновом режиме.
+\n
+\nРекомедуем вам проверить что в настройках энергосбережения Hauk не ограничен в потреблении энергии, что бы Hauk неожиданно не перестал работать.
+\n
+\nЭто сообщение не будет показано снова.</string>
+    <string name="share_via">Поделится ссылкой на Hauk с помощью</string>
+    <string name="authorize_header">Запрос на широковещание</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="explain_adopt_body">Hauk позволяет вам создавать сессии геошеринга для себя и для группы людей. Если кто то создает групповую шару у них есть групповой код который другие пользователи могут использовать что бы присоединится к сессии. 
+\n
+\nОднако, пользователь создающий групповую шару так же может включить вашу в уже существующую сессию. Это называется присоединение.
+\n
+\nВы можете выбирать разрешено или нет другим пользователям присоединять вашу сессию к их групповым сессиям с помощью этой галочки.
+\n
+\nЕсли вы разрешите эту опцию и поделитесь своим местоположением со своими друзьями и кто то из них захочет поделится своим местоположением, то они могут создать групповую шару и добавить вас на их карту, так что вы все будете видны на одной и той же карте. Это полезно если вы ведете машину и не можете пользоваться телефоном. При этом добавление вас на их карту не требует взаимодействия вас с программой.</string>
+    <string name="adopt_body">Вы можете добавить существующие индивидуальные шары что бы собрать их в групповую шару. Пожалуйста вставьте URL или ID шары которую вы ходите добавить. (к примеру %s\?XXXX-XXXX) и дайте ей ник.</string>
+</resources>
