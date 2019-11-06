@@ -1,2 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_nickname">Нік:</string>
+    <string name="label_remember">Збереження пароля:</string>
+    <string name="err_ver_group">Сервер не підтримує групові шари. Групові шари підтримуються в версії %s та вище; цей сервер зараз має версію %s. Ваша шара була перетворена на індивідуальну.</string>
+    <string name="btn_link">Створити новий відстежувальний лінк</string>
+    <string name="ok_message">Шарінг місцеположення активний! Нажміть кнопку поділитися щоб скопіювати публічно доступний URL для вашої шари.</string>
+    <string name="label_heading_links">Активні лінки зараз</string>
+    <string name="sel_mode_opt_alone">Ділитися тільки моїм місцеположенням</string>
+    <string name="label_status_none">Шарінг місцеположення не активний</string>
+    <string name="link_added_body">Новий лінк створено для шари вашего місцеположення! Нажміть кнопку поділитися щоб скопіювати публічно доступний URL для вашої шари.</string>
+    <string name="label_status_wait">Чекаємо на розрахунок місцеположення…</string>
+    <string name="label_pin_help">Поділіться цим PINом з іншими у вашій групі щоб вони приєдналися до вашої групової шари</string>
+    <string name="req_perms_message">Ця програма потребує доступу до фунцій місцеположення, але дозвіл ще не був наданий. Будь ласка схваліть наступні запити на підтверження доступу та натисніть кнопку розпочати знову.</string>
+    <string name="battery_savings_body">"Схоже що ви використвуєте пристрій %s. Ці пристрої мають доволі суворі налаштування енергосбереження, що можуть не дозволити  Hauk відсилати дані про місцеположення у фоновому режимі.
+\n
+\nРекомендуємо вам впевнитися що Hauk виключено з переліку програм що підлягають жорсткому котролю енегосбереження, щоб бути впевненим що він раптом не перестане працювати.
+\n
+\nЦе повідомлення більше не буде показано."</string>
+    <string name="explain_adopt_body">Hauk дозовляє створювати сесії шарінгу для вас і для групи людей також. Якщо хтось створює групову шару, він отримує груповий код, котрий інші можуть використати для приєднання до сессії
+\n
+\nОднак, той хто створив групову шару також має можливість додати вже існуючу шару до своєї групи. Це називається додаванням.
+\n
+\nВи можете вирішувати чи ви дозволяєте іншим додавати вашу шару до їх групових шар за допомогою цієї галочки.
+\n
+\nЯкщо ви дозволяєте додавання і ділитесь своїм місцеположенням зі своіми друзями, і хтось інши також хоче поділитися своїм місцеположеням, він може створити групову шару та додати вас до своєї мапи, так що ви оба з\'явитесь на мапі. Це зручно якщо ви керуєте і не можете користуватись програмою, так що додавання вас іншими людьми не потребує взаємодії з пристроєм з вашого боку.</string>
+    <string name="label_allow_adopt">Дозволити додавання:</string>
+    <string name="chk_allow_adopt">Дозволити іншим додавати мою шару в групові шари</string>
+    <string name="label_explain_adopt">(Що це\?)</string>
+    <string name="notify_title">Шарінг місцеположення активний</string>
+    <string name="label_heading">Ділимося місцеположенням за допомогою відкритого ПЗ</string>
+    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_server">URL сервера:</string>
+    <string name="label_password">Пароль:</string>
+    <string name="label_duration">Час життя шари:</string>
+    <string name="label_interval">Інтервал поновлення (сек):</string>
+    <string name="label_mode">Режим шари:</string>
+    <string name="progress_adopt_body">Додавання %s…</string>
+    <string name="app_name">Hauk</string>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="err_connect">Помилка підключення</string>
+    <string name="label_pin">Груповий PIN:</string>
+    <string name="label_status">Статус:</string>
+    <string name="label_share_url">ID/URL шари:</string>
+    <string name="chk_remember">Запом\'ятати пароль</string>
+    <string name="btn_start">Почати шару</string>
+    <string name="btn_stop">Зупинити шару [%s]</string>
+    <string name="btn_adopt">Додати існуючу шару</string>
+    <string name="btn_stop_short">Стоп</string>
+    <string name="btn_share_short">Поділитися</string>
+    <string name="link_type_solo">Тільки ваше положення</string>
+    <string name="link_type_group_host">Групова шара (host)</string>
+    <string name="link_type_group_member">Групова шара (учасник)</string>
+    <string name="sel_mode_opt_create_group">Створити групову шару</string>
+    <string name="sel_mode_opt_join_group">Приєднатися до групової шари</string>
+    <string name="sel_unit_opt_minutes">хвилин</string>
+    <string name="sel_unit_opt_hours">годин</string>
+    <string name="sel_unit_opt_days">днів</string>
+    <string name="label_status_coarse">Чекаємо на розрахунок високоточного місцеположення…</string>
+    <string name="label_status_ok">Шарінг місцеположення активний!</string>
+    <string name="label_pin_head">ВАШ ГРУПОВИЙ PIN:</string>
+    <string name="explain_adopt_title">Додаваня шари</string>
+    <string name="adopt_title">Додати існуючу шару</string>
+    <string name="adopt_body">Ви можете додати існуючу індивідуальну шару до цієї групової шари. Будь ласка, вставте URL або ID шари яку ви хочете додати (наприклад s\?XXXX-XXXX) та вигадайте ник для цієї шари.</string>
+    <string name="create_link_title">Створити новий лінк</string>
+    <string name="create_link_body">Ви можете створити декілька лінків для однієї шари. Робота кожного лінка може бути зупинена індивідуально, що дозволяє тонко контролювати хто баче ваше місцеположення.
+\n
+\nВсі додаткові лінки які ви створююте в цей спосіб будуть працювати тільки в режимі, який показує тільки ваше місцеположення.</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Відміна</string>
+    <string name="btn_yes">Так</string>
+    <string name="btn_no">Ні</string>
+    <string name="btn_create">Створити</string>
+    <string name="btn_show_settings">Відкрити налаштування</string>
+    <string name="btn_dismiss">Відміна</string>
+    <string name="action_copy">Копіювати лінк</string>
+    <string name="action_copied">Скопійовані лінки з Hauk</string>
+    <string name="action_stop">Зупинити шару</string>
+    <string name="notify_body">Hauk ділиться місцеположенням із %s</string>
+    <string name="progress_connect_title">Приєднання</string>
+    <string name="progress_connect_body">Приєднання до Hauk…</string>
+    <string name="progress_adopt_title">Додавання</string>
+    <string name="progress_new_link_title">Створення лінка</string>
+    <string name="progress_new_link_body">Створення нового лінка для шари…</string>
+    <string name="err_client">Погані налаштування</string>
+    <string name="err_server">Помилка на сервері</string>
+    <string name="err_missing_perms">Дозвіл на використання місцеположення потрібний для використання цієї програми.</string>
+    <string name="err_empty">Сервер повернув пусту відповідь.</string>
+    <string name="err_response_code">Отримано HTTP %s від сервера!</string>
+    <string name="err_outdated">Сервер не оновлений</string>
+    <string name="ok_title">З\'єднання налаштовано</string>
+    <string name="ended_title">Шарінг закінчено</string>
+    <string name="adopted_title">Шара додана</string>
+    <string name="ended_message">Ваша шара закінчилась.</string>
+    <string name="adopted_body">%s була додана до вашої шари!</string>
+    <string name="resume_title">Відновити сесію</string>
+    <string name="resume_body">Ви маєте незакінчину сесію:
+\n
+\nАктивні лінки: %d
+\nЗакінчується: %s
+\n
+\nХочете продовжити сесію\?</string>
+    <string name="link_added_title">Лін створено</string>
+    <string name="req_perms_title">Необхідний дозвіл</string>
+    <string name="battery_savings_title">Агресивне енегрозберігання</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
+    <string name="share_via">Поділитися лінком на Hauk за допомогою</string>
+    <string name="share_subject">Слідкуй за моїм місцеположенням на Hauk!</string>
+    <string name="authorize_header">Запит на авторизацію</string>
+    <string name="authorize_body">Hauk отримав та заблокував спробу створити новий сеанс обміну місцезнаходженнями з широкомовного джерела, який ідентифікував себе як</string>
+    <string name="authorize_question">Ви хочете дозволити в майбутньому створювати сеанси з трансляцій із цією ідентифікацією\?</string>
+    <string name="err_malformed_url">URL серверу що ви ввели не вірний.</string>
+    <string name="err_location_disabled">Сервіси місцеположення вимкнуті або заборонені. Будь ласка включіть високоточні сервіси місцеположення для того щоб можно було ділитися вашим положенням.</string>
+</resources>
