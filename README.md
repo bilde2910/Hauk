@@ -127,7 +127,9 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 **German** - natrius and hurradiegams  
 **Norwegian Bokmål** - bilde2910  
 **Norwegian Nynorsk** - bilde2910  
-**Polish** - krystiancha
+**Polish** - krystiancha  
+**Russian** - RuralYak  
+**Ukrainian** - RuralYak
 
 ### Translation status
 
