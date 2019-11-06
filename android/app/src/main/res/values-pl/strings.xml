@@ -82,4 +82,6 @@
     <string name="err_response_code">Serwer zwrócił odpowiedź o kodzie HTTP %s!</string>
     <string name="err_ver_group">Podany serwer nie wspiera udostępniania grupowego. Ta funkcja jest dostępna od wersji %s, a obecna wersja serwera to %s. Sposób udostępniania zostanie zmieniony na udostępnianie indywidualne.</string>
     <string name="ok_message">Udostępnianie aktualizacji jest aktywne! Skorzystaj z przycisku \"Udostępnij\", aby udostępnić komuś swoją lokalizację.</string>
+    <string name="adopted_title">Udostępnianie podjęty</string>
+    <string name="label_remember">Przechowywanie hasła:</string>
 </resources>
