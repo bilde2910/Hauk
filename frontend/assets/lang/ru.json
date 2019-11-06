@@ -1,1 +1,16 @@
-{}
+{
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
+    "btn_dismiss": "Отменить",
+    "status_offline": "Не подключено",
+    "status_expired": "Истекло",
+    "dialog_connection_body": "Соединение с сервером Hauk потеряно. Hauk будет пытаться переподключится в фоне. Пожалуйста проверьте соединение с сетью.",
+    "dialog_connection_head": "Ошибка подлючения",
+    "dialog_expired_body": "Эта шара устарела.",
+    "dialog_expired_head": "Шара устарела",
+    "point_app_to": "Укажите этот сервер в приложении Hauk что бы делится своим местоположением:",
+    "gnss_signal_body": "Ждем сигнала GPS",
+    "gnss_signal_head": "Пожалуйста подождите",
+    "expired_body": "Шара к которой вы пытаетесь получить доступ не найдена на сервере. Если эта ссылка работала в прошлом, возможно истекло время жизни шары.",
+    "expired_head": "Местоположение устарело",
+    "page_title": "Hauk"
+}
