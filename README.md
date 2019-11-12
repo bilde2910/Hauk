@@ -14,6 +14,9 @@
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/info.varden.hauk)
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+    alt="Get it on Google Play"
+    height="80">](https://play.google.com/store/apps/details?id=info.varden.hauk)
 
 Hauk is a fully open source, self-hosted location sharing service. Install the
 backend code on a PHP-compatible web server, install the companion app on your
