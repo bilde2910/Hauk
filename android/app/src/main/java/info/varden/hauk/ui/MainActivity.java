@@ -161,6 +161,7 @@ public final class MainActivity extends AppCompatActivity {
         String password = ((TextView) findViewById(R.id.txtPassword)).getText().toString();
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
         int interval = Integer.parseInt(((TextView) findViewById(R.id.txtInterval)).getText().toString());
+        String customID = ((TextView) findViewById(R.id.txtCustomID)).getText().toString().trim();
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
@@ -175,6 +176,7 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_USERNAME, username);
         prefs.set(Constants.PREF_DURATION, duration);
         prefs.set(Constants.PREF_INTERVAL, interval);
+        prefs.set(Constants.PREF_CUSTOM_ID, customID);
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
@@ -192,7 +194,7 @@ public final class MainActivity extends AppCompatActivity {
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
         duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
-        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval);
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID);
         SessionInitiationResponseHandler responseHandler = new SessionInitiationResponseHandlerImpl();
 
         try {
@@ -241,6 +243,15 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * On-tap handler for the "show advanced settings" button.
+     */
+    public void showAdvancedSettings(View view) {
+        view.setVisibility(View.GONE);
+        findViewById(R.id.rowUpdateInterval).setVisibility(View.VISIBLE);
+        findViewById(R.id.rowCustomID).setVisibility(View.VISIBLE);
+    }
+
+    /**
      * This function is called by onCreate() to initialize class-level variables for usage in this
      * activity.
      */
@@ -252,6 +263,7 @@ public final class MainActivity extends AppCompatActivity {
                 findViewById(R.id.txtPassword),
                 findViewById(R.id.txtDuration),
                 findViewById(R.id.txtInterval),
+                findViewById(R.id.txtCustomID),
 
                 findViewById(R.id.selUnit),
                 findViewById(R.id.selMode),
@@ -292,6 +304,7 @@ public final class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.txtUsername)).setText(prefs.get(Constants.PREF_USERNAME));
         ((TextView) findViewById(R.id.txtDuration)).setText(String.valueOf(prefs.get(Constants.PREF_DURATION)));
         ((TextView) findViewById(R.id.txtInterval)).setText(String.valueOf(prefs.get(Constants.PREF_INTERVAL)));
+        ((TextView) findViewById(R.id.txtCustomID)).setText(prefs.get(Constants.PREF_CUSTOM_ID));
         ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD));
         ((TextView) findViewById(R.id.txtNickname)).setText(prefs.get(Constants.PREF_NICKNAME));
         // Because I can choose between an unchecked cast warning and an overly strong cast warning,

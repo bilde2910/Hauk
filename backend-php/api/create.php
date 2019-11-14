@@ -42,6 +42,10 @@ switch ($mod) {
         break;
 }
 
+// If a custom link is requested, validate the ID.
+$custom = filter_input(INPUT_POST, "lid", FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[\w-]+$/")));
+if ($custom === false) $custom = null;
+
 $memcache = memConnect();
 
 // Create a new client session.
@@ -58,6 +62,7 @@ switch ($mod) {
     case SHARE_MODE_CREATE_ALONE:
         // Create a new solo share and set its arguments.
         $share = new SoloShare($memcache);
+        if ($custom !== null) $share->requestCustomLink($custom);
         $share
             ->setAdoptable($adoptable)
             ->setHost($host)
@@ -80,6 +85,7 @@ switch ($mod) {
 
         // Create a new group share and set its arguments.
         $share = new GroupShare($memcache);
+        if ($custom !== null) $share->requestCustomLink($custom);
         $share
             ->addHost($nickname, $host)
             ->setExpirationTime($expire)

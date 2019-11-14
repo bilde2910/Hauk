@@ -99,10 +99,11 @@ public final class Receiver extends BroadcastReceiver {
         String password = intent.hasExtra(Constants.EXTRA_SESSION_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_PASSWORD) : fallback.get(Constants.PREF_PASSWORD);
         int duration = intent.hasExtra(Constants.EXTRA_SESSION_DURATION) ? intent.getIntExtra(Constants.EXTRA_SESSION_DURATION, 0) : TimeUtils.timeUnitsToSeconds(fallback.get(Constants.PREF_DURATION), fallback.get(Constants.PREF_DURATION_UNIT));
         int interval = intent.hasExtra(Constants.EXTRA_SESSION_INTERVAL) ? intent.getIntExtra(Constants.EXTRA_SESSION_INTERVAL, 0) : fallback.get(Constants.PREF_INTERVAL);
+        String customID = intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID) ? intent.getStringExtra(Constants.EXTRA_SESSION_CUSTOM_ID) : fallback.get(Constants.PREF_CUSTOM_ID);
 
         assert server != null;
         server = server.endsWith("/") ? server : server + "/";
 
-        return new SessionInitiationPacket.InitParameters(server, username, password, duration, interval);
+        return new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID);
     }
 }

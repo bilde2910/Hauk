@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:labelFor="@id/txtPassword"
+                        android:labelFor="@id/txtUsername"
                         android:text="@string/label_username" />
 
                     <EditText
@@ -147,10 +147,25 @@
                         android:gravity="center_vertical"/>
                 </TableRow>
 
-                <!-- Update interval, in seconds. -->
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="2"
+                        android:text="@string/btn_advanced"
+                        android:onClick="showAdvancedSettings"
+                        style="?android:attr/borderlessButtonStyle" />
+                </TableRow>
+
+                <!-- Update interval, in seconds. -->
+                <TableRow
+                    android:id="@+id/rowUpdateInterval"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,6 +181,30 @@
                         android:autofillHints="seconds"
                         android:ems="10"
                         android:inputType="number" />
+                </TableRow>
+
+                <!-- Custom link ID. -->
+                <TableRow
+                    android:id="@+id/rowCustomID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtCustomID"
+                        android:text="@string/label_custom_id" />
+
+                    <EditText
+                        android:id="@+id/txtCustomID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textShortMessage"
+                        android:hint="@string/label_custom_id_hint"
+                        android:autofillHints="username" />
                 </TableRow>
 
                 <!-- The sharing mode (alone or group share). -->

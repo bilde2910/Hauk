@@ -35,6 +35,9 @@ public class SessionInitiationPacket extends Packet {
         if (params.getUsername() != null) {
             setParameter(Constants.PACKET_PARAM_USERNAME, params.getUsername());
         }
+        if (params.getCustomID() != null) {
+            setParameter(Constants.PACKET_PARAM_SHARE_ID, params.getCustomID());
+        }
         setParameter(Constants.PACKET_PARAM_PASSWORD, params.getPassword());
         setParameter(Constants.PACKET_PARAM_DURATION, String.valueOf(params.getDuration()));
         setParameter(Constants.PACKET_PARAM_INTERVAL, String.valueOf(params.getInterval()));
@@ -178,6 +181,7 @@ public class SessionInitiationPacket extends Packet {
         private final String password;
         private final int duration;
         private final int interval;
+        private final String customID;
 
         /**
          * Declares initialization parameters for a session initiation request.
@@ -188,12 +192,13 @@ public class SessionInitiationPacket extends Packet {
          * @param duration The duration, in seconds, to run the share for.
          * @param interval The interval, in seconds, between each sent location update.
          */
-        public InitParameters(String server, String username, String password, int duration, int interval) {
+        public InitParameters(String server, String username, String password, int duration, int interval, String customID) {
             this.server = server;
-            this.username = username.isEmpty() ? null : username;
+            this.username = username == null || username.isEmpty() ? null : username;
             this.password = password;
             this.duration = duration;
             this.interval = interval;
+            this.customID = customID == null || customID.isEmpty() ? null : customID;
         }
 
         String getServerURL() {
@@ -215,6 +220,11 @@ public class SessionInitiationPacket extends Packet {
 
         int getInterval() {
             return this.interval;
+        }
+
+        @Nullable
+        String getCustomID() {
+            return this.customID;
         }
     }
 }

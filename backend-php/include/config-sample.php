@@ -99,6 +99,39 @@
 |  GENERAL SETTINGS                                                            |
 \*----------------------------------------------------------------------------*/
 
+// Hauk v1.4 and on allows you to request a custom link ID instead of having the
+// server randomly generate one. Custom links can use characters A-Z, a-z, 0-9,
+// - (dash), and _ (underscore). If you want to disallow the option to request
+// custom links, set this to false.
+//
+// If a user requests particular custom link that is already in use, that user
+// will not have their request honored and will get a randomly generated link
+// instead.
+"allow_link_req"    => true,
+
+// If you want certain links to only be usable by some users, you can reserve
+// them here. The following example reserves https://example.com/?WheresAlice
+// for user "alice" only, and reserves https://example.com/?TheRealBob
+// for use by both "bob" and "charlie".
+//
+// If you use Tasker or another automation platform to automatically start
+// sharing to a specific link ID, it's a good idea to specify it here so that
+// others cannot use it while you are inactive.
+//
+// Note that for this setting to have any effect, you have to specify an
+// auth_method that requires both a username and a password, such as HTPASSWD.
+"reserved_links"    => [
+    'WheresAlice'       => ['alice'],
+    'TheRealBob'        => ['bob', 'charlie'],
+],
+
+// If you want to enable pre-approved custom links only, you can choose to
+// enable reservation whitelist mode. If this setting is set to true, custom
+// link IDs will only be accepted if they are present in the reserved_links
+// array above - requests to share to other links than those in the array will
+// not be honored.
+"reserve_whitelist" => false,
+
 // Leaflet tile URI template for the map frontend. Here are some examples:
 //
 // - OpenStreetMap directly:

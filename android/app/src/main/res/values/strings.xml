@@ -10,6 +10,8 @@
     <string name="label_password">Password:</string>
     <string name="label_duration">Share duration:</string>
     <string name="label_interval">Update interval (s):</string>
+    <string name="label_custom_id">Preferred link ID:</string>
+    <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
     <string name="label_mode">Sharing mode:</string>
     <string name="label_allow_adopt">Allow adoption:</string>
     <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
@@ -21,6 +23,7 @@
     <string name="label_share_url">Share ID/URL:</string>
     <string name="chk_remember">Remember password</string>
 
+    <string name="btn_advanced">Show advanced settings</string>
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Create new tracking link</string>
