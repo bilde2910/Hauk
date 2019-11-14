@@ -101,9 +101,15 @@
     font-family: monospace;
     font-size: 5vmin;
 }
-.f-droid {
+.store-icon {
     margin-top: 1vmin;
-    width: 50vmin;
+    width: 40vmin;
+}
+a:first-child > .store-icon {
+    margin-left: -5vmin;
+}
+a:last-child > .store-icon {
+    margin-right: -5vmin;
 }
 
 /* Display the Hauk logo in the bottom left corner of the map if the viewport is
