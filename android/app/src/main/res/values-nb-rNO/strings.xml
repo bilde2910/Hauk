@@ -113,4 +113,9 @@
     <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="btn_show_settings">Åpne innstillinger</string>
     <string name="btn_dismiss">Lukk</string>
+    <string name="btn_advanced">Vis avanserte innstillinger</string>
+    <string name="label_custom_id_hint">&lt;tilfeldig generert&gt;</string>
+    <string name="label_custom_id">Foretrukket link-ID:</string>
+    <string name="label_username_hint">&lt;valgfritt&gt;</string>
+    <string name="label_username">Brukernavn:</string>
 </resources>
