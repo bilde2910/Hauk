@@ -15,3 +15,4 @@ $LANG['group_pin_invalid'] = 'Ugyldig gruppekode!';
 $LANG['session_invalid'] = 'Ugyldig sesjon!';
 $LANG['location_invalid'] = 'Ugyldig lokasjon!';
 $LANG['config_missing'] = 'Kunne ikkje finna config.php!';
+$LANG['username_required'] = 'Brukarnamn krevjast!';
