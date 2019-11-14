@@ -195,7 +195,7 @@ public final class DialogService {
             this.run = run;
         }
 
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(DialogInterface dialogInterface, int which) {
             Log.v("Closing dialog, which=%s (unknown, run=%s)", which, this.run); //NON-NLS
             if (this.run != null) this.run.run();
         }
@@ -212,7 +212,7 @@ public final class DialogService {
             this.builder = builder;
         }
 
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(DialogInterface dialogInterface, int which) {
             Log.d("Closing dialog, which=%s (positive)", which); //NON-NLS
             this.builder.onPositive();
         }
@@ -230,7 +230,7 @@ public final class DialogService {
         }
 
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(DialogInterface dialogInterface, int which) {
             Log.d("Closing dialog, which=%s (negative)", which); //NON-NLS
             this.builder.onNegative();
         }

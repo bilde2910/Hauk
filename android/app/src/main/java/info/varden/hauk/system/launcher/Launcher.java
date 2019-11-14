@@ -7,6 +7,7 @@ import android.content.Context;
  *
  * @author Marius Lindvall
  */
+@SuppressWarnings("ClassNamePrefixedWithPackageName")
 public interface Launcher {
     /**
      * Starts the activity.
