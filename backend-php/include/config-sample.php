@@ -53,7 +53,20 @@
 "redis_prefix"          => 'hauk',
 
 /*----------------------------------------------------------------------------*\
-|  GENERAL SETTINGS                                                            |
+|  AUTHENTICATION                                                              |
+\*----------------------------------------------------------------------------*/
+
+// Users must be authenticated to use the Hauk server. The default
+// authentication method is using a static server password that is shared by all
+// users, without the need for a username. You can, however, use other
+// authentication methods. Valid values here include:
+//
+// - PASSWORD: Use a static, shared server password for everyone
+// - HTPASSWD: Require a username and separate password for each user
+"auth_method"       => PASSWORD,
+
+/*----------------------------------------------------------------------------*\
+|  PASSWORD AUTHENTICATION                                                     |
 \*----------------------------------------------------------------------------*/
 
 // A hashed password that is required for creating sessions and posting location
@@ -70,6 +83,21 @@
 // the password will be stored in plain text (unhashed) on their devices. You
 // are encouraged to generate a random password to prevent risks associated with
 // credential reuse, should the password somehow be leaked from their devices.
+
+/*----------------------------------------------------------------------------*\
+|  HTPASSWD AUTHENTICATION                                                     |
+\*----------------------------------------------------------------------------*/
+
+// A file that contains a pairing between users and hashed passwords. To
+// generate this file on the terminal:
+//   - htpasswd -cBC 10 /etc/hauk/users.htpasswd <username>
+// To add additional users to an existing file:
+//   - htpasswd -BC 10 /etc/hauk/users.htpasswd <username>
+"htpasswd_path"     => '/etc/hauk/users.htpasswd',
+
+/*----------------------------------------------------------------------------*\
+|  GENERAL SETTINGS                                                            |
+\*----------------------------------------------------------------------------*/
 
 // Leaflet tile URI template for the map frontend. Here are some examples:
 //

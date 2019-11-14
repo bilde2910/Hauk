@@ -2,6 +2,8 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.AdoptabilityPreference;
@@ -30,6 +32,9 @@ public class SessionInitiationPacket extends Packet {
         super(ctx, params.getServerURL(), Constants.URL_PATH_CREATE_SHARE);
         this.params = params;
         this.handler = handler;
+        if (params.getUsername() != null) {
+            setParameter(Constants.PACKET_PARAM_USERNAME, params.getUsername());
+        }
         setParameter(Constants.PACKET_PARAM_PASSWORD, params.getPassword());
         setParameter(Constants.PACKET_PARAM_DURATION, String.valueOf(params.getDuration()));
         setParameter(Constants.PACKET_PARAM_INTERVAL, String.valueOf(params.getInterval()));
@@ -169,6 +174,7 @@ public class SessionInitiationPacket extends Packet {
      */
     public static final class InitParameters {
         private final String server;
+        private final String username;
         private final String password;
         private final int duration;
         private final int interval;
@@ -177,12 +183,14 @@ public class SessionInitiationPacket extends Packet {
          * Declares initialization parameters for a session initiation request.
          *
          * @param server   The full URL to the server to create a session on.
+         * @param username The backend username, or empty string if not applicable.
          * @param password The backend password.
          * @param duration The duration, in seconds, to run the share for.
          * @param interval The interval, in seconds, between each sent location update.
          */
-        public InitParameters(String server, String password, int duration, int interval) {
+        public InitParameters(String server, String username, String password, int duration, int interval) {
             this.server = server;
+            this.username = username.isEmpty() ? null : username;
             this.password = password;
             this.duration = duration;
             this.interval = interval;
@@ -190,6 +198,11 @@ public class SessionInitiationPacket extends Packet {
 
         String getServerURL() {
             return this.server;
+        }
+
+        @Nullable
+        String getUsername() {
+            return this.username;
         }
 
         String getPassword() {

@@ -8,6 +8,7 @@ $LANG['share_not_found'] = 'The given share does not exist!';
 $LANG['group_share_not_adoptable'] = 'You cannot adopt group shares!';
 $LANG['share_adoption_not_allowed'] = 'The host of the given share does not permit adoption!';
 $LANG['incorrect_password'] = 'Incorrect password!';
+$LANG['username_required'] = 'Username required!';
 $LANG['share_too_long'] = 'Share period is too long!';
 $LANG['interval_too_long'] = 'Ping interval is too long!';
 $LANG['interval_too_short'] = 'Ping interval is too short!';

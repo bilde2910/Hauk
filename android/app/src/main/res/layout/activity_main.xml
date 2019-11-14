@@ -72,7 +72,30 @@
                         android:layout_weight="1"
                         android:autofillHints="uri"
                         android:ems="10"
+                        android:hint="@string/label_server_hint"
                         android:inputType="textUri" />
+                </TableRow>
+
+                <!-- Username. -->
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtPassword"
+                        android:text="@string/label_username" />
+
+                    <EditText
+                        android:id="@+id/txtUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:hint="@string/label_username_hint"
+                        android:autofillHints="username" />
                 </TableRow>
 
                 <!-- Server password. -->

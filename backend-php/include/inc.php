@@ -25,6 +25,10 @@ const GROUP_PIN_MAX = 999999;
 const MEMCACHED = 0;
 const REDIS = 1;
 
+// Authentication methods.
+const PASSWORD = 0;
+const HTPASSWD = 1;
+
 const KILOMETERS_PER_HOUR = array(
     // Relative distance per second multiplied by number of seconds per hour.
     "mpsMultiplier" => 3.6,
@@ -104,7 +108,9 @@ const DEFAULTS = array(
     "redis_use_auth"        => false,
     "redis_auth"            => '',
     "redis_prefix"          => 'hauk',
+    "auth_method"           => PASSWORD,
     "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
+    "htpasswd_path"         => '/etc/hauk/users.htpasswd',
     "map_tile_uri"          => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     "map_attribution"       => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     "default_zoom"          => 14,
@@ -118,7 +124,7 @@ const DEFAULTS = array(
     "v_data_points"         => 2,
     "trail_color"           => '#d80037',
     "velocity_unit"         => KILOMETERS_PER_HOUR,
-    "public_url"            => 'http://10.0.0.44/'
+    "public_url"            => 'https://example.com/'
 
 );
 
@@ -627,6 +633,38 @@ class Client {
 function requirePOST(...$args) {
     foreach ($args as $field) {
         if (!isset($_POST[$field])) die("Missing data!\n");
+    }
+}
+
+// Checks whether or not the user is correctly authenticated based on the
+// server's requirements.
+function authenticated() {
+    switch (getConfig("auth_method")) {
+        case PASSWORD:
+            // Static shared password authentication
+            requirePOST("pwd");
+            return password_verify($_POST["pwd"], getConfig("password_hash"));
+
+        case HTPASSWD:
+            // .htpasswd file based authentication
+            global $LANG;
+            if (!isset($_POST["usr"])) die($LANG["username_required"]);
+            requirePOST("pwd", "usr");
+            if (file_exists(getConfig("htpasswd_path"))) {
+                $file = fopen(getConfig("htpasswd_path"), "r");
+                $authed = false;
+                while (($line = fgets($file)) !== false && !$authed) {
+                    $creds = explode(":", trim($line));
+                    if ($creds[0] == $_POST["usr"]) {
+                        $authed = password_verify($_POST["pwd"], $creds[1]);
+                    }
+                }
+                fclose($file);
+                return $authed;
+            }
+
+        default:
+            return false;
     }
 }
 

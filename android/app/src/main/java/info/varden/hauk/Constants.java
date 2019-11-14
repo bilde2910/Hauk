@@ -25,6 +25,7 @@ public enum Constants {
 
     // Keys for use in stored server preferences.
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
+    public static final Preference<String> PREF_USERNAME = new Preference.String("username", "");
     public static final Preference<String> PREF_PASSWORD = new Preference.String("password", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
@@ -55,6 +56,7 @@ public enum Constants {
     public static final String EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX = "dataRegistryIndex";
     public static final String EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER = "source";
     public static final String EXTRA_SESSION_SERVER_URL = "server";
+    public static final String EXTRA_SESSION_USERNAME = "username";
     public static final String EXTRA_SESSION_PASSWORD = "password";
     public static final String EXTRA_SESSION_DURATION = "duration";
     public static final String EXTRA_SESSION_INTERVAL = "interval";
@@ -86,6 +88,7 @@ public enum Constants {
     public static final String PACKET_PARAM_SHARE_MODE = "mod";
     public static final String PACKET_PARAM_SPEED = "spd";
     public static final String PACKET_PARAM_TIMESTAMP = "time";
+    public static final String PACKET_PARAM_USERNAME = "usr";
 
     // Packet OK response header. All valid packets start with this line.
     public static final String PACKET_RESPONSE_OK = "OK";

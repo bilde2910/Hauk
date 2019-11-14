@@ -2,8 +2,11 @@
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="label_heading">Open source location sharing</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
+    <string name="label_source_link" translatable="false">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Server URL:</string>
+    <string name="label_server_hint" translatable="false">https://example.com/</string>
+    <string name="label_username">Username:</string>
+    <string name="label_username_hint">&lt;optional&gt;</string>
     <string name="label_password">Password:</string>
     <string name="label_duration">Share duration:</string>
     <string name="label_interval">Update interval (s):</string>

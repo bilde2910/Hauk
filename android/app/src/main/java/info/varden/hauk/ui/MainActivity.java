@@ -157,6 +157,7 @@ public final class MainActivity extends AppCompatActivity {
         disableUI();
 
         String server = ((TextView) findViewById(R.id.txtServer)).getText().toString().trim();
+        String username = ((TextView) findViewById(R.id.txtUsername)).getText().toString().trim();
         String password = ((TextView) findViewById(R.id.txtPassword)).getText().toString();
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
         int interval = Integer.parseInt(((TextView) findViewById(R.id.txtInterval)).getText().toString());
@@ -171,6 +172,7 @@ public final class MainActivity extends AppCompatActivity {
         Log.i("Updating connection preferences"); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
         prefs.set(Constants.PREF_SERVER, server);
+        prefs.set(Constants.PREF_USERNAME, username);
         prefs.set(Constants.PREF_DURATION, duration);
         prefs.set(Constants.PREF_INTERVAL, interval);
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
@@ -190,7 +192,7 @@ public final class MainActivity extends AppCompatActivity {
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
         duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
-        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, password, duration, interval);
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval);
         SessionInitiationResponseHandler responseHandler = new SessionInitiationResponseHandlerImpl();
 
         try {
@@ -246,6 +248,7 @@ public final class MainActivity extends AppCompatActivity {
         Log.d("Setting class variables"); //NON-NLS
         this.lockWhileRunning = new View[] {
                 findViewById(R.id.txtServer),
+                findViewById(R.id.txtUsername),
                 findViewById(R.id.txtPassword),
                 findViewById(R.id.txtDuration),
                 findViewById(R.id.txtInterval),
@@ -286,6 +289,7 @@ public final class MainActivity extends AppCompatActivity {
         Log.i("Loading preferences..."); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
         ((TextView) findViewById(R.id.txtServer)).setText(prefs.get(Constants.PREF_SERVER));
+        ((TextView) findViewById(R.id.txtUsername)).setText(prefs.get(Constants.PREF_USERNAME));
         ((TextView) findViewById(R.id.txtDuration)).setText(String.valueOf(prefs.get(Constants.PREF_DURATION)));
         ((TextView) findViewById(R.id.txtInterval)).setText(String.valueOf(prefs.get(Constants.PREF_INTERVAL)));
         ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD));

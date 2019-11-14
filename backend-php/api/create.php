@@ -7,13 +7,12 @@ include("../include/inc.php");
 header("X-Hauk-Version: ".BACKEND_VERSION);
 
 requirePOST(
-    "pwd", // Hauk password.
     "dur", // Duration in seconds.
     "int"  // Interval in seconds.
 );
 
 // Verify that the client is authorized to connect.
-if (!password_verify($_POST["pwd"], getConfig("password_hash"))) die($LANG['incorrect_password']."\n");
+if (!authenticated()) die($LANG['incorrect_password']."\n");
 
 // Perform input validation.
 $d = intval($_POST["dur"]);
