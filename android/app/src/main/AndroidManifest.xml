@@ -36,6 +36,7 @@
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="info.varden.hauk.START_ALONE_THEN_SHARE_VIA" />
+                <action android:name="info.varden.hauk.START_ALONE_THEN_MAKE_TOAST" />
             </intent-filter>
         </receiver>
 

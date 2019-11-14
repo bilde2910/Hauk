@@ -12,6 +12,7 @@ import info.varden.hauk.global.ui.AuthorizationActivity;
 import info.varden.hauk.global.ui.DisplayShareDialogListener;
 import info.varden.hauk.global.ui.toast.GNSSStatusUpdateListenerImpl;
 import info.varden.hauk.global.ui.toast.SessionInitiationResponseHandlerImpl;
+import info.varden.hauk.global.ui.toast.ShareListenerImpl;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
@@ -45,44 +46,108 @@ import info.varden.hauk.utils.TimeUtils;
  */
 public final class Receiver extends BroadcastReceiver {
     @SuppressWarnings("HardCodedStringLiteral")
-    private static final String ACTION_START_SHARING_ALONE = "info.varden.hauk.START_ALONE_THEN_SHARE_VIA";
+    private static final String ACTION_START_SHARING_ALONE_WITH_MENU = "info.varden.hauk.START_ALONE_THEN_SHARE_VIA";
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String ACTION_START_SHARING_ALONE_WITH_TOAST = "info.varden.hauk.START_ALONE_THEN_MAKE_TOAST";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // Ensure we have a valid broadcast.
-        if (!ACTION_START_SHARING_ALONE.equals(intent.getAction())) return;
+        if (intent.getAction() == null) return;
         if (!intent.hasExtra(Constants.EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER)) return;
 
+        // Check that the broadcast is authorized.
+        if (!checkAuthorization(context, intent)) return;
+
+        // Handle the broadcast appropriately.
+        switch (intent.getAction()) {
+            case ACTION_START_SHARING_ALONE_WITH_MENU:
+                startAloneThenShareVia(context, intent);
+                break;
+            case ACTION_START_SHARING_ALONE_WITH_TOAST:
+                startAloneThenMakeToast(context, intent);
+                break;
+        }
+    }
+
+    /**
+     * Checks whether or not the given broadcast source is authorized to start sharing without user
+     * interaction, and prompts the user if this status is unknown.
+     *
+     * @param ctx    Android application context.
+     * @param intent The broadcast intent.
+     * @return true if handling should continue; false otherwise.
+     */
+    private static boolean checkAuthorization(Context ctx, Intent intent) {
         // Check that the source is authorized.
         String identifier = intent.getStringExtra(Constants.EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER);
-        SharedPreferences authPrefs = context.getSharedPreferences(Constants.SHARED_PREFS_AUTHORIZATIONS, Context.MODE_PRIVATE);
+        SharedPreferences authPrefs = ctx.getSharedPreferences(Constants.SHARED_PREFS_AUTHORIZATIONS, Context.MODE_PRIVATE);
         if (!authPrefs.contains(identifier)) {
             // If not, show the authorization dialog and abort the session initiation.
-            Intent authIntent = new Intent(context, AuthorizationActivity.class);
+            Intent authIntent = new Intent(ctx, AuthorizationActivity.class);
             authIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             authIntent.putExtra(Constants.EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER, identifier);
-            context.startActivity(authIntent);
-            return;
+            ctx.startActivity(authIntent);
+            return false;
         } else if (!authPrefs.getBoolean(identifier, false)) {
             // Denied sources are silently ignored.
-            return;
+            return false;
+        } else {
+            // Proceed with broadcast handling.
+            return true;
         }
+    }
 
+    /**
+     * Starts a single user sharing session and prompts the user to share the link.
+     *
+     * @param ctx    Android application context.
+     * @param intent The broadcast intent.
+     */
+    private static void startAloneThenShareVia(Context ctx, Intent intent) {
         // Create session initiation parameters.
-        PreferenceManager prefs = new PreferenceManager(context);
+        PreferenceManager prefs = new PreferenceManager(ctx);
         SessionInitiationPacket.InitParameters initParams = buildSessionParams(intent, prefs);
         boolean adoptable = intent.hasExtra(Constants.EXTRA_SESSION_ALLOW_ADOPT) ? intent.getBooleanExtra(Constants.EXTRA_SESSION_ALLOW_ADOPT, true) : prefs.get(Constants.PREF_ALLOW_ADOPTION);
 
-        SessionManager manager = new BroadcastSessionManager(context);
-        manager.attachShareListener(new DisplayShareDialogListener(context));
-        manager.attachStatusListener(new GNSSStatusUpdateListenerImpl(context));
+        SessionManager manager = new BroadcastSessionManager(ctx);
+        manager.attachShareListener(new DisplayShareDialogListener(ctx));
+        manager.attachStatusListener(new GNSSStatusUpdateListenerImpl(ctx));
 
         try {
-            manager.shareLocation(initParams, new SessionInitiationResponseHandlerImpl(context), adoptable ? AdoptabilityPreference.ALLOW_ADOPTION : AdoptabilityPreference.DISALLOW_ADOPTION);
+            manager.shareLocation(initParams, new SessionInitiationResponseHandlerImpl(ctx), adoptable ? AdoptabilityPreference.ALLOW_ADOPTION : AdoptabilityPreference.DISALLOW_ADOPTION);
         } catch (LocationPermissionsNotGrantedException e) {
-            Toast.makeText(context, R.string.err_missing_perms, Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, R.string.err_missing_perms, Toast.LENGTH_LONG).show();
         } catch (LocationServicesDisabledException e) {
-            Toast.makeText(context, R.string.err_location_disabled, Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, R.string.err_location_disabled, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Starts a single user sharing session and displays the sharing link in a toast notification.
+     *
+     * @param ctx    Android application context.
+     * @param intent The broadcast intent.
+     */
+    private static void startAloneThenMakeToast(Context ctx, Intent intent) {
+        // Require a custom link ID for this broadcast.
+        if (!intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID)) return;
+
+        // Create session initiation parameters.
+        PreferenceManager prefs = new PreferenceManager(ctx);
+        SessionInitiationPacket.InitParameters initParams = buildSessionParams(intent, prefs);
+        boolean adoptable = intent.hasExtra(Constants.EXTRA_SESSION_ALLOW_ADOPT) ? intent.getBooleanExtra(Constants.EXTRA_SESSION_ALLOW_ADOPT, true) : prefs.get(Constants.PREF_ALLOW_ADOPTION);
+
+        SessionManager manager = new BroadcastSessionManager(ctx);
+        manager.attachShareListener(new ShareListenerImpl(ctx));
+        manager.attachStatusListener(new GNSSStatusUpdateListenerImpl(ctx));
+
+        try {
+            manager.shareLocation(initParams, new SessionInitiationResponseHandlerImpl(ctx), adoptable ? AdoptabilityPreference.ALLOW_ADOPTION : AdoptabilityPreference.DISALLOW_ADOPTION);
+        } catch (LocationPermissionsNotGrantedException e) {
+            Toast.makeText(ctx, R.string.err_missing_perms, Toast.LENGTH_LONG).show();
+        } catch (LocationServicesDisabledException e) {
+            Toast.makeText(ctx, R.string.err_location_disabled, Toast.LENGTH_LONG).show();
         }
     }
 
