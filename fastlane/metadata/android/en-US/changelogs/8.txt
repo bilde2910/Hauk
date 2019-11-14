@@ -1,0 +1,8 @@
+For full changelog, see https://github.com/bilde2910/Hauk/releases
+
+* Added localizations for Russian and Ukrainian and update for Polish
+* Add support for user/password authentication (#54)
+* Custom link IDs can now be requested from within the app (#56)
+* Added broadcast receiver that enables starting a share without opening the "share via" UI (#56)
+* Advanced settings are now hidden by default in the app
+* Added Google Play Store link on frontend index page
