@@ -15,3 +15,4 @@ $LANG['session_invalid'] = 'Ugyldig sesjon!';
 $LANG['location_invalid'] = 'Ugyldig lokasjon!';
 $LANG['config_missing'] = 'Kunne ikke finne config.php!';
 $LANG['no_memcached_ext'] = 'Ingen kompatibel memcached-utvidelse (memcache eller memcached) er aktivert i PHP-konfigurasjonen din!';
+$LANG['username_required'] = 'Brukernavn kreves!';
