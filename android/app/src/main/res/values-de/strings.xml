@@ -113,4 +113,9 @@
     <string name="create_link_body">Sie können mehrere Links erstellen, um auf Ihren gemeinsamen Standort zuzugreifen. Jede Verbindung kann einzeln gestoppt werden, so dass Sie jederzeit genau steuern können, wer Ihren Standort sehen kann.
 \n
 \nAlle zusätzlichen Links, die Sie auf diese Weise erstellen, sind einzelne Standortfreigaben, die nur Ihren Standort anzeigen.</string>
+    <string name="label_username">Benutzername:</string>
+    <string name="btn_advanced">Erweiterte Einstellungen anzeigen</string>
+    <string name="label_custom_id_hint">&lt;zufällig generiert&gt;</string>
+    <string name="label_custom_id">Bevorzugte Link ID:</string>
+    <string name="label_username_hint">&lt;optional&gt;</string>
 </resources>
