@@ -15,3 +15,4 @@ $LANG['invalid_storage'] = 'Ein ungültiges storage_backend wurde in Hauk gesetz
 $LANG['no_redis_ext'] = 'Es ist keine kompatible redis Erweiterung (redis) in Ihrer PHP-Konfiguration aktiviert!';
 $LANG['no_memcached_ext'] = 'Es ist keine kompatible memcached Erweiterung (memcache oder memcached) in Ihrer PHP-Konfiguration aktiviert!';
 $LANG['config_missing'] = 'config.php konnte nicht gefunden werden!';
+$LANG['username_required'] = 'Benutzername erforderlich!';
