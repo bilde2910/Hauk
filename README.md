@@ -127,7 +127,7 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 **Basque** - osoitz  
 **Dutch** - Jdekoning141  
 **French** - thifranc  
-**German** - natrius and hurradiegams  
+**German** - natrius, hurradiegams and lemmerk  
 **Norwegian Bokmål** - bilde2910  
 **Norwegian Nynorsk** - bilde2910  
 **Polish** - krystiancha  
