@@ -43,6 +43,7 @@ import info.varden.hauk.ui.listener.AddLinkClickListener;
 import info.varden.hauk.ui.listener.InitiateAdoptionClickListener;
 import info.varden.hauk.ui.listener.RememberPasswordPreferenceChangedListener;
 import info.varden.hauk.ui.listener.SelectionModeChangedListener;
+import info.varden.hauk.utils.DeprecationMigrator;
 import info.varden.hauk.utils.Log;
 import info.varden.hauk.utils.PreferenceManager;
 import info.varden.hauk.utils.TimeUtils;
@@ -95,6 +96,10 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Ensure that all deprecated preferences have been migrated before we continue.
+        new DeprecationMigrator(this).migrate();
+
         Log.i("Creating main activity"); //NON-NLS
         setContentView(R.layout.activity_main);
         setClassVariables();
@@ -172,8 +177,8 @@ public final class MainActivity extends AppCompatActivity {
         // every time.
         Log.i("Updating connection preferences"); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
-        prefs.set(Constants.PREF_SERVER, server);
-        prefs.set(Constants.PREF_USERNAME, username);
+        prefs.set(Constants.PREF_SERVER_ENCRYPTED, server);
+        prefs.set(Constants.PREF_USERNAME_ENCRYPTED, username);
         prefs.set(Constants.PREF_DURATION, duration);
         prefs.set(Constants.PREF_INTERVAL, interval);
         prefs.set(Constants.PREF_CUSTOM_ID, customID);
@@ -181,11 +186,12 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
 
+        // TODO: Passwords are encrypted now, don't prompt to save, just do it by default
         // If password saving is enabled, save the password as well.
         if (((Checkable) findViewById(R.id.chkRemember)).isChecked()) {
             Log.i("Saving password"); //NON-NLS
             prefs.set(Constants.PREF_REMEMBER_PASSWORD, true);
-            prefs.set(Constants.PREF_PASSWORD, password);
+            prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, password);
         }
 
         assert mode != null;
@@ -300,12 +306,12 @@ public final class MainActivity extends AppCompatActivity {
     private void loadPreferences() {
         Log.i("Loading preferences..."); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
-        ((TextView) findViewById(R.id.txtServer)).setText(prefs.get(Constants.PREF_SERVER));
-        ((TextView) findViewById(R.id.txtUsername)).setText(prefs.get(Constants.PREF_USERNAME));
+        ((TextView) findViewById(R.id.txtServer)).setText(prefs.get(Constants.PREF_SERVER_ENCRYPTED));
+        ((TextView) findViewById(R.id.txtUsername)).setText(prefs.get(Constants.PREF_USERNAME_ENCRYPTED));
         ((TextView) findViewById(R.id.txtDuration)).setText(String.valueOf(prefs.get(Constants.PREF_DURATION)));
         ((TextView) findViewById(R.id.txtInterval)).setText(String.valueOf(prefs.get(Constants.PREF_INTERVAL)));
         ((TextView) findViewById(R.id.txtCustomID)).setText(prefs.get(Constants.PREF_CUSTOM_ID));
-        ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD));
+        ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD_ENCRYPTED));
         ((TextView) findViewById(R.id.txtNickname)).setText(prefs.get(Constants.PREF_NICKNAME));
         // Because I can choose between an unchecked cast warning and an overly strong cast warning,
         // I'm going to with the latter.

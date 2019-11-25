@@ -24,9 +24,9 @@ public enum Constants {
     public static final String SHARED_PREFS_DEVICE_SPECS = "deviceSpecs";
 
     // Keys for use in stored server preferences.
-    public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
-    public static final Preference<String> PREF_USERNAME = new Preference.String("username", "");
-    public static final Preference<String> PREF_PASSWORD = new Preference.String("password", "");
+    public static final Preference<String> PREF_SERVER_ENCRYPTED = new Preference.EncryptedString("cryptServer", "");
+    public static final Preference<String> PREF_USERNAME_ENCRYPTED = new Preference.EncryptedString("cryptUsername", "");
+    public static final Preference<String> PREF_PASSWORD_ENCRYPTED = new Preference.EncryptedString("cryptPassword", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
     public static final Preference<String> PREF_CUSTOM_ID = new Preference.String("requestLink", "");
@@ -34,6 +34,13 @@ public enum Constants {
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
     public static final Preference<Boolean> PREF_REMEMBER_PASSWORD = new Preference.Boolean("rememberPassword", false);
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
+
+    @Deprecated // Use PREF_SERVER_ENCRYPTED instead
+    public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
+    @Deprecated // Use PREF_USERNAME_ENCRYPTED instead
+    public static final Preference<String> PREF_USERNAME = new Preference.String("username", "");
+    @Deprecated // Use PREF_PASSWORD_ENCRYPTED instead
+    public static final Preference<String> PREF_PASSWORD = new Preference.String("password", "");
 
     // Keys for use in session resumption preferences.
     public static final String RESUME_AVAILABLE = "canResume";

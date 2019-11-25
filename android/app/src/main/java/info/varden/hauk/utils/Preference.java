@@ -2,6 +2,11 @@ package info.varden.hauk.utils;
 
 import android.content.SharedPreferences;
 
+import info.varden.hauk.system.security.EncryptedData;
+import info.varden.hauk.system.security.EncryptionException;
+import info.varden.hauk.system.security.KeyStoreAlias;
+import info.varden.hauk.system.security.KeyStoreHelper;
+
 /**
  * Represents a preference key to default value mapping pair for use with storing preferences for
  * Hauk on the device.
@@ -27,6 +32,20 @@ public abstract class Preference<T> {
     abstract void set(SharedPreferences.Editor prefs, T value);
 
     /**
+     * Checks whether or not the preference exists in the given preference object.
+     *
+     * @param prefs The shared preferences to check for preference existence in.
+     */
+    abstract boolean has(SharedPreferences prefs);
+
+    /**
+     * Clears the preference from the given preference object.
+     *
+     * @param prefs The shared preferences to clear the value from.
+     */
+    abstract void clear(SharedPreferences.Editor prefs);
+
+    /**
      * Represents a String-value preference.
      */
     public static final class String extends Preference<java.lang.String> {
@@ -48,10 +67,71 @@ public abstract class Preference<T> {
             prefs.putString(this.key, value);
         }
 
+        @Override
+        boolean has(SharedPreferences prefs) {
+            return prefs.contains(this.key);
+        }
+
+        @Override
+        void clear(SharedPreferences.Editor prefs) {
+            prefs.remove(this.key);
+        }
+
         @SuppressWarnings("DuplicateStringLiteralInspection")
         @Override
         public java.lang.String toString() {
             return "Preference<String>{key=" + this.key + ",default=" + this.def + "}";
+        }
+    }
+
+    /**
+     * Represents an encrypted String-value preference.
+     */
+    public static final class EncryptedString extends Preference<java.lang.String> {
+        private final java.lang.String key;
+        private final java.lang.String def;
+
+        public EncryptedString(java.lang.String key, java.lang.String def) {
+            this.key = key;
+            this.def = def;
+        }
+
+        @Override
+        java.lang.String get(SharedPreferences prefs) {
+            if (!has(prefs)) return this.def;
+            EncryptedData data = StringSerializer.deserialize(prefs.getString(this.key, null));
+            try {
+                return new KeyStoreHelper(KeyStoreAlias.PREFERENCES).decryptString(data);
+            } catch (EncryptionException ex) {
+                Log.e("Failed to retrieve preference %s due to a decryption error", ex, this.key); //NON-NLS
+                return this.def;
+            }
+        }
+
+        @Override
+        void set(SharedPreferences.Editor prefs, java.lang.String value) {
+            try {
+                EncryptedData data = new KeyStoreHelper(KeyStoreAlias.PREFERENCES).encryptString(value);
+                prefs.putString(this.key, StringSerializer.serialize(data));
+            } catch (EncryptionException ex) {
+                Log.e("Failed to store preference %s due to an encryption error", ex, this.key); //NON-NLS
+            }
+        }
+
+        @Override
+        boolean has(SharedPreferences prefs) {
+            return prefs.contains(this.key);
+        }
+
+        @Override
+        void clear(SharedPreferences.Editor prefs) {
+            prefs.remove(this.key);
+        }
+
+        @SuppressWarnings("DuplicateStringLiteralInspection")
+        @Override
+        public java.lang.String toString() {
+            return "Preference<String+Encrypted>{key=" + this.key + ",default=" + this.def + "}";
         }
     }
 
@@ -75,6 +155,16 @@ public abstract class Preference<T> {
         @Override
         void set(SharedPreferences.Editor prefs, java.lang.Integer value) {
             prefs.putInt(this.key, value);
+        }
+
+        @Override
+        boolean has(SharedPreferences prefs) {
+            return prefs.contains(this.key);
+        }
+
+        @Override
+        void clear(SharedPreferences.Editor prefs) {
+            prefs.remove(this.key);
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
@@ -105,6 +195,16 @@ public abstract class Preference<T> {
         @Override
         void set(SharedPreferences.Editor prefs, java.lang.Boolean value) {
             prefs.putBoolean(this.key, value);
+        }
+
+        @Override
+        boolean has(SharedPreferences prefs) {
+            return prefs.contains(this.key);
+        }
+
+        @Override
+        void clear(SharedPreferences.Editor prefs) {
+            prefs.remove(this.key);
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")

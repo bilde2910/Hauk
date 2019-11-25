@@ -18,6 +18,7 @@ import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
+import info.varden.hauk.utils.DeprecationMigrator;
 import info.varden.hauk.utils.PreferenceManager;
 import info.varden.hauk.utils.TimeUtils;
 
@@ -58,6 +59,10 @@ public final class Receiver extends BroadcastReceiver {
 
         // Check that the broadcast is authorized.
         if (!checkAuthorization(context, intent)) return;
+
+        // Subsequent calls may result in data being read from preferences. We should ensure that
+        // all deprecated preferences have been migrated before we continue.
+        new DeprecationMigrator(context).migrate();
 
         // Handle the broadcast appropriately.
         switch (intent.getAction()) {
@@ -159,9 +164,9 @@ public final class Receiver extends BroadcastReceiver {
      * @return Session initiation parameters.
      */
     private static SessionInitiationPacket.InitParameters buildSessionParams(Intent intent, PreferenceManager fallback) {
-        String server = intent.hasExtra(Constants.EXTRA_SESSION_SERVER_URL) ? intent.getStringExtra(Constants.EXTRA_SESSION_SERVER_URL) : fallback.get(Constants.PREF_SERVER);
-        String username = intent.hasExtra(Constants.EXTRA_SESSION_USERNAME) ? intent.getStringExtra(Constants.EXTRA_SESSION_USERNAME) : fallback.get(Constants.PREF_USERNAME);
-        String password = intent.hasExtra(Constants.EXTRA_SESSION_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_PASSWORD) : fallback.get(Constants.PREF_PASSWORD);
+        String server = intent.hasExtra(Constants.EXTRA_SESSION_SERVER_URL) ? intent.getStringExtra(Constants.EXTRA_SESSION_SERVER_URL) : fallback.get(Constants.PREF_SERVER_ENCRYPTED);
+        String username = intent.hasExtra(Constants.EXTRA_SESSION_USERNAME) ? intent.getStringExtra(Constants.EXTRA_SESSION_USERNAME) : fallback.get(Constants.PREF_USERNAME_ENCRYPTED);
+        String password = intent.hasExtra(Constants.EXTRA_SESSION_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_PASSWORD) : fallback.get(Constants.PREF_PASSWORD_ENCRYPTED);
         int duration = intent.hasExtra(Constants.EXTRA_SESSION_DURATION) ? intent.getIntExtra(Constants.EXTRA_SESSION_DURATION, 0) : TimeUtils.timeUnitsToSeconds(fallback.get(Constants.PREF_DURATION), fallback.get(Constants.PREF_DURATION_UNIT));
         int interval = intent.hasExtra(Constants.EXTRA_SESSION_INTERVAL) ? intent.getIntExtra(Constants.EXTRA_SESSION_INTERVAL, 0) : fallback.get(Constants.PREF_INTERVAL);
         String customID = intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID) ? intent.getStringExtra(Constants.EXTRA_SESSION_CUSTOM_ID) : fallback.get(Constants.PREF_CUSTOM_ID);
