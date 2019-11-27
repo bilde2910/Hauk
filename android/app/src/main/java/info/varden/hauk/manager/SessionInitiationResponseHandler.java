@@ -30,4 +30,13 @@ public interface SessionInitiationResponseHandler extends FailureHandler {
      * @param backendVersion The version of the Hauk backend server.
      */
     void onShareModeForciblyDowngraded(ShareMode downgradeTo, Version backendVersion);
+
+    /**
+     * Called if the session was successfully initiated, but the backend does not support end-to-end
+     * encryption. {@code onSuccess()} will still be called after this callback in the event that
+     * this happens.
+     *
+     * @param backendVersion The version of the Hauk backend server.
+     */
+    void onE2EForciblyDisabled(Version backendVersion);
 }

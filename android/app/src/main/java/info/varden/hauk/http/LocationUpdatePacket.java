@@ -2,11 +2,21 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Base64;
+
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.utils.Log;
 import info.varden.hauk.utils.TimeUtils;
 
 /**
@@ -36,16 +46,37 @@ public abstract class LocationUpdatePacket extends Packet {
      * @param session  The session for which location is being updated.
      * @param location The updated location data obtained from GNSS/network sensors.
      */
-    public LocationUpdatePacket(Context ctx, Session session, Location location) {
+    protected LocationUpdatePacket(Context ctx, Session session, Location location) {
         super(ctx, session.getServerURL(), Constants.URL_PATH_POST_LOCATION);
-        setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
-        setParameter(Constants.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
-        setParameter(Constants.PACKET_PARAM_TIMESTAMP, String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND));
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
-        // Not all devices provide these parameters.
-        if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, String.valueOf(location.getSpeed()));
-        if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, String.valueOf(location.getAccuracy()));
+        if (session.getE2EPassword() == null) {
+            // If not using end-to-end encryption, send parameters in plain text.
+            setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
+            setParameter(Constants.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
+            setParameter(Constants.PACKET_PARAM_TIMESTAMP, String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND));
+
+            // Not all devices provide these parameters:
+            if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, String.valueOf(location.getSpeed()));
+            if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, String.valueOf(location.getAccuracy()));
+        } else {
+            // We're using end-to-end encryption - generate an IV and encrypt all parameters.
+            try {
+                Cipher cipher = Cipher.getInstance(Constants.E2E_TRANSFORMATION);
+                cipher.init(Cipher.ENCRYPT_MODE, session.getKeySpec(), new SecureRandom());
+                byte[] iv = cipher.getIV();
+
+                setParameter(Constants.PACKET_PARAM_LATITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLatitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+                setParameter(Constants.PACKET_PARAM_LONGITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLongitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+                setParameter(Constants.PACKET_PARAM_TIMESTAMP, Base64.encodeToString(cipher.doFinal(String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+
+                // Not all devices provide these parameters:
+                if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getSpeed()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+                if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getAccuracy()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+            } catch (Exception e) {
+                Log.e("Error was thrown when encrypting location data", e); //NON-NLS
+            }
+        }
     }
 
     @Override

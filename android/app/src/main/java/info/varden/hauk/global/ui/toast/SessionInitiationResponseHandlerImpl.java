@@ -37,6 +37,11 @@ public final class SessionInitiationResponseHandlerImpl implements SessionInitia
     }
 
     @Override
+    public void onE2EForciblyDisabled(Version backendVersion) {
+        Toast.makeText(this.ctx, String.format(this.ctx.getString(R.string.err_ver_e2e), Constants.VERSION_COMPAT_E2E_ENCRYPTION, backendVersion), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onFailure(Exception ex) {
         Toast.makeText(this.ctx, ex.getMessage(), Toast.LENGTH_LONG).show();
     }

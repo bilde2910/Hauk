@@ -107,10 +107,10 @@ public final class MainActivity extends AppCompatActivity {
 
         Log.d("Attaching event handlers"); //NON-NLS
 
-        // Add an on checked handler to the password remember checkbox to save their password
-        // immediately.
+        // Add an on checked handler to the password remember checkbox to save their encryption
+        // password immediately.
         ((CompoundButton) findViewById(R.id.chkRemember)).setOnCheckedChangeListener(
-                new RememberPasswordPreferenceChangedListener(this, (EditText) findViewById(R.id.txtPassword))
+                new RememberPasswordPreferenceChangedListener(this, (EditText) findViewById(R.id.txtE2EPassword))
         );
 
         // Add an event handler to the sharing mode selector.
@@ -167,6 +167,7 @@ public final class MainActivity extends AppCompatActivity {
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
         int interval = Integer.parseInt(((TextView) findViewById(R.id.txtInterval)).getText().toString());
         String customID = ((TextView) findViewById(R.id.txtCustomID)).getText().toString().trim();
+        String e2ePass = ((TextView) findViewById(R.id.txtE2EPassword)).getText().toString();
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
@@ -179,6 +180,7 @@ public final class MainActivity extends AppCompatActivity {
         PreferenceManager prefs = new PreferenceManager(this);
         prefs.set(Constants.PREF_SERVER_ENCRYPTED, server);
         prefs.set(Constants.PREF_USERNAME_ENCRYPTED, username);
+        prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, password);
         prefs.set(Constants.PREF_DURATION, duration);
         prefs.set(Constants.PREF_INTERVAL, interval);
         prefs.set(Constants.PREF_CUSTOM_ID, customID);
@@ -186,12 +188,11 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
 
-        // TODO: Passwords are encrypted now, don't prompt to save, just do it by default
         // If password saving is enabled, save the password as well.
         if (((Checkable) findViewById(R.id.chkRemember)).isChecked()) {
-            Log.i("Saving password"); //NON-NLS
+            Log.i("Saving E2E password"); //NON-NLS
             prefs.set(Constants.PREF_REMEMBER_PASSWORD, true);
-            prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, password);
+            prefs.set(Constants.PREF_E2E_PASSWORD, e2ePass);
         }
 
         assert mode != null;
@@ -200,7 +201,7 @@ public final class MainActivity extends AppCompatActivity {
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
         duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
-        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID);
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
         SessionInitiationResponseHandler responseHandler = new SessionInitiationResponseHandlerImpl();
 
         try {
@@ -255,6 +256,8 @@ public final class MainActivity extends AppCompatActivity {
         view.setVisibility(View.GONE);
         findViewById(R.id.rowUpdateInterval).setVisibility(View.VISIBLE);
         findViewById(R.id.rowCustomID).setVisibility(View.VISIBLE);
+        findViewById(R.id.rowE2EPassword).setVisibility(View.VISIBLE);
+        findViewById(R.id.rowRemember).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -270,6 +273,7 @@ public final class MainActivity extends AppCompatActivity {
                 findViewById(R.id.txtDuration),
                 findViewById(R.id.txtInterval),
                 findViewById(R.id.txtCustomID),
+                findViewById(R.id.txtE2EPassword),
 
                 findViewById(R.id.selUnit),
                 findViewById(R.id.selMode),
@@ -311,6 +315,7 @@ public final class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.txtDuration)).setText(String.valueOf(prefs.get(Constants.PREF_DURATION)));
         ((TextView) findViewById(R.id.txtInterval)).setText(String.valueOf(prefs.get(Constants.PREF_INTERVAL)));
         ((TextView) findViewById(R.id.txtCustomID)).setText(prefs.get(Constants.PREF_CUSTOM_ID));
+        ((TextView) findViewById(R.id.txtE2EPassword)).setText(prefs.get(Constants.PREF_E2E_PASSWORD));
         ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD_ENCRYPTED));
         ((TextView) findViewById(R.id.txtNickname)).setText(prefs.get(Constants.PREF_NICKNAME));
         // Because I can choose between an unchecked cast warning and an overly strong cast warning,
@@ -362,6 +367,11 @@ public final class MainActivity extends AppCompatActivity {
             //noinspection OverlyStrongTypeCast
             ((Spinner) findViewById(R.id.selMode)).setSelection(downgradeTo.getIndex());
             MainActivity.this.dialogSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_group), Constants.VERSION_COMPAT_GROUP_SHARE, backendVersion));
+        }
+
+        @Override
+        public void onE2EForciblyDisabled(Version backendVersion) {
+            MainActivity.this.dialogSvc.showDialog(R.string.err_outdated, String.format(getString(R.string.err_ver_e2e), Constants.VERSION_COMPAT_E2E_ENCRYPTION, backendVersion));
         }
     }
 

@@ -41,6 +41,7 @@ public class SessionInitiationPacket extends Packet {
         setParameter(Constants.PACKET_PARAM_PASSWORD, params.getPassword());
         setParameter(Constants.PACKET_PARAM_DURATION, String.valueOf(params.getDuration()));
         setParameter(Constants.PACKET_PARAM_INTERVAL, String.valueOf(params.getInterval()));
+        setParameter(Constants.PACKET_PARAM_E2E_FLAG, params.getE2EPassword() != null ? "1" : "0");
     }
 
     /**
@@ -99,6 +100,16 @@ public class SessionInitiationPacket extends Packet {
             }
         }
 
+        // Check if the server is out of date for end-to-end encryption, if applicable.
+        String realE2EPassword = this.params.getE2EPassword();
+        if (realE2EPassword != null) {
+            if (!backendVersion.isAtLeast(Constants.VERSION_COMPAT_E2E_ENCRYPTION)) {
+                // If the server is out of date, disable E2E and warn the user.
+                realE2EPassword = null;
+                this.handler.onE2EUnavailable(backendVersion);
+            }
+        }
+
         // Somehow the data array can be empty? Check for this.
         if (data.length < 1) {
             throw new ServerException(getContext(), R.string.err_empty);
@@ -125,7 +136,7 @@ public class SessionInitiationPacket extends Packet {
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.params.getServerURL(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval());
+            Session session = new Session(this.params.getServerURL(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), realE2EPassword);
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             this.handler.onSessionInitiated(share);
@@ -169,6 +180,14 @@ public class SessionInitiationPacket extends Packet {
          * @param backendVersion The Hauk backend version.
          */
         void onShareModeIncompatible(ShareMode downgradeTo, Version backendVersion);
+
+        /**
+         * Called if end-to-end encryption was forcibly disabled because the backend/frontend
+         * doesn't support this feature.
+         *
+         * @param backendVersion The Hauk backend version.
+         */
+        void onE2EUnavailable(Version backendVersion);
     }
 
     /**
@@ -182,6 +201,7 @@ public class SessionInitiationPacket extends Packet {
         private final int duration;
         private final int interval;
         private final String customID;
+        private final String e2ePass;
 
         /**
          * Declares initialization parameters for a session initiation request.
@@ -192,13 +212,14 @@ public class SessionInitiationPacket extends Packet {
          * @param duration The duration, in seconds, to run the share for.
          * @param interval The interval, in seconds, between each sent location update.
          */
-        public InitParameters(String server, String username, String password, int duration, int interval, String customID) {
+        public InitParameters(String server, String username, String password, int duration, int interval, String customID, String e2ePass) {
             this.server = server;
             this.username = username == null || username.isEmpty() ? null : username;
             this.password = password;
             this.duration = duration;
             this.interval = interval;
             this.customID = customID == null || customID.isEmpty() ? null : customID;
+            this.e2ePass = e2ePass == null || e2ePass.isEmpty() ? null : e2ePass;
         }
 
         String getServerURL() {
@@ -225,6 +246,11 @@ public class SessionInitiationPacket extends Packet {
         @Nullable
         String getCustomID() {
             return this.customID;
+        }
+
+        @Nullable
+        String getE2EPassword() {
+            return this.e2ePass;
         }
     }
 }

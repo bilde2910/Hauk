@@ -12,6 +12,8 @@
     <string name="label_interval">Update interval (s):</string>
     <string name="label_custom_id">Preferred link ID:</string>
     <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
+    <string name="label_e2e_password">Encryption key:</string>
+    <string name="label_e2e_password_hint">(for end-to-end encryption)</string>
     <string name="label_mode">Sharing mode:</string>
     <string name="label_allow_adopt">Allow adoption:</string>
     <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
@@ -21,7 +23,7 @@
     <string name="label_remember">Password storage:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Share ID/URL:</string>
-    <string name="chk_remember">Remember password</string>
+    <string name="chk_remember">Remember encryption password</string>
 
     <string name="btn_advanced">Show advanced settings</string>
     <string name="btn_start">Start sharing</string>
@@ -93,6 +95,7 @@
 
     <string name="err_outdated">Server is out of date</string>
     <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
+    <string name="err_ver_e2e">The server does not support end-to-end encryption. End-to-end encryption is supported in version %s and above; the server is currently running version %s. Your share will be created without end-to-end encryption to maintain compatibility.</string>
 
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>

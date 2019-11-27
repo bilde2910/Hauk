@@ -15,7 +15,6 @@ import info.varden.hauk.utils.PreferenceManager;
  * @see info.varden.hauk.ui.MainActivity
  * @author Marius Lindvall
  */
-// TODO: This is useless
 public final class RememberPasswordPreferenceChangedListener implements CompoundButton.OnCheckedChangeListener {
     /**
      * Android application context.
@@ -39,6 +38,6 @@ public final class RememberPasswordPreferenceChangedListener implements Compound
         // was unchecked.
         PreferenceManager prefs = new PreferenceManager(this.ctx);
         prefs.set(Constants.PREF_REMEMBER_PASSWORD, isChecked);
-        prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, isChecked ? this.passwordBox.getText().toString() : "");
+        prefs.set(Constants.PREF_E2E_PASSWORD, isChecked ? this.passwordBox.getText().toString() : "");
     }
 }

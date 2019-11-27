@@ -30,6 +30,7 @@ public enum Constants {
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
     public static final Preference<String> PREF_CUSTOM_ID = new Preference.String("requestLink", "");
+    public static final Preference<String> PREF_E2E_PASSWORD = new Preference.EncryptedString("e2ePassword", "");
     public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
     public static final Preference<Boolean> PREF_REMEMBER_PASSWORD = new Preference.Boolean("rememberPassword", false);
@@ -68,6 +69,7 @@ public enum Constants {
     public static final String EXTRA_SESSION_PASSWORD = "password";
     public static final String EXTRA_SESSION_DURATION = "duration";
     public static final String EXTRA_SESSION_CUSTOM_ID = "requestLink";
+    public static final String EXTRA_SESSION_E2E_PASSWORD = "e2ePassword";
     public static final String EXTRA_SESSION_INTERVAL = "interval";
     public static final String EXTRA_SESSION_ALLOW_ADOPT = "adoptable";
 
@@ -85,6 +87,7 @@ public enum Constants {
     public static final String PACKET_PARAM_ACCURACY = "acc";
     public static final String PACKET_PARAM_ADOPTABLE = "ado";
     public static final String PACKET_PARAM_DURATION = "dur";
+    public static final String PACKET_PARAM_E2E_FLAG = "e2e";
     public static final String PACKET_PARAM_GROUP_PIN = "pin";
     public static final String PACKET_PARAM_ID_TO_ADOPT = "aid";
     public static final String PACKET_PARAM_INTERVAL = "int";
@@ -110,4 +113,14 @@ public enum Constants {
 
     // Minimum backend version that sends the link ID as well as the view link itself.
     public static final Version VERSION_COMPAT_VIEW_ID = new Version("1.2");
+
+    // Minimum backend/frontend version that support end-to-end encryption.
+    public static final Version VERSION_COMPAT_E2E_ENCRYPTION = new Version("1.5");
+
+    // End-to-end encryption specifications.
+    public static final int E2E_AES_KEY_SIZE = 256;
+    public static final int E2E_PBKDF2_ITERATIONS = 65536;
+    public static final String E2E_KD_FUNCTION = "PBKDF2WithHmacSHA1";
+    public static final String E2E_TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    public static final String E2E_KEY_SPEC = "AES";
 }

@@ -227,6 +227,12 @@ public abstract class SessionManager {
             }
 
             @Override
+            public void onE2EUnavailable(Version backendVersion) {
+                Log.e("End-to-end encryption was requested but dropped because the server is out of date (backend=%s)", backendVersion); //NON-NLS
+                upstreamCallback.onE2EForciblyDisabled(backendVersion);
+            }
+
+            @Override
             public void onFailure(Exception ex) {
                 Log.e("Share could not be initiated", ex); //NON-NLS
                 upstreamCallback.onFailure(ex);

@@ -152,12 +152,12 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_span="2"
-                        android:text="@string/btn_advanced"
                         android:onClick="showAdvancedSettings"
-                        style="?android:attr/borderlessButtonStyle" />
+                        android:text="@string/btn_advanced" />
                 </TableRow>
 
                 <!-- Update interval, in seconds. -->
@@ -205,6 +205,50 @@
                         android:inputType="textShortMessage"
                         android:hint="@string/label_custom_id_hint"
                         android:autofillHints="username" />
+                </TableRow>
+
+                <!-- Custom link ID. -->
+                <TableRow
+                    android:id="@+id/rowE2EPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/txtE2EPassword"
+                        android:text="@string/label_e2e_password" />
+
+                    <EditText
+                        android:id="@+id/txtE2EPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:hint="@string/label_e2e_password_hint"
+                        android:autofillHints="e2epassword" />
+                </TableRow>
+
+                <!-- Whether or not to save the server password. -->
+                <TableRow
+                    android:id="@+id/rowRemember"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_remember" />
+
+                    <CheckBox
+                        android:id="@+id/chkRemember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/chk_remember" />
                 </TableRow>
 
                 <!-- The sharing mode (alone or group share). -->
@@ -317,24 +361,6 @@
                         android:inputType="number" />
                 </TableRow>
 
-                <!-- Whether or not to save the server password. -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_remember" />
-
-                    <CheckBox
-                        android:id="@+id/chkRemember"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:text="@string/chk_remember" />
-                </TableRow>
-
                 <!-- The current connection status. -->
                 <TableRow
                     android:layout_width="match_parent"
@@ -348,8 +374,10 @@
 
                     <TextView
                         android:id="@+id/labelStatusCur"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:paddingStart="7dp"
+                        android:paddingEnd="0dp"
                         android:gravity="center_vertical"
                         android:textStyle="bold"
                         android:textColor="@color/statusOff"
