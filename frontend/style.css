@@ -5,6 +5,12 @@
     font-family: sans-serif;
 }
 
+/* Override browser-specific defaults. */
+body {
+    background-color: #fff;
+    color: #000;
+}
+
 .hidden {
     display: none;
 }
