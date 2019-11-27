@@ -2,8 +2,10 @@
     "page_title": "Hauk",
     "expired_head": "Location expired",
     "expired_body": "The shared location you tried to access was not found on the server. If this link worked before, the share might have expired.",
-    "e2e_password_prompt": "This share is protected by end-to-end encryption. Please enter the encryption password to access the share:",
-    "e2e_incorrect": "The encryption password you entered was wrong. Please try again:",
+    "e2e_title": "End-to-end encryption",
+    "e2e_placeholder": "Encryption password",
+    "e2e_password_prompt": "This share is protected by end-to-end encryption. Please enter the encryption password to access the share.",
+    "e2e_incorrect": "The encryption password you entered was wrong. Please try again.",
     "e2e_unavailable_secure": "This share is protected by end-to-end encryption. Decryption is currently unavailable because you are not using HTTPS. Please ensure you are using HTTPS, then try again.",
     "e2e_unsupported": "This share is protected by end-to-end encryption. Your browser does not appear to support the cryptographic functions required to decrypt such shares. Please try again with another web browser.",
     "gnss_signal_head": "Please wait",
@@ -16,6 +18,8 @@
     "status_expired": "Expired",
     "status_offline": "Offline",
     "btn_dismiss": "Dismiss",
+    "btn_cancel": "Cancel",
+    "btn_decrypt": "Decrypt",
     "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
     "google_play_badge_url": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 }

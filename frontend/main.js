@@ -246,12 +246,23 @@ function getJSON(url, callback, invalid) {
     xhr.send();
 }
 
-var dismissExpiredE = document.getElementById("dismiss-expired");
-if (dismissExpiredE !== null) {
-    dismissExpiredE.addEventListener("click", function() {
-        var expiredE = document.getElementById("expired");
-        if (expiredE !== null) expiredE.style.display = "none";
+// General message popup box. Reused for several popups.
+var dismissMessageE = document.getElementById("dismiss-message");
+if (dismissMessageE !== null) {
+    dismissMessageE.addEventListener("click", function() {
+        var messageE = document.getElementById("message-popup");
+        if (messageE !== null) messageE.style.display = "none";
     });
+}
+
+// Shows a dialog box with a title and message.
+function showMessage(title, message) {
+    var messageE = document.getElementById("message-popup");
+    var titleE = document.getElementById("message-title");
+    var bodyE = document.getElementById("message-body");
+    if (titleE !== null) titleE.textContent = title;
+    if (bodyE !== null) bodyE.textContent = message;
+    if (messageE !== null) messageE.style.display = "block";
 }
 
 var dismissOfflineE = document.getElementById("dismiss-offline");
@@ -262,12 +273,33 @@ if (dismissOfflineE !== null) {
     });
 }
 
+// End-to-end encryption password prompt handlers.
+var passwordInputE = document.getElementById("e2e-password");
+var passwordDecryptE = document.getElementById("decrypt-e2e-password");
+if (passwordInputE !== null) {
+    passwordInputE.addEventListener("keyup", function(e) {
+        if (e.keyCode == 13) {
+            if (passwordDecryptE !== null) {
+                passwordDecryptE.click();
+            }
+        }
+    });
+}
+
+var passwordCancelE = document.getElementById("cancel-e2e-password");
+if (passwordCancelE !== null) {
+    passwordCancelE.addEventListener("click", function() {
+        var promptE = document.getElementById("e2e-prompt");
+        if (promptE !== null) promptE.style.display = "none";
+        if (passwordDecryptE !== null && acceptKeyFunc !== null) passwordDecryptE.removeEventListener("click", acceptKeyFunc);
+    });
+}
+
 var fetchIntv;
 var countIntv;
 
 function setNewInterval(expire, interval) {
     var countdownE = document.getElementById("countdown");
-    var expiredE = document.getElementById("expired");
 
     // The data contains an expiration time. Create a countdown at the top of
     // the map screen that ends when the share is over.
@@ -300,7 +332,7 @@ function setNewInterval(expire, interval) {
             clearInterval(fetchIntv);
             clearInterval(countIntv);
             if (countdownE !== null) countdownE.textContent = LANG["status_expired"];
-            if (expiredE !== null) expiredE.style.display = "block";
+            showMessage(LANG["dialog_expired_head"], LANG["dialog_expired_body"]);
         }
 
         getJSON("./api/fetch.php?id=" + id, function(data) {
@@ -317,7 +349,7 @@ function setNewInterval(expire, interval) {
             clearInterval(fetchIntv);
             clearInterval(countIntv);
             if (countdownE !== null) countdownE.textContent = LANG["status_expired"];
-            if (expiredE !== null) expiredE.style.display = "block";
+            showMessage(LANG["dialog_expired_head"], LANG["dialog_expired_body"]);
         });
     }, interval * 1000);
 }
@@ -336,9 +368,8 @@ var following = null;
 // The decryption key for end-to-end encrypted shares.
 var aesKey = null;
 
-// Whether or not the user has already entered an incorrect encryption password
-// at least once.
-var hasEnteredPass = false;
+// Button handler for the "Decrypt" button on the E2E password prompt.
+var acceptKeyFunc = null;
 
 // Converts a base64-encoded string to a Uint8Array ArrayBuffer for use with
 // WebCrypto.
@@ -366,13 +397,13 @@ function processUpdate(data, init) {
 
     // Check for crypto support if necessary.
     if (data.encrypted && !("crypto" in window)) {
-        alert(LANG["e2e_unsupported"]);
+        showMessage(LANG["e2e_title"], LANG["e2e_unsupported"]);
         return;
     } else if (data.encrypted && !("subtle" in window.crypto)) {
         if (!window.isSecureContext) {
-            alert(LANG["e2e_unavailable_secure"]);
+            showMessage(LANG["e2e_title"], LANG["e2e_unavailable_secure"]);
         } else {
-            alert(LANG["e2e_unsupported"]);
+            showMessage(LANG["e2e_title"], LANG["e2e_unsupported"]);
         }
         return;
     }
@@ -380,29 +411,44 @@ function processUpdate(data, init) {
     if (data.encrypted && aesKey == null) {
         // If using end-to-end encryption, we need to decrypt the data. We have
         // not obtained an AES key yet, so prompt the user for it.
-        var password = prompt(hasEnteredPass ? LANG["e2e_incorrect"] : LANG["e2e_password_prompt"]);
-        if (password == null) return;
-        hasEnteredPass = true;
+        var promptE = document.getElementById("e2e-prompt");
+        var labelE = document.getElementById("e2e-password-label");
+        if (promptE !== null && passwordInputE !== null && passwordDecryptE !== null && labelE !== null) {
+            acceptKeyFunc = function() {
+                // Remove the event listener, hide the dialog and fetch the
+                // password.
+                passwordDecryptE.removeEventListener("click", acceptKeyFunc);
+                promptE.style.display = "none";
+                labelE.textContent = LANG["e2e_incorrect"];
+                var password = passwordInputE.value;
 
-        // Get the salt in binary format.
-        var salt = byteArray(data.salt);
+                // Get the salt in binary format.
+                var salt = byteArray(data.salt);
 
-        // Derive the encryption key using PBKDF2 with SHA-1. SHA-1 was chosen
-        // because of availability in Android.
-        crypto.subtle
-            .importKey("raw", new TextEncoder("utf-8").encode(password), "PBKDF2", false, ["deriveKey"])
-            .then(key => crypto.subtle.deriveKey(
-                {name: "PBKDF2", salt: salt, iterations: 65536, hash: "SHA-1"},
-                key,
-                {name: "AES-CBC", length: 256},
-                false,
-                ["decrypt"]
-            ))
-            .then(key => {
-                // Store the crypto key and re-process the update.
-                aesKey = key;
-                processUpdate(data, init);
-            });
+                // Derive the encryption key using PBKDF2 with SHA-1. SHA-1 was chosen
+                // because of availability in Android.
+                crypto.subtle
+                    .importKey("raw", new TextEncoder("utf-8").encode(password), "PBKDF2", false, ["deriveKey"])
+                    .then(key => crypto.subtle.deriveKey(
+                        {name: "PBKDF2", salt: salt, iterations: 65536, hash: "SHA-1"},
+                        key,
+                        {name: "AES-CBC", length: 256},
+                        false,
+                        ["decrypt"]
+                    ))
+                    .then(key => {
+                        // Store the crypto key and re-process the update.
+                        aesKey = key;
+                        processUpdate(data, init);
+                    });
+            };
+
+            // Attach the listener to the dialog box and show it.
+            passwordDecryptE.addEventListener("click", acceptKeyFunc);
+            passwordInputE.value = "";
+            promptE.style.display = "block";
+            passwordInputE.focus();
+        }
 
         return;
 

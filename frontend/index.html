@@ -81,11 +81,11 @@
             </a></p>
         </div>
 
-        <div id="expired" class="dialog hidden">
+        <div id="message-popup" class="dialog hidden">
             <div>
-                <p class="header" data-i18n="dialog_expired_head"></p>
-                <p class="body" data-i18n="dialog_expired_body"></p>
-                <p class="button"><input type="button" id="dismiss-expired" data-i18n-attr="value" data-i18n="btn_dismiss"></p>
+                <p class="header" id="message-title"></p>
+                <p class="body" id="message-body"></p>
+                <p class="button"><input type="button" id="dismiss-message" data-i18n-attr="value" data-i18n="btn_dismiss"></p>
             </div>
         </div>
 
@@ -94,6 +94,18 @@
                 <p class="header" data-i18n="dialog_connection_head"></p>
                 <p class="body" data-i18n="dialog_connection_body"></p>
                 <p class="button"><input type="button" id="dismiss-offline" data-i18n-attr="value" data-i18n="btn_dismiss"></p>
+            </div>
+        </div>
+
+        <div id="e2e-prompt" class="dialog hidden">
+            <div>
+                <p class="header" data-i18n="e2e_title"></p>
+                <p class="body" id="e2e-password-label" data-i18n="e2e_password_prompt"></p>
+                <p class="body"><input type="password" id="e2e-password" data-i18n-attr="placeholder" data-i18n="e2e_placeholder"></p>
+                <p class="button">
+                    <input type="button" id="cancel-e2e-password" data-i18n-attr="value" data-i18n="btn_cancel">
+                    <input type="button" id="decrypt-e2e-password" data-i18n-attr="value" data-i18n="btn_decrypt">
+                </p>
             </div>
         </div>
 

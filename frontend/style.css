@@ -101,6 +101,11 @@ body {
     font-size: 1em;
 }
 
+/* Ensure the password prompt fills the dialog box. */
+.dialog input[type=password] {
+    width: calc(100% - 20px);
+}
+
 /* Visible on the root page of Hauk. */
 #url {
     color: #d80037;
