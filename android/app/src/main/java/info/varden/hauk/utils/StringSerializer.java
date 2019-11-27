@@ -15,7 +15,6 @@ import java.io.Serializable;
  * Helper class that serializes a serializable class to and from Base64-encoded strings for storage
  * in Android shared preferences.
  */
-@SuppressWarnings("StaticMethodOnlyUsedInOneClass")
 public enum StringSerializer {
     ;
 

@@ -5,12 +5,9 @@ import android.location.Location;
 import android.util.Base64;
 
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
@@ -50,7 +47,7 @@ public abstract class LocationUpdatePacket extends Packet {
         super(ctx, session.getServerURL(), Constants.URL_PATH_POST_LOCATION);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
-        if (session.getE2EPassword() == null) {
+        if (session.getDerivableE2EKey() == null) {
             // If not using end-to-end encryption, send parameters in plain text.
             setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
             setParameter(Constants.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
@@ -63,8 +60,9 @@ public abstract class LocationUpdatePacket extends Packet {
             // We're using end-to-end encryption - generate an IV and encrypt all parameters.
             try {
                 Cipher cipher = Cipher.getInstance(Constants.E2E_TRANSFORMATION);
-                cipher.init(Cipher.ENCRYPT_MODE, session.getKeySpec(), new SecureRandom());
+                cipher.init(Cipher.ENCRYPT_MODE, session.getDerivableE2EKey().deriveSpec(), new SecureRandom());
                 byte[] iv = cipher.getIV();
+                setParameter(Constants.PACKET_PARAM_INIT_VECTOR, Base64.encodeToString(iv, Base64.DEFAULT));
 
                 setParameter(Constants.PACKET_PARAM_LATITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLatitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
                 setParameter(Constants.PACKET_PARAM_LONGITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLongitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));

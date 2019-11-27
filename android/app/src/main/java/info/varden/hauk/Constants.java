@@ -90,11 +90,13 @@ public enum Constants {
     public static final String PACKET_PARAM_E2E_FLAG = "e2e";
     public static final String PACKET_PARAM_GROUP_PIN = "pin";
     public static final String PACKET_PARAM_ID_TO_ADOPT = "aid";
+    public static final String PACKET_PARAM_INIT_VECTOR = "iv";
     public static final String PACKET_PARAM_INTERVAL = "int";
     public static final String PACKET_PARAM_LATITUDE = "lat";
     public static final String PACKET_PARAM_LONGITUDE = "lon";
     public static final String PACKET_PARAM_NICKNAME = "nic";
     public static final String PACKET_PARAM_PASSWORD = "pwd";
+    public static final String PACKET_PARAM_SALT = "salt";
     public static final String PACKET_PARAM_SESSION_ID = "sid";
     public static final String PACKET_PARAM_SHARE_ID = "lid";
     public static final String PACKET_PARAM_SHARE_MODE = "mod";

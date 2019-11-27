@@ -27,6 +27,7 @@ $share = Share::fromShareID($memcache, $shid);
 if (!$share->exists()) die($LANG['share_not_found']."\n");
 if (!$share->getType() === SHARE_TYPE_ALONE) die($LANG['group_share_not_adoptable']."\n");
 if (!$share->isAdoptable()) die($LANG['share_adoption_not_allowed']."\n");
+if ($share->getHost()->isEncrypted()) die($LANG['e2e_adoption_not_allowed']."\n");
 
 // Retrieve the target share.
 $pin = $_POST["pin"];

@@ -26,20 +26,32 @@ if ($i < getConfig("min_interval")) die($LANG['interval_too_short']."\n");
 // enabled by default in the app, but users are free to change this.
 $adoptable = isset($_POST["ado"]) ? intval($_POST["ado"]) : 0;
 $expire = time() + $d;
+$encrypted = isset($_POST["e2e"]) ? intval($_POST["e2e"]) : 0;
 
 // Require additional arguments depending on the given sharing mode.
 switch ($mod) {
     case SHARE_MODE_CREATE_GROUP:
+        // End-to-end encryption is not supported for group shares.
+        if ($encrypted > 0) die($LANG['group_e2e_unsupported']."\n");
         requirePOST(
             "nic"  // Nickname to join the group share with.
         );
         break;
     case SHARE_MODE_JOIN_GROUP:
+        // End-to-end encryption is not supported for group shares.
+        if ($encrypted > 0) die($LANG['group_e2e_unsupported']."\n");
         requirePOST(
             "nic", // Nickname to join the group share with.
             "pin"  // Group PIN for the group to attach to.
         );
         break;
+}
+
+// Also require salt when creating encrypted shares.
+if ($encrypted) {
+    requirePOST(
+        "salt" // Salt used to derive the key in PBKDF2.
+    );
 }
 
 // If a custom link is requested, validate the ID.
@@ -70,7 +82,10 @@ switch ($mod) {
             ->save();
 
         // Tell the session that it is posting to this share.
-        $host->addTarget($share)->save();
+        $host
+            ->addTarget($share)
+            ->setEncrypted($encrypted, $_POST["salt"])
+            ->save();
 
         $output = array(
             "OK",

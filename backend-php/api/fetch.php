@@ -29,7 +29,9 @@ if (!$share->exists()) {
                 "type" => $share->getType(),
                 "expire" => $share->getExpirationTime(),
                 "interval" => $session->getInterval(),
-                "points" => $session->getPoints()
+                "points" => $session->getPoints(),
+                "encrypted" => $session->isEncrypted(),
+                "salt" => $session->getEncryptionSalt()
             ));
             break;
 

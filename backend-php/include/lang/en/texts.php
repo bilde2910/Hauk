@@ -16,3 +16,5 @@ $LANG['share_mode_unsupported'] = 'Unsupported share mode!';
 $LANG['group_pin_invalid'] = 'Invalid group PIN!';
 $LANG['session_invalid'] = 'Invalid session!';
 $LANG['location_invalid'] = 'Invalid location!';
+$LANG['group_e2e_unsupported'] = 'End-to-end encryption cannot be used for group shares!';
+$LANG['e2e_adoption_not_allowed'] = 'This share is using end-to-end encryption and cannot be adopted!';

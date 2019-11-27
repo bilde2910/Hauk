@@ -36,20 +36,22 @@ xhr.onreadystatechange = function() {
                         LANG[key] = data[key];
                     }
                     localizeHTML();
+                    init();
                 }
             };
             xhr2.open('GET', './assets/lang/' + prefLang + '.json', true);
             xhr2.send();
         } else {
             localizeHTML();
+            init();
         }
     }
 };
 xhr.open('GET', './assets/lang/en.json', true);
 xhr.send();
 
+// Put localized strings in HTML.
 function localizeHTML() {
-    // Put localized strings in HTML.
     var tags = document.querySelectorAll('[data-i18n]');
     for (var key in tags) {
         if (!tags.hasOwnProperty(key)) continue;
@@ -59,6 +61,31 @@ function localizeHTML() {
         } else {
             tags[key].textContent = LANG[i18nKey];
         }
+    }
+}
+
+// Starts fetching location data from the server. This is called after I18N has
+// loaded to ensure strings are present for prompts.
+function init() {
+    if (location.href.indexOf("?") === -1 || id == "") {
+        // If there is no share ID, show the root page.
+        var url = location.href.indexOf("?") === -1 ? location.href : location.href.substring(0, location.href.indexOf("?"));
+
+        var urlE = document.getElementById("url");
+        var indexE = document.getElementById("index");
+        if (urlE !== null) urlE.textContent = url;
+        if (indexE !== null) indexE.style.display = "block";
+    } else {
+        // Attempt to fetch location data from the server once.
+        getJSON("./api/fetch.php?id=" + id, function(data) {
+            // Initialize the Leaflet map.
+            initMap();
+            noGPS.style.display = "block";
+            processUpdate(data, true);
+        }, function() {
+            var notFoundE = document.getElementById("notfound");
+            if (notFoundE !== null) notFoundE.style.display = "block";
+        });
     }
 }
 
@@ -284,7 +311,7 @@ function setNewInterval(expire, interval) {
                 clearInterval(countIntv);
                 setNewInterval(data.expire, data.interval);
             }
-            processUpdate(data);
+            processUpdate(data, false);
         }, function() {
             // On failure to get new location data:
             clearInterval(fetchIntv);
@@ -296,28 +323,6 @@ function setNewInterval(expire, interval) {
 }
 
 var noGPS = document.getElementById("searching");
-console.log(id);
-if (location.href.indexOf("?") === -1 || id == "") {
-    // If there is no share ID, show the root page.
-    var url = location.href.indexOf("?") === -1 ? location.href : location.href.substring(0, location.href.indexOf("?"));
-
-    var urlE = document.getElementById("url");
-    var indexE = document.getElementById("index");
-    if (urlE !== null) urlE.textContent = url;
-    if (indexE !== null) indexE.style.display = "block";
-} else {
-    // Attempt to fetch location data from the server once.
-    getJSON("./api/fetch.php?id=" + id, function(data) {
-        // Initialize the Leaflet map.
-        initMap();
-        noGPS.style.display = "block";
-        setNewInterval(data.expire, data.interval);
-        processUpdate(data);
-    }, function() {
-        var notFoundE = document.getElementById("notfound");
-        if (notFoundE !== null) notFoundE.style.display = "block";
-    });
-}
 
 // Whether or not an initial location has been received.
 var hasReceivedFirst = false;
@@ -328,8 +333,27 @@ var hasInitiated = false;
 // The user being followed on the map.
 var following = null;
 
+// The decryption key for end-to-end encrypted shares.
+var aesKey = null;
+
+// Whether or not the user has already entered an incorrect encryption password
+// at least once.
+var hasEnteredPass = false;
+
+// Converts a base64-encoded string to a Uint8Array ArrayBuffer for use with
+// WebCrypto.
+function byteArray(base64) {
+    var raw = atob(base64);
+    var len = raw.length;
+    var arr = new Uint8Array(new ArrayBuffer(len));
+    for (var i = 0; i < len; i++) {
+        arr[i] = raw.charCodeAt(i);
+    }
+    return arr;
+}
+
 // Parses the data returned from ./api/fetch.php and updates the map marker.
-function processUpdate(data) {
+function processUpdate(data, init) {
     var users = {};
     var multiUser = false;
     if (data.type == SHARE_TYPE_ALONE) {
@@ -339,6 +363,96 @@ function processUpdate(data) {
         users = data.points;
         multiUser = true;
     }
+
+    // Check for crypto support if necessary.
+    if (data.encrypted && !("crypto" in window)) {
+        alert(LANG["e2e_unsupported"]);
+        return;
+    } else if (data.encrypted && !("subtle" in window.crypto)) {
+        if (!window.isSecureContext) {
+            alert(LANG["e2e_unavailable_secure"]);
+        } else {
+            alert(LANG["e2e_unsupported"]);
+        }
+        return;
+    }
+
+    if (data.encrypted && aesKey == null) {
+        // If using end-to-end encryption, we need to decrypt the data. We have
+        // not obtained an AES key yet, so prompt the user for it.
+        var password = prompt(hasEnteredPass ? LANG["e2e_incorrect"] : LANG["e2e_password_prompt"]);
+        if (password == null) return;
+        hasEnteredPass = true;
+
+        // Get the salt in binary format.
+        var salt = byteArray(data.salt);
+
+        // Derive the encryption key using PBKDF2 with SHA-1. SHA-1 was chosen
+        // because of availability in Android.
+        crypto.subtle
+            .importKey("raw", new TextEncoder("utf-8").encode(password), "PBKDF2", false, ["deriveKey"])
+            .then(key => crypto.subtle.deriveKey(
+                {name: "PBKDF2", salt: salt, iterations: 65536, hash: "SHA-1"},
+                key,
+                {name: "AES-CBC", length: 256},
+                false,
+                ["decrypt"]
+            ))
+            .then(key => {
+                // Store the crypto key and re-process the update.
+                aesKey = key;
+                processUpdate(data, init);
+            });
+
+        return;
+
+    } else if (data.encrypted) {
+        // The data is encrypted, but now we have a key we can use to decrypt
+        // it. Decrypt each point using the key.
+        var algo = {name: "AES-CBC"};
+
+        var pointPromises = [];
+        for (var i = 0; i < data.points.length; i++) {
+            algo.iv = byteArray(data.points[i][0]);
+            var promises = [];
+            for (var j = 1; j < data.points[i].length; j++) {
+                promises.push(crypto.subtle.decrypt(algo, aesKey, byteArray(data.points[i][j])));
+            }
+            pointPromises.push(Promise.all(promises));
+        }
+
+        // Wait for all points to be decrypted.
+        Promise
+            .all(pointPromises)
+            .then(function(values) {
+                // Parse all points and conver them to floating point values
+                // (all values in the array are currently numbers).
+                var decoder = new TextDecoder("utf-8");
+                for (var i = 0; i < values.length; i++) {
+                    for (var j = 0; j < values[i].length; j++) {
+                        data.points[i][j] = parseFloat(decoder.decode(values[i][j]));
+                    }
+                    // The IV was the first item in the array, so all items have
+                    // been shifted up once. Pop the last array element off.
+                    data.points[i].pop();
+                }
+
+                // Flag the data as unencrypted and re-process the update.
+                data.encrypted = false;
+                processUpdate(data, init);
+            })
+            .catch(function(error) {
+                // Decryption error. Most likely incorrect password. Reset the
+                // key and prompt the user for the password again.
+                aesKey = null;
+                processUpdate(data, init);
+            });
+
+        return;
+    }
+
+    // If flagged to initialize, set up polling.
+    if (init) setNewInterval(data.expire, data.interval);
 
     for (var user in users) {
         if (!users.hasOwnProperty(user)) continue;

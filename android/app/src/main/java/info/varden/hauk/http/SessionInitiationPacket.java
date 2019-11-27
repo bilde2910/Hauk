@@ -1,12 +1,16 @@
 package info.varden.hauk.http;
 
 import android.content.Context;
+import android.util.Base64;
 
 import androidx.annotation.Nullable;
+
+import java.security.SecureRandom;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.struct.AdoptabilityPreference;
+import info.varden.hauk.struct.KeyDerivable;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.ShareMode;
@@ -28,6 +32,11 @@ public class SessionInitiationPacket extends Packet {
      */
     private ShareMode mode;
 
+    /**
+     * A salt used if the session is end-to-end encrypted.
+     */
+    private final byte[] salt;
+
     private SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler) {
         super(ctx, params.getServerURL(), Constants.URL_PATH_CREATE_SHARE);
         this.params = params;
@@ -37,6 +46,16 @@ public class SessionInitiationPacket extends Packet {
         }
         if (params.getCustomID() != null) {
             setParameter(Constants.PACKET_PARAM_SHARE_ID, params.getCustomID());
+        }
+        // Generate a random salt key derivation if using end-to-end encryption.
+        if (params.getE2EPassword() != null) {
+            SecureRandom rand = new SecureRandom();
+            this.salt = new byte[Constants.E2E_AES_KEY_SIZE / 8];
+            rand.nextBytes(this.salt);
+            // The backend needs to know about the salt so the frontend can derive the key using it.
+            setParameter(Constants.PACKET_PARAM_SALT, Base64.encodeToString(this.salt, Base64.DEFAULT));
+        } else {
+            this.salt = null;
         }
         setParameter(Constants.PACKET_PARAM_PASSWORD, params.getPassword());
         setParameter(Constants.PACKET_PARAM_DURATION, String.valueOf(params.getDuration()));
@@ -101,11 +120,11 @@ public class SessionInitiationPacket extends Packet {
         }
 
         // Check if the server is out of date for end-to-end encryption, if applicable.
-        String realE2EPassword = this.params.getE2EPassword();
-        if (realE2EPassword != null) {
-            if (!backendVersion.isAtLeast(Constants.VERSION_COMPAT_E2E_ENCRYPTION)) {
-                // If the server is out of date, disable E2E and warn the user.
-                realE2EPassword = null;
+        KeyDerivable e2eParams = null;
+        if (this.params.getE2EPassword() != null) {
+            if (backendVersion.isAtLeast(Constants.VERSION_COMPAT_E2E_ENCRYPTION)) {
+                e2eParams = new KeyDerivable(this.params.getE2EPassword(), this.salt);
+            } else {
                 this.handler.onE2EUnavailable(backendVersion);
             }
         }
@@ -136,7 +155,7 @@ public class SessionInitiationPacket extends Packet {
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.params.getServerURL(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), realE2EPassword);
+            Session session = new Session(this.params.getServerURL(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), e2eParams);
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             this.handler.onSessionInitiated(share);

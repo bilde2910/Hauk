@@ -3,17 +3,9 @@ package info.varden.hauk.struct;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.utils.TimeUtils;
@@ -54,34 +46,18 @@ public final class Session implements Serializable {
     private final int interval;
 
     /**
-     * End-to-end password to encrypt outgoing data with.
+     * End-to-end encryption parameters.
      */
     @Nullable
-    private final String e2ePass;
+    private final KeyDerivable e2eParams;
 
-    /**
-     * Salt used in PBKDF2 for key derivation.
-     */
-    @Nullable
-    private final byte[] salt;
-
-    /**
-     * Secret key spec cache to improve performance regarding key derivation.
-     */
-    @Nullable
-    private transient SecretKeySpec keySpec = null;
-
-    public Session(String serverURL, Version backendVersion, String sessionID, long expiry, int interval, @Nullable String e2ePass) {
+    public Session(String serverURL, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
         this.serverURL = serverURL;
         this.backendVersion = backendVersion;
         this.sessionID = sessionID;
         this.expiry = expiry;
         this.interval = interval;
-        this.e2ePass = e2ePass;
-
-        SecureRandom rand = new SecureRandom();
-        this.salt = new byte[Constants.E2E_AES_KEY_SIZE / 8];
-        rand.nextBytes(this.salt);
+        this.e2eParams = e2eParams;
     }
 
     @Override
@@ -91,7 +67,7 @@ public final class Session implements Serializable {
                 + ",sessionID=" + this.sessionID
                 + ",expiry=" + this.expiry
                 + ",interval=" + this.interval
-                + ",e2ePass=" + this.e2ePass
+                + ",e2eParams=" + this.e2eParams
                 + "}";
     }
 
@@ -165,24 +141,7 @@ public final class Session implements Serializable {
     }
 
     @Nullable
-    public String getE2EPassword() {
-        return this.e2ePass;
-    }
-
-    @Nullable
-    public SecretKeySpec getKeySpec() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        if (this.e2ePass == null) {
-            // If end-to-end encryption is not used:
-            return null;
-        } else if (this.keySpec == null) {
-            // E2E encryption is used, but the keyspec hasn't been cached yet. Generate and cache
-            // it, then return the spec.
-            KeySpec ks = new PBEKeySpec(this.e2ePass.toCharArray(), this.salt, Constants.E2E_PBKDF2_ITERATIONS, Constants.E2E_AES_KEY_SIZE);
-            SecretKeyFactory kf = SecretKeyFactory.getInstance(Constants.E2E_KD_FUNCTION);
-            byte[] key = kf.generateSecret(ks).getEncoded();
-            this.keySpec = new SecretKeySpec(key, Constants.E2E_KEY_SPEC);
-        }
-
-        return this.keySpec;
+    public KeyDerivable getDerivableE2EKey() {
+        return this.e2eParams;
     }
 }

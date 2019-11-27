@@ -509,7 +509,9 @@ class Client {
                 "expire" => 0,
                 "interval" => null,
                 "targets" => array(),
-                "points" => array()
+                "points" => array(),
+                "encrypted" => 0,
+                "salt" => null
             );
             // Generate new session IDs for new sessions.
             $this->sessionID = $this->generateSessionID();
@@ -596,6 +598,23 @@ class Client {
     // Gets the current sharing interval of this session, in seconds.
     public function getInterval() {
         return $this->sessionData["interval"];
+    }
+
+    // Sets whether or not this share is end-to-end encrypted.
+    public function setEncrypted($encrypted, $salt) {
+        $this->sessionData["encrypted"] = $encrypted;
+        $this->sessionData["salt"] = $salt;
+        return $this;
+    }
+
+    // Returns whether or not this share is end-to-end encrypted.
+    public function isEncrypted() {
+        return $this->sessionData["encrypted"] > 0;
+    }
+
+    // Returns the salt used to derive the key for end-to-end encryption.
+    public function getEncryptionSalt() {
+        return $this->sessionData["salt"];
     }
 
     // Adds a new share that this session is contributing location data to. Used
