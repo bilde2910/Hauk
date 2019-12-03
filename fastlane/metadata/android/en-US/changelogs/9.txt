@@ -1,0 +1,6 @@
+For full changelog, see https://github.com/bilde2910/Hauk/releases
+
+* Update localizations for German
+* End-to-end encryption supported (requires backend update)
+* Server connection details are now encrypted at rest (#58)
+* Fixed frontend back- and foreground coloring in browsers using custom default colors
