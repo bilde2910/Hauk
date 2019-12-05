@@ -13,5 +13,13 @@
     "gnss_signal_head": "Vennligst vent",
     "expired_body": "Den delte posisjonen du prøvde å åpne ble ikke funnet på serveren. Hvis denne linken virket tidligere, kan det hende at delingen har utløpt.",
     "expired_head": "Posisjon utløpt",
-    "page_title": "Hauk"
+    "page_title": "Hauk",
+    "btn_decrypt": "Dekrypter",
+    "btn_cancel": "Avbryt",
+    "e2e_unsupported": "Denne delte posisjonen er beskyttet av ende-til-ende-kryptering. Nettleseren din ser ikke ut til å støtte de kryptografiske funksjonene som kreves for å dekryptere slike delinger. Vennligst prøv igjen med en annen nettleser.",
+    "e2e_unavailable_secure": "Denne delte posisjonen er beskyttet med ende-til-ende-kryptering. Dekryptering er dessverre ikke mulig fordi du ikke bruker HTTPS for øyeblikket. Vennligst last inn siden med HTTPS og prøv igjen.",
+    "e2e_incorrect": "Krypteringsnøkkelen du skrev inn er feil. Vennligst prøv igjen.",
+    "e2e_password_prompt": "Denne delte posisjonen er beskyttet med ende-til-ende-kryptering. Vennligst skriv inn krypteringsnøkkelen for å få tilgang til delingen.",
+    "e2e_placeholder": "Krypteringsnøkkel",
+    "e2e_title": "Ende-til-ende-kryptering"
 }
