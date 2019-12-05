@@ -1,0 +1,4 @@
+For full changelog, see https://github.com/bilde2910/Hauk/releases
+
+* Shares no longer stop working after 30 seconds in the background on Android 10 (#61)
+* The Hauk notification now uses "copy" and "stop" icons instead of the launcher icon on Android 6
