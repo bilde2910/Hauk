@@ -24,8 +24,8 @@ phone, and you're good to go!
 
 ## System Requirements
 
-- Web server running LEMP or LAMP
-- PHP Memcached or Memcache extension installed on websever.
+- Web server running PHP and Memcached or Redis
+- PHP `memcached`, `memcache` or `redis` extension installed on the web server.
 - Android 6 or above to run the [companion Android app](https://f-droid.org/packages/info.varden.hauk/).
 
 ## Installation instructions
@@ -35,12 +35,9 @@ phone, and you're good to go!
    to install Hauk in, for example `/var/www/html`. Follow the instructions
    given by the install script. Make sure to set a secure hashed password and
    edit your site's domain in the configuration file after installation.
-3. Start the webserver and make sure Memcached is running.
+3. Start the web server and make sure Memcached or Redis is running.
 4. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
    on your phone and enter your server's settings.
-
-When you visit the webroot you may see an experation notice. Hauk uses randomly
-generated URL which will be provided by the app.
 
 ## Manual installation
 
@@ -52,7 +49,7 @@ files manually.
    in your web root, for example `/var/www/html`.
 3. Modify `include/config.php` to your liking. Make sure to set a secure hashed
    password and edit your site's domain in this file.
-4. Start the webserver and make sure Memcached is running.
+4. Start the web server and make sure Memcached or Redis is running.
 5. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
    on your phone and enter your server's settings.
 
