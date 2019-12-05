@@ -16,3 +16,5 @@ $LANG['session_invalid'] = 'Ugyldig sesjon!';
 $LANG['location_invalid'] = 'Ugyldig lokasjon!';
 $LANG['config_missing'] = 'Kunne ikkje finna config.php!';
 $LANG['username_required'] = 'Brukarnamn krevjast!';
+$LANG['e2e_adoption_not_allowed'] = 'Denne delinga bruker ende-til-ende-kryptering og kan ikkje adopterast!';
+$LANG['group_e2e_unsupported'] = 'Ende-til-ende-kryptering kan ikkje nyttast for gruppedelingar!';
