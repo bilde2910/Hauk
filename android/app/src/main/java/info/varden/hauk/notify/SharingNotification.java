@@ -49,8 +49,8 @@ public final class SharingNotification extends HaukNotification {
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // Add "Copy link" and "Stop sharing" buttons to the notification.
-        builder.addAction(R.drawable.ic_notify, getContext().getString(R.string.action_copy), new Receiver<>(getContext(), CopyLinkReceiver.class, this.share.getViewURL()).toPending());
-        builder.addAction(R.drawable.ic_notify, getContext().getString(R.string.action_stop), new Receiver<>(getContext(), StopSharingReceiver.class, this.stopSharingTask).toPending());
+        builder.addAction(R.drawable.ic_button_copy, getContext().getString(R.string.action_copy), new Receiver<>(getContext(), CopyLinkReceiver.class, this.share.getViewURL()).toPending());
+        builder.addAction(R.drawable.ic_button_stop, getContext().getString(R.string.action_stop), new Receiver<>(getContext(), StopSharingReceiver.class, this.stopSharingTask).toPending());
         builder.setContentIntent(new ReopenIntent(getContext(), MainActivity.class).toPending());
 
         builder.setOngoing(true);
