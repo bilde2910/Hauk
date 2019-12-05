@@ -50,7 +50,7 @@
                 <action android:name="info.varden.hauk.STOP_SHARING" />
             </intent-filter>
         </receiver>
-        <service android:name=".service.LocationPushService" android:exported="false" android:enabled="true">
+        <service android:name=".service.LocationPushService" android:exported="false" android:enabled="true" android:foregroundServiceType="location">
             <intent-filter>
                 <action android:name="info.varden.hauk.LOCATION_SERVICE" />
             </intent-filter>
