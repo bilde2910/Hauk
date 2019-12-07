@@ -1,8 +1,16 @@
 #!/bin/sh
 
 # Set up QEMU for cross compilation
-apt update -y
+apt -y update
 apt -y --only-upgrade install docker-ee
-apt install -y qemu-user-static
+apt -y install qemu-user-static jq
 cp /usr/bin/qemu-*-static .
+
+# Enable Docker CLI experimental mode
+TMPFILE=`mktemp`
+jq '.experimental="enabled"' ~/.docker/config.json > "$TMPFILE"
+rm ~/.docker/config.json
+mv "$TMPFILE" ~/.docker/config.json
+
+# Register QEMU
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
