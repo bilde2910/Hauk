@@ -1,18 +1,7 @@
 #!/bin/sh
 
 # Enable Docker CLI experimental mode
-CONFPATH=~/.docker/config.json
-if ! [ -f "$CONFPATH" ]; then
-    if ! [ -d ~/.docker ]; then
-        mkdir -pv ~/.docker
-    fi
-    jq -n '.experimental="enabled"' > "$CONFPATH"
-else
-    TMPFILE=`mktemp`
-    jq '.experimental="enabled"' "$CONFPATH" > "$TMPFILE"
-    rm "$CONFPATH"
-    mv "$TMPFILE" "$CONFPATH"
-fi
+export DOCKER_CLI_EXPERIMENTAL=enabled
 
 # Create manifest and annotate multiarch image
 docker manifest create $IMAGE_NAME $IMAGE_NAME-amd64 $IMAGE_NAME-arm32v7 $IMAGE_NAME-arm64v8
