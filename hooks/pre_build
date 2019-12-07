@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Set up QEMU for cross compilation
-docker run --rm --privileged multiarch/qemu-user-static:register --reset
 apt update -y
 apt install -y qemu-user-static
+cp /usr/bin/qemu-*-static .
+docker run --rm --privileged multiarch/qemu-user-static:register --reset

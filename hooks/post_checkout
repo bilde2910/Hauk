@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# Generate architecture-specific Dockerfiles
-for arch in amd64 arm32v7 arm64v8; do
-    cat Dockerfile | sed -e "s/php:apache/${arch}\/php:apache/" > docker/Dockerfile.${arch}
-done

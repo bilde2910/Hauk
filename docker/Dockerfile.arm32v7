@@ -1,0 +1,18 @@
+FROM    arm32v7/php:apache
+COPY    qemu-arm-static /usr/bin
+COPY    backend-php/ /var/www/html/
+COPY    frontend/ /var/www/html/
+COPY    docker/start.sh .
+
+RUN     apt-get update && \
+        apt-get install -y memcached libmemcached-dev zlib1g-dev && \
+        pecl install memcached && \
+        docker-php-ext-enable memcached
+
+EXPOSE  80/tcp
+VOLUME  /etc/hauk
+
+STOPSIGNAL SIGINT
+RUN     chmod +x ./start.sh
+RUN     rm -f /usr/bin/qemu-arm-static
+CMD     ["./start.sh"]
