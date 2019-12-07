@@ -1,10 +1,8 @@
 #!/bin/sh
 
 # Enable Docker CLI experimental mode
-CREATED=false
 CONFPATH=~/.docker/config.json
 if ! [ -f "$CONFPATH" ]; then
-    CREATED=true
     if ! [ -d ~/.docker ]; then
         mkdir -pv ~/.docker
     fi
@@ -21,11 +19,6 @@ docker manifest create $IMAGE_NAME $IMAGE_NAME-amd64 $IMAGE_NAME-arm32v7 $IMAGE_
 docker manifest annotate $IMAGE_NAME $IMAGE_NAME-amd64 --os linux --arch amd64
 docker manifest annotate $IMAGE_NAME $IMAGE_NAME-arm32v7 --os linux --arch arm --variant v7
 docker manifest annotate $IMAGE_NAME $IMAGE_NAME-arm64v8 --os linux --arch arm64
-
-# If the config was created, delete it after we're done
-if [ "$CREATED" = "true" ]; then
-    rm "$CONFPATH"
-fi
 
 # Replace image in registry
 docker manifest push --purge $IMAGE_NAME
