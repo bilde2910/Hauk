@@ -6,19 +6,5 @@ apt -y --only-upgrade install docker-ee
 apt -y install qemu-user-static jq
 cp /usr/bin/qemu-*-static .
 
-# Enable Docker CLI experimental mode
-CONFPATH=~/.docker/config.json
-if ! [ -f "$CONFPATH" ]; then
-    if ! [ -d ~/.docker ]; then
-        mkdir -pv ~/.docker
-    fi
-    jq -n '.experimental="enabled"' > "$CONFPATH"
-else
-    TMPFILE=`mktemp`
-    jq '.experimental="enabled"' "$CONFPATH" > "$TMPFILE"
-    rm "$CONFPATH"
-    mv "$TMPFILE" "$CONFPATH"
-fi
-
 # Register QEMU
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
