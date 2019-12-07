@@ -84,7 +84,7 @@ switch ($mod) {
         // Tell the session that it is posting to this share.
         $host
             ->addTarget($share)
-            ->setEncrypted($encrypted, $_POST["salt"])
+            ->setEncrypted($encrypted, filter_input(INPUT_POST, "salt"))
             ->save();
 
         $output = array(
