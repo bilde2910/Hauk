@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Push multiarch images
+for arch in amd64 arm32v7 arm64v8; do
+    docker push $IMAGE_NAME-${arch}
+done

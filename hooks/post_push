@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Create manifest and annotate multiarch image
+docker manifest create $IMAGE_NAME $IMAGE_NAME-amd64 $IMAGE_NAME-arm32v7 $IMAGE_NAME-arm64v8
+docker manifest annotate $IMAGE_NAME $IMAGE_NAME-amd64 --os linux --arch amd64
+docker manifest annotate $IMAGE_NAME $IMAGE_NAME-arm32v7 --os linux --arch arm --variant v7
+docker manifest annotate $IMAGE_NAME $IMAGE_NAME-arm64v8 --os linux --arch arm64
+
+# Replace image in registry
+docker manifest push --purge $IMAGE_NAME

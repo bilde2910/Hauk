@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Build main amd64 image
+docker build -f docker/Dockerfile.amd64 -t $IMAGE_NAME-amd64 -t $IMAGE_NAME .
+
+# Build multiarch images
+docker build -f docker/Dockerfile.arm32v7 -t $IMAGE_NAME-arm32v7 .
+docker build -f docker/Dockerfile.arm64v8 -t $IMAGE_NAME-arm64v8 .
