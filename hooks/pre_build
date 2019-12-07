@@ -3,8 +3,6 @@
 # Set up QEMU for cross compilation
 apt -y update
 apt -y --only-upgrade install docker-ee
-apt -y install qemu-user-static jq
+apt -y install qemu-user-static
 cp /usr/bin/qemu-*-static .
-
-# Register QEMU
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
