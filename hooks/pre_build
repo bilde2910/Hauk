@@ -9,8 +9,8 @@ cp /usr/bin/qemu-*-static .
 # Enable Docker CLI experimental mode
 CONFPATH=~/.docker/config.json
 if ! [ -f "$CONFPATH" ]; then
-    if ! [ -d "~/.docker" ]; then
-        mkdir -p "~/.docker"
+    if ! [ -d ~/.docker ]; then
+        mkdir -pv ~/.docker
     fi
     jq -n '.experimental="enabled"' > "$CONFPATH"
 else
