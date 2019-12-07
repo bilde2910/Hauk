@@ -7,10 +7,18 @@ apt -y install qemu-user-static jq
 cp /usr/bin/qemu-*-static .
 
 # Enable Docker CLI experimental mode
-TMPFILE=`mktemp`
-jq '.experimental="enabled"' ~/.docker/config.json > "$TMPFILE"
-rm ~/.docker/config.json
-mv "$TMPFILE" ~/.docker/config.json
+CONFPATH=~/.docker/config.json
+if ! [ -f "$CONFPATH" ]; then
+    if ! [ -d "~/.docker" ]; then
+        mkdir -p "~/.docker"
+    fi
+    jq -n '.experimental="enabled"' > "$CONFPATH"
+else
+    TMPFILE=`mktemp`
+    jq '.experimental="enabled"' "$CONFPATH" > "$TMPFILE"
+    rm "$CONFPATH"
+    mv "$TMPFILE" "$CONFPATH"
+fi
 
 # Register QEMU
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
