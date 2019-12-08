@@ -40,6 +40,7 @@ import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.powersaving.DeviceChecker;
 import info.varden.hauk.ui.listener.AddLinkClickListener;
+import info.varden.hauk.ui.listener.EncryptionEnabledChangeListener;
 import info.varden.hauk.ui.listener.InitiateAdoptionClickListener;
 import info.varden.hauk.ui.listener.RememberPasswordPreferenceChangedListener;
 import info.varden.hauk.ui.listener.SelectionModeChangedListener;
@@ -122,6 +123,17 @@ public final class MainActivity extends AppCompatActivity {
         ));
 
         loadPreferences();
+
+        // Add an on checked handler to the enable E2E checkbox to toggle the E2E state. This must
+        // be done after loading preferences to ensure that the checkbox doesn't trigger the event
+        // when hidden.
+        ((CompoundButton) findViewById(R.id.chkUseE2E)).setOnCheckedChangeListener(
+                new EncryptionEnabledChangeListener(this, new View[] {
+                        findViewById(R.id.rowE2EPassword),
+                        findViewById(R.id.rowRemember)
+                })
+        );
+
         this.manager.resumeShares(new ResumePrompt() {
             @Override
             public void promptForResumption(Context ctx, Session session, Share[] shares, PromptCallback response) {
@@ -167,6 +179,7 @@ public final class MainActivity extends AppCompatActivity {
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
         int interval = Integer.parseInt(((TextView) findViewById(R.id.txtInterval)).getText().toString());
         String customID = ((TextView) findViewById(R.id.txtCustomID)).getText().toString().trim();
+        boolean useE2E = ((Checkable) findViewById(R.id.chkUseE2E)).isChecked();
         String e2ePass = ((TextView) findViewById(R.id.txtE2EPassword)).getText().toString();
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
@@ -187,6 +200,7 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
+        prefs.set(Constants.PREF_ENABLE_E2E, useE2E);
 
         // If password saving is enabled, save the password as well.
         if (((Checkable) findViewById(R.id.chkRemember)).isChecked()) {
@@ -194,6 +208,9 @@ public final class MainActivity extends AppCompatActivity {
             prefs.set(Constants.PREF_REMEMBER_PASSWORD, true);
             prefs.set(Constants.PREF_E2E_PASSWORD, e2ePass);
         }
+
+        // Ignore E2E password if E2E is disabled.
+        if (!useE2E) e2ePass = "";
 
         assert mode != null;
         server = server.endsWith("/") ? server : server + "/";
@@ -256,8 +273,11 @@ public final class MainActivity extends AppCompatActivity {
         view.setVisibility(View.GONE);
         findViewById(R.id.rowUpdateInterval).setVisibility(View.VISIBLE);
         findViewById(R.id.rowCustomID).setVisibility(View.VISIBLE);
-        findViewById(R.id.rowE2EPassword).setVisibility(View.VISIBLE);
-        findViewById(R.id.rowRemember).setVisibility(View.VISIBLE);
+        findViewById(R.id.rowUseE2E).setVisibility(View.VISIBLE);
+        if (((Checkable) findViewById(R.id.chkUseE2E)).isChecked()) {
+            findViewById(R.id.rowE2EPassword).setVisibility(View.VISIBLE);
+            findViewById(R.id.rowRemember).setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -279,7 +299,8 @@ public final class MainActivity extends AppCompatActivity {
                 findViewById(R.id.selMode),
                 findViewById(R.id.txtNickname),
                 findViewById(R.id.txtGroupCode),
-                findViewById(R.id.chkAllowAdopt)
+                findViewById(R.id.chkAllowAdopt),
+                findViewById(R.id.chkUseE2E)
         };
 
         this.uiResetTask = new ResetTask();
@@ -324,6 +345,7 @@ public final class MainActivity extends AppCompatActivity {
         ((Spinner) findViewById(R.id.selUnit)).setSelection(prefs.get(Constants.PREF_DURATION_UNIT));
         ((Checkable) findViewById(R.id.chkRemember)).setChecked(prefs.get(Constants.PREF_REMEMBER_PASSWORD));
         ((Checkable) findViewById(R.id.chkAllowAdopt)).setChecked(prefs.get(Constants.PREF_ALLOW_ADOPTION));
+        ((Checkable) findViewById(R.id.chkUseE2E)).setChecked(prefs.get(Constants.PREF_ENABLE_E2E));
     }
 
     /**

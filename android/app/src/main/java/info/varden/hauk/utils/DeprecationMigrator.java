@@ -42,5 +42,10 @@ public final class DeprecationMigrator {
             prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, pass);
             prefs.clear(Constants.PREF_PASSWORD);
         }
+        if (!prefs.has(Constants.PREF_ENABLE_E2E)) {
+            boolean enableE2E = !prefs.get(Constants.PREF_E2E_PASSWORD).isEmpty();
+            Log.i("Setting E2E enabled preference to %s based on stored preferences", String.valueOf(enableE2E)); //NON-NLS
+            prefs.set(Constants.PREF_ENABLE_E2E, enableE2E);
+        }
     }
 }

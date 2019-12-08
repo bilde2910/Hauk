@@ -30,6 +30,7 @@ public enum Constants {
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
     public static final Preference<String> PREF_CUSTOM_ID = new Preference.String("requestLink", "");
+    public static final Preference<Boolean> PREF_ENABLE_E2E = new Preference.Boolean("enableE2E", false);
     public static final Preference<String> PREF_E2E_PASSWORD = new Preference.EncryptedString("e2ePassword", "");
     public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);

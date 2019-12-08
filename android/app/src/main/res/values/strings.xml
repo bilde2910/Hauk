@@ -12,8 +12,9 @@
     <string name="label_interval">Update interval (s):</string>
     <string name="label_custom_id">Preferred link ID:</string>
     <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
+    <string name="label_use_e2e">Encrypt share:</string>
+    <string name="chk_use_e2e">Enable end-to-end encryption</string>
     <string name="label_e2e_password">Encryption key:</string>
-    <string name="label_e2e_password_hint">(for end-to-end encryption)</string>
     <string name="label_mode">Sharing mode:</string>
     <string name="label_allow_adopt">Allow adoption:</string>
     <string name="chk_allow_adopt">Allow others to add my share into a group share</string>

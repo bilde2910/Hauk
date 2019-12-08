@@ -170,7 +170,13 @@ public final class Receiver extends BroadcastReceiver {
         int duration = intent.hasExtra(Constants.EXTRA_SESSION_DURATION) ? intent.getIntExtra(Constants.EXTRA_SESSION_DURATION, 0) : TimeUtils.timeUnitsToSeconds(fallback.get(Constants.PREF_DURATION), fallback.get(Constants.PREF_DURATION_UNIT));
         int interval = intent.hasExtra(Constants.EXTRA_SESSION_INTERVAL) ? intent.getIntExtra(Constants.EXTRA_SESSION_INTERVAL, 0) : fallback.get(Constants.PREF_INTERVAL);
         String customID = intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID) ? intent.getStringExtra(Constants.EXTRA_SESSION_CUSTOM_ID) : fallback.get(Constants.PREF_CUSTOM_ID);
-        String e2ePass = intent.hasExtra(Constants.EXTRA_SESSION_E2E_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_E2E_PASSWORD) : fallback.get(Constants.PREF_E2E_PASSWORD);
+
+        String e2ePass = "";
+        if (intent.hasExtra(Constants.EXTRA_SESSION_E2E_PASSWORD)) {
+            e2ePass = intent.getStringExtra(Constants.EXTRA_SESSION_E2E_PASSWORD);
+        } else if (fallback.get(Constants.PREF_ENABLE_E2E)) {
+            e2ePass = fallback.get(Constants.PREF_E2E_PASSWORD);
+        }
 
         assert server != null;
         server = server.endsWith("/") ? server : server + "/";

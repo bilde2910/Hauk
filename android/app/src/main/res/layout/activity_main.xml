@@ -207,7 +207,27 @@
                         android:autofillHints="username" />
                 </TableRow>
 
-                <!-- Custom link ID. -->
+                <!-- Whether or not to use end-to-end encryption. -->
+                <TableRow
+                    android:id="@+id/rowUseE2E"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_use_e2e" />
+
+                    <CheckBox
+                        android:id="@+id/chkUseE2E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="@string/chk_use_e2e" />
+                </TableRow>
+
+                <!-- End-to-end encryption password. -->
                 <TableRow
                     android:id="@+id/rowE2EPassword"
                     android:layout_width="match_parent"
@@ -227,7 +247,6 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPassword"
-                        android:hint="@string/label_e2e_password_hint"
                         android:autofillHints="e2epassword" />
                 </TableRow>
 
