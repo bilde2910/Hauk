@@ -29,6 +29,20 @@ const REDIS = 1;
 const PASSWORD = 0;
 const HTPASSWD = 1;
 
+// Share link types.
+const LINK_4_PLUS_4_UPPER_CASE = 0;
+const LINK_4_PLUS_4_LOWER_CASE = 1;
+const LINK_4_PLUS_4_MIXED_CASE = 2;
+const LINK_UUID_V4 = 3;
+const LINK_16_HEX = 4;
+const LINK_16_UPPER_CASE = 5;
+const LINK_16_LOWER_CASE = 6;
+const LINK_16_MIXED_CASE = 7;
+const LINK_32_HEX = 8;
+const LINK_32_UPPER_CASE = 9;
+const LINK_32_LOWER_CASE = 10;
+const LINK_32_MIXED_CASE = 11;
+
 const KILOMETERS_PER_HOUR = array(
     // Relative distance per second multiplied by number of seconds per hour.
     "mpsMultiplier" => 3.6,
@@ -114,6 +128,7 @@ const DEFAULTS = array(
     "allow_link_req"        => true,
     "reserved_links"        => [],
     "reserve_whitelist"     => false,
+    "link_style"            => LINK_4_PLUS_4_UPPER_CASE,
     "map_tile_uri"          => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     "map_attribution"       => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     "default_zoom"          => 14,
@@ -300,8 +315,74 @@ class Share {
     protected function generateLinkID() {
         $s = "";
         do {
-            $s = strtoupper(base_convert(hash("sha256", openssl_random_pseudo_bytes(LINK_ID_RAND_BYTES)), 16, 36));
-            $s = substr($s, 0, 4)."-".substr($s, -4);
+            switch (getConfig("link_style")) {
+                case LINK_UUID_V4:
+                    // UUID version 4.
+                    $uuid = openssl_random_pseudo_bytes(16);
+                    $uuid[6] = chr(ord($uuid[6]) & 0x0f | 0x40);
+                    $uuid[8] = chr(ord($uuid[8]) & 0x3f | 0x80);
+                    $s = vsprintf("%s%s-%s-%s-%s-%s%s%s", str_split(bin2hex($uuid), 4));
+                    break;
+                case LINK_16_HEX:
+                    // 16-char (8-byte) hexadecimal string.
+                    $s = bin2hex(openssl_random_pseudo_bytes(8));
+                    break;
+                case LINK_16_LOWER_CASE:
+                    // 16-char lower-case alphanumeric string.
+                    $alpha = "0123456789abcdefghijklmnopqrstuvwxyz";
+                    for ($i = 0; $i < 16; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_16_MIXED_CASE:
+                    // 16-char mixed-case alphanumeric string.
+                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    for ($i = 0; $i < 16; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_16_UPPER_CASE:
+                    // 16-char upper-case alphanumeric string.
+                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    for ($i = 0; $i < 16; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_32_HEX:
+                    // 32-char (16-byte) hexadecimal string.
+                    $s = bin2hex(openssl_random_pseudo_bytes(16));
+                    break;
+                case LINK_32_LOWER_CASE:
+                    // 32-char lower-case alphanumeric string.
+                    $alpha = "0123456789abcdefghijklmnopqrstuvwxyz";
+                    for ($i = 0; $i < 32; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_32_MIXED_CASE:
+                    // 32-char mixed-case alphanumeric string.
+                    // 'l' and 'I' not included because of visual similarity.
+                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    for ($i = 0; $i < 32; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_32_UPPER_CASE:
+                    // 32-char upper-case alphanumeric string.
+                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    for ($i = 0; $i < 32; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    break;
+                case LINK_4_PLUS_4_LOWER_CASE:
+                    // 4+4-char lower-case alphanumeric string.
+                    $alpha = "0123456789abcdefghijklmnopqrstuvwxyz";
+                    for ($i = 0; $i < 8; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    $s = substr($s, 0, 4)."-".substr($s, -4);
+                    break;
+                case LINK_4_PLUS_4_MIXED_CASE:
+                    // 4+4-char mixed-case alphanumeric string.
+                    // 'l' and 'I' not included because of visual similarity.
+                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    for ($i = 0; $i < 8; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    $s = substr($s, 0, 4)."-".substr($s, -4);
+                    break;
+                case LINK_4_PLUS_4_UPPER_CASE:
+                default:
+                    // 4+4-char upper-case alphanumeric string.
+                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    for ($i = 0; $i < 8; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
+                    $s = substr($s, 0, 4)."-".substr($s, -4);
+                    break;
+            }
         } while ($this->memcache->get(PREFIX_LOCDATA.$s) !== false);
         return $s;
     }

@@ -132,6 +132,51 @@
 // not be honored.
 "reserve_whitelist" => false,
 
+// The type of links to generate when making new links for shares. Can be any
+// of the following:
+//
+// | Link style                 | Example                               | No. of combinations   | Avg. bruteforce time          |
+// +----------------------------+---------------------------------------+-----------------------+-------------------------------+
+// | LINK_4_PLUS_4_UPPER_CASE   | EIRG-0CYE                             | 2.82 * 10^12 (36^8)   | 44.7 years                    |
+// | LINK_4_PLUS_4_LOWER_CASE   | qae3-ulna                             | 2.82 * 10^12 (36^8)   | 44.7 years                    |
+// | LINK_4_PLUS_4_MIXED_CASE   | WRho-uHLG                             | 1.68 * 10^14 (60^8)   | 2663 years                    |
+// | LINK_UUID_V4               | 09c8a3b1-e78f-48b1-a604-0da49e99cb5d  | 5.32 * 10^36 (2^122)  | 84.2 septillion years         |
+// | LINK_16_HEX                | 6cde14c4c6551b41                      | 1.84 * 10^19 (2^64)   | 292 million years             |
+// | LINK_16_UPPER_CASE         | 49OFGRK6SGPU93KV                      | 7.95 * 10^24 (36^16)  | 126 trillion years            |
+// | LINK_16_LOWER_CASE         | bdyslxszs14cj359                      | 7.95 * 10^24 (36^16)  | 126 trillion years            |
+// | LINK_16_MIXED_CASE         | NTHX2HDsTn0kS3aj                      | 2.82 * 10^28 (60^16)  | 447 quadrillion years         |
+// | LINK_32_HEX                | 22adf21f11491ae8f3ae128e23a6782f      | 3.40 * 10^38 (2^128)  | 5.39 octillion years          |
+// | LINK_32_UPPER_CASE         | MG42MW2DKIMHM87B4AO0WAB2PIY26TR1      | 6.33 * 10^49 (36^32)  | 1 duodecillion years          |
+// | LINK_32_LOWER_CASE         | itgbolrbq1c02eot5o46c5wixhdrdb5m      | 6.33 * 10^49 (36^32)  | 1 duodecillion years          |
+// | LINK_32_MIXED_CASE         | cTK82MJ7rUOP138WNVznQR0Ck3BwZp6b      | 7.96 * 10^57 (60^32)  | 12.6 quattuordecillion years  |
+//
+// For any MIXED_CASE variants, upper-case I and lower-case L will not appear
+// because they are visually very similar and are easily confused.
+//
+// The default value is LINK_4_PLUS_4_UPPER_CASE, which is still considered very
+// secure. The bruteforce times in the table below are the average time it would
+// take to find a valid sharing link, when there is one link active, at 1000
+// guesses per second. For the default setting, this means it would take almost
+// 45 years to find the link.
+//
+// This is assuming that the link is active 24/7 for that entire time. If you
+// only have a link active 2% of the time, it would take over 2200 years.
+//
+// At 1000 guesses per second, you will likely notice that your server is
+// noticeably slower and rapidly filling up with access logs.
+//
+// Very long links are also time-consuming to type, should you find yourself
+// in need of typing in a link manually on another computer. This is the reason
+// that short links are default.
+//
+// ---- PLEASE NOTE ----
+// This option is provided to you only because several people have requested it
+// as a convenience. You are free to change it, but you should know that
+// changing the default here gives you, for all intents and purposes, no
+// security advantage in practice.
+//
+"link_style"        => LINK_4_PLUS_4_UPPER_CASE,
+
 // Leaflet tile URI template for the map frontend. Here are some examples:
 //
 // - OpenStreetMap directly:
