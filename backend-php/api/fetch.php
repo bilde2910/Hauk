@@ -28,6 +28,7 @@ if (!$share->exists()) {
             echo json_encode(array(
                 "type" => $share->getType(),
                 "expire" => $share->getExpirationTime(),
+                "serverTime" => microtime(true),
                 "interval" => $session->getInterval(),
                 "points" => $session->getPoints(),
                 "encrypted" => $session->isEncrypted(),
@@ -39,6 +40,7 @@ if (!$share->exists()) {
             echo json_encode(array(
                 "type" => $share->getType(),
                 "expire" => $share->getExpirationTime(),
+                "serverTime" => microtime(true),
                 "interval" => $share->getAutoInterval(),
                 "points" => $share->getAllPoints()
             ));

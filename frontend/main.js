@@ -298,13 +298,14 @@ if (passwordCancelE !== null) {
 var fetchIntv;
 var countIntv;
 
-function setNewInterval(expire, interval) {
+function setNewInterval(expire, interval, serverTime) {
     var countdownE = document.getElementById("countdown");
+    var timeOffset = Date.now() / 1000 - serverTime;
 
     // The data contains an expiration time. Create a countdown at the top of
     // the map screen that ends when the share is over.
     countIntv = setInterval(function() {
-        var seconds = expire - Math.round(Date.now() / 1000);
+        var seconds = expire - Math.round((Date.now() - timeOffset) / 1000);
         if (seconds < 0) {
             clearInterval(countIntv);
             return;
@@ -328,7 +329,7 @@ function setNewInterval(expire, interval) {
     // once per interval time.
     fetchIntv = setInterval(function() {
         // Stop the task if the share has expired.
-        if ((Date.now() / 1000) >= expire) {
+        if ((Date.now() - timeOffset) / 1000 >= expire) {
             clearInterval(fetchIntv);
             clearInterval(countIntv);
             if (countdownE !== null) countdownE.textContent = LANG["status_expired"];
@@ -341,7 +342,7 @@ function setNewInterval(expire, interval) {
             if (data.expire != expire || data.interval != interval) {
                 clearInterval(fetchIntv);
                 clearInterval(countIntv);
-                setNewInterval(data.expire, data.interval);
+                setNewInterval(data.expire, data.interval, data.serverTime);
             }
             processUpdate(data, false);
         }, function() {
@@ -518,7 +519,7 @@ function processUpdate(data, init) {
     }
 
     // If flagged to initialize, set up polling.
-    if (init) setNewInterval(data.expire, data.interval);
+    if (init) setNewInterval(data.expire, data.interval, data.serverTime);
 
     for (var user in users) {
         if (!users.hasOwnProperty(user)) continue;
@@ -657,13 +658,13 @@ function processUpdate(data, init) {
             var eLabel = document.getElementById("label-" + shares[user].id);
             var eLastSeen = document.getElementById("last-seen-" + shares[user].id);
 
-            if (point.time < (Date.now() / 1000) - OFFLINE_TIMEOUT) {
+            if (point.time < data.serverTime - OFFLINE_TIMEOUT) {
                 eArrow.className = eArrow.className.split("live").join("dead");
                 if (eLabel !== null) eLabel.className = 'dead';
                 if (eLastSeen !== null) {
                     // Calculate time since last update and choose an
                     // appropriate unit.
-                    var time = Math.round((Date.now() / 1000) - point.time);
+                    var time = Math.round(data.serverTime - point.time);
                     var unit = LANG["last_update_seconds"];
                     if (time >= 60) {
                         time = Math.floor(time / 60);
