@@ -71,7 +71,7 @@ public final class AutoResumptionPrompter implements ResumeHandler {
             Log.i("Resuming shares..."); //NON-NLS
             AutoResumptionPrompter.this.resumptionHandler.clearResumableSession();
             for (Share share : this.shares) {
-                AutoResumptionPrompter.this.manager.shareLocation(share);
+                AutoResumptionPrompter.this.manager.shareLocation(share, SessionInitiationReason.USER_RESUMED);
             }
         }
 

@@ -15,8 +15,9 @@ public interface SessionListener {
      *
      * @param session The session that was created.
      * @param share   The share that the session was created for.
+     * @param reason  The reason the session was created.
      */
-    void onSessionCreated(Session session, Share share);
+    void onSessionCreated(Session session, Share share, SessionInitiationReason reason);
 
     /**
      * Called if the session could not be initiated due to missing location permissions.

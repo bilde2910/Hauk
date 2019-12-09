@@ -27,6 +27,7 @@ import info.varden.hauk.dialog.CustomDialogBuilder;
 import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.manager.PromptCallback;
+import info.varden.hauk.manager.SessionInitiationReason;
 import info.varden.hauk.manager.SessionInitiationResponseHandler;
 import info.varden.hauk.manager.SessionListener;
 import info.varden.hauk.manager.SessionManager;
@@ -476,7 +477,7 @@ public final class MainActivity extends AppCompatActivity {
      */
     private final class SessionListenerImpl implements SessionListener {
         @Override
-        public void onSessionCreated(Session session, final Share share) {
+        public void onSessionCreated(Session session, final Share share, SessionInitiationReason reason) {
             // We now have a link to share, so we enable the additional link creation button if the backend supports it. Add an event handler to handle the user clicking on it.
             if (session.getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
                 boolean allowNewLinkAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
@@ -485,7 +486,7 @@ public final class MainActivity extends AppCompatActivity {
                 btnLink.setOnClickListener(new AddLinkClickListener(MainActivity.this, session, allowNewLinkAdoption) {
                     @Override
                     public void onShareCreated(Share share) {
-                        MainActivity.this.manager.shareLocation(share);
+                        MainActivity.this.manager.shareLocation(share, SessionInitiationReason.SHARE_ADDED);
                     }
                 });
                 btnLink.setEnabled(true);
@@ -501,29 +502,32 @@ public final class MainActivity extends AppCompatActivity {
             // Re-enable the start (stop) button and inform the user.
             findViewById(R.id.btnShare).setEnabled(true);
 
-            MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.OK_SHARE, new CustomDialogBuilder() {
-                @Override
-                public void onPositive() {
-                    // OK button
-                }
+            // Service relaunches should be handled silently.
+            if (reason != SessionInitiationReason.SERVICE_RELAUNCH) {
+                MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.OK_SHARE, new CustomDialogBuilder() {
+                    @Override
+                    public void onPositive() {
+                        // OK button
+                    }
 
-                @Override
-                public void onNegative() {
-                    // Share button
-                    Log.i("User requested to share %s", share); //NON-NLS
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, MainActivity.this.getString(R.string.share_subject));
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
-                    MainActivity.this.startActivity(Intent.createChooser(shareIntent, MainActivity.this.getString(R.string.share_via)));
-                }
+                    @Override
+                    public void onNegative() {
+                        // Share button
+                        Log.i("User requested to share %s", share); //NON-NLS
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, MainActivity.this.getString(R.string.share_subject));
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, share.getViewURL());
+                        MainActivity.this.startActivity(Intent.createChooser(shareIntent, MainActivity.this.getString(R.string.share_via)));
+                    }
 
-                @Nullable
-                @Override
-                public View createView(Context ctx) {
-                    return null;
-                }
-            });
+                    @Nullable
+                    @Override
+                    public View createView(Context ctx) {
+                        return null;
+                    }
+                });
+            }
         }
 
         @Override

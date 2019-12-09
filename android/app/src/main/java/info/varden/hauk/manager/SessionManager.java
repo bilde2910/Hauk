@@ -64,6 +64,12 @@ public abstract class SessionManager {
     private final StopSharingCallback stopCallback;
 
     /**
+     * Intent for the location pusher, so that it can be stopped if already running when launching
+     * the app.
+     */
+    private static Intent pusher = null;
+
+    /**
      * Android application context.
      */
     private final Context ctx;
@@ -182,7 +188,19 @@ public abstract class SessionManager {
      *               any are found in storage.
      */
     public final void resumeShares(ResumePrompt prompt) {
-        this.resumable.tryResumeShare(new AutoResumptionPrompter(this, this.resumable, prompt));
+        // Check if the location push service is already running. This will happen if the main UI
+        // activity is killed/stopped, but the app itself and the pushing service keeps running in
+        // the background. If this happens, the push service should be silently restarted to ensure
+        // it behaves properly with new instances of GNSSActiveHandler and StopSharingTask that will
+        // be created and attached when creating a new SessionManager in MainActivity. There is
+        // probably a cleaner way to do this.
+        if (pusher != null) {
+            this.ctx.stopService(pusher);
+            pusher = null;
+            this.resumable.tryResumeShare(new ServiceRelauncher(this, this.resumable));
+        } else {
+            this.resumable.tryResumeShare(new AutoResumptionPrompter(this, this.resumable, prompt));
+        }
     }
 
     /**
@@ -194,7 +212,7 @@ public abstract class SessionManager {
      * @throws LocationServicesDisabledException if location services are disabled.
      * @throws LocationPermissionsNotGrantedException if location permissions have not been granted.
      */
-    private SessionInitiationPacket.ResponseHandler preSessionInitiation(final SessionInitiationResponseHandler upstreamCallback) throws LocationServicesDisabledException, LocationPermissionsNotGrantedException {
+    private SessionInitiationPacket.ResponseHandler preSessionInitiation(final SessionInitiationResponseHandler upstreamCallback, final SessionInitiationReason reason) throws LocationServicesDisabledException, LocationPermissionsNotGrantedException {
         // Check for location permission and prompt the user if missing. This returns because the
         // checking function creates async dialogs here - the user is prompted to press the button
         // again instead.
@@ -215,7 +233,7 @@ public abstract class SessionManager {
                 Log.i("Session was initiated for share %s; setting session resumable", share); //NON-NLS
 
                 // Proceed with the location share.
-                shareLocation(share);
+                shareLocation(share, reason);
 
                 upstreamCallback.onSuccess();
             }
@@ -250,7 +268,7 @@ public abstract class SessionManager {
      * @throws LocationPermissionsNotGrantedException if location permissions have not been granted.
      */
     public final void shareLocation(SessionInitiationPacket.InitParameters initParams, SessionInitiationResponseHandler upstreamCallback, AdoptabilityPreference allowAdoption) throws LocationPermissionsNotGrantedException, LocationServicesDisabledException {
-        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback);
+        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback, SessionInitiationReason.USER_STARTED);
 
         // Create a handshake request and handle the response. The handshake transmits the duration
         // and interval to the server and waits for the server to return a session ID to confirm
@@ -269,7 +287,7 @@ public abstract class SessionManager {
      * @throws LocationPermissionsNotGrantedException if location permissions have not been granted.
      */
     public final void shareLocation(SessionInitiationPacket.InitParameters initParams, SessionInitiationResponseHandler upstreamCallback, String nickname) throws LocationPermissionsNotGrantedException, LocationServicesDisabledException {
-        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback);
+        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback, SessionInitiationReason.USER_STARTED);
 
         // Create a handshake request and handle the response. The handshake transmits the duration
         // and interval to the server and waits for the server to return a session ID to confirm
@@ -289,7 +307,7 @@ public abstract class SessionManager {
      * @throws LocationPermissionsNotGrantedException if location permissions have not been granted.
      */
     public final void shareLocation(SessionInitiationPacket.InitParameters initParams, SessionInitiationResponseHandler upstreamCallback, String nickname, String groupPin) throws LocationPermissionsNotGrantedException, LocationServicesDisabledException {
-        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback);
+        SessionInitiationPacket.ResponseHandler handler = preSessionInitiation(upstreamCallback, SessionInitiationReason.USER_STARTED);
 
         // Create a handshake request and handle the response. The handshake transmits the duration
         // and interval to the server and waits for the server to return a session ID to confirm
@@ -304,10 +322,10 @@ public abstract class SessionManager {
      *
      * @param share The share to run against the server.
      */
-    public final void shareLocation(Share share) {
+    public final void shareLocation(Share share, SessionInitiationReason reason) {
         // If we are not already sharing our location, initiate a new session.
         if (this.activeSession == null) {
-            initiateSessionForExistingShare(share);
+            initiateSessionForExistingShare(share, reason);
         }
 
         Log.i("Attaching to share, share=%s", share); //NON-NLS
@@ -349,7 +367,7 @@ public abstract class SessionManager {
      *
      * @param share The share whose session should be pushed to.
      */
-    private void initiateSessionForExistingShare(Share share) {
+    private void initiateSessionForExistingShare(Share share, SessionInitiationReason reason) {
         this.activeSession = share.getSession();
         this.resumable.setSessionResumable(this.activeSession);
 
@@ -381,6 +399,7 @@ public abstract class SessionManager {
             // When both the notification and pusher are created, we can update the stop task with
             // these so that they can be canceled when the location share ends.
             this.stopTask.updateTask(pusher);
+            SessionManager.pusher = pusher;
 
             // stopTask is scheduled for expiration, but it could also be called if the user
             // manually stops the share, or if the app is destroyed.
@@ -393,7 +412,7 @@ public abstract class SessionManager {
                 listener.onStarted();
             }
             for (SessionListener listener : this.upstreamSessionListeners) {
-                listener.onSessionCreated(share.getSession(), share);
+                listener.onSessionCreated(share.getSession(), share, reason);
             }
         } else {
             Log.w("Location permission has not been granted; sharing will not commence"); //NON-NLS
@@ -460,7 +479,7 @@ public abstract class SessionManager {
                     // that can be initiated by a remote user (through adoption).
                     Share newShare = new Share(this.session, String.format(linkFormat, shareID), shareID, ShareMode.JOIN_GROUP);
                     Log.i("Received unknown share %s from server", newShare); //NON-NLS
-                    shareLocation(newShare);
+                    shareLocation(newShare, SessionInitiationReason.SHARE_ADDED);
                 }
             }
             for (Iterator<Map.Entry<String, Share>> it = SessionManager.this.knownShares.entrySet().iterator(); it.hasNext();) {
