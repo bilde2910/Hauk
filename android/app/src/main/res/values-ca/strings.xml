@@ -1,2 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="img_alt_logo">Hauk</string>
+    <string name="label_username">Nom d\'usuari:</string>
+    <string name="label_username_hint">&lt;opcional&gt;</string>
+    <string name="label_password">Password:</string>
+    <string name="label_duration">Durada de la compartició:</string>
+    <string name="label_interval">Interval d\'actualització (s):</string>
+    <string name="chk_use_e2e">Activa el xifrat d\'extrem a extrem</string>
+    <string name="label_e2e_password">Clau de xifrat:</string>
+    <string name="label_mode">Sistema de compartició:</string>
+    <string name="label_allow_adopt">Permetre l\'adopció:</string>
+    <string name="label_explain_adopt">(Què és això\?)</string>
+    <string name="label_nickname">Nom d\'usuari:</string>
+    <string name="label_use_e2e">Xifra la compartició:</string>
+    <string name="label_pin">PIN del grup:</string>
+    <string name="label_status">Estat:</string>
+    <string name="label_share_url">Comparteix ID/URL:</string>
+    <string name="chk_remember">Recorda la contrasenya de xifrat</string>
+    <string name="btn_advanced">Mostra les opcions avançades</string>
+    <string name="btn_start">Comença a compartir</string>
+    <string name="btn_link">Crear un no enllaç de seguiment</string>
+    <string name="btn_adopt">Afegeix una compartició existent</string>
+    <string name="btn_stop_short">Atura</string>
+    <string name="link_type_solo">Només la teva localització</string>
+    <string name="link_type_group_host">Compartició de grup (host)</string>
+    <string name="link_type_group_member">Compartició de grup (membre)</string>
+    <string name="sel_mode_opt_alone">Mostra només la meva localització</string>
+    <string name="sel_mode_opt_join_group">Unir-se a una compartició de grup</string>
+    <string name="sel_unit_opt_minutes">minut(s)</string>
+    <string name="sel_unit_opt_hours">hora(es)</string>
+    <string name="sel_unit_opt_days">dia(es)</string>
+    <string name="label_status_none">Compartició de localització inactiva</string>
+    <string name="label_status_wait">Esperant per la fixació inicial del GNSS…</string>
+    <string name="label_status_ok">Compartició de localització activa!</string>
+    <string name="label_status_coarse">Esperant per la fixació d\'alta precisió…</string>
+    <string name="label_pin_head">PIN DEL TEU GRUP:</string>
+    <string name="label_pin_help">Comparteix aquest PIN amb els altres membres del teu grup per deixar-los unir-se al teu grup de compartició de localització</string>
+    <string name="explain_adopt_title">Adopció compartida</string>
+    <string name="create_link_title">Crea un nou enllaç de compartició</string>
+    <string name="btn_ok">D\'acord</string>
+    <string name="btn_cancel">Cancel·la</string>
+    <string name="btn_yes">Sí</string>
+    <string name="adopt_body">Podeu adoptar una quota d’ubicació individual existent per incorporar-la a aquesta quota de grup. Enganxeu l\'URL o l\'identificador de la participació que vulgueu adoptar (per exemple,% s\?XXXX-XXXX) i assigneu un sobrenom a aquest recurs.</string>
+    <string name="create_link_body">Podeu crear diversos enllaços per accedir a la ubicació compartida. Cada enllaç es pot aturar individualment, permetent un control minuciós sobre qui pot veure la vostra ubicació en qualsevol moment.
+\n
+\nEls enllaços addicionals que creeu d\'aquesta manera seran compartits d\'un sol usuari que només mostrin la vostra ubicació.</string>
+    <string name="btn_create">Crea</string>
+    <string name="btn_dismiss">Tanca</string>
+    <string name="action_copy">Copia l\'enllaç</string>
+    <string name="action_copied">l\'enllaç de Hauk s\'ha copiat</string>
+    <string name="action_stop">Atura la compartició</string>
+    <string name="notify_title">Compartició de localització activa</string>
+    <string name="progress_connect_title">Connectant</string>
+    <string name="progress_connect_body">Connectant a Hauk…</string>
+    <string name="progress_adopt_title">Adoptant</string>
+    <string name="progress_new_link_title">Creant l\'enllaç</string>
+    <string name="progress_new_link_body">Creant un nou enllaç de compartició…</string>
+    <string name="err_client">Configuració incorrecta</string>
+    <string name="err_connect">Error de connexió</string>
+    <string name="err_server">Error de servidor</string>
+    <string name="err_malformed_url">L\'adreça URL del servidor introduïda és invàlida.</string>
+    <string name="err_empty">El servidor ha retornat una resposta buida.</string>
+    <string name="err_response_code">Rebut el %s HTTP del servidor!</string>
+    <string name="ok_title">Connexió establerta</string>
+    <string name="ok_message">La compartició de localització és activa! Prem el botó de compartir per copiar l\'enllaç públic de la teva compartició.</string>
+    <string name="ended_title">Compartició acabada</string>
+    <string name="ended_message">La teva compartició de localització ha expirat.</string>
+    <string name="adopted_title">Compartició adoptada</string>
+    <string name="adopted_body">%s s\'ha afegit a la teva compartició!</string>
+    <string name="resume_title">Resumeix la sessió</string>
+    <string name="link_added_title">Enllaç creat</string>
+    <string name="link_added_body">S\'ha creat un nou enllaç per compartir la teva localització de manera correcta! Prem el botó de compartir per copiar l\'enllaç públic de compartició.</string>
+    <string name="req_perms_title">Requereix permís</string>
+    <string name="battery_savings_title">Estalvi de bateria agressiu</string>
+    <string name="manufacturer_huawei">Huawei</string>
+    <string name="manufacturer_oneplus">OnePlus</string>
+    <string name="manufacturer_xiaomi">Xiaomi</string>
+    <string name="share_via">Comparteix l\'enllaç Hauk via</string>
+    <string name="share_subject">Segueix la meva localització a Hauk!</string>
+    <string name="authorize_header">Sol·licitud d’autorització de transmissió</string>
+    <string name="authorize_body">"Hauk ha rebut i blocat un intent de crear una nova sessió de localització  des d\'una font de transmissió que s\'ha identificat a si mateixa com a"</string>
+    <string name="authorize_question">Voleu permetre que en el futur es crein sessions a partir d’emissions amb aquesta identificació\?</string>
+    <string name="app_name">Hauk</string>
+    <string name="label_heading">Ús compartit de la ubicació de codi obert</string>
+    <string name="label_server">URL del servidor:</string>
+    <string name="label_custom_id">Identificador d\'enllaç preferit:</string>
+    <string name="label_custom_id_hint">&lt;generat aleatòriament&gt;</string>
+    <string name="chk_allow_adopt">Permetre als altres d\'afegir la meva compartició en un grup compartit</string>
+    <string name="label_remember">Desa el password:</string>
+    <string name="btn_stop">Atura la compartició [%s]</string>
+    <string name="btn_share_short">Comparteix</string>
+    <string name="label_heading_links">Enllaços actius actualment</string>
+    <string name="sel_mode_opt_create_group">Crear una compartició de grup</string>
+    <string name="adopt_title">Adopta una compartició existent</string>
+    <string name="btn_no">No</string>
+    <string name="btn_show_settings">Obre les opcions</string>
+    <string name="notify_body">Hauk està compartint la teva localització a %s</string>
+    <string name="progress_adopt_body">Adoptant %s…</string>
+    <string name="err_missing_perms">El permís de localització és requerit per usar aquesta aplicació.</string>
+    <string name="err_location_disabled">Els serveis de localització estan desactivats. Si us plau, activa la localització d\'alta precisió per compartir la teva localització.</string>
+    <string name="err_outdated">El servidor està desactualitzat</string>
+    <string name="err_ver_e2e">El servidor no suporta el xifrat d\'extrem a extrem. El xifrat d\'extrem a extrem està suportat en la versió %s i posteriors; el servidor actualment està usant la versió %s. La teva compartició es crearà sense xifratge d\'extrem a extrem per mantenir la compatibilitat.</string>
+    <string name="resume_body">Tens una sessió inacabada:
+\n
+\nLink(s) de compartició actiu(s): %d
+\nExpira: %s
+\n
+\nVols resumir la sessió\?</string>
+    <string name="req_perms_message">Aquesta aplicació requereix accés a la teva localització per funcionar, però aquest permís encara no s\'ha concedit encara. Si us plau, aprova la següent petició de permisos, i després prem el botó d\'inici de nou per tornar-ho a intentar.</string>
+    <string name="battery_savings_body">Sembla que uses un mòbil %s. Aquests terminals tenen un sistema d\'estalvi de bateria estricte que eviten que Hauk enviï actualitzacions de localització en segon pla.
+\n
+\nEt recomanem que t\'asseguris que Hauk està exempt de l\'estalvi de bateria per assegurar-te que l\'aplicació no deixa de funcionar inesperadament.
+\n
+\nAquest missatge no es tornarà a mostrar més cops.</string>
+    <string name="explain_adopt_body">Hauk us permet crear sessions de compartició d’ubicacions tant per a vosaltres com per a un grup de persones. Si algú crea un grup compartit, obté un codi de grup que altres poden utilitzar per unir-se a la sessió de compartició.
+\n
+\nTanmateix, la persona que crea la participació de grup també té l’opció d’afegir una quota d’ubicació ja existent al grup. Aquest procés s’anomena adopció.
+\n
+\nPodeu decidir si voleu o no permetre que altres persones incorporin el vostre percentatge d’ubicació al seu grup compartit marcant aquesta casella de selecció.
+\n
+\nSi activeu aquesta opció i compartiu la vostra ubicació amb un grup d’amics i algú altre també vol compartir la seva ubicació, pot crear un grup compartit i afegir-lo al seu mapa, de manera que tots dos aparegueu al mateix mapa d’ubicació compartit. Això és útil si és conduir i no es pot utilitzar el telèfon, ja que l\'adopció de la seva participació per part d\'altres persones no requereix cap interacció per part seva.</string>
+    <string name="err_ver_group">El servidor no admet comparticions de grup. Les accions del grup són compatibles amb la versió %s i superiors; actualment el servidor està executant la versió %s. La vostra participació s\'ha convertit en una participació individual.</string>
+</resources>
