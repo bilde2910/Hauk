@@ -121,15 +121,15 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/287x66-white.png)](https://traduki.varden.info/engage/hauk/)
 
-**Basque** - osoitz  
-**Dutch** - Jdekoning141  
-**French** - thifranc  
-**German** - natrius, hurradiegams and lemmerk  
-**Norwegian Bokmål** - bilde2910  
-**Norwegian Nynorsk** - bilde2910  
-**Polish** - krystiancha and RuralYak  
-**Russian** - RuralYak  
-**Ukrainian** - RuralYak
+- **Basque** - osoitz
+- **Dutch** - Jdekoning141
+- **French** - thifranc
+- **German** - natrius, hurradiegams and lemmerk
+- **Norwegian Bokmål** - bilde2910
+- **Norwegian Nynorsk** - bilde2910
+- **Polish** - krystiancha and RuralYak
+- **Russian** - RuralYak
+- **Ukrainian** - RuralYak
 
 ### Translation status
 
