@@ -121,4 +121,6 @@
     <string name="err_ver_e2e">Serveren støtter ikke ende-til-ende-kryptering. Ende-til-ende-kryptering støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din vil bli opprettet uten ende-til-ende-kryptering for å beholde kompatibilitet.</string>
     <string name="label_e2e_password_hint">(for ende-til-ende-kryptering)</string>
     <string name="label_e2e_password">Krypteringsnøkkel:</string>
+    <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
+    <string name="label_use_e2e">Krypter deling:</string>
 </resources>
