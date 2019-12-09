@@ -28,6 +28,7 @@ public final class KeyDerivable implements Serializable {
     /**
      * End-to-end password to encrypt outgoing data with.
      */
+    @SuppressWarnings("FieldNotUsedInToString")
     private final String password;
 
     /**
@@ -62,7 +63,7 @@ public final class KeyDerivable implements Serializable {
 
     @Override
     public String toString() {
-        return "KeyDerivable{password=" + this.password
+        return "KeyDerivable{password=<hidden>"
                 + ",salt=0x" + StringUtils.bytesToHex(this.salt)
                 + "}";
     }

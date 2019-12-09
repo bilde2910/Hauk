@@ -46,6 +46,12 @@ public abstract class Preference<T> {
     abstract void clear(SharedPreferences.Editor prefs);
 
     /**
+     * Returns whether or not this preference is expected to contain sensitive information that
+     * should not be logged.
+     */
+    abstract boolean isSensitive();
+
+    /**
      * Represents a String-value preference.
      */
     public static final class String extends Preference<java.lang.String> {
@@ -75,6 +81,11 @@ public abstract class Preference<T> {
         @Override
         void clear(SharedPreferences.Editor prefs) {
             prefs.remove(this.key);
+        }
+
+        @Override
+        boolean isSensitive() {
+            return false;
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
@@ -128,6 +139,11 @@ public abstract class Preference<T> {
             prefs.remove(this.key);
         }
 
+        @Override
+        boolean isSensitive() {
+            return true;
+        }
+
         @SuppressWarnings("DuplicateStringLiteralInspection")
         @Override
         public java.lang.String toString() {
@@ -165,6 +181,11 @@ public abstract class Preference<T> {
         @Override
         void clear(SharedPreferences.Editor prefs) {
             prefs.remove(this.key);
+        }
+
+        @Override
+        boolean isSensitive() {
+            return false;
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
@@ -205,6 +226,11 @@ public abstract class Preference<T> {
         @Override
         void clear(SharedPreferences.Editor prefs) {
             prefs.remove(this.key);
+        }
+
+        @Override
+        boolean isSensitive() {
+            return false;
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")

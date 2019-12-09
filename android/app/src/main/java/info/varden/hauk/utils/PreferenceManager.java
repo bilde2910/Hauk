@@ -39,7 +39,7 @@ public final class PreferenceManager {
      * @see Constants
      */
     public <T> void set(Preference<T> pair, T value) {
-        Log.v("Setting preference %s, value=%s", pair, value); //NON-NLS
+        Log.v("Setting preference %s, value=%s", pair, pair.isSensitive() ? "<hidden>" : value); //NON-NLS
         SharedPreferences.Editor editor = this.prefs.edit();
         pair.set(editor, value);
         editor.apply();
