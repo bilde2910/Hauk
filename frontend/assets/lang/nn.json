@@ -21,5 +21,9 @@
     "e2e_incorrect": "Krypteringsnøkkelen du skreiv inn er feil. Ver vennleg og prøv igjen.",
     "e2e_password_prompt": "Denne delte posisjonen er kryptert med ende-til-ende-kryptering. Ver vennleg og skriv inn krypteringsnøkkelen for å få tilgang til delinga.",
     "e2e_placeholder": "Krypteringsnøkkel",
-    "e2e_title": "Ende-til-ende-kryptering"
+    "e2e_title": "Ende-til-ende-kryptering",
+    "last_update_days": "{{time}}d sidan",
+    "last_update_hours": "{{time}}t sidan",
+    "last_update_minutes": "{{time}}m sidan",
+    "last_update_seconds": "{{time}}s sidan"
 }
