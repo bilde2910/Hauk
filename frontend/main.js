@@ -507,7 +507,11 @@ function processUpdate(data, init) {
                 // key and prompt the user for the password again.
                 console.log(error);
                 aesKey = null;
-                processUpdate(data, init);
+                if (!init) {
+                    clearInterval(fetchIntv);
+                    clearInterval(countIntv);
+                }
+                processUpdate(data, true);
             });
 
         return;
