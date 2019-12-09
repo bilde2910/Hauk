@@ -537,8 +537,7 @@ function processUpdate(data, init) {
                                     '<span class="velocity">' +
                                         '<span id="velocity-' + shares[user].id + '">0.0</span> ' +
                                         VELOCITY_UNIT.unit +
-                                    '</span><span class="offline">' +
-                                        'Offline' +
+                                    '</span><span class="offline" id="last-seen-' + shares[user].id + '">' +
                                     '</span>' +
                                 '</p>' +
                             '</div>',
@@ -636,10 +635,30 @@ function processUpdate(data, init) {
             var last = shares[user].points.length - 1;
             var point = shares[user].points[last];
             var eLabel = document.getElementById("label-" + shares[user].id);
+            var eLastSeen = document.getElementById("last-seen-" + shares[user].id);
 
             if (point.time < (Date.now() / 1000) - OFFLINE_TIMEOUT) {
                 eArrow.className = eArrow.className.split("live").join("dead");
                 if (eLabel !== null) eLabel.className = 'dead';
+                if (eLastSeen !== null) {
+                    // Calculate time since last update and choose an
+                    // appropriate unit.
+                    var time = Math.round((Date.now() / 1000) - point.time);
+                    var unit = LANG["last_update_seconds"];
+                    if (time >= 60) {
+                        time = Math.floor(time / 60);
+                        unit = LANG["last_update_minutes"];
+                        if (time >= 60) {
+                            time = Math.floor(time / 60);
+                            unit = LANG["last_update_hours"];
+                            if (time >= 24) {
+                                time = Math.floor(time / 24);
+                                unit = LANG["last_update_days"];
+                            }
+                        }
+                    }
+                    eLastSeen.textContent = unit.split("{{time}}").join(time);
+                }
                 shares[user].circle.setStyle({
                     fillColor: '#555555',
                     color: '#555555'
