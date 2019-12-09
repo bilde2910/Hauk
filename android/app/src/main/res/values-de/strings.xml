@@ -3,7 +3,6 @@
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="label_heading">Teilen Ihrer Position mit Open Source Software</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Server URL:</string>
     <string name="label_password">Passwort:</string>
     <string name="label_status">Status:</string>

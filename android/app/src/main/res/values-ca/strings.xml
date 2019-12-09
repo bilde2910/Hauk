@@ -41,7 +41,7 @@
     <string name="btn_ok">D\'acord</string>
     <string name="btn_cancel">Cancel·la</string>
     <string name="btn_yes">Sí</string>
-    <string name="adopt_body">Podeu adoptar una quota d’ubicació individual existent per incorporar-la a aquesta quota de grup. Enganxeu l\'URL o l\'identificador de la participació que vulgueu adoptar (per exemple,% s\?XXXX-XXXX) i assigneu un sobrenom a aquest recurs.</string>
+    <string name="adopt_body">Podeu adoptar una quota d’ubicació individual existent per incorporar-la a aquesta quota de grup. Enganxeu l\'URL o l\'identificador de la participació que vulgueu adoptar (per exemple, %s\?XXXX-XXXX) i assigneu un sobrenom a aquest recurs.</string>
     <string name="create_link_body">Podeu crear diversos enllaços per accedir a la ubicació compartida. Cada enllaç es pot aturar individualment, permetent un control minuciós sobre qui pot veure la vostra ubicació en qualsevol moment.
 \n
 \nEls enllaços addicionals que creeu d\'aquesta manera seran compartits d\'un sol usuari que només mostrin la vostra ubicació.</string>

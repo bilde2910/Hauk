@@ -3,7 +3,6 @@
     <string name="label_password">Passord:</string>
     <string name="label_duration">Varighet:</string>
     <string name="label_heading">Åpen løsning for posisjonsdeling</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_allow_adopt">Tillat adopsjon:</string>
     <string name="label_explain_adopt">(Hva er dette\?)</string>
     <string name="label_nickname">Kallenavn:</string>
@@ -119,7 +118,6 @@
     <string name="label_username_hint">&lt;valgfritt&gt;</string>
     <string name="label_username">Brukernavn:</string>
     <string name="err_ver_e2e">Serveren støtter ikke ende-til-ende-kryptering. Ende-til-ende-kryptering støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din vil bli opprettet uten ende-til-ende-kryptering for å beholde kompatibilitet.</string>
-    <string name="label_e2e_password_hint">(for ende-til-ende-kryptering)</string>
     <string name="label_e2e_password">Krypteringsnøkkel:</string>
     <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
     <string name="label_use_e2e">Krypter deling:</string>

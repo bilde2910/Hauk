@@ -31,7 +31,6 @@
     <string name="label_duration">Czas udostępniania:</string>
     <string name="label_password">Hasło:</string>
     <string name="label_server">URL serwera:</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_heading">Otwarte oprogramowanie do udostępniania lokalizacji</string>
     <string name="img_alt_logo">Hauk</string>
     <string name="app_name">Hauk</string>

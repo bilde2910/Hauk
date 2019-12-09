@@ -35,7 +35,6 @@
     <string name="label_pin_help">Partager ce PIN avec les autres membres du groupe pour qu\'il rejoignent votre groupe de partage de location</string>
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="explain_adopt_body">Hauk vous permet de partager votre localisation pour vous-même ou pour un groupe de personnes. Si une personne crée un partage de groupe, elle obtient un code groupe que d\'autres peuvent utiliser pour rejoindre le partage de localisation.
 \n
 \nCependant, la personne qui crée le partage de groupe a également l\'option d\'ajouter un partage de localisation existant dans le groupe de partage. Cette procédure est appelée l\'ajout de partage.

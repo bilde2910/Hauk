@@ -29,7 +29,6 @@
     <string name="label_explain_adopt">(Що це\?)</string>
     <string name="notify_title">Шарінг місцеположення активний</string>
     <string name="label_heading">Ділимося місцеположенням за допомогою відкритого ПЗ</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">URL сервера:</string>
     <string name="label_password">Пароль:</string>
     <string name="label_duration">Час життя шари:</string>

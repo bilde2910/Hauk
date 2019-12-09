@@ -5,7 +5,6 @@
     <string name="btn_ok">Ados</string>
     <string name="err_malformed_url">Sartu duzun zerbitzari URL-a baliogabea da.</string>
     <string name="req_perms_message">Aplikazio honek zure kokalekua atzitzeko baimena behar du funtzionatzeko, baina baimen hau ez da oraindik eman. Onartu hurrengo baimen eskaera eta gero sakatu hasi botoia berriro saiatzeko.</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Zerbitzariaren URLa:</string>
     <string name="label_password">Pasahitza:</string>
     <string name="label_duration">Partekatzearen iraupena:</string>

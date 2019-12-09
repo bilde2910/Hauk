@@ -12,7 +12,6 @@
     <string name="err_outdated">Сервер устарел</string>
     <string name="label_server">URL Сервера:</string>
     <string name="label_password">Пароль:</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_duration">Время жизни шары:</string>
     <string name="label_interval">Интервал обновления (сек):</string>
     <string name="app_name">Hauk</string>

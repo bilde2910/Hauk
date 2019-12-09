@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_heading">Open løysing for posisjonsdeling</string>
-    <string name="label_source_link">https://github.com/bilde2910/Hauk</string>
     <string name="label_server">Serveradresse:</string>
     <string name="label_password">Passord:</string>
     <string name="label_duration">Varigheit:</string>
@@ -119,7 +118,6 @@
     <string name="label_username_hint">&lt;valfritt&gt;</string>
     <string name="label_username">Brukarnamn:</string>
     <string name="err_ver_e2e">Serveren støttar ikkje ende-til-ende-kryptering. Ende-til-ende-kryptering er støtta i versjon %s og høgare; serveren køyrer no versjon %s. Delingen din vil bli oppretta utan ende-til-ende-kryptering for å behalda kompatibilitet.</string>
-    <string name="label_e2e_password_hint">(for ende-til-ende-kryptering)</string>
     <string name="label_e2e_password">Krypteringsnøkkel:</string>
     <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
     <string name="label_use_e2e">Krypter deling:</string>
