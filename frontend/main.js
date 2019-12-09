@@ -462,7 +462,17 @@ function processUpdate(data, init) {
             algo.iv = byteArray(data.points[i][0]);
             var promises = [];
             for (var j = 1; j < data.points[i].length; j++) {
-                promises.push(crypto.subtle.decrypt(algo, aesKey, byteArray(data.points[i][j])));
+                // Check that the array entry is not null to prevent an
+                // exception. If the entry is null, push a promise that returns
+                // null to the array to maintain indexing in the decrypted
+                // result.
+                if (data.points[i][j] !== null) {
+                    promises.push(crypto.subtle.decrypt(algo, aesKey, byteArray(data.points[i][j])));
+                } else {
+                    promises.push(new Promise(function(resolve, reject) {
+                        resolve(null);
+                    }));
+                }
             }
             pointPromises.push(Promise.all(promises));
         }
@@ -476,7 +486,12 @@ function processUpdate(data, init) {
                 var decoder = new TextDecoder("utf-8");
                 for (var i = 0; i < values.length; i++) {
                     for (var j = 0; j < values[i].length; j++) {
-                        data.points[i][j] = parseFloat(decoder.decode(values[i][j]));
+                        // Check that the value isn't null to avoid exceptions.
+                        if (values[i][j] !== null) {
+                            data.points[i][j] = parseFloat(decoder.decode(values[i][j]));
+                        } else {
+                            data.points[i][j] = null;
+                        }
                     }
                     // The IV was the first item in the array, so all items have
                     // been shifted up once. Pop the last array element off.
@@ -490,6 +505,7 @@ function processUpdate(data, init) {
             .catch(function(error) {
                 // Decryption error. Most likely incorrect password. Reset the
                 // key and prompt the user for the password again.
+                console.log(error);
                 aesKey = null;
                 processUpdate(data, init);
             });
