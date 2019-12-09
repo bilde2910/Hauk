@@ -122,6 +122,7 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 [![Translation status](https://traduki.varden.info/widgets/hauk/-/287x66-white.png)](https://traduki.varden.info/engage/hauk/)
 
 - **Basque** - osoitz
+- **Catalan** - xordiet
 - **Dutch** - Jdekoning141
 - **French** - thifranc
 - **German** - natrius, hurradiegams and lemmerk
