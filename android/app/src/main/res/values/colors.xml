@@ -9,4 +9,5 @@
     <color name="statusOff">#D80037</color>
     <color name="statusWait">#FF9C00</color>
     <color name="statusOn">#007F00</color>
+    <color name="statusDisconnected">#76001E</color>
 </resources>

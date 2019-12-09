@@ -78,7 +78,7 @@ public abstract class LocationUpdatePacket extends Packet {
     }
 
     @Override
-    protected final void onSuccess(String[] data, Version backendVersion) throws ServerException {
+    protected void onSuccess(String[] data, Version backendVersion) throws ServerException {
         // Somehow the data array can be empty? Check for this.
         if (data.length < 1) {
             throw new ServerException(getContext(), R.string.err_empty);

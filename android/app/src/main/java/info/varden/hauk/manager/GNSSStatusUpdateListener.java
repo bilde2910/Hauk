@@ -32,4 +32,14 @@ public interface GNSSStatusUpdateListener {
      * adequate GNSS signal reception.
      */
     void onAccurateLocationReceived();
+
+    /**
+     * Called if the backend server is unreachable.
+     */
+    void onServerConnectionLost();
+
+    /**
+     * Called if the backend server was unreachable, but is now reachable again.
+     */
+    void onServerConnectionRestored();
 }

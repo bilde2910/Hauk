@@ -41,4 +41,14 @@ public final class GNSSStatusUpdateListenerImpl implements GNSSStatusUpdateListe
     public void onAccurateLocationReceived() {
         Toast.makeText(this.ctx, R.string.label_status_ok, Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onServerConnectionLost() {
+        // Silently ignore
+    }
+
+    @Override
+    public void onServerConnectionRestored() {
+        // Silently ignore
+    }
 }

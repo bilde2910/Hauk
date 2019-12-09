@@ -469,6 +469,20 @@ public abstract class SessionManager {
         }
 
         @Override
+        public void onServerConnectionLost() {
+            for (GNSSStatusUpdateListener listener : SessionManager.this.upstreamUpdateHandlers) {
+                listener.onServerConnectionLost();
+            }
+        }
+
+        @Override
+        public void onServerConnectionRestored() {
+            for (GNSSStatusUpdateListener listener : SessionManager.this.upstreamUpdateHandlers) {
+                listener.onServerConnectionRestored();
+            }
+        }
+
+        @Override
         public void onShareListReceived(String linkFormat, String[] shareIDs) {
             List<String> currentShares = Arrays.asList(shareIDs);
             for (int i = 0; i < currentShares.size(); i++) {

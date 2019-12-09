@@ -14,10 +14,12 @@ import androidx.annotation.Nullable;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.http.LocationUpdatePacket;
+import info.varden.hauk.http.ServerException;
 import info.varden.hauk.manager.StopSharingTask;
 import info.varden.hauk.notify.HaukNotification;
 import info.varden.hauk.notify.SharingNotification;
 import info.varden.hauk.struct.Share;
+import info.varden.hauk.struct.Version;
 import info.varden.hauk.utils.Log;
 import info.varden.hauk.utils.ReceiverDataRegistry;
 
@@ -74,6 +76,12 @@ public final class LocationPushService extends Service {
      * The service's location listener for coarse (network, low-accuracy) location updates.
      */
     private LocationListener listenCoarse;
+
+    /**
+     * Whether or not the last update packet was sent successfully, i.e. whether there is a
+     * connection to the backend server.
+     */
+    private boolean connected = true;
 
     @Override
     public void onCreate() {
@@ -185,24 +193,47 @@ public final class LocationPushService extends Service {
      */
     private void onLocationChanged(Location location) {
         Log.v("Sending location update packet"); //NON-NLS
-        new LocationUpdatePacket(this, this.share.getSession(), location) {
-            @Override
-            public void onShareListReceived(String linkFormat, String[] shares) {
-                Log.v("Received list of shares from server"); //NON-NLS
-                LocationPushService.this.gnssActiveTask.onShareListReceived(linkFormat, shares);
-            }
-
-            @Override
-            protected void onFailure(Exception ex) {
-                // Errors can be due to intermittent connectivity. Ignore them.
-                Log.w("Failed to push location update to server", ex); //NON-NLS
-            }
-        }.send();
+        new LocationUpdatePacketImpl(location).send();
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private final class LocationUpdatePacketImpl extends LocationUpdatePacket {
+        private LocationUpdatePacketImpl(Location location) {
+            super(LocationPushService.this, LocationPushService.this.share.getSession(), location);
+        }
+
+        @Override
+        public void onShareListReceived(String linkFormat, String[] shares) {
+            Log.v("Received list of shares from server"); //NON-NLS
+            LocationPushService.this.gnssActiveTask.onShareListReceived(linkFormat, shares);
+        }
+
+        @Override
+        protected void onSuccess(String[] data, Version backendVersion) throws ServerException {
+            // Check if connection was lost previously, and notify upstream if that's the case.
+            Log.i("Hello " + LocationPushService.this.connected);
+            if (!LocationPushService.this.connected) {
+                LocationPushService.this.connected = true;
+                Log.i("Connection to the backend was restored."); //NON-NLS
+                LocationPushService.this.gnssActiveTask.onServerConnectionRestored();
+            }
+            super.onSuccess(data, backendVersion);
+        }
+
+        @Override
+        protected void onFailure(Exception ex) {
+            Log.w("Failed to push location update to server", ex); //NON-NLS
+            // Notify upstream about connectivity loss.
+            if (LocationPushService.this.connected) {
+                LocationPushService.this.connected = false;
+                Log.i("Connection to the backend was lost."); //NON-NLS
+                LocationPushService.this.gnssActiveTask.onServerConnectionLost();
+            }
+        }
     }
 }

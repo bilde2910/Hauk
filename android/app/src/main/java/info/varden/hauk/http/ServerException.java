@@ -8,7 +8,7 @@ import android.content.Context;
  *
  * @author Marius Lindvall
  */
-class ServerException extends Exception {
+public class ServerException extends Exception {
     private static final long serialVersionUID = 2879124634145201633L;
 
     /**
