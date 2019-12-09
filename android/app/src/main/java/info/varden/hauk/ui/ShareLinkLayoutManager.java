@@ -24,7 +24,7 @@ import info.varden.hauk.utils.Log;
  *
  * @author Marius Lindvall
  */
-final class ShareLinkLayoutManager {
+public final class ShareLinkLayoutManager {
     /**
      * The activity on which the links should be placed.
      */
@@ -62,6 +62,13 @@ final class ShareLinkLayoutManager {
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     void add(Share share) {
         this.act.runOnUiThread(new AddTask(share));
+    }
+
+    /**
+     * Returns the number of shares that are visible on the UI.
+     */
+    public int getShareViewCount() {
+        return this.shareViewMap.size();
     }
 
     /**
@@ -105,7 +112,7 @@ final class ShareLinkLayoutManager {
             Button btnStop = linkView.findViewById(R.id.linkBtnStop);
             if (this.share.getSession().getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
                 Log.i("Server is compatible with individual share termination"); //NON-NLS
-                btnStop.setOnClickListener(new StopLinkClickListener(ShareLinkLayoutManager.this.manager, this.share));
+                btnStop.setOnClickListener(new StopLinkClickListener(ShareLinkLayoutManager.this.manager, this.share, ShareLinkLayoutManager.this));
             } else {
                 Log.i("Server is not compatible with individual share termination"); //NON-NLS
                 btnStop.setVisibility(View.GONE);
