@@ -4,6 +4,7 @@ stop_all()
 {
     echo "Stopping apache"
     kill $APACHE_PID
+    rm -rf /run/apache2/apache2.pid
 
     echo "Stopping memcached"
     kill $MEMCACHED_PID
