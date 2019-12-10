@@ -55,6 +55,16 @@ files manually.
 
 ## Via Docker Compose
 
+The official Docker image on Docker Hub is `bilde2910/hauk`. It comes with several different tags:
+
+| Tag | Description |
+| --- | ----------- |
+| `latest` | Updated with each commit to this repository and always has the latest changes. |
+| `stable-1.x` | The latest tagged [release](https://github.com/bilde2910/Hauk/releases) of version 1.x. |
+| `X.Y.Z` | A specific release of the Hauk backend. Note that old versions are not supported and are provided for your convenience only. |
+
+`latest`, `stable-1.x` and all releases from `1.5.2` and up are multi-arch and compiled for x86_64, armv7l and aarch64. `1.5.1` and older are x86_64 only. You can use any of these tags for all architectures, and Docker will automatically pick the correct one. If you need the image for a specific architecture, however, you can fetch them using `*-amd64` (x86_64), `*-arm32v7` (armv7l) or `*-arm64v8` (aarch64) versions of any of the tags (e.g. `latest-arm32v7`).
+
 **docker-compose.yml**
 
 ```yaml
