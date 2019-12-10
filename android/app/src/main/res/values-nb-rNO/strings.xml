@@ -121,4 +121,5 @@
     <string name="label_e2e_password">Krypteringsnøkkel:</string>
     <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
     <string name="label_use_e2e">Krypter deling:</string>
+    <string name="label_status_disconnected">Serveren kan ikke nås akkurat nå</string>
 </resources>
