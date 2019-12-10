@@ -242,7 +242,26 @@ public final class MainActivity extends AppCompatActivity {
             }
         } catch (LocationServicesDisabledException e) {
             Log.e("Share initiation was stopped because location services are disabled", e); //NON-NLS
-            this.dialogSvc.showDialog(R.string.err_client, R.string.err_location_disabled, this.uiResetTask);
+            this.dialogSvc.showDialog(R.string.err_client, R.string.err_location_disabled, Buttons.SETTINGS_OK, new CustomDialogBuilder() {
+                @Override
+                public void onPositive() {
+                    // OK button
+                    MainActivity.this.uiResetTask.run();
+                }
+
+                @Override
+                public void onNegative() {
+                    // Open Settings button
+                    MainActivity.this.uiResetTask.run();
+                    startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
+
+                @Nullable
+                @Override
+                public View createView(Context ctx) {
+                    return null;
+                }
+            });
         } catch (LocationPermissionsNotGrantedException e) {
             Log.w("Share initiation was stopped because the user has not granted location permissions yet", e); //NON-NLS
         }
