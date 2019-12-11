@@ -9,7 +9,7 @@
     <string name="chk_use_e2e">Activa el xifrat d\'extrem a extrem</string>
     <string name="label_e2e_password">Clau de xifrat</string>
     <string name="label_mode">Sistema de compartició:</string>
-    <string name="label_allow_adopt">Permetre l\'adopció</string>
+    <string name="label_allow_adopt">Permetre l\'adopció:</string>
     <string name="label_explain_adopt">(Què és això\?)</string>
     <string name="label_nickname">Nom d\'usuari:</string>
     <string name="label_use_e2e">Xifra la compartició</string>
