@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_password">Passord:</string>
-    <string name="label_duration">Varighet:</string>
+    <string name="label_password">Passord</string>
+    <string name="label_duration">Varighet</string>
     <string name="label_heading">Åpen løsning for posisjonsdeling</string>
-    <string name="label_allow_adopt">Tillat adopsjon:</string>
+    <string name="label_allow_adopt">Tillat adopsjon</string>
     <string name="label_explain_adopt">(Hva er dette\?)</string>
-    <string name="label_nickname">Kallenavn:</string>
+    <string name="label_nickname">Kallenavn</string>
     <string name="label_pin">Gruppekode:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Delings-ID/link:</string>
@@ -53,8 +53,8 @@
     <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
-    <string name="label_server">Serveradresse:</string>
-    <string name="label_interval">Intervall (sek):</string>
+    <string name="label_server">Serveradresse</string>
+    <string name="label_interval">Intervall (sek)</string>
     <string name="label_mode">Delingsmodus:</string>
     <string name="chk_allow_adopt">La andre legge meg til i en delingsgruppe når jeg deler posisjonen min</string>
     <string name="btn_link">Lag en ny delingslink</string>
@@ -74,7 +74,7 @@
     <string name="ok_title">Oppkobling vellykket</string>
     <string name="ok_message">Posisjonen din blir delt! Klikk på del-knappen for å kopiere visningslinken for delingen din.</string>
     <string name="ended_title">Deling avsluttet</string>
-    <string name="ended_message">Sesjonen din har utløpt.</string>
+    <string name="ended_message">Sesjonen din er avsluttet.</string>
     <string name="adopted_title">Deling adoptert</string>
     <string name="adopted_body">%s ble lagt til i gruppen din!</string>
     <string name="resume_title">Gjenoppta sesjon</string>
@@ -111,12 +111,17 @@
     <string name="btn_show_settings">Åpne innstillinger</string>
     <string name="btn_dismiss">Lukk</string>
     <string name="label_custom_id_hint">&lt;tilfeldig generert&gt;</string>
-    <string name="label_custom_id">Foretrukket link-ID:</string>
+    <string name="label_custom_id">Foretrukket link-ID</string>
     <string name="label_username_hint">&lt;valgfritt&gt;</string>
-    <string name="label_username">Brukernavn:</string>
+    <string name="label_username">Brukernavn</string>
     <string name="err_ver_e2e">Serveren støtter ikke ende-til-ende-kryptering. Ende-til-ende-kryptering støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din vil bli opprettet uten ende-til-ende-kryptering for å beholde kompatibilitet.</string>
-    <string name="label_e2e_password">Krypteringsnøkkel:</string>
+    <string name="label_e2e_password">Krypteringsnøkkel</string>
     <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
-    <string name="label_use_e2e">Krypter deling:</string>
+    <string name="label_use_e2e">Krypter deling</string>
     <string name="label_status_disconnected">Serveren kan ikke nås akkurat nå</string>
+    <string name="chk_dont_use_e2e">Deaktiver ende-til-ende-kryptering</string>
+    <string name="password_mask">Trykk for å endre</string>
+    <string name="header_connection">Tilkobling</string>
+    <string name="title_activity_settings">Innstillinger</string>
+    <string name="action_settings">Innstillinger</string>
 </resources>
