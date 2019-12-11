@@ -7,10 +7,8 @@
     <string name="label_explain_adopt">(Hva er dette\?)</string>
     <string name="label_nickname">Kallenavn:</string>
     <string name="label_pin">Gruppekode:</string>
-    <string name="label_remember">Passordlagring:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Delings-ID/link:</string>
-    <string name="chk_remember">Husk krypteringspassord</string>
     <string name="btn_start">Start deling</string>
     <string name="btn_stop">Stopp deling [%s]</string>
     <string name="btn_adopt">Legg til en eksisterende sesjon</string>
@@ -112,7 +110,6 @@
     <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="btn_show_settings">Åpne innstillinger</string>
     <string name="btn_dismiss">Lukk</string>
-    <string name="btn_advanced">Vis avanserte innstillinger</string>
     <string name="label_custom_id_hint">&lt;tilfeldig generert&gt;</string>
     <string name="label_custom_id">Foretrukket link-ID:</string>
     <string name="label_username_hint">&lt;valgfritt&gt;</string>

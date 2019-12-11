@@ -7,10 +7,8 @@
     <string name="label_explain_adopt">(Qu\'est-ce que c\'est\?)</string>
     <string name="label_nickname">Surnom :</string>
     <string name="label_pin">Groupe PIN :</string>
-    <string name="label_remember">Stockage du mot de passe :</string>
     <string name="label_status">Statut :</string>
     <string name="label_share_url">URL/ID de partage :</string>
-    <string name="chk_remember">Enregistrer le mot de passe</string>
     <string name="btn_start">Commencer le partage</string>
     <string name="btn_link">Créer un nouveau lien de suivi</string>
     <string name="btn_adopt">Ajouter un partage existant</string>

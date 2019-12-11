@@ -16,8 +16,6 @@
     <string name="label_pin">PIN del grup:</string>
     <string name="label_status">Estat:</string>
     <string name="label_share_url">Comparteix ID/URL:</string>
-    <string name="chk_remember">Recorda la contrasenya de xifrat</string>
-    <string name="btn_advanced">Mostra les opcions avançades</string>
     <string name="btn_start">Comença a compartir</string>
     <string name="btn_link">Crear un no enllaç de seguiment</string>
     <string name="btn_adopt">Afegeix una compartició existent</string>
@@ -87,7 +85,6 @@
     <string name="label_custom_id">Identificador d\'enllaç preferit:</string>
     <string name="label_custom_id_hint">&lt;generat aleatòriament&gt;</string>
     <string name="chk_allow_adopt">Permetre als altres d\'afegir la meva compartició en un grup compartit</string>
-    <string name="label_remember">Desa el password:</string>
     <string name="btn_stop">Atura la compartició [%s]</string>
     <string name="btn_share_short">Comparteix</string>
     <string name="label_heading_links">Enllaços actius actualment</string>

@@ -24,8 +24,6 @@
     <string name="label_status_ok">Standortfreigabe aktiv!</string>
     <string name="chk_allow_adopt">Anderen erlauben, meine Position einer Gruppenfreigabe hinzuzufügen</string>
     <string name="label_share_url">ID/URL teilen:</string>
-    <string name="label_remember">Passwortspeicher:</string>
-    <string name="chk_remember">Passwort speichern</string>
     <string name="btn_share_short">Teilen</string>
     <string name="link_type_group_member">Gruppenfreigabe (Mitglied)</string>
     <string name="label_status_coarse">Warte auf Präzisions-Fix…</string>
@@ -113,7 +111,6 @@
 \n
 \nAlle zusätzlichen Links, die Sie auf diese Weise erstellen, sind einzelne Standortfreigaben, die nur Ihren Standort anzeigen.</string>
     <string name="label_username">Benutzername:</string>
-    <string name="btn_advanced">Erweiterte Einstellungen anzeigen</string>
     <string name="label_custom_id_hint">&lt;zufällig generiert&gt;</string>
     <string name="label_custom_id">Bevorzugte Link ID:</string>
     <string name="label_username_hint">&lt;optional&gt;</string>

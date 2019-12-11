@@ -1,32 +1,30 @@
 <resources>
     <string name="app_name">Hauk</string>
     <string name="img_alt_logo">Hauk</string>
+    <string name="action_settings">Settings</string>
     <string name="label_heading">Open source location sharing</string>
     <string name="label_source_link" translatable="false">https://github.com/bilde2910/Hauk</string>
-    <string name="label_server">Server URL:</string>
+    <string name="label_server">Server URL</string>
     <string name="label_server_hint" translatable="false">https://example.com/</string>
-    <string name="label_username">Username:</string>
+    <string name="label_username">Username</string>
     <string name="label_username_hint">&lt;optional&gt;</string>
-    <string name="label_password">Password:</string>
-    <string name="label_duration">Share duration:</string>
-    <string name="label_interval">Update interval (s):</string>
-    <string name="label_custom_id">Preferred link ID:</string>
+    <string name="label_password">Password</string>
+    <string name="label_duration">Share duration</string>
+    <string name="label_interval">Update interval (seconds)</string>
+    <string name="label_custom_id">Preferred link ID</string>
     <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
-    <string name="label_use_e2e">Encrypt share:</string>
-    <string name="chk_use_e2e">Enable end-to-end encryption</string>
-    <string name="label_e2e_password">Encryption key:</string>
+    <string name="label_use_e2e">Encrypt share</string>
+
+    <string name="label_e2e_password">Encryption key</string>
     <string name="label_mode">Sharing mode:</string>
-    <string name="label_allow_adopt">Allow adoption:</string>
-    <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
+    <string name="label_allow_adopt">Allow adoption</string>
+
     <string name="label_explain_adopt">(What\'s this?)</string>
-    <string name="label_nickname">Nickname:</string>
+    <string name="label_nickname">Nickname</string>
     <string name="label_pin">Group PIN:</string>
-    <string name="label_remember">Password storage:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Share ID/URL:</string>
-    <string name="chk_remember">Remember encryption password</string>
 
-    <string name="btn_advanced">Show advanced settings</string>
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Create new tracking link</string>
@@ -125,4 +123,14 @@
     <string name="authorize_header">Broadcast authorization request</string>
     <string name="authorize_body">Hauk received and blocked an attempt to create a new location sharing session from a broadcast source which identified itself as</string>
     <string name="authorize_question">Do you wish to allow sessions to be created from broadcasts with this identification in the future?</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="header_connection">Connection</string>
+    <string name="password_mask">Tap to edit</string>
+
+    <string name="chk_use_e2e">Enable end-to-end encryption</string>
+    <string name="chk_dont_use_e2e">Disable end-to-end encryption</string>
+    <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
 </resources>

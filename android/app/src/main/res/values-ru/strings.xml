@@ -18,10 +18,8 @@
     <string name="label_explain_adopt">(Что это\?)</string>
     <string name="label_nickname">Ник:</string>
     <string name="label_pin">Групповой PIN:</string>
-    <string name="label_remember">Сохранять пароль:</string>
     <string name="label_status">Статус:</string>
     <string name="label_share_url">ID/URL шары:</string>
-    <string name="chk_remember">Запомнить пароль</string>
     <string name="btn_start">Старт сессии</string>
     <string name="btn_stop">Остановить сессию [%s]</string>
     <string name="btn_adopt">Добавить существующую шару</string>

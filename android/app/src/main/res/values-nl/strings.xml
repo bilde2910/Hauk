@@ -12,11 +12,9 @@
     <string name="label_explain_adopt">(Wat is dit\?)</string>
     <string name="label_nickname">Bijnaam:</string>
     <string name="label_pin">Groep PIN:</string>
-    <string name="label_remember">Wachtwoord opslag:</string>
     <string name="label_status">Status:</string>
     <string name="label_allow_adopt">Toevoegen aan groep toestaan:</string>
     <string name="label_share_url">Deel ID/URL:</string>
-    <string name="chk_remember">Onthoud wachtwoord</string>
     <string name="btn_start">Start met delen</string>
     <string name="btn_stop">Stop met delen van [%s]</string>
     <string name="btn_link">Creëer nieuwe volg link</string>

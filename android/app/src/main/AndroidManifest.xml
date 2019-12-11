@@ -9,17 +9,28 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".system.preferences.ui.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="info.varden.hauk.ui.MainActivity" />
+        </activity>
+
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,7 +40,9 @@
         <activity
             android:name=".global.ui.AuthorizationActivity"
             android:screenOrientation="portrait">
+
         </activity>
+
         <receiver
             android:name=".global.Receiver"
             android:exported="true"
@@ -39,23 +52,30 @@
                 <action android:name="info.varden.hauk.START_ALONE_THEN_MAKE_TOAST" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".notify.CopyLinkReceiver" android:exported="false">
+        <receiver
+            android:name=".notify.CopyLinkReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="info.varden.hauk.COPY_LINK" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".notify.StopSharingReceiver" android:exported="false">
+        <receiver
+            android:name=".notify.StopSharingReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="info.varden.hauk.STOP_SHARING" />
             </intent-filter>
         </receiver>
-        <service android:name=".service.LocationPushService" android:exported="false" android:enabled="true" android:foregroundServiceType="location">
+
+        <service
+            android:name=".service.LocationPushService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location">
             <intent-filter>
                 <action android:name="info.varden.hauk.LOCATION_SERVICE" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

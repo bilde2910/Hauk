@@ -6,17 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Checkable;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import info.varden.hauk.Constants;
@@ -40,14 +41,13 @@ import info.varden.hauk.struct.Version;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.powersaving.DeviceChecker;
+import info.varden.hauk.system.preferences.PreferenceManager;
+import info.varden.hauk.system.preferences.ui.SettingsActivity;
 import info.varden.hauk.ui.listener.AddLinkClickListener;
-import info.varden.hauk.ui.listener.EncryptionEnabledChangeListener;
 import info.varden.hauk.ui.listener.InitiateAdoptionClickListener;
-import info.varden.hauk.ui.listener.RememberPasswordPreferenceChangedListener;
 import info.varden.hauk.ui.listener.SelectionModeChangedListener;
 import info.varden.hauk.utils.DeprecationMigrator;
 import info.varden.hauk.utils.Log;
-import info.varden.hauk.utils.PreferenceManager;
 import info.varden.hauk.utils.TimeUtils;
 
 /**
@@ -104,16 +104,12 @@ public final class MainActivity extends AppCompatActivity {
 
         Log.i("Creating main activity"); //NON-NLS
         setContentView(R.layout.activity_main);
+        setSupportActionBar((Toolbar) findViewById(R.id.mainToolbar));
+
         setClassVariables();
         ((TextView) findViewById(R.id.labelAdoptWhatsThis)).setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         Log.d("Attaching event handlers"); //NON-NLS
-
-        // Add an on checked handler to the password remember checkbox to save their encryption
-        // password immediately.
-        ((CompoundButton) findViewById(R.id.chkRemember)).setOnCheckedChangeListener(
-                new RememberPasswordPreferenceChangedListener(this, (EditText) findViewById(R.id.txtE2EPassword))
-        );
 
         // Add an event handler to the sharing mode selector.
         //noinspection OverlyStrongTypeCast
@@ -124,16 +120,6 @@ public final class MainActivity extends AppCompatActivity {
         ));
 
         loadPreferences();
-
-        // Add an on checked handler to the enable E2E checkbox to toggle the E2E state. This must
-        // be done after loading preferences to ensure that the checkbox doesn't trigger the event
-        // when hidden.
-        ((CompoundButton) findViewById(R.id.chkUseE2E)).setOnCheckedChangeListener(
-                new EncryptionEnabledChangeListener(this, new View[] {
-                        findViewById(R.id.rowE2EPassword),
-                        findViewById(R.id.rowRemember)
-                })
-        );
 
         this.manager.resumeShares(new ResumePrompt() {
             @Override
@@ -150,6 +136,24 @@ public final class MainActivity extends AppCompatActivity {
 
         // Check for aggressive power saving devices and warn the user if applicable.
         new DeviceChecker(this).performCheck();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.title_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -174,14 +178,16 @@ public final class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnShare).setEnabled(false);
         disableUI();
 
-        String server = ((TextView) findViewById(R.id.txtServer)).getText().toString().trim();
-        String username = ((TextView) findViewById(R.id.txtUsername)).getText().toString().trim();
-        String password = ((TextView) findViewById(R.id.txtPassword)).getText().toString();
+        PreferenceManager prefs = new PreferenceManager(this);
+
+        String server = prefs.get(Constants.PREF_SERVER_ENCRYPTED).trim();
+        String username = prefs.get(Constants.PREF_USERNAME_ENCRYPTED).trim();
+        String password = prefs.get(Constants.PREF_PASSWORD_ENCRYPTED);
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
-        int interval = Integer.parseInt(((TextView) findViewById(R.id.txtInterval)).getText().toString());
-        String customID = ((TextView) findViewById(R.id.txtCustomID)).getText().toString().trim();
-        boolean useE2E = ((Checkable) findViewById(R.id.chkUseE2E)).isChecked();
-        String e2ePass = ((TextView) findViewById(R.id.txtE2EPassword)).getText().toString();
+        int interval = prefs.get(Constants.PREF_INTERVAL);
+        String customID = prefs.get(Constants.PREF_CUSTOM_ID).trim();
+        boolean useE2E = prefs.get(Constants.PREF_ENABLE_E2E);
+        String e2ePass = prefs.get(Constants.PREF_E2E_PASSWORD);
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
@@ -191,24 +197,10 @@ public final class MainActivity extends AppCompatActivity {
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
         Log.i("Updating connection preferences"); //NON-NLS
-        PreferenceManager prefs = new PreferenceManager(this);
-        prefs.set(Constants.PREF_SERVER_ENCRYPTED, server);
-        prefs.set(Constants.PREF_USERNAME_ENCRYPTED, username);
-        prefs.set(Constants.PREF_PASSWORD_ENCRYPTED, password);
         prefs.set(Constants.PREF_DURATION, duration);
-        prefs.set(Constants.PREF_INTERVAL, interval);
-        prefs.set(Constants.PREF_CUSTOM_ID, customID);
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
-        prefs.set(Constants.PREF_ENABLE_E2E, useE2E);
-
-        // If password saving is enabled, save the password as well.
-        if (((Checkable) findViewById(R.id.chkRemember)).isChecked()) {
-            Log.i("Saving E2E password"); //NON-NLS
-            prefs.set(Constants.PREF_REMEMBER_PASSWORD, true);
-            prefs.set(Constants.PREF_E2E_PASSWORD, e2ePass);
-        }
 
         // Ignore E2E password if E2E is disabled.
         if (!useE2E) e2ePass = "";
@@ -287,40 +279,19 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * On-tap handler for the "show advanced settings" button.
-     */
-    public void showAdvancedSettings(View view) {
-        view.setVisibility(View.GONE);
-        findViewById(R.id.rowUpdateInterval).setVisibility(View.VISIBLE);
-        findViewById(R.id.rowCustomID).setVisibility(View.VISIBLE);
-        findViewById(R.id.rowUseE2E).setVisibility(View.VISIBLE);
-        if (((Checkable) findViewById(R.id.chkUseE2E)).isChecked()) {
-            findViewById(R.id.rowE2EPassword).setVisibility(View.VISIBLE);
-            findViewById(R.id.rowRemember).setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
      * This function is called by onCreate() to initialize class-level variables for usage in this
      * activity.
      */
     private void setClassVariables() {
         Log.d("Setting class variables"); //NON-NLS
         this.lockWhileRunning = new View[] {
-                findViewById(R.id.txtServer),
-                findViewById(R.id.txtUsername),
-                findViewById(R.id.txtPassword),
                 findViewById(R.id.txtDuration),
-                findViewById(R.id.txtInterval),
-                findViewById(R.id.txtCustomID),
-                findViewById(R.id.txtE2EPassword),
 
                 findViewById(R.id.selUnit),
                 findViewById(R.id.selMode),
                 findViewById(R.id.txtNickname),
                 findViewById(R.id.txtGroupCode),
-                findViewById(R.id.chkAllowAdopt),
-                findViewById(R.id.chkUseE2E)
+                findViewById(R.id.chkAllowAdopt)
         };
 
         this.uiResetTask = new ResetTask();
@@ -351,21 +322,13 @@ public final class MainActivity extends AppCompatActivity {
     private void loadPreferences() {
         Log.i("Loading preferences..."); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
-        ((TextView) findViewById(R.id.txtServer)).setText(prefs.get(Constants.PREF_SERVER_ENCRYPTED));
-        ((TextView) findViewById(R.id.txtUsername)).setText(prefs.get(Constants.PREF_USERNAME_ENCRYPTED));
         ((TextView) findViewById(R.id.txtDuration)).setText(String.valueOf(prefs.get(Constants.PREF_DURATION)));
-        ((TextView) findViewById(R.id.txtInterval)).setText(String.valueOf(prefs.get(Constants.PREF_INTERVAL)));
-        ((TextView) findViewById(R.id.txtCustomID)).setText(prefs.get(Constants.PREF_CUSTOM_ID));
-        ((TextView) findViewById(R.id.txtE2EPassword)).setText(prefs.get(Constants.PREF_E2E_PASSWORD));
-        ((TextView) findViewById(R.id.txtPassword)).setText(prefs.get(Constants.PREF_PASSWORD_ENCRYPTED));
         ((TextView) findViewById(R.id.txtNickname)).setText(prefs.get(Constants.PREF_NICKNAME));
         // Because I can choose between an unchecked cast warning and an overly strong cast warning,
         // I'm going to with the latter.
         //noinspection OverlyStrongTypeCast
         ((Spinner) findViewById(R.id.selUnit)).setSelection(prefs.get(Constants.PREF_DURATION_UNIT));
-        ((Checkable) findViewById(R.id.chkRemember)).setChecked(prefs.get(Constants.PREF_REMEMBER_PASSWORD));
         ((Checkable) findViewById(R.id.chkAllowAdopt)).setChecked(prefs.get(Constants.PREF_ALLOW_ADOPTION));
-        ((Checkable) findViewById(R.id.chkUseE2E)).setChecked(prefs.get(Constants.PREF_ENABLE_E2E));
     }
 
     /**

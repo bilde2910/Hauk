@@ -3,6 +3,7 @@ package info.varden.hauk.utils;
 import android.content.Context;
 
 import info.varden.hauk.Constants;
+import info.varden.hauk.system.preferences.PreferenceManager;
 
 /**
  * Helper utility to migrate old, deprecated settings saved in shared preferences to modern storage.

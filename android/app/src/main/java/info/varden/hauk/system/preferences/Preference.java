@@ -1,4 +1,4 @@
-package info.varden.hauk.utils;
+package info.varden.hauk.system.preferences;
 
 import android.content.SharedPreferences;
 
@@ -6,6 +6,8 @@ import info.varden.hauk.system.security.EncryptedData;
 import info.varden.hauk.system.security.EncryptionException;
 import info.varden.hauk.system.security.KeyStoreAlias;
 import info.varden.hauk.system.security.KeyStoreHelper;
+import info.varden.hauk.utils.Log;
+import info.varden.hauk.utils.StringSerializer;
 
 /**
  * Represents a preference key to default value mapping pair for use with storing preferences for
@@ -15,6 +17,28 @@ import info.varden.hauk.system.security.KeyStoreHelper;
  * @author Marius Lindvall
  */
 public abstract class Preference<T> {
+
+    private final java.lang.String key;
+    private final Class<T> type;
+
+    private Preference(java.lang.String key, Class<T> type) {
+        this.key = key;
+        this.type = type;
+    }
+
+    /**
+     * Returns the key of this preference in the {@link SharedPreferences} instance.
+     */
+    public final java.lang.String getKey() {
+        return this.key;
+    }
+
+    /**
+     * Returns the type of data this preference stores.
+     */
+    public final Class<T> getPreferenceType() {
+        return this.type;
+    }
 
     /**
      * Gets the value of the preference from the given preference object.
@@ -59,6 +83,7 @@ public abstract class Preference<T> {
         private final java.lang.String def;
 
         public String(java.lang.String key, java.lang.String def) {
+            super(key, java.lang.String.class);
             this.key = key;
             this.def = def;
         }
@@ -103,6 +128,7 @@ public abstract class Preference<T> {
         private final java.lang.String def;
 
         public EncryptedString(java.lang.String key, java.lang.String def) {
+            super(key, java.lang.String.class);
             this.key = key;
             this.def = def;
         }
@@ -159,6 +185,7 @@ public abstract class Preference<T> {
         private final int def;
 
         public Integer(java.lang.String key, int def) {
+            super(key, java.lang.Integer.class);
             this.key = key;
             this.def = def;
         }
@@ -204,6 +231,7 @@ public abstract class Preference<T> {
 
         @SuppressWarnings("BooleanParameter")
         public Boolean(java.lang.String key, boolean def) {
+            super(key, java.lang.Boolean.class);
             this.key = key;
             this.def = def;
         }

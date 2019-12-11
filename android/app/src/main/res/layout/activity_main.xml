@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The main application activity for Hauk. -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.MainActivity">
+    
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,71 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Server URL. -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtServer"
-                        android:text="@string/label_server" />
-
-                    <EditText
-                        android:id="@+id/txtServer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:autofillHints="uri"
-                        android:ems="10"
-                        android:hint="@string/label_server_hint"
-                        android:inputType="textUri" />
-                </TableRow>
-
-                <!-- Username. -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtUsername"
-                        android:text="@string/label_username" />
-
-                    <EditText
-                        android:id="@+id/txtUsername"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:hint="@string/label_username_hint"
-                        android:autofillHints="username" />
-                </TableRow>
-
-                <!-- Server password. -->
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtPassword"
-                        android:text="@string/label_password" />
-
-                    <EditText
-                        android:id="@+id/txtPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textPassword"
-                        android:autofillHints="password" />
-                </TableRow>
-
                 <!-- Share duration, in minutes. -->
                 <TableRow
                     android:layout_width="match_parent"
@@ -145,129 +90,6 @@
                         android:layout_height="45dp"
                         android:entries="@array/sel_unit_opts"
                         android:gravity="center_vertical"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Button
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_span="2"
-                        android:onClick="showAdvancedSettings"
-                        android:text="@string/btn_advanced" />
-                </TableRow>
-
-                <!-- Update interval, in seconds. -->
-                <TableRow
-                    android:id="@+id/rowUpdateInterval"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtInterval"
-                        android:text="@string/label_interval" />
-
-                    <EditText
-                        android:id="@+id/txtInterval"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:autofillHints="seconds"
-                        android:ems="10"
-                        android:inputType="number" />
-                </TableRow>
-
-                <!-- Custom link ID. -->
-                <TableRow
-                    android:id="@+id/rowCustomID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtCustomID"
-                        android:text="@string/label_custom_id" />
-
-                    <EditText
-                        android:id="@+id/txtCustomID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textShortMessage"
-                        android:hint="@string/label_custom_id_hint"
-                        android:autofillHints="username" />
-                </TableRow>
-
-                <!-- Whether or not to use end-to-end encryption. -->
-                <TableRow
-                    android:id="@+id/rowUseE2E"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_use_e2e" />
-
-                    <CheckBox
-                        android:id="@+id/chkUseE2E"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:text="@string/chk_use_e2e" />
-                </TableRow>
-
-                <!-- End-to-end encryption password. -->
-                <TableRow
-                    android:id="@+id/rowE2EPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/txtE2EPassword"
-                        android:text="@string/label_e2e_password" />
-
-                    <EditText
-                        android:id="@+id/txtE2EPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="textPassword"
-                        android:autofillHints="e2epassword" />
-                </TableRow>
-
-                <!-- Whether or not to save the server password. -->
-                <TableRow
-                    android:id="@+id/rowRemember"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_remember" />
-
-                    <CheckBox
-                        android:id="@+id/chkRemember"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:text="@string/chk_remember" />
                 </TableRow>
 
                 <!-- The sharing mode (alone or group share). -->
@@ -500,4 +322,4 @@
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

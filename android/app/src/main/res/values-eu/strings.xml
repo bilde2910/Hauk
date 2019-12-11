@@ -14,10 +14,8 @@
     <string name="label_explain_adopt">(Zer da hau\?)</string>
     <string name="label_nickname">Ezizena:</string>
     <string name="label_pin">Taldearen PIN-a:</string>
-    <string name="label_remember">Pasahitzaren biltegiratzea:</string>
     <string name="label_status">Egoera:</string>
     <string name="label_share_url">Partekatzearen ID/URL-a:</string>
-    <string name="chk_remember">Gogoratu pasahitza</string>
     <string name="btn_start">Hasi partekatzen</string>
     <string name="btn_adopt">Gehitu badagoen partekatze bat</string>
     <string name="btn_stop_short">Gelditu</string>

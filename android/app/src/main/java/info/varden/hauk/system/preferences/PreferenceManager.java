@@ -1,9 +1,10 @@
-package info.varden.hauk.utils;
+package info.varden.hauk.system.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import info.varden.hauk.Constants;
+import info.varden.hauk.utils.Log;
 
 /**
  * Utility class that manages connection preferences in Hauk.

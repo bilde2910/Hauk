@@ -18,8 +18,8 @@ import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
+import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.utils.DeprecationMigrator;
-import info.varden.hauk.utils.PreferenceManager;
 import info.varden.hauk.utils.TimeUtils;
 
 /**

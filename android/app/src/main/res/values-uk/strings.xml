@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_nickname">Нік:</string>
-    <string name="label_remember">Збереження пароля:</string>
     <string name="err_ver_group">Сервер не підтримує групові шари. Групові шари підтримуються в версії %s та вище; цей сервер зараз має версію %s. Ваша шара була перетворена на індивідуальну.</string>
     <string name="btn_link">Створити новий відстежувальний лінк</string>
     <string name="ok_message">Шарінг місцеположення активний! Нажміть кнопку поділитися щоб скопіювати публічно доступний URL для вашої шари.</string>
@@ -41,7 +40,6 @@
     <string name="label_pin">Груповий PIN:</string>
     <string name="label_status">Статус:</string>
     <string name="label_share_url">ID/URL шари:</string>
-    <string name="chk_remember">Запом\'ятати пароль</string>
     <string name="btn_start">Почати шару</string>
     <string name="btn_stop">Зупинити шару [%s]</string>
     <string name="btn_adopt">Додати існуючу шару</string>
