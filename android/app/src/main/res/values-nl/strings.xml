@@ -13,7 +13,7 @@
     <string name="label_nickname">Bijnaam:</string>
     <string name="label_pin">Groep PIN:</string>
     <string name="label_status">Status:</string>
-    <string name="label_allow_adopt">Toevoegen aan groep toestaan</string>
+    <string name="label_allow_adopt">Toevoegen aan groep toestaan:</string>
     <string name="label_share_url">Deel ID/URL:</string>
     <string name="btn_start">Start met delen</string>
     <string name="btn_stop">Stop met delen van [%s]</string>
