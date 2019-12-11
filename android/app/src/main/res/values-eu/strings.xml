@@ -7,7 +7,7 @@
     <string name="req_perms_message">Aplikazio honek zure kokalekua atzitzeko baimena behar du funtzionatzeko, baina baimen hau ez da oraindik eman. Onartu hurrengo baimen eskaera eta gero sakatu hasi botoia berriro saiatzeko.</string>
     <string name="label_server">Zerbitzariaren URLa</string>
     <string name="label_password">Pasahitza</string>
-    <string name="label_duration">Partekatzearen iraupena</string>
+    <string name="label_duration">Partekatzearen iraupena:</string>
     <string name="label_interval">Eguneraketa tartea (s):</string>
     <string name="label_mode">Partekatze modua:</string>
     <string name="label_allow_adopt">Baimendu adopzioa</string>
