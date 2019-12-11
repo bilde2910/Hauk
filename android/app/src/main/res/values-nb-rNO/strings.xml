@@ -5,7 +5,7 @@
     <string name="label_heading">Åpen løsning for posisjonsdeling</string>
     <string name="label_allow_adopt">Tillat adopsjon</string>
     <string name="label_explain_adopt">(Hva er dette\?)</string>
-    <string name="label_nickname">Kallenavn</string>
+    <string name="label_nickname">Kallenavn:</string>
     <string name="label_pin">Gruppekode:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Delings-ID/link:</string>

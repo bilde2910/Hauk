@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="img_alt_logo">Hauk</string>
-    <string name="label_username">Nom d\'usuari:</string>
+    <string name="label_username">Nom d\'usuari</string>
     <string name="label_username_hint">&lt;opcional&gt;</string>
     <string name="label_password">Password:</string>
-    <string name="label_duration">Durada de la compartició:</string>
+    <string name="label_duration">Durada de la compartició</string>
     <string name="label_interval">Interval d\'actualització (s):</string>
     <string name="chk_use_e2e">Activa el xifrat d\'extrem a extrem</string>
     <string name="label_e2e_password">Clau de xifrat:</string>
@@ -81,7 +81,7 @@
     <string name="authorize_question">Voleu permetre que en el futur es crein sessions a partir d’emissions amb aquesta identificació\?</string>
     <string name="app_name">Hauk</string>
     <string name="label_heading">Ús compartit de la ubicació de codi obert</string>
-    <string name="label_server">URL del servidor:</string>
+    <string name="label_server">URL del servidor</string>
     <string name="label_custom_id">Identificador d\'enllaç preferit:</string>
     <string name="label_custom_id_hint">&lt;generat aleatòriament&gt;</string>
     <string name="chk_allow_adopt">Permetre als altres d\'afegir la meva compartició en un grup compartit</string>
