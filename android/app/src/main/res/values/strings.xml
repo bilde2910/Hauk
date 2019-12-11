@@ -9,7 +9,7 @@
     <string name="label_username">Username</string>
     <string name="label_username_hint">&lt;optional&gt;</string>
     <string name="label_password">Password</string>
-    <string name="label_duration">Share duration</string>
+    <string name="label_duration">Share duration:</string>
     <string name="label_interval">Update interval (seconds)</string>
     <string name="label_custom_id">Preferred link ID</string>
     <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
