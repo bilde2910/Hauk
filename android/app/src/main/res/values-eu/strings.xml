@@ -10,7 +10,7 @@
     <string name="label_duration">Partekatzearen iraupena:</string>
     <string name="label_interval">Eguneraketa tartea (s):</string>
     <string name="label_mode">Partekatze modua:</string>
-    <string name="label_allow_adopt">Baimendu adopzioa</string>
+    <string name="label_allow_adopt">Baimendu adopzioa:</string>
     <string name="label_explain_adopt">(Zer da hau\?)</string>
     <string name="label_nickname">Ezizena:</string>
     <string name="label_pin">Taldearen PIN-a:</string>
