@@ -4,8 +4,8 @@
     <string name="label_pin_help">Deel deze PIN met anderen in uw groep zodat zij uw locatie kunnen volgen</string>
     <string name="err_ver_group">De server ondersteund geen groepsdelingen. Groepsdelingen zijn ondersteund vanaf versie %s; de server draait op dit moment versie %s. Uw locatiedeling is omgezet in een individuele deling.</string>
     <string name="label_heading">Open source locatie deling</string>
-    <string name="label_server">Server URL:</string>
-    <string name="label_password">Wachtwoord:</string>
+    <string name="label_server">Server URL</string>
+    <string name="label_password">Wachtwoord</string>
     <string name="label_duration">Deelduratie:</string>
     <string name="label_interval">Updatefrequentie (s):</string>
     <string name="label_mode">Deelmodus:</string>
@@ -13,7 +13,7 @@
     <string name="label_nickname">Bijnaam:</string>
     <string name="label_pin">Groep PIN:</string>
     <string name="label_status">Status:</string>
-    <string name="label_allow_adopt">Toevoegen aan groep toestaan:</string>
+    <string name="label_allow_adopt">Toevoegen aan groep toestaan</string>
     <string name="label_share_url">Deel ID/URL:</string>
     <string name="btn_start">Start met delen</string>
     <string name="btn_stop">Stop met delen van [%s]</string>
