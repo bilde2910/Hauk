@@ -17,7 +17,7 @@
 
     <string name="label_e2e_password">Encryption key</string>
     <string name="label_mode">Sharing mode:</string>
-    <string name="label_allow_adopt">Allow adoption</string>
+    <string name="label_allow_adopt">Allow adoption:</string>
 
     <string name="label_explain_adopt">(What\'s this?)</string>
     <string name="label_nickname">Nickname:</string>
