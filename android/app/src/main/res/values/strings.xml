@@ -20,7 +20,7 @@
     <string name="label_allow_adopt">Allow adoption</string>
 
     <string name="label_explain_adopt">(What\'s this?)</string>
-    <string name="label_nickname">Nickname</string>
+    <string name="label_nickname">Nickname:</string>
     <string name="label_pin">Group PIN:</string>
     <string name="label_status">Status:</string>
     <string name="label_share_url">Share ID/URL:</string>
