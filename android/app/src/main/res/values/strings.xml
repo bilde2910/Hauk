@@ -100,7 +100,7 @@
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
     <string name="ended_title">Sharing ended</string>
-    <string name="ended_message">Your location share has expired.</string>
+    <string name="ended_message">Your location share has ended.</string>
     <string name="adopted_title">Share adopted</string>
     <string name="adopted_body">%s has been added to your share!</string>
     <string name="resume_title">Resume session</string>
