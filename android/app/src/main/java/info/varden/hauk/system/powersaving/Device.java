@@ -42,7 +42,7 @@ public enum Device {
     XIAOMI(3,
             R.string.manufacturer_xiaomi,
             Build.HOST,
-            Pattern.compile("-miui-"),
+            Pattern.compile("(-miui-)|(xiaomi)"),
             new ComponentLauncher(
                     "com.miui.powerkeeper",
                     ".ui.HiddenAppsContainerManagementActivity"
