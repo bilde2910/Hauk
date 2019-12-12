@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hauk</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="label_heading">Teilen Ihrer Position mit Open Source Software</string>
     <string name="label_server">Server URL</string>
     <string name="label_password">Passwort</string>

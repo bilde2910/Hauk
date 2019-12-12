@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="img_alt_logo">Hauk</string>
     <string name="label_username">Nom d\'usuari</string>
     <string name="label_username_hint">&lt;opcional&gt;</string>
     <string name="label_password">Password:</string>
@@ -79,7 +78,6 @@
     <string name="authorize_header">Sol·licitud d’autorització de transmissió</string>
     <string name="authorize_body">"Hauk ha rebut i blocat un intent de crear una nova sessió de localització  des d\'una font de transmissió que s\'ha identificat a si mateixa com a"</string>
     <string name="authorize_question">Voleu permetre que en el futur es crein sessions a partir d’emissions amb aquesta identificació\?</string>
-    <string name="app_name">Hauk</string>
     <string name="label_heading">Ús compartit de la ubicació de codi obert</string>
     <string name="label_server">URL del servidor</string>
     <string name="label_custom_id">Identificador d\'enllaç preferit</string>

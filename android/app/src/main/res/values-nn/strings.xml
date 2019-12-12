@@ -79,7 +79,6 @@
     <string name="share_subject">Følg posisjonen min på Hauk!</string>
     <string name="err_missing_perms">Tilgang til stadtenester krevjast for å bruka denne appen.</string>
     <string name="label_pin_help">Del denne koden med dei andre i gruppa di for å la dei kopla seg på og bli med i delingsgruppa</string>
-    <string name="app_name">Hauk</string>
     <string name="explain_adopt_body">Hauk lèt deg laga delingssesjoner for deg sjølv i tillegg til for grupper. Viss nokon lagar ei gruppe, får dei ein kode som andre kan bruka til å bli med på å dela posisjonen sin til gruppa. 
 \n 
 \nPersonen som opprettar gruppa har òg moglegheit til å legga til ein eksisterande enkeltperson som allereie deler posisjonen sin inn i gruppa. Denne prosessen kallast for adopsjon. 
@@ -87,7 +86,6 @@
 \nDu kan avgjera om du ønsker å la andre fletta delingen din inn i ei gruppe ved å kryssa av i denne boksen. 
 \n 
 \nViss du aktiverer dette og deler posisjonen din med ein gjeng med venner, og nokon andre i gjengen òg ønsker å dela posisjonen sin, kan dei oppretta ein delingsgruppe og legga deg til på kartet sitt, slik at de begge dukkar opp på same kart. Dette kan vera nyttig viss du t.d. køyrer bil og ikkje kan bruka telefonen din, sidan adopsjon av delingen din av andre ikkje krev noka handling frå deg.</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="chk_allow_adopt">La andre legga meg til i ein delingsgruppe når eg deler posisjonen min</string>
     <string name="btn_adopt">Legg til ein eksisterande sesjon</string>
     <string name="sel_mode_opt_join_group">Bli med i ein delingsgruppe</string>
