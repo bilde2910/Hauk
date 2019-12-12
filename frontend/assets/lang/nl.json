@@ -12,6 +12,5 @@
     "gnss_signal_body": "Verzender is aan het wachten op GPS signaal",
     "gnss_signal_head": "Wacht alstublieft",
     "expired_body": "The locatiedeling die u probeerde te bekijken kon niet gevonden worden op de server. Als deze link eerder wel werkte, dan zou de sessie verlopen kunnen zijn.",
-    "expired_head": "Locatie verlopen",
-    "page_title": "Hauk"
+    "expired_head": "Locatie verlopen"
 }

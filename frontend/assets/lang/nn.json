@@ -13,7 +13,6 @@
     "gnss_signal_head": "Ver vennleg og vent",
     "expired_body": "Den delte posisjonen du prøvde å opna vart ikkje funne på serveren. Viss denne linken verkte tidlegare, kan det hendet at delingen har gått ut.",
     "expired_head": "Posisjon gått ut",
-    "page_title": "Hauk",
     "btn_decrypt": "Dekrypter",
     "btn_cancel": "Avbryt",
     "e2e_unsupported": "Denne delte posisjonen er kryptert med ende-til-ende-kryptering. Nettlesaren din ser ikkje ut til å støtta dei kryptografiske funksjonane som krevjast for å dekryptere slike delingar. Ver vennleg og prøv igjen med ein annan nettlesar.",
