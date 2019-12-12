@@ -104,10 +104,10 @@
     <string name="err_ver_e2e">Serverul nu suportă criptarea partajării. Partajările criptate sunt suportate de versiunea %s sau mai nouă; serverul rulează versiunea %s. Partajarea dumneavoastră va fi creată fără criptare pentru a păstra compatibilitatea.</string>
     <string name="link_added_body">O noua adresă a fost creată cu succes pentru partajarea locației! Atingeți butonul de partajare pentru a copia adresa vizibilă public.</string>
     <string name="req_perms_message">Această aplicație necesită acces la locația dumneavoastră pentru a funcționa, dar acestă permisiune nu a fost încă acordată. Vă rugăm să aprobați următoarea solicitare de permisiune, apoi apăsați din nou butonul de pornire pentru a reîncerca.</string>
-    <string name="battery_savings_body">Se pare că utilizați un dispozitiv %s. Acestea au setări deosebit de stricte în privința economisirii bateriei care pot împiedica Hauk să trimită actualizări ale locației cât timp este în fundal.
-\n
-\nEste recomandat să vă asigurați că Hauk este în lista de excepții de la economisirea bateriei astfel încât aplicația să nu se oprească din funcțiotare în mod neașteptat.
-\n
+    <string name="battery_savings_body">Se pare că utilizați un dispozitiv %s. Acestea au setări deosebit de stricte în privința economisirii bateriei care pot împiedica Hauk să trimită actualizări ale locației cât timp este în fundal. 
+\n 
+\nEste recomandat să vă asigurați că Hauk este în lista de excepții de la economisirea bateriei astfel încât aplicația să nu se oprească din funcționare în mod neașteptat. 
+\n 
 \nAcest mesaj nu se va mai afișa.</string>
     <string name="label_use_e2e">Protejează partajarea cu parolă</string>
     <string name="label_pin_help">Partajați acest PIN cu ceilalți din grup pentru a le permite și lor să participe la partajare</string>
@@ -122,4 +122,14 @@
 \n
 \nOrice adresă adițională creată în acest mod va fi doar individuală și va arăta doar locața dumneavoastră.</string>
     <string name="progress_adopt_body">Adoptare %s…</string>
+    <string name="err_proxy_failure">A apărut o eroare la căutarea gazdei proxyului configurat: %s</string>
+    <string name="err_proxy_host_resolution">Adresa IP a proxyului configurat (%s) nu a putut fi găsită!</string>
+    <string name="progress_resolving_proxy">Se caută gazda proxy…</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Fără proxy</string>
+    <string name="proxy_mode_default">Implicit sistem</string>
+    <string name="label_proxy_port">Port proxy</string>
+    <string name="label_proxy_host">Gazdă proxy</string>
+    <string name="label_proxy_type">Proxy</string>
 </resources>
