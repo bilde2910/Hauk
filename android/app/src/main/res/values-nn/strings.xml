@@ -122,4 +122,14 @@
     <string name="password_mask">Trykk for å endra</string>
     <string name="chk_dont_use_e2e">Deaktiver ende-til-ende-kryptering</string>
     <string name="action_settings">Innstillingar</string>
+    <string name="err_proxy_failure">Ein feil oppstod under oppslag av vertsnamnet til den konfigurerte proxyen: %s</string>
+    <string name="err_proxy_host_resolution">IP-adressa til den konfigurerte proxyen (%s) kunne ikkje slåast opp!</string>
+    <string name="progress_resolving_proxy">Slår opp proxyens vertsnamn…</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Ikkje bruk proxy</string>
+    <string name="proxy_mode_default">Bruk standard for systemet</string>
+    <string name="label_proxy_port">Proxy-port</string>
+    <string name="label_proxy_host">Proxy-vertsnamn</string>
+    <string name="label_proxy_type">Proxy</string>
 </resources>
