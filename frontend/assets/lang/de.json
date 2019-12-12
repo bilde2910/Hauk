@@ -1,5 +1,5 @@
 {
-    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on-de.png",
+    "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
     "google_play_badge_url": "https://play.google.com/intl/en_us/badges/static/images/badges/de_badge_web_generic.png",
     "btn_dismiss": "Verwerfen",
     "status_offline": "Offline",
@@ -12,5 +12,17 @@
     "gnss_signal_body": "Der Sender wartet auf ein GPS-Signal",
     "gnss_signal_head": "Bitte warten",
     "expired_body": "Die Standortfreigabe, auf die Sie zugreifen wollen, wurde nicht auf dem Server gefunden. Wenn dieser Link zuvor funktioniert hat, ist die Freigabe möglicherweise abgelaufen.",
-    "expired_head": "Standortfreigabe abgelaufen"
+    "expired_head": "Standortfreigabe abgelaufen",
+    "btn_decrypt": "Entsperren",
+    "btn_cancel": "Abbrechen",
+    "last_update_days": "{{time}}T her",
+    "last_update_hours": "{{time}}S her",
+    "last_update_minutes": "{{time}}M her",
+    "last_update_seconds": "{{time}}S her",
+    "e2e_unsupported": "Diese Freigabe ist passwortgeschützt. Dem Browser fehlt die Funktionalität solche Freigaben zu öffnen. Bitte mit einem anderen Browser noch einmal probieren.",
+    "e2e_unavailable_secure": "Diese Freigabe ist passwortgeschützt. Die Freigabe kann nicht entsperrt werden, da kein HTTPS benutzt wird. Bitte sicherstellen, dass HTTPS benutzt wird, dann noch einmal probieren.",
+    "e2e_incorrect": "Das eingegebene Passwort ist falsch. Bitte noch einmal probieren.",
+    "e2e_password_prompt": "Diese Freigabe ist passwortgeschützt. Bitte das Passwort eingeben, um der Freigabe beizutreten.",
+    "e2e_placeholder": "Passwort eingeben",
+    "e2e_title": "Passwortgeschützt"
 }
