@@ -137,21 +137,22 @@
 //
 // | Link style                 | Example                               | No. of combinations   | Avg. bruteforce time          |
 // +----------------------------+---------------------------------------+-----------------------+-------------------------------+
-// | LINK_4_PLUS_4_UPPER_CASE   | EIRG-0CYE                             | 2.82 * 10^12 (36^8)   | 44.7 years                    |
+// | LINK_4_PLUS_4_UPPER_CASE   | V8LQ-H2UM                             | 1.79 * 10^12 (34^8)   | 28.3 years                    |
 // | LINK_4_PLUS_4_LOWER_CASE   | qae3-ulna                             | 2.82 * 10^12 (36^8)   | 44.7 years                    |
-// | LINK_4_PLUS_4_MIXED_CASE   | WRho-uHLG                             | 1.68 * 10^14 (60^8)   | 2663 years                    |
+// | LINK_4_PLUS_4_MIXED_CASE   | HEq3-tgJ1                             | 1.28 * 10^14 (58^8)   | 2030 years                    |
 // | LINK_UUID_V4               | 09c8a3b1-e78f-48b1-a604-0da49e99cb5d  | 5.32 * 10^36 (2^122)  | 84.2 septillion years         |
 // | LINK_16_HEX                | 6cde14c4c6551b41                      | 1.84 * 10^19 (2^64)   | 292 million years             |
-// | LINK_16_UPPER_CASE         | 49OFGRK6SGPU93KV                      | 7.95 * 10^24 (36^16)  | 126 trillion years            |
+// | LINK_16_UPPER_CASE         | WVHA2FNMRT9HSKJK                      | 3.19 * 10^24 (34^16)  | 50.6 trillion years           |
 // | LINK_16_LOWER_CASE         | bdyslxszs14cj359                      | 7.95 * 10^24 (36^16)  | 126 trillion years            |
-// | LINK_16_MIXED_CASE         | NTHX2HDsTn0kS3aj                      | 2.82 * 10^28 (60^16)  | 447 quadrillion years         |
+// | LINK_16_MIXED_CASE         | 1Ayh2yUXDe3sdF3S                      | 1.64 * 10^28 (58^16)  | 260 quadrillion years         |
 // | LINK_32_HEX                | 22adf21f11491ae8f3ae128e23a6782f      | 3.40 * 10^38 (2^128)  | 5.39 octillion years          |
-// | LINK_32_UPPER_CASE         | MG42MW2DKIMHM87B4AO0WAB2PIY26TR1      | 6.33 * 10^49 (36^32)  | 1 duodecillion years          |
+// | LINK_32_UPPER_CASE         | R88M1Z2KPL27XN8MF73KCRYPHJD4QQMT      | 1.02 * 10^49 (34^32)  | 161 undecillion years         |
 // | LINK_32_LOWER_CASE         | itgbolrbq1c02eot5o46c5wixhdrdb5m      | 6.33 * 10^49 (36^32)  | 1 duodecillion years          |
-// | LINK_32_MIXED_CASE         | cTK82MJ7rUOP138WNVznQR0Ck3BwZp6b      | 7.96 * 10^57 (60^32)  | 12.6 quattuordecillion years  |
+// | LINK_32_MIXED_CASE         | qf5pqr2UKTUT6vREPPSTuqSKkCMojF17      | 2.69 * 10^56 (58^32)  | 4.26 quattuordecillion years  |
 //
 // For any MIXED_CASE variants, upper-case I and lower-case L will not appear
-// because they are visually very similar and are easily confused.
+// because they are visually very similar and are easily confused. For the same
+// reason, MIXED_CASE and UPPER_CASE variants will not generate 0 and O.
 //
 // The default value is LINK_4_PLUS_4_UPPER_CASE, which is still considered very
 // secure. The bruteforce times in the table below are the average time it would
