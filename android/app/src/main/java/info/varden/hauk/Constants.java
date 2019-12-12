@@ -34,7 +34,6 @@ public enum Constants {
     public static final Preference<String> PREF_E2E_PASSWORD = new Preference.EncryptedString("e2ePassword", "");
     public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
-    public static final Preference<Boolean> PREF_REMEMBER_PASSWORD = new Preference.Boolean("rememberPassword", false);
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
 
     @Deprecated // Use PREF_SERVER_ENCRYPTED instead
