@@ -16,5 +16,5 @@ $LANG['location_invalid'] = 'Ugyldig lokasjon!';
 $LANG['config_missing'] = 'Kunne ikke finne config.php!';
 $LANG['no_memcached_ext'] = 'Ingen kompatibel memcached-utvidelse (memcache eller memcached) er aktivert i PHP-konfigurasjonen din!';
 $LANG['username_required'] = 'Brukernavn kreves!';
-$LANG['e2e_adoption_not_allowed'] = 'Denne delingen bruker ende-til-ende-kryptering og kan ikke adopteres!';
-$LANG['group_e2e_unsupported'] = 'Ende-til-ende-kryptering kan ikke benyttes for gruppedelinger!';
+$LANG['e2e_adoption_not_allowed'] = 'Denne delingen er passordbeskyttet og kan ikke adopteres!';
+$LANG['group_e2e_unsupported'] = 'Gruppedelinger kan ikke passordbeskyttes!';
