@@ -14,7 +14,6 @@
     <string name="label_password">Пароль</string>
     <string name="label_duration">Время жизни шары:</string>
     <string name="label_interval">Интервал обновления (сек):</string>
-    <string name="app_name">Hauk</string>
     <string name="label_explain_adopt">(Что это\?)</string>
     <string name="label_nickname">Ник:</string>
     <string name="label_pin">Групповой PIN:</string>
@@ -52,7 +51,6 @@
     <string name="notify_title">Шаринг местоположения активен</string>
     <string name="notify_body">Hauk шарит ваше местоположение %s</string>
     <string name="btn_ok">OK</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="label_mode">Режим шары:</string>
     <string name="chk_allow_adopt">Другие пользователи могут добавлять мою сессию к своей</string>
     <string name="label_allow_adopt">Разрешить добавление:</string>

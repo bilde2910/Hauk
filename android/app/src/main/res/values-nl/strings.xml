@@ -87,10 +87,8 @@
     <string name="authorize_header">Intentie autorisatieverzoek</string>
     <string name="authorize_body">Hauk ontving en blokkeerde een poging om een nieuwe locatiedelingssessie aan te maken van een bron die zichzelf identificeerde als</string>
     <string name="authorize_question">Wil u toestaan dat in de toekomst sessies gecreëerd kunnen worden via intentiezendingen met deze identificatie\?</string>
-    <string name="app_name">Hauk</string>
     <string name="action_copied">Hauk link gekopieerd</string>
     <string name="ok_message">Locatie delen is actief! Klik de deel knop om de publieke URL van uw locatiedeling te kopiëren.</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="progress_connect_title">Verbinden</string>
     <string name="resume_body">U heeft een onafgemaakte sessie:
 \n

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Hauk</string>
-    <string name="img_alt_logo">Hauk</string>
+    <string name="app_name" translatable="false">Hauk</string>
+    <string name="img_alt_logo" translatable="false">Hauk</string>
     <string name="action_settings">Settings</string>
     <string name="label_heading">Open source location sharing</string>
     <string name="label_source_link" translatable="false">https://github.com/bilde2910/Hauk</string>

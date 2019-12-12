@@ -51,8 +51,6 @@
     <string name="err_missing_perms">Tilgang til stedstjenester kreves for å bruke denne appen.</string>
     <string name="err_empty">Serveren returnerte en tom respons.</string>
     <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
-    <string name="app_name">Hauk</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="label_server">Serveradresse</string>
     <string name="label_interval">Intervall (sek)</string>
     <string name="label_mode">Delingsmodus:</string>
