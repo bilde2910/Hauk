@@ -122,4 +122,14 @@
     <string name="header_connection">Tilkobling</string>
     <string name="title_activity_settings">Innstillinger</string>
     <string name="action_settings">Innstillinger</string>
+    <string name="err_proxy_failure">En feil oppstod under oppslag av vertsnavnet til den konfigurerte proxyen: %s</string>
+    <string name="err_proxy_host_resolution">IP-adressen til den konfigurerte proxyen (%s) kunne ikke slås opp!</string>
+    <string name="progress_resolving_proxy">Slår opp proxyens vertsnavn…</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Ikke bruk proxy</string>
+    <string name="proxy_mode_default">Bruk standard for systemet</string>
+    <string name="label_proxy_port">Proxy-port</string>
+    <string name="label_proxy_host">Proxy-vertsnavn</string>
+    <string name="label_proxy_type">Proxy</string>
 </resources>
