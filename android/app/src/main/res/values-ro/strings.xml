@@ -99,7 +99,7 @@
     <string name="action_copied">S-a copiat adresa din Hauk</string>
     <string name="progress_connect_body">Conectare la Hauk…</string>
     <string name="err_malformed_url">Adresa introdusă pentru server este invalidă.</string>
-    <string name="err_location_disabled">Serviciile de localizare sunt dezactivate. Va rugăm să activați serviciile de localizare cu precizie înaltă pentru a vă putea partaja locația.</string>
+    <string name="err_location_disabled">Serviciile de localizare sunt dezactivate. Vă rugăm să activați serviciile de localizare cu precizie înaltă pentru a vă putea partaja locația.</string>
     <string name="err_ver_group">Serverul nu suportă partajări în grup. Partajările în grup sunt suportate de versiunea %s sau mai nouă; serverul rulează versiunea %s. Partajarea dumneavoastră a fost convertită într-una individuală.</string>
     <string name="err_ver_e2e">Serverul nu suportă criptarea partajării. Partajările criptate sunt suportate de versiunea %s sau mai nouă; serverul rulează versiunea %s. Partajarea dumneavoastră va fi creată fără criptare pentru a păstra compatibilitatea.</string>
     <string name="link_added_body">O noua adresă a fost creată cu succes pentru partajarea locației! Atingeți butonul de partajare pentru a copia adresa vizibilă public.</string>
