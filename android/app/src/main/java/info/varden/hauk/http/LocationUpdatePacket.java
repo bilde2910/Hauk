@@ -77,6 +77,7 @@ public abstract class LocationUpdatePacket extends Packet {
         }
     }
 
+    @SuppressWarnings("DesignForExtension")
     @Override
     protected void onSuccess(String[] data, Version backendVersion) throws ServerException {
         // Somehow the data array can be empty? Check for this.

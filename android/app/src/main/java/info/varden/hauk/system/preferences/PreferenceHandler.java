@@ -54,6 +54,7 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
     @Override
     public boolean getBoolean(String key, boolean defValue) {
+        Log.v("Getting boolean key %s", key); //NON-NLS
         if (!map.containsKey(key)) throw new PreferenceNotFoundException(key);
         Object value = this.manager.get(map.get(key));
         if (value instanceof Boolean) {
@@ -65,6 +66,7 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
     @Override
     public float getFloat(String key, float defValue) {
+        Log.v("Getting float key %s", key); //NON-NLS
         if (!map.containsKey(key)) throw new PreferenceNotFoundException(key);
         Object value = this.manager.get(map.get(key));
         if (value instanceof Float) {
@@ -76,6 +78,7 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
     @Override
     public int getInt(String key, int defValue) {
+        Log.v("Getting int key %s", key); //NON-NLS
         if (!map.containsKey(key)) throw new PreferenceNotFoundException(key);
         Object value = this.manager.get(map.get(key));
         if (value instanceof Integer) {
@@ -87,6 +90,7 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
     @Override
     public long getLong(String key, long defValue) {
+        Log.v("Getting long key %s", key); //NON-NLS
         if (!map.containsKey(key)) throw new PreferenceNotFoundException(key);
         Object value = this.manager.get(map.get(key));
         if (value instanceof Long) {
@@ -98,6 +102,7 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
     @Override
     public String getString(String key, String defValue) {
+        Log.v("Getting string key %s", key); //NON-NLS
         if (!map.containsKey(key)) throw new PreferenceNotFoundException(key);
         Object value = this.manager.get(map.get(key));
         if (value instanceof String) {

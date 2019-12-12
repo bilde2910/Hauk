@@ -216,7 +216,6 @@ public final class LocationPushService extends Service {
         @Override
         protected void onSuccess(String[] data, Version backendVersion) throws ServerException {
             // Check if connection was lost previously, and notify upstream if that's the case.
-            Log.i("Hello " + LocationPushService.this.connected);
             if (!LocationPushService.this.connected) {
                 LocationPushService.this.connected = true;
                 Log.i("Connection to the backend was restored."); //NON-NLS

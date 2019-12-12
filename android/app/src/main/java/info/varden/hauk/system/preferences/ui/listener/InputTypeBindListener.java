@@ -10,7 +10,7 @@ import androidx.preference.EditTextPreference;
  *
  * @author Marius Lindvall
  */
-public class InputTypeBindListener implements EditTextPreference.OnBindEditTextListener {
+public final class InputTypeBindListener implements EditTextPreference.OnBindEditTextListener {
     private final int inputType;
 
     public InputTypeBindListener(int inputType) {
