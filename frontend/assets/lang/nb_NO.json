@@ -13,7 +13,6 @@
     "gnss_signal_head": "Vennligst vent",
     "expired_body": "Den delte posisjonen du prøvde å åpne ble ikke funnet på serveren. Hvis denne linken virket tidligere, kan det hende at delingen har utløpt.",
     "expired_head": "Posisjon utløpt",
-    "page_title": "Hauk",
     "btn_decrypt": "Åpne",
     "btn_cancel": "Avbryt",
     "e2e_unsupported": "Denne delte posisjonen er passordbeskyttet. Nettleseren din mangler funksjonaliteten som kreves for å åpne slike delinger. Vennligst prøv igjen med en annen nettleser.",

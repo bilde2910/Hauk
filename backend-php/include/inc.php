@@ -334,12 +334,14 @@ class Share {
                     break;
                 case LINK_16_MIXED_CASE:
                     // 16-char mixed-case alphanumeric string.
-                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    // '0', 'O', 'l' and 'I' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
                     for ($i = 0; $i < 16; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     break;
                 case LINK_16_UPPER_CASE:
                     // 16-char upper-case alphanumeric string.
-                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    // '0' and 'O' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
                     for ($i = 0; $i < 16; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     break;
                 case LINK_32_HEX:
@@ -353,13 +355,14 @@ class Share {
                     break;
                 case LINK_32_MIXED_CASE:
                     // 32-char mixed-case alphanumeric string.
-                    // 'l' and 'I' not included because of visual similarity.
-                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    // '0', 'O', 'l' and 'I' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
                     for ($i = 0; $i < 32; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     break;
                 case LINK_32_UPPER_CASE:
                     // 32-char upper-case alphanumeric string.
-                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    // '0' and 'O' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
                     for ($i = 0; $i < 32; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     break;
                 case LINK_4_PLUS_4_LOWER_CASE:
@@ -370,15 +373,16 @@ class Share {
                     break;
                 case LINK_4_PLUS_4_MIXED_CASE:
                     // 4+4-char mixed-case alphanumeric string.
-                    // 'l' and 'I' not included because of visual similarity.
-                    $alpha = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+                    // '0', 'O', 'l' and 'I' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
                     for ($i = 0; $i < 8; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     $s = substr($s, 0, 4)."-".substr($s, -4);
                     break;
                 case LINK_4_PLUS_4_UPPER_CASE:
                 default:
                     // 4+4-char upper-case alphanumeric string.
-                    $alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    // '0' and 'O' not included because of visual similarity.
+                    $alpha = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
                     for ($i = 0; $i < 8; $i++) $s .= $alpha[random_int(0, strlen($alpha)-1)];
                     $s = substr($s, 0, 4)."-".substr($s, -4);
                     break;

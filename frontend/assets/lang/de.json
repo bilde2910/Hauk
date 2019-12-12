@@ -12,6 +12,5 @@
     "gnss_signal_body": "Der Sender wartet auf ein GPS-Signal",
     "gnss_signal_head": "Bitte warten",
     "expired_body": "Die Standortfreigabe, auf die Sie zugreifen wollen, wurde nicht auf dem Server gefunden. Wenn dieser Link zuvor funktioniert hat, ist die Freigabe möglicherweise abgelaufen.",
-    "expired_head": "Standortfreigabe abgelaufen",
-    "page_title": "Hauk"
+    "expired_head": "Standortfreigabe abgelaufen"
 }

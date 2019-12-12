@@ -31,8 +31,6 @@
     <string name="label_password">Hasło</string>
     <string name="label_server">URL serwera</string>
     <string name="label_heading">Otwarte oprogramowanie do udostępniania lokalizacji</string>
-    <string name="img_alt_logo">Hauk</string>
-    <string name="app_name">Hauk</string>
     <string name="link_added_title">Link został utworzony</string>
     <string name="req_perms_title">Potrzebne pozwolenie</string>
     <string name="req_perms_message">Ta aplikacja potrzebuje dostępu do twojej lokalizacji, a nie zostało ono udzielone. Udziel pozwolenia i spróbuj ponownie rozpocząć udostępnianie.</string>

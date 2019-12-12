@@ -34,8 +34,6 @@
     <string name="label_interval">Інтервал поновлення (сек):</string>
     <string name="label_mode">Режим шари:</string>
     <string name="progress_adopt_body">Додавання %s…</string>
-    <string name="app_name">Hauk</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="err_connect">Помилка підключення</string>
     <string name="label_pin">Груповий PIN:</string>
     <string name="label_status">Статус:</string>

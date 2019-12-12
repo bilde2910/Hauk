@@ -79,7 +79,6 @@
     <string name="label_pin_help">Partekatu PIN hau taldeko beste kideekin zure kokaleku partekatze taldera elkartzea ahalbidetzeko</string>
     <string name="action_copied">Esteka kopiatuta Hauk aplikaziotik</string>
     <string name="err_ver_group">Zerbitzariak ez ditu talde partekatzeak onartzen. Talde partekatzeak %s bertsiotik gora onartzen dira, zerbitzari honek %s bertsioa darabil. Zure partekatzea partekatze indibiduala bihurtu da.</string>
-    <string name="app_name">Hauk</string>
     <string name="link_type_group_host">Taldeko partekatzea (ostalaria)</string>
     <string name="explain_adopt_body">Hauk aplikazioak kokaleku partekatze saioak sortzea ahalbidetzen dizu, zuretzat edo talde batentzat. Inork talde partekatze bat sortzen badu, besteek partekatze taldera elkartzeko erabili dezaketen talde kode bat jasoko du.
 \n
@@ -95,5 +94,4 @@
 \nIraungitzea: %s
 \n
 \nSaio hau berreskuratu nahi duzu\?</string>
-    <string name="img_alt_logo">Hauk</string>
 </resources>

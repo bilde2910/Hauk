@@ -51,8 +51,6 @@
     <string name="err_missing_perms">Tilgang til stedstjenester kreves for å bruke denne appen.</string>
     <string name="err_empty">Serveren returnerte en tom respons.</string>
     <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
-    <string name="app_name">Hauk</string>
-    <string name="img_alt_logo">Hauk</string>
     <string name="label_server">Serveradresse</string>
     <string name="label_interval">Intervall (sek)</string>
     <string name="label_mode">Delingsmodus:</string>
@@ -115,9 +113,9 @@
     <string name="label_username_hint">&lt;valgfritt&gt;</string>
     <string name="label_username">Brukernavn</string>
     <string name="err_ver_e2e">Serveren støtter ikke ende-til-ende-kryptering. Ende-til-ende-kryptering støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din vil bli opprettet uten ende-til-ende-kryptering for å beholde kompatibilitet.</string>
-    <string name="label_e2e_password">Krypteringsnøkkel</string>
+    <string name="label_e2e_password">Krypteringspassord</string>
     <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
-    <string name="label_use_e2e">Krypter deling</string>
+    <string name="label_use_e2e">Krev passord for deling</string>
     <string name="label_status_disconnected">Serveren kan ikke nås akkurat nå</string>
     <string name="chk_dont_use_e2e">Deaktiver ende-til-ende-kryptering</string>
     <string name="password_mask">Trykk for å endre</string>
