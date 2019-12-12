@@ -52,7 +52,7 @@
     <string name="err_empty">Serveren returnerte en tom respons.</string>
     <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
     <string name="label_server">Serveradresse</string>
-    <string name="label_interval">Intervall (sek)</string>
+    <string name="label_interval">Intervall (sekunder)</string>
     <string name="label_mode">Delingsmodus:</string>
     <string name="chk_allow_adopt">La andre legge meg til i en delingsgruppe når jeg deler posisjonen min</string>
     <string name="btn_link">Lag en ny delingslink</string>
