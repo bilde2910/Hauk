@@ -3,6 +3,8 @@ package info.varden.hauk.struct;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -22,6 +24,16 @@ public final class Session implements Serializable {
      * The Hauk backend server base URL.
      */
     private final String serverURL;
+
+    /**
+     * Proxy endpoint.
+     */
+    private final SocketAddress proxyAddress;
+
+    /**
+     * Proxy type.
+     */
+    private final Proxy.Type proxyType;
 
     /**
      * The version the backend is running.
@@ -51,18 +63,27 @@ public final class Session implements Serializable {
     @Nullable
     private final KeyDerivable e2eParams;
 
-    public Session(String serverURL, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
+    public Session(String serverURL, @Nullable Proxy proxy, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
         this.serverURL = serverURL;
         this.backendVersion = backendVersion;
         this.sessionID = sessionID;
         this.expiry = expiry;
         this.interval = interval;
         this.e2eParams = e2eParams;
+        if (proxy == null) {
+            this.proxyAddress = null;
+            this.proxyType = null;
+        } else {
+            this.proxyAddress = proxy.address();
+            this.proxyType = proxy.type();
+        }
     }
 
     @Override
     public String toString() {
         return "Session{serverURL=" + this.serverURL
+                + ",proxyType=" + this.proxyType
+                + ",proxyAddress=" + this.proxyAddress
                 + ",backendVersion=" + this.backendVersion
                 + ",sessionID=" + this.sessionID
                 + ",expiry=" + this.expiry
@@ -73,6 +94,11 @@ public final class Session implements Serializable {
 
     public String getServerURL() {
         return this.serverURL;
+    }
+
+    @Nullable
+    public Proxy getProxy() {
+        return this.proxyAddress == null || this.proxyType == null ? null : new Proxy(this.proxyType, this.proxyAddress);
     }
 
     public Version getBackendVersion() {

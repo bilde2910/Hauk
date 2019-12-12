@@ -35,7 +35,7 @@ public abstract class NewLinkPacket extends Packet {
      * @param allowAdoption Whether or not this share should be adoptable.
      */
     protected NewLinkPacket(Context ctx, Session session, boolean allowAdoption) {
-        super(ctx, session.getServerURL(), Constants.URL_PATH_CREATE_NEW_LINK);
+        super(ctx, session.getServerURL(), session.getProxy(), Constants.URL_PATH_CREATE_NEW_LINK);
         this.session = session;
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
         setParameter(Constants.PACKET_PARAM_ADOPTABLE, allowAdoption ? "1" : "0");

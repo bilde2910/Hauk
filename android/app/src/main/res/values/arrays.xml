@@ -15,4 +15,18 @@
     <string-array name="sel_new_mode_opts">
         <item>@string/sel_mode_opt_alone</item>
     </string-array>
+
+    <string-array name="proxy_types">
+        <item>@string/proxy_mode_default</item>
+        <item>@string/proxy_mode_none</item>
+        <item>@string/proxy_mode_http</item>
+        <item>@string/proxy_mode_socks</item>
+    </string-array>
+
+    <string-array name="proxy_type_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

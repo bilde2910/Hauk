@@ -25,6 +25,9 @@ public enum Constants {
 
     // Keys for use in stored server preferences.
     public static final Preference<String> PREF_SERVER_ENCRYPTED = new Preference.EncryptedString("cryptServer", "");
+    public static final Preference<Integer> PREF_PROXY_TYPE = new Preference.Integer("proxyType", 0);
+    public static final Preference<String> PREF_PROXY_HOST = new Preference.String("proxyHost", "localhost");
+    public static final Preference<Integer> PREF_PROXY_PORT = new Preference.Integer("proxyPort", 9050);
     public static final Preference<String> PREF_USERNAME_ENCRYPTED = new Preference.EncryptedString("cryptUsername", "");
     public static final Preference<String> PREF_PASSWORD_ENCRYPTED = new Preference.EncryptedString("cryptPassword", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);

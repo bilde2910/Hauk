@@ -7,6 +7,7 @@ import android.text.InputType;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
@@ -16,6 +17,7 @@ import info.varden.hauk.system.preferences.PreferenceHandler;
 import info.varden.hauk.system.preferences.ui.listener.CascadeBindListener;
 import info.varden.hauk.system.preferences.ui.listener.HintBindListener;
 import info.varden.hauk.system.preferences.ui.listener.InputTypeBindListener;
+import info.varden.hauk.system.preferences.ui.listener.ProxyPreferenceChangeListener;
 
 /**
  * Settings activity that allows the user to change app preferences.
@@ -80,6 +82,18 @@ public final class SettingsActivity extends AppCompatActivity {
             ((EditTextPreference) manager.findPreference(Constants.PREF_CUSTOM_ID.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE),
                     new HintBindListener(R.string.label_custom_id_hint)
+            }));
+            ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_HOST.getKey())).setOnBindEditTextListener(
+                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI)
+            );
+            ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_PORT.getKey())).setOnBindEditTextListener(
+                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
+            );
+
+            // Set proxy settings disabled if proxy is set to default or none
+            manager.findPreference(Constants.PREF_PROXY_TYPE.getKey()).setOnPreferenceChangeListener(new ProxyPreferenceChangeListener(new Preference[]{
+                    manager.findPreference(Constants.PREF_PROXY_HOST.getKey()),
+                    manager.findPreference(Constants.PREF_PROXY_PORT.getKey())
             }));
         }
     }

@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
+
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.global.ui.AuthorizationActivity;
@@ -14,6 +18,7 @@ import info.varden.hauk.global.ui.toast.GNSSStatusUpdateListenerImpl;
 import info.varden.hauk.global.ui.toast.SessionInitiationResponseHandlerImpl;
 import info.varden.hauk.global.ui.toast.ShareListenerImpl;
 import info.varden.hauk.http.SessionInitiationPacket;
+import info.varden.hauk.http.proxy.TypeIndexResolver;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
@@ -181,6 +186,17 @@ public final class Receiver extends BroadcastReceiver {
         assert server != null;
         server = server.endsWith("/") ? server : server + "/";
 
-        return new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
+        Proxy proxy = null;
+        Proxy.Type proxyType = TypeIndexResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
+        if (proxyType == Proxy.Type.DIRECT) {
+            proxy = Proxy.NO_PROXY;
+        } else if (proxyType != null) {
+            SocketAddress proxyAddr = new InetSocketAddress(fallback.get(Constants.PREF_PROXY_HOST).trim(), fallback.get(Constants.PREF_PROXY_PORT));
+            proxy = new Proxy(proxyType, proxyAddr);
+        }
+
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
+        initParams.setProxy(proxy);
+        return initParams;
     }
 }

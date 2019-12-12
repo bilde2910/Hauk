@@ -14,6 +14,9 @@
     <string name="label_custom_id">Preferred link ID</string>
     <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
     <string name="label_use_e2e">Password protect share</string>
+    <string name="label_proxy_type">Proxy</string>
+    <string name="label_proxy_host">Proxy hostname</string>
+    <string name="label_proxy_port">Proxy port</string>
 
     <string name="label_e2e_password">Encryption password</string>
     <string name="label_mode">Sharing mode:</string>
@@ -41,6 +44,11 @@
     <string name="sel_mode_opt_alone">Share my own location only</string>
     <string name="sel_mode_opt_create_group">Create a group share</string>
     <string name="sel_mode_opt_join_group">Join a group share</string>
+
+    <string name="proxy_mode_default">System default</string>
+    <string name="proxy_mode_none">Do not proxy</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
 
     <string name="sel_unit_opt_minutes">minute(s)</string>
     <string name="sel_unit_opt_hours">hour(s)</string>
@@ -79,6 +87,7 @@
 
     <string name="progress_connect_title">Connecting</string>
     <string name="progress_connect_body">Connecting to Hauk…</string>
+    <string name="progress_resolving_proxy">Resolving proxy hostname…</string>
     <string name="progress_adopt_title">Adopting</string>
     <string name="progress_adopt_body">Adopting %s…</string>
     <string name="progress_new_link_title">Creating link</string>
@@ -92,6 +101,8 @@
     <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
     <string name="err_empty">The server returned an empty response.</string>
     <string name="err_response_code">Received HTTP %s from server!</string>
+    <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
+    <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
 
     <string name="err_outdated">Server is out of date</string>
     <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>

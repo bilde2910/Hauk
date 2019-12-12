@@ -33,13 +33,10 @@ import info.varden.hauk.manager.SessionInitiationResponseHandler;
 import info.varden.hauk.manager.SessionListener;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.manager.ShareListener;
-import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
-import info.varden.hauk.system.LocationPermissionsNotGrantedException;
-import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.powersaving.DeviceChecker;
 import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.system.preferences.ui.SettingsActivity;
@@ -187,7 +184,7 @@ public final class MainActivity extends AppCompatActivity {
         int interval = prefs.get(Constants.PREF_INTERVAL);
         String customID = prefs.get(Constants.PREF_CUSTOM_ID).trim();
         boolean useE2E = prefs.get(Constants.PREF_ENABLE_E2E);
-        String e2ePass = prefs.get(Constants.PREF_E2E_PASSWORD);
+        String e2ePass = useE2E ? "" : prefs.get(Constants.PREF_E2E_PASSWORD);
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
@@ -202,9 +199,6 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
 
-        // Ignore E2E password if E2E is disabled.
-        if (!useE2E) e2ePass = "";
-
         assert mode != null;
         server = server.endsWith("/") ? server : server + "/";
 
@@ -212,51 +206,7 @@ public final class MainActivity extends AppCompatActivity {
         duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
-        SessionInitiationResponseHandler responseHandler = new SessionInitiationResponseHandlerImpl();
-
-        try {
-            switch (mode) {
-                case CREATE_ALONE:
-                    this.manager.shareLocation(initParams, responseHandler, allowAdoption ? AdoptabilityPreference.ALLOW_ADOPTION : AdoptabilityPreference.DISALLOW_ADOPTION);
-                    break;
-
-                case CREATE_GROUP:
-                    this.manager.shareLocation(initParams, responseHandler, nickname);
-                    break;
-
-                case JOIN_GROUP:
-                    this.manager.shareLocation(initParams, responseHandler, nickname, groupPin);
-                    break;
-
-                default:
-                    Log.wtf("Unknown sharing mode. This is not supposed to happen, ever"); //NON-NLS
-                    break;
-            }
-        } catch (LocationServicesDisabledException e) {
-            Log.e("Share initiation was stopped because location services are disabled", e); //NON-NLS
-            this.dialogSvc.showDialog(R.string.err_client, R.string.err_location_disabled, Buttons.SETTINGS_OK, new CustomDialogBuilder() {
-                @Override
-                public void onPositive() {
-                    // OK button
-                    MainActivity.this.uiResetTask.run();
-                }
-
-                @Override
-                public void onNegative() {
-                    // Open Settings button
-                    MainActivity.this.uiResetTask.run();
-                    startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                }
-
-                @Nullable
-                @Override
-                public View createView(Context ctx) {
-                    return null;
-                }
-            });
-        } catch (LocationPermissionsNotGrantedException e) {
-            Log.w("Share initiation was stopped because the user has not granted location permissions yet", e); //NON-NLS
-        }
+        new ProxyHostnameResolverImpl(this, this.manager, this.uiResetTask, prefs, new SessionInitiationResponseHandlerImpl(), initParams, mode, allowAdoption, nickname, groupPin).resolve();
     }
 
     /**

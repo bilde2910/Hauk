@@ -56,6 +56,23 @@
             app:summary="@string/password_mask"
             app:dependency="enableE2E" />
 
+        <ListPreference
+            app:key="proxyType"
+            app:title="@string/label_proxy_type"
+            app:useSimpleSummaryProvider="true"
+            app:entries="@array/proxy_types"
+            app:entryValues="@array/proxy_type_values" />
+
+        <EditTextPreference
+            app:key="proxyHost"
+            app:title="@string/label_proxy_host"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="proxyPort"
+            app:title="@string/label_proxy_port"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

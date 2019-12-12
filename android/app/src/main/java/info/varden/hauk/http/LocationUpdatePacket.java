@@ -44,7 +44,7 @@ public abstract class LocationUpdatePacket extends Packet {
      * @param location The updated location data obtained from GNSS/network sensors.
      */
     protected LocationUpdatePacket(Context ctx, Session session, Location location) {
-        super(ctx, session.getServerURL(), Constants.URL_PATH_POST_LOCATION);
+        super(ctx, session.getServerURL(), session.getProxy(), Constants.URL_PATH_POST_LOCATION);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
         if (session.getDerivableE2EKey() == null) {
