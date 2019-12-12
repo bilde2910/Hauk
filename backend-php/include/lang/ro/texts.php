@@ -17,3 +17,4 @@ $LANG['share_not_found'] = 'Această partajare nu există!';
 $LANG['session_expired'] = 'Sesiune expirată!';
 $LANG['config_missing'] = 'Nu s-a putut găsi config.php!';
 $LANG['no_redis_ext'] = 'În setările PHP nu aveți nici o extensie redis (redis) compatibilă activă!';
+$LANG['invalid_storage'] = 'Ați setat în Hauk un storage_backend invalid!';
