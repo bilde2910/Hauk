@@ -5,7 +5,6 @@
     <string name="label_username">Nume utilizator</string>
     <string name="label_username_hint">&lt;opțional&gt;</string>
     <string name="label_password">Parolă</string>
-    <string name="img_alt_logo"/>
     <string name="label_interval">Interval actualizare (secunde)</string>
     <string name="label_custom_id">ID preferat adresă</string>
     <string name="label_e2e_password">Parolă criptare</string>
@@ -94,7 +93,6 @@
     <string name="label_heading_links">Adrese active acum</string>
     <string name="link_type_solo">Doar locația ta</string>
     <string name="sel_mode_opt_alone">Partajează doar locația mea</string>
-    <string name="app_name"/>
     <string name="label_heading">Partajarea locației, cu sursă deschisă</string>
     <string name="adopt_body">Puteți adopta o partajare individuală deja existentă pentru a o incorpora în acest grup. Vă rugăm să scrieți adresa sau ID-ul partajării pe care doriți să o adoptați (ex. %s\?XXXX-XXXX) și să îi atribuiți un nume de afișare.</string>
     <string name="btn_create">Creare</string>
