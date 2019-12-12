@@ -1,5 +1,5 @@
 <?php
-$LANG['no_memcached_ext'] = 'În setările PHP nu aveți nici o extensie memcached (memcache sau memcached) compatibilă!';
+$LANG['no_memcached_ext'] = 'În setările PHP nu aveți nici o extensie memcached (memcache sau memcached) compatibilă activă!';
 $LANG['e2e_adoption_not_allowed'] = 'Această partajare este protejată prin parolă și nu poate fi adoptată!';
 $LANG['group_e2e_unsupported'] = 'Partajările de grup nu pot fi protejate prin parolă!';
 $LANG['location_invalid'] = 'Locație invalidă!';
