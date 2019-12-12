@@ -4,7 +4,7 @@
     <string name="label_server">Serveradresse</string>
     <string name="label_password">Passord</string>
     <string name="label_duration">Varigheit:</string>
-    <string name="label_interval">Intervall (sekunder)</string>
+    <string name="label_interval">Intervall (sekund)</string>
     <string name="label_mode">Delingsmodus:</string>
     <string name="label_allow_adopt">Tillat adopsjon:</string>
     <string name="label_explain_adopt">(Kva er dette\?)</string>
