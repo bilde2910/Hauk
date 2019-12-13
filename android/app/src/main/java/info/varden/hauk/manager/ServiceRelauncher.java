@@ -15,7 +15,7 @@ import info.varden.hauk.utils.Log;
  *
  * @author Marius Lindvall
  */
-public class ServiceRelauncher implements ResumeHandler {
+public final class ServiceRelauncher implements ResumeHandler {
     /**
      * The session manager to call to resume the shares.
      */
@@ -28,7 +28,7 @@ public class ServiceRelauncher implements ResumeHandler {
      */
     private final ResumableSessions resumptionHandler;
 
-    public ServiceRelauncher(SessionManager manager, ResumableSessions resumptionHandler) {
+    ServiceRelauncher(SessionManager manager, ResumableSessions resumptionHandler) {
         this.manager = manager;
         this.resumptionHandler = resumptionHandler;
     }

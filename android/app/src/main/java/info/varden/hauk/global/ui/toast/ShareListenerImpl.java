@@ -12,7 +12,7 @@ import info.varden.hauk.struct.Share;
  *
  * @author Marius Lindvall
  */
-public class ShareListenerImpl implements ShareListener {
+public final class ShareListenerImpl implements ShareListener {
     /**
      * Android application context.
      */

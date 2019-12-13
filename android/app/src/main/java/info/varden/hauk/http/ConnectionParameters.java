@@ -59,7 +59,7 @@ public final class ConnectionParameters implements Serializable {
     @Override
     public String toString() {
         return "ConnectionParameters{"
-                + ",proxyType=" + this.proxyType
+                + "proxyType=" + this.proxyType
                 + ",proxyAddress=" + this.proxyAddress
                 + ",connectTimeout=" + this.connectTimeout
                 + ",tlsPolicy=" + this.tlsPolicy

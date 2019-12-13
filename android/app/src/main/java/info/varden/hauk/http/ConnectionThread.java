@@ -24,6 +24,7 @@ import javax.net.ssl.HttpsURLConnection;
 import info.varden.hauk.BuildConfig;
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.http.security.CertificateValidationPolicy;
 import info.varden.hauk.http.security.InsecureHostnameVerifier;
 import info.varden.hauk.http.security.InsecureTrustManager;
 import info.varden.hauk.struct.Version;
@@ -76,15 +77,11 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             HttpURLConnection client = (HttpURLConnection) (proxy == null ? url.openConnection() : url.openConnection(proxy));
             if (url.getHost().endsWith(".onion") && url.getProtocol().equals("https")) {
                 // Check if TLS validation should be disabled for .onion addresses over HTTPS.
-                switch (req.getParameters().getTLSPolicy()) {
-                    case DISABLE_TRUST_ANCHOR_ONION:
-                        ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
-                        break;
-
-                    case DISABLE_ALL_ONION:
-                        ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
-                        ((HttpsURLConnection) client).setHostnameVerifier(new InsecureHostnameVerifier());
-                        break;
+                if (req.getParameters().getTLSPolicy().equals(CertificateValidationPolicy.DISABLE_TRUST_ANCHOR_ONION)) {
+                    ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
+                } else if (req.getParameters().getTLSPolicy().equals(CertificateValidationPolicy.DISABLE_ALL_ONION)) {
+                    ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
+                    ((HttpsURLConnection) client).setHostnameVerifier(new InsecureHostnameVerifier());
                 }
             }
 

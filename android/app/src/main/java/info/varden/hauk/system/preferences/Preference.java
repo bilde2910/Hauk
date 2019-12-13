@@ -19,10 +19,12 @@ import info.varden.hauk.utils.StringSerializer;
 public abstract class Preference<T> {
 
     private final java.lang.String key;
-    private final Class<T> type;
+    private final T def;
+    private final Class<?> type;
 
-    private Preference(java.lang.String key, Class<T> type) {
+    private Preference(java.lang.String key, T def, Class<?> type) {
         this.key = key;
+        this.def = def;
         this.type = type;
     }
 
@@ -33,10 +35,14 @@ public abstract class Preference<T> {
         return this.key;
     }
 
+    public final T getDefault() {
+        return this.def;
+    }
+
     /**
      * Returns the type of data this preference stores.
      */
-    public final Class<T> getPreferenceType() {
+    public final Class<?> getPreferenceType() {
         return this.type;
     }
 
@@ -60,14 +66,18 @@ public abstract class Preference<T> {
      *
      * @param prefs The shared preferences to check for preference existence in.
      */
-    abstract boolean has(SharedPreferences prefs);
+    public final boolean has(SharedPreferences prefs) {
+        return prefs.contains(this.key);
+    }
 
     /**
      * Clears the preference from the given preference object.
      *
      * @param prefs The shared preferences to clear the value from.
      */
-    abstract void clear(SharedPreferences.Editor prefs);
+    public final void clear(SharedPreferences.Editor prefs) {
+        prefs.remove(this.key);
+    }
 
     /**
      * Returns whether or not this preference is expected to contain sensitive information that
@@ -83,7 +93,7 @@ public abstract class Preference<T> {
         private final java.lang.String def;
 
         public String(java.lang.String key, java.lang.String def) {
-            super(key, java.lang.String.class);
+            super(key, def, java.lang.String.class);
             this.key = key;
             this.def = def;
         }
@@ -96,16 +106,6 @@ public abstract class Preference<T> {
         @Override
         void set(SharedPreferences.Editor prefs, java.lang.String value) {
             prefs.putString(this.key, value);
-        }
-
-        @Override
-        boolean has(SharedPreferences prefs) {
-            return prefs.contains(this.key);
-        }
-
-        @Override
-        void clear(SharedPreferences.Editor prefs) {
-            prefs.remove(this.key);
         }
 
         @Override
@@ -128,7 +128,7 @@ public abstract class Preference<T> {
         private final java.lang.String def;
 
         public EncryptedString(java.lang.String key, java.lang.String def) {
-            super(key, java.lang.String.class);
+            super(key, def, java.lang.String.class);
             this.key = key;
             this.def = def;
         }
@@ -156,16 +156,6 @@ public abstract class Preference<T> {
         }
 
         @Override
-        boolean has(SharedPreferences prefs) {
-            return prefs.contains(this.key);
-        }
-
-        @Override
-        void clear(SharedPreferences.Editor prefs) {
-            prefs.remove(this.key);
-        }
-
-        @Override
         boolean isSensitive() {
             return true;
         }
@@ -185,7 +175,7 @@ public abstract class Preference<T> {
         private final int def;
 
         public Integer(java.lang.String key, int def) {
-            super(key, java.lang.Integer.class);
+            super(key, def, java.lang.Integer.class);
             this.key = key;
             this.def = def;
         }
@@ -201,13 +191,39 @@ public abstract class Preference<T> {
         }
 
         @Override
-        boolean has(SharedPreferences prefs) {
-            return prefs.contains(this.key);
+        boolean isSensitive() {
+            return false;
+        }
+
+        @SuppressWarnings("DuplicateStringLiteralInspection")
+        @Override
+        public java.lang.String toString() {
+            return "Preference<Integer>{key=" + this.key + ",default=" + this.def + "}";
+        }
+    }
+
+    public static final class Enum<U extends IndexedEnum<U>> extends Preference<U> {
+        private final java.lang.String key;
+        private final U def;
+
+        public Enum(java.lang.String key, U def) {
+            super(key, def, IndexedEnum.class);
+            this.key = key;
+            this.def = def;
         }
 
         @Override
-        void clear(SharedPreferences.Editor prefs) {
-            prefs.remove(this.key);
+        U get(SharedPreferences prefs) {
+            try {
+                return this.def.fromIndex(prefs.getInt(this.key, this.def.getIndex()));
+            } catch (Exception e) {
+                return this.def;
+            }
+        }
+
+        @Override
+        void set(SharedPreferences.Editor prefs, IndexedEnum value) {
+            prefs.putInt(this.key, value.getIndex());
         }
 
         @Override
@@ -218,7 +234,7 @@ public abstract class Preference<T> {
         @SuppressWarnings("DuplicateStringLiteralInspection")
         @Override
         public java.lang.String toString() {
-            return "Preference<Integer>{key=" + this.key + ",default=" + this.def + "}";
+            return "Preference<Enum>{key=" + this.key + ",default=" + this.def + "}";
         }
     }
 
@@ -231,7 +247,7 @@ public abstract class Preference<T> {
 
         @SuppressWarnings("BooleanParameter")
         public Boolean(java.lang.String key, boolean def) {
-            super(key, java.lang.Boolean.class);
+            super(key, def, java.lang.Boolean.class);
             this.key = key;
             this.def = def;
         }
@@ -244,16 +260,6 @@ public abstract class Preference<T> {
         @Override
         void set(SharedPreferences.Editor prefs, java.lang.Boolean value) {
             prefs.putBoolean(this.key, value);
-        }
-
-        @Override
-        boolean has(SharedPreferences prefs) {
-            return prefs.contains(this.key);
-        }
-
-        @Override
-        void clear(SharedPreferences.Editor prefs) {
-            prefs.remove(this.key);
         }
 
         @Override

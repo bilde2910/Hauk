@@ -10,7 +10,6 @@ import java.net.Proxy;
 import info.varden.hauk.Constants;
 import info.varden.hauk.http.FailureHandler;
 import info.varden.hauk.system.preferences.PreferenceManager;
-import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.utils.Log;
 
 /**
@@ -51,7 +50,7 @@ public abstract class NameResolverTask extends AsyncTask<Void, Void, Proxy> impl
     private boolean wasSuccessful = true;
 
     protected NameResolverTask(PreferenceManager prefs) {
-        this.proxyType = ProxyTypeResolver.fromIndex(prefs.get(Constants.PREF_PROXY_TYPE)).getProxyType();
+        this.proxyType = prefs.get(Constants.PREF_PROXY_TYPE).getProxyType();
         this.proxyHost = prefs.get(Constants.PREF_PROXY_HOST).trim();
         this.proxyPort = prefs.get(Constants.PREF_PROXY_PORT);
     }

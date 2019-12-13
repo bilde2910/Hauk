@@ -13,7 +13,7 @@ import info.varden.hauk.utils.Log;
  */
 abstract class LocationListenerBase implements LocationListener {
     @Override
-    public final void onStatusChanged(String provider, int status, Bundle extras) {
+    public final void onStatusChanged(String provider, int status, Bundle bundle) {
         Log.v("Location status changed for provider %s, status=%s", provider, status); //NON-NLS
     }
 

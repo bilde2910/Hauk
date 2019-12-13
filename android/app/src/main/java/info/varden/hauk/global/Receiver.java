@@ -25,7 +25,6 @@ import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.preferences.PreferenceManager;
-import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.utils.DeprecationMigrator;
 import info.varden.hauk.utils.TimeUtils;
 
@@ -189,9 +188,9 @@ public final class Receiver extends BroadcastReceiver {
         server = server.endsWith("/") ? server : server + "/";
 
         int timeout = fallback.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
-        CertificateValidationPolicy tlsPolicy = CertificateValidationPolicy.fromIndex(fallback.get(Constants.PREF_CERTIFICATE_VALIDATION));
+        CertificateValidationPolicy tlsPolicy = fallback.get(Constants.PREF_CERTIFICATE_VALIDATION);
         ConnectionParameters connParams;
-        Proxy.Type proxyType = ProxyTypeResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
+        Proxy.Type proxyType = fallback.get(Constants.PREF_PROXY_TYPE).getProxyType();
         if (proxyType == Proxy.Type.DIRECT) {
             connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout, tlsPolicy);
         } else if (proxyType != null) {

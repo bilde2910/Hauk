@@ -30,11 +30,11 @@ public final class PreferenceHandler extends PreferenceDataStore {
 
         // Find all Preferences declared in the Constants class and add them to the map.
         Field[] fields = Constants.class.getFields();
-        for (Field f : fields) {
-            if (f.getType().isAssignableFrom(Preference.class)) {
+        for (Field field : fields) {
+            if (field.getType().isAssignableFrom(Preference.class)) {
                 try {
-                    Log.v("Found field %s of type Preference in Constants, adding to map", f.getName()); //NON-NLS
-                    Preference p = (Preference) f.get(null);
+                    Log.v("Found field %s of type Preference in Constants, adding to map", field.getName()); //NON-NLS
+                    Preference p = (Preference) field.get(null);
                     map.put(p.getKey(), p);
                 } catch (IllegalAccessException e) {
                     Log.wtf("Failed to read constant from Constants", e); //NON-NLS
@@ -112,6 +112,8 @@ public final class PreferenceHandler extends PreferenceDataStore {
             // because it is a text input field, despite the type of data it is set to store. This
             // must be handled properly.
             return String.valueOf(value);
+        } else if (value instanceof IndexedEnum) {
+            return String.valueOf(((IndexedEnum) value).getIndex());
         } else {
             throw new InvalidPreferenceTypeException(value, String.class);
         }
@@ -149,6 +151,14 @@ public final class PreferenceHandler extends PreferenceDataStore {
             putFloat(key, Float.valueOf(value));
         } else if (type == Long.class) {
             putLong(key, Long.valueOf(value));
+        } else if (type == IndexedEnum.class) {
+            @SuppressWarnings("unchecked")
+            Preference<IndexedEnum> pref = (Preference<IndexedEnum>) map.get(key);
+            try {
+                this.manager.set(pref, pref.getDefault().fromIndex(Integer.valueOf(value)));
+            } catch (Exception e) {
+                throw new PreferenceAssignmentException(e);
+            }
         } else {
             this.manager.set(map.get(key), value);
         }

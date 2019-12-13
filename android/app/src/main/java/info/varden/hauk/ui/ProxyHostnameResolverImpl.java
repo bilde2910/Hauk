@@ -109,7 +109,7 @@ public final class ProxyHostnameResolverImpl extends NameResolverTask {
 
         // Set the connection parameters.
         int timeout = this.prefs.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
-        CertificateValidationPolicy tlsPolicy = CertificateValidationPolicy.fromIndex(this.prefs.get(Constants.PREF_CERTIFICATE_VALIDATION));
+        CertificateValidationPolicy tlsPolicy = this.prefs.get(Constants.PREF_CERTIFICATE_VALIDATION);
         ConnectionParameters params;
         if (proxy == null) {
             params = new ConnectionParameters(null, null, timeout, tlsPolicy);
