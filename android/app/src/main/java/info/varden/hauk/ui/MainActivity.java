@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Checkable;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -198,6 +199,15 @@ public final class MainActivity extends AppCompatActivity {
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
+
+        if (server.isEmpty()) {
+            // If the user hasn't set up a server yet, open the settings menu and prompt them to
+            // configure the backend.
+            this.uiResetTask.run();
+            Toast.makeText(this, R.string.err_server_not_configured, Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, SettingsActivity.class));
+            return;
+        }
 
         assert mode != null;
         server = server.endsWith("/") ? server : server + "/";
