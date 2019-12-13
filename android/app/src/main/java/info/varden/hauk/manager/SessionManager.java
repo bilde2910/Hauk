@@ -384,6 +384,7 @@ public abstract class SessionManager {
             pusher.setAction(LocationPushService.ACTION_ID);
             pusher.putExtra(Constants.EXTRA_SHARE, ReceiverDataRegistry.register(share));
             pusher.putExtra(Constants.EXTRA_STOP_TASK, ReceiverDataRegistry.register(this.stopTask));
+            pusher.putExtra(Constants.EXTRA_HANDLER, ReceiverDataRegistry.register(this.handler));
             pusher.putExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, ReceiverDataRegistry.register(statusUpdateHandler));
 
             // Android O and higher require the service to be started as a foreground service for it
@@ -399,6 +400,9 @@ public abstract class SessionManager {
             // When both the notification and pusher are created, we can update the stop task with
             // these so that they can be canceled when the location share ends.
             this.stopTask.updateTask(pusher);
+
+            // Required for session relaunches
+            //noinspection AssignmentToStaticFieldFromInstanceMethod
             SessionManager.pusher = pusher;
 
             // stopTask is scheduled for expiration, but it could also be called if the user

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -78,6 +79,13 @@ public final class LocationPushService extends Service {
     private LocationListener listenCoarse;
 
     /**
+     * The handler that has scheduled the stop task. This is needed so that the callback can be
+     * cancelled if the service is relaunched because of a {@link info.varden.hauk.ui.MainActivity}
+     * reset/recreation.
+     */
+    private Handler handler;
+
+    /**
      * Whether or not the last update packet was sent successfully, i.e. whether there is a
      * connection to the backend server.
      */
@@ -97,6 +105,7 @@ public final class LocationPushService extends Service {
         StopSharingTask stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_STOP_TASK, -1));
         this.share = (Share) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_SHARE, -1));
         this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, -1));
+        this.handler = (Handler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_HANDLER, -1));
 
         try {
             // Even though we previously requested location permission, we still have to check for
@@ -165,7 +174,13 @@ public final class LocationPushService extends Service {
         }
         Log.i("Service destroyed; removing updates from fine location provider"); //NON-NLS
         this.locMan.removeUpdates(this.listenFine);
+
+        Log.i("Removing callbacks from handler"); //NON-NLS
+        this.handler.removeCallbacksAndMessages(null);
+
+        Log.i("Stopping foreground service"); //NON-NLS
         stopForeground(true);
+
         super.onDestroy();
     }
 

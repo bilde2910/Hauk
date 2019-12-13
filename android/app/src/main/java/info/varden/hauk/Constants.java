@@ -70,6 +70,7 @@ public enum Constants {
     // Keys for intent extras.
     public static final String EXTRA_SHARE = "share";
     public static final String EXTRA_STOP_TASK = "stopTask";
+    public static final String EXTRA_HANDLER = "handler";
     public static final String EXTRA_GNSS_ACTIVE_TASK = "gnssActiveTask";
     public static final String EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX = "dataRegistryIndex";
     public static final String EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER = "source";
