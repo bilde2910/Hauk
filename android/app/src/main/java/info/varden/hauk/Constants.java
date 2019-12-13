@@ -1,8 +1,8 @@
 package info.varden.hauk;
 
-import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.system.preferences.Preference;
+import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 
 /**
  * Constants used in the Hauk app.
@@ -30,6 +30,7 @@ public enum Constants {
     public static final Preference<String> PREF_PROXY_HOST = new Preference.String("proxyHost", "localhost");
     public static final Preference<Integer> PREF_PROXY_PORT = new Preference.Integer("proxyPort", 9050);
     public static final Preference<Integer> PREF_CONNECTION_TIMEOUT = new Preference.Integer("connectTimeout", 10);
+    public static final Preference<Integer> PREF_CERTIFICATE_VALIDATION = new Preference.Integer("tlsCertValidation", 0);
     public static final Preference<String> PREF_USERNAME_ENCRYPTED = new Preference.EncryptedString("cryptUsername", "");
     public static final Preference<String> PREF_PASSWORD_ENCRYPTED = new Preference.EncryptedString("cryptPassword", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);

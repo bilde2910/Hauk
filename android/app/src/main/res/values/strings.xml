@@ -18,6 +18,7 @@
     <string name="label_proxy_host">Proxy hostname</string>
     <string name="label_proxy_port">Proxy port</string>
     <string name="label_connect_timeout">Connection timeout (seconds)</string>
+    <string name="label_certificate_validation">HTTPS certificate validation</string>
 
     <string name="label_e2e_password">Encryption password</string>
     <string name="label_mode">Sharing mode:</string>
@@ -50,6 +51,10 @@
     <string name="proxy_mode_none">Do not proxy</string>
     <string name="proxy_mode_http">HTTP</string>
     <string name="proxy_mode_socks">SOCKS 4/5</string>
+
+    <string name="tls_validation_all">Always validate certificates (recommended)</string>
+    <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
+    <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
 
     <string name="sel_unit_opt_minutes">minute(s)</string>
     <string name="sel_unit_opt_hours">hour(s)</string>

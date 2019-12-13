@@ -19,12 +19,13 @@ import info.varden.hauk.global.ui.toast.SessionInitiationResponseHandlerImpl;
 import info.varden.hauk.global.ui.toast.ShareListenerImpl;
 import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.http.SessionInitiationPacket;
-import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
+import info.varden.hauk.http.security.CertificateValidationPolicy;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.preferences.PreferenceManager;
+import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.utils.DeprecationMigrator;
 import info.varden.hauk.utils.TimeUtils;
 
@@ -188,15 +189,16 @@ public final class Receiver extends BroadcastReceiver {
         server = server.endsWith("/") ? server : server + "/";
 
         int timeout = fallback.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
+        CertificateValidationPolicy tlsPolicy = CertificateValidationPolicy.fromIndex(fallback.get(Constants.PREF_CERTIFICATE_VALIDATION));
         ConnectionParameters connParams;
         Proxy.Type proxyType = ProxyTypeResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
         if (proxyType == Proxy.Type.DIRECT) {
-            connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout);
+            connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout, tlsPolicy);
         } else if (proxyType != null) {
             SocketAddress proxyAddr = new InetSocketAddress(fallback.get(Constants.PREF_PROXY_HOST).trim(), fallback.get(Constants.PREF_PROXY_PORT));
-            connParams = new ConnectionParameters(proxyType, proxyAddr, timeout);
+            connParams = new ConnectionParameters(proxyType, proxyAddr, timeout, tlsPolicy);
         } else {
-            connParams = new ConnectionParameters(null, null, timeout);
+            connParams = new ConnectionParameters(null, null, timeout, tlsPolicy);
         }
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);

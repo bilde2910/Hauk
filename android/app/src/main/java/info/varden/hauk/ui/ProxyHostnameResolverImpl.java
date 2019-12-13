@@ -19,6 +19,7 @@ import info.varden.hauk.dialog.DialogService;
 import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.http.proxy.NameResolverTask;
+import info.varden.hauk.http.security.CertificateValidationPolicy;
 import info.varden.hauk.manager.SessionInitiationResponseHandler;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
@@ -106,13 +107,14 @@ public final class ProxyHostnameResolverImpl extends NameResolverTask {
             }
         }
 
-        // Set the proxy.
+        // Set the connection parameters.
         int timeout = this.prefs.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
+        CertificateValidationPolicy tlsPolicy = CertificateValidationPolicy.fromIndex(this.prefs.get(Constants.PREF_CERTIFICATE_VALIDATION));
         ConnectionParameters params;
         if (proxy == null) {
-            params = new ConnectionParameters(null, null, timeout);
+            params = new ConnectionParameters(null, null, timeout, tlsPolicy);
         } else {
-            params = new ConnectionParameters(proxy.type(), proxy.address(), timeout);
+            params = new ConnectionParameters(proxy.type(), proxy.address(), timeout, tlsPolicy);
         }
         this.initParams.setConnectionParameters(params);
 

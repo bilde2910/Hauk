@@ -19,9 +19,13 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import info.varden.hauk.BuildConfig;
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.http.security.InsecureHostnameVerifier;
+import info.varden.hauk.http.security.InsecureTrustManager;
 import info.varden.hauk.struct.Version;
 
 /**
@@ -64,11 +68,28 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
     @SuppressWarnings("HardCodedStringLiteral")
     protected final Response doInBackground(Request... params) {
         try {
-            // Open a connection to the Hauk server and post the data.
-            Proxy proxy = params[0].getParameters().getProxy();
-            URL url = new URL(params[0].getURL());
+            Request req = params[0];
+
+            // Configure and open the connection.
+            Proxy proxy = req.getParameters().getProxy();
+            URL url = new URL(req.getURL());
             HttpURLConnection client = (HttpURLConnection) (proxy == null ? url.openConnection() : url.openConnection(proxy));
-            client.setConnectTimeout(params[0].getParameters().getTimeout());
+            if (url.getHost().endsWith(".onion") && url.getProtocol().equals("https")) {
+                // Check if TLS validation should be disabled for .onion addresses over HTTPS.
+                switch (req.getParameters().getTLSPolicy()) {
+                    case DISABLE_TRUST_ANCHOR_ONION:
+                        ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
+                        break;
+
+                    case DISABLE_ALL_ONION:
+                        ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
+                        ((HttpsURLConnection) client).setHostnameVerifier(new InsecureHostnameVerifier());
+                        break;
+                }
+            }
+
+            // Post the data.
+            client.setConnectTimeout(req.getParameters().getTimeout());
             client.setRequestMethod("POST");
             client.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
             client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

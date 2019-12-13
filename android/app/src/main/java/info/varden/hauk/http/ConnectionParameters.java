@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.net.Proxy;
 import java.net.SocketAddress;
 
+import info.varden.hauk.http.security.CertificateValidationPolicy;
+
 /**
  * Structure used to store connection parameters for backend connections, e.g. proxy details.
  *
@@ -29,10 +31,16 @@ public final class ConnectionParameters implements Serializable {
      */
     private final int connectTimeout;
 
-    public ConnectionParameters(Proxy.Type proxyType, SocketAddress proxyAddress, int connectTimeout) {
+    /**
+     * TLS certificate validation policy for the connection.
+     */
+    private final CertificateValidationPolicy tlsPolicy;
+
+    public ConnectionParameters(Proxy.Type proxyType, SocketAddress proxyAddress, int connectTimeout, CertificateValidationPolicy tlsPolicy) {
         this.proxyType = proxyType;
         this.proxyAddress = proxyAddress;
         this.connectTimeout = connectTimeout;
+        this.tlsPolicy = tlsPolicy;
     }
 
     @Nullable
@@ -44,12 +52,17 @@ public final class ConnectionParameters implements Serializable {
         return this.connectTimeout;
     }
 
+    CertificateValidationPolicy getTLSPolicy() {
+        return this.tlsPolicy;
+    }
+
     @Override
     public String toString() {
         return "ConnectionParameters{"
                 + ",proxyType=" + this.proxyType
                 + ",proxyAddress=" + this.proxyAddress
                 + ",connectTimeout=" + this.connectTimeout
+                + ",tlsPolicy=" + this.tlsPolicy
                 + "}";
     }
 }
