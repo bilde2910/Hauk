@@ -185,7 +185,7 @@ public final class MainActivity extends AppCompatActivity {
         int interval = prefs.get(Constants.PREF_INTERVAL);
         String customID = prefs.get(Constants.PREF_CUSTOM_ID).trim();
         boolean useE2E = prefs.get(Constants.PREF_ENABLE_E2E);
-        String e2ePass = useE2E ? "" : prefs.get(Constants.PREF_E2E_PASSWORD);
+        String e2ePass = !useE2E ? "" : prefs.get(Constants.PREF_E2E_PASSWORD);
         String nickname = ((TextView) findViewById(R.id.txtNickname)).getText().toString().trim();
         @SuppressWarnings("OverlyStrongTypeCast") ShareMode mode = ShareMode.fromMode(((Spinner) findViewById(R.id.selMode)).getSelectedItemPosition());
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
