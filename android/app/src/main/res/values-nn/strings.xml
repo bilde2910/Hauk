@@ -132,4 +132,9 @@
     <string name="label_proxy_port">Proxy-port</string>
     <string name="label_proxy_host">Proxy-vertsnamn</string>
     <string name="label_proxy_type">Proxy</string>
+    <string name="tls_validation_none_for_onion">Deaktiver sertifikatkjede- og vertsnamnvalidering for .onion-vertar (ikkje anbefalt)</string>
+    <string name="tls_validation_no_anchor_onion">Deaktiver sertifikatkjedevalidering for .onion-vertar (ikkje anbefalt)</string>
+    <string name="tls_validation_all">Alltid valider sertifikat (anbefalt)</string>
+    <string name="label_certificate_validation">HTTPS-sertifikatvalidering</string>
+    <string name="label_connect_timeout">Tidsavbrot for oppkopling (sekund)</string>
 </resources>
