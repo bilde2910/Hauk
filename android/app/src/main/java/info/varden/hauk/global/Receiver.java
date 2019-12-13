@@ -17,6 +17,7 @@ import info.varden.hauk.global.ui.DisplayShareDialogListener;
 import info.varden.hauk.global.ui.toast.GNSSStatusUpdateListenerImpl;
 import info.varden.hauk.global.ui.toast.SessionInitiationResponseHandlerImpl;
 import info.varden.hauk.global.ui.toast.ShareListenerImpl;
+import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.http.proxy.TypeIndexResolver;
 import info.varden.hauk.manager.SessionManager;
@@ -186,17 +187,20 @@ public final class Receiver extends BroadcastReceiver {
         assert server != null;
         server = server.endsWith("/") ? server : server + "/";
 
-        Proxy proxy = null;
+        int timeout = fallback.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
+        ConnectionParameters connParams;
         Proxy.Type proxyType = TypeIndexResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
         if (proxyType == Proxy.Type.DIRECT) {
-            proxy = Proxy.NO_PROXY;
+            connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout);
         } else if (proxyType != null) {
             SocketAddress proxyAddr = new InetSocketAddress(fallback.get(Constants.PREF_PROXY_HOST).trim(), fallback.get(Constants.PREF_PROXY_PORT));
-            proxy = new Proxy(proxyType, proxyAddr);
+            connParams = new ConnectionParameters(proxyType, proxyAddr, timeout);
+        } else {
+            connParams = new ConnectionParameters(null, null, timeout);
         }
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
-        initParams.setProxy(proxy);
+        initParams.setConnectionParameters(connParams);
         return initParams;
     }
 }

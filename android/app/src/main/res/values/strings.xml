@@ -17,6 +17,7 @@
     <string name="label_proxy_type">Proxy</string>
     <string name="label_proxy_host">Proxy hostname</string>
     <string name="label_proxy_port">Proxy port</string>
+    <string name="label_connect_timeout">Connection timeout (seconds)</string>
 
     <string name="label_e2e_password">Encryption password</string>
     <string name="label_mode">Sharing mode:</string>

@@ -2,7 +2,6 @@ package info.varden.hauk.http;
 
 import android.content.Context;
 
-import java.net.Proxy;
 import java.util.HashMap;
 
 import info.varden.hauk.struct.Version;
@@ -20,7 +19,7 @@ public abstract class Packet {
     private final Context ctx;
     private final String server;
     private final String path;
-    private final Proxy proxy;
+    private final ConnectionParameters connParams;
 
     /**
      * Called if the request is successful.
@@ -49,12 +48,12 @@ public abstract class Packet {
      * @param server The full Hauk server base URL, including trailing slash.
      * @param path   The path underneath the base URL that should be called.
      */
-    Packet(Context ctx, String server, Proxy proxy, String path) {
+    Packet(Context ctx, String server, ConnectionParameters connParams, String path) {
         this.params = new HashMap<>();
         this.ctx = ctx;
         this.server = server;
         this.path = path;
-        this.proxy = proxy;
+        this.connParams = connParams;
     }
 
     /**
@@ -97,6 +96,6 @@ public abstract class Packet {
                     onFailure(e);
                 }
             }
-        }).execute(new ConnectionThread.Request(this.ctx, this.server + this.path, this.params, this.proxy));
+        }).execute(new ConnectionThread.Request(this.ctx, this.server + this.path, this.params, this.connParams));
     }
 }

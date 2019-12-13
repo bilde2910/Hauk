@@ -3,8 +3,6 @@ package info.varden.hauk.http;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import androidx.annotation.Nullable;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -67,10 +65,10 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
     protected final Response doInBackground(Request... params) {
         try {
             // Open a connection to the Hauk server and post the data.
-            Proxy proxy = params[0].getProxy();
+            Proxy proxy = params[0].getParameters().getProxy();
             URL url = new URL(params[0].getURL());
             HttpURLConnection client = (HttpURLConnection) (proxy == null ? url.openConnection() : url.openConnection(proxy));
-            client.setConnectTimeout(TIMEOUT);
+            client.setConnectTimeout(params[0].getParameters().getTimeout());
             client.setRequestMethod("POST");
             client.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
             client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -126,21 +124,21 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
         private final Context ctx;
         private final String url;
         private final Map<String, String> data;
-        private final Proxy proxy;
+        private final ConnectionParameters params;
 
         /**
          * Constructs an HTTP request that should be passed through a proxy.
          *
-         * @param ctx   Android application context.
-         * @param url   The URL to POST data to.
-         * @param data  A set of key-value pairs consisting of data to be sent in the POST request.
-         * @param proxy The proxy that should be used to send the request.
+         * @param ctx    Android application context.
+         * @param url    The URL to POST data to.
+         * @param data   A set of key-value pairs consisting of data to be sent in the POST request.
+         * @param params The parameters that should be used when establishing the connection.
          */
-        Request(Context ctx, String url, Map<String, String> data, @Nullable Proxy proxy) {
+        Request(Context ctx, String url, Map<String, String> data, ConnectionParameters params) {
             this.ctx = ctx;
             this.url = url;
             this.data = Collections.unmodifiableMap(data);
-            this.proxy = proxy;
+            this.params = params;
         }
 
         private Context getContext() {
@@ -151,9 +149,8 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             return this.url;
         }
 
-        @Nullable
-        private Proxy getProxy() {
-            return this.proxy;
+        private ConnectionParameters getParameters() {
+            return this.params;
         }
 
         private String getURLEncodedData() throws UnsupportedEncodingException {

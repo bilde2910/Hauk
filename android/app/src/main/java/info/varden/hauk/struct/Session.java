@@ -3,13 +3,12 @@ package info.varden.hauk.struct;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
-import java.net.Proxy;
-import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import info.varden.hauk.Constants;
+import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.utils.TimeUtils;
 
 /**
@@ -18,7 +17,7 @@ import info.varden.hauk.utils.TimeUtils;
  * @author Marius Lindvall
  */
 public final class Session implements Serializable {
-    private static final long serialVersionUID = 8424014563201300999L;
+    private static final long serialVersionUID = 315568255735934584L;
 
     /**
      * The Hauk backend server base URL.
@@ -26,14 +25,9 @@ public final class Session implements Serializable {
     private final String serverURL;
 
     /**
-     * Proxy endpoint.
+     * Connection parameters for the backend connection.
      */
-    private final SocketAddress proxyAddress;
-
-    /**
-     * Proxy type.
-     */
-    private final Proxy.Type proxyType;
+    private final ConnectionParameters connParams;
 
     /**
      * The version the backend is running.
@@ -63,27 +57,20 @@ public final class Session implements Serializable {
     @Nullable
     private final KeyDerivable e2eParams;
 
-    public Session(String serverURL, @Nullable Proxy proxy, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
+    public Session(String serverURL, ConnectionParameters connParams, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
         this.serverURL = serverURL;
         this.backendVersion = backendVersion;
         this.sessionID = sessionID;
         this.expiry = expiry;
         this.interval = interval;
         this.e2eParams = e2eParams;
-        if (proxy == null) {
-            this.proxyAddress = null;
-            this.proxyType = null;
-        } else {
-            this.proxyAddress = proxy.address();
-            this.proxyType = proxy.type();
-        }
+        this.connParams = connParams;
     }
 
     @Override
     public String toString() {
         return "Session{serverURL=" + this.serverURL
-                + ",proxyType=" + this.proxyType
-                + ",proxyAddress=" + this.proxyAddress
+                + ",connParams=" + this.connParams
                 + ",backendVersion=" + this.backendVersion
                 + ",sessionID=" + this.sessionID
                 + ",expiry=" + this.expiry
@@ -96,9 +83,8 @@ public final class Session implements Serializable {
         return this.serverURL;
     }
 
-    @Nullable
-    public Proxy getProxy() {
-        return this.proxyAddress == null || this.proxyType == null ? null : new Proxy(this.proxyType, this.proxyAddress);
+    public ConnectionParameters getConnectionParameters() {
+        return this.connParams;
     }
 
     public Version getBackendVersion() {

@@ -26,7 +26,7 @@ public abstract class StopSharingPacket extends Packet {
      * @param session The session to delete.
      */
     protected StopSharingPacket(Context ctx, Session session) {
-        super(ctx, session.getServerURL(), session.getProxy(), Constants.URL_PATH_STOP_SHARING);
+        super(ctx, session.getServerURL(), session.getConnectionParameters(), Constants.URL_PATH_STOP_SHARING);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
     }
 
@@ -37,7 +37,7 @@ public abstract class StopSharingPacket extends Packet {
      * @param share The share to stop.
      */
     protected StopSharingPacket(Context ctx, Share share) {
-        super(ctx, share.getSession().getServerURL(), share.getSession().getProxy(), Constants.URL_PATH_STOP_SHARING);
+        super(ctx, share.getSession().getServerURL(), share.getSession().getConnectionParameters(), Constants.URL_PATH_STOP_SHARING);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, share.getSession().getID());
         setParameter(Constants.PACKET_PARAM_SHARE_ID, share.getID());
     }

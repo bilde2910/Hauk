@@ -89,6 +89,9 @@ public final class SettingsActivity extends AppCompatActivity {
             ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_PORT.getKey())).setOnBindEditTextListener(
                     new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
             );
+            ((EditTextPreference) manager.findPreference(Constants.PREF_CONNECTION_TIMEOUT.getKey())).setOnBindEditTextListener(
+                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
+            );
 
             // Set proxy settings disabled if proxy is set to default or none
             manager.findPreference(Constants.PREF_PROXY_TYPE.getKey()).setOnPreferenceChangeListener(new ProxyPreferenceChangeListener(new Preference[]{

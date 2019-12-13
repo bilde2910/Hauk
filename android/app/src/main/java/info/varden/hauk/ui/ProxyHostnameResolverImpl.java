@@ -11,10 +11,12 @@ import androidx.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.net.Proxy;
 
+import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.dialog.Buttons;
 import info.varden.hauk.dialog.CustomDialogBuilder;
 import info.varden.hauk.dialog.DialogService;
+import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.http.proxy.NameResolverTask;
 import info.varden.hauk.manager.SessionInitiationResponseHandler;
@@ -25,12 +27,14 @@ import info.varden.hauk.system.LocationPermissionsNotGrantedException;
 import info.varden.hauk.system.LocationServicesDisabledException;
 import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.utils.Log;
+import info.varden.hauk.utils.TimeUtils;
 
 /**
  * Implementation of {@link NameResolverTask} for {@link MainActivity}. This implementation is
  * responsible for starting shares after the proxy configuration has been resolved.
  */
 public final class ProxyHostnameResolverImpl extends NameResolverTask {
+    private final PreferenceManager prefs;
     private final WeakReference<Activity> ctx;
     private final SessionManager manager;
     private final Runnable uiResetTask;
@@ -46,6 +50,7 @@ public final class ProxyHostnameResolverImpl extends NameResolverTask {
 
     ProxyHostnameResolverImpl(Activity ctx, SessionManager manager, Runnable uiResetTask, PreferenceManager prefs, SessionInitiationResponseHandler responseHandler, SessionInitiationPacket.InitParameters initParams, ShareMode mode, boolean allowAdoption, String nickname, String groupPin) {
         super(prefs);
+        this.prefs = prefs;
         this.ctx = new WeakReference<>(ctx);
         this.manager = manager;
         this.uiResetTask = uiResetTask;
@@ -102,7 +107,14 @@ public final class ProxyHostnameResolverImpl extends NameResolverTask {
         }
 
         // Set the proxy.
-        this.initParams.setProxy(proxy);
+        int timeout = this.prefs.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
+        ConnectionParameters params;
+        if (proxy == null) {
+            params = new ConnectionParameters(null, null, timeout);
+        } else {
+            params = new ConnectionParameters(proxy.type(), proxy.address(), timeout);
+        }
+        this.initParams.setConnectionParameters(params);
 
         // Start the location share.
         try {

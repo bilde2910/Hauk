@@ -73,6 +73,11 @@
             app:title="@string/label_proxy_port"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:key="connectTimeout"
+            app:title="@string/label_connect_timeout"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

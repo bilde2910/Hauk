@@ -34,7 +34,7 @@ public abstract class AdoptSharePacket extends Packet {
      * @param nickname The nickname that should be assigned to the user when adopted.
      */
     protected AdoptSharePacket(Context ctx, Share target, String origin, String nickname) {
-        super(ctx, target.getSession().getServerURL(), target.getSession().getProxy(), Constants.URL_PATH_ADOPT_SHARE);
+        super(ctx, target.getSession().getServerURL(), target.getSession().getConnectionParameters(), Constants.URL_PATH_ADOPT_SHARE);
         this.nickname = nickname;
         setParameter(Constants.PACKET_PARAM_SESSION_ID, target.getSession().getID());
         setParameter(Constants.PACKET_PARAM_NICKNAME, nickname);

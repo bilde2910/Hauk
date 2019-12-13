@@ -5,7 +5,6 @@ import android.util.Base64;
 
 import androidx.annotation.Nullable;
 
-import java.net.Proxy;
 import java.security.SecureRandom;
 
 import info.varden.hauk.Constants;
@@ -39,7 +38,7 @@ public class SessionInitiationPacket extends Packet {
     private final byte[] salt;
 
     private SessionInitiationPacket(Context ctx, InitParameters params, ResponseHandler handler) {
-        super(ctx, params.getServerURL(), params.getProxy(), Constants.URL_PATH_CREATE_SHARE);
+        super(ctx, params.getServerURL(), params.getConnectionParameters(), Constants.URL_PATH_CREATE_SHARE);
         this.params = params;
         this.handler = handler;
         if (params.getUsername() != null) {
@@ -156,7 +155,7 @@ public class SessionInitiationPacket extends Packet {
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.params.getServerURL(), this.params.getProxy(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), e2eParams);
+            Session session = new Session(this.params.getServerURL(), this.params.getConnectionParameters(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), e2eParams);
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             this.handler.onSessionInitiated(share);
@@ -223,7 +222,7 @@ public class SessionInitiationPacket extends Packet {
         private final String customID;
         private final String e2ePass;
 
-        private Proxy proxy;
+        private ConnectionParameters connParams;
 
         /**
          * Declares initialization parameters for a session initiation request.
@@ -236,7 +235,7 @@ public class SessionInitiationPacket extends Packet {
          */
         public InitParameters(String server, String username, String password, int duration, int interval, String customID, String e2ePass) {
             this.server = server;
-            this.proxy = null;
+            this.connParams = null;
             this.username = username == null || username.isEmpty() ? null : username;
             this.password = password;
             this.duration = duration;
@@ -249,13 +248,12 @@ public class SessionInitiationPacket extends Packet {
             return this.server;
         }
 
-        public void setProxy(Proxy proxy) {
-            this.proxy = proxy;
+        public void setConnectionParameters(ConnectionParameters connParams) {
+            this.connParams = connParams;
         }
 
-        @Nullable
-        Proxy getProxy() {
-            return this.proxy;
+        ConnectionParameters getConnectionParameters() {
+            return this.connParams;
         }
 
         @Nullable
