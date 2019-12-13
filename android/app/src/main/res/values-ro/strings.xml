@@ -132,4 +132,9 @@
     <string name="label_proxy_port">Port proxy</string>
     <string name="label_proxy_host">Gazdă proxy</string>
     <string name="label_proxy_type">Proxy</string>
+    <string name="tls_validation_none_for_onion">Dezactivează validarea lanțului de încredere și a numelui de gazdă pentru adresele .onion (nu este recomandat)</string>
+    <string name="tls_validation_no_anchor_onion">Dezactivează validarea lanțului de încredere pentru adresele .onion (nu este recomandat)</string>
+    <string name="tls_validation_all">Validează mereu certificatele (recomandat)</string>
+    <string name="label_certificate_validation">Validare certificat HTTPS</string>
+    <string name="label_connect_timeout">Expirare conexiune (secunde)</string>
 </resources>
