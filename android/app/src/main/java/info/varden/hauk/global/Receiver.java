@@ -190,7 +190,7 @@ public final class Receiver extends BroadcastReceiver {
         int timeout = fallback.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
         CertificateValidationPolicy tlsPolicy = fallback.get(Constants.PREF_CERTIFICATE_VALIDATION);
         ConnectionParameters connParams;
-        Proxy.Type proxyType = fallback.get(Constants.PREF_PROXY_TYPE).getProxyType();
+        Proxy.Type proxyType = fallback.get(Constants.PREF_PROXY_TYPE).resolve();
         if (proxyType == Proxy.Type.DIRECT) {
             connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout, tlsPolicy);
         } else if (proxyType != null) {

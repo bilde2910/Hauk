@@ -50,7 +50,7 @@ public abstract class NameResolverTask extends AsyncTask<Void, Void, Proxy> impl
     private boolean wasSuccessful = true;
 
     protected NameResolverTask(PreferenceManager prefs) {
-        this.proxyType = prefs.get(Constants.PREF_PROXY_TYPE).getProxyType();
+        this.proxyType = prefs.get(Constants.PREF_PROXY_TYPE).resolve();
         this.proxyHost = prefs.get(Constants.PREF_PROXY_HOST).trim();
         this.proxyPort = prefs.get(Constants.PREF_PROXY_PORT);
     }
