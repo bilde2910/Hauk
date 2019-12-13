@@ -17,6 +17,7 @@ import info.varden.hauk.system.preferences.PreferenceHandler;
 import info.varden.hauk.system.preferences.ui.listener.CascadeBindListener;
 import info.varden.hauk.system.preferences.ui.listener.HintBindListener;
 import info.varden.hauk.system.preferences.ui.listener.InputTypeBindListener;
+import info.varden.hauk.system.preferences.ui.listener.NightModeChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.ProxyPreferenceChangeListener;
 
 /**
@@ -32,7 +33,7 @@ public final class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment(this))
+                .replace(R.id.settings, new SettingsFragment())
                 .commit();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -41,14 +42,8 @@ public final class SettingsActivity extends AppCompatActivity {
     }
 
     public static final class SettingsFragment extends PreferenceFragmentCompat {
-        /**
-         * Android application context.
-         */
-        private final Context ctx;
 
-        private SettingsFragment(Context ctx) {
-            this.ctx = ctx;
-        }
+        private Context ctx = null;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -93,11 +88,20 @@ public final class SettingsActivity extends AppCompatActivity {
                     new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
             );
 
-            // Set proxy settings disabled if proxy is set to default or none
+            // Set proxy settings disabled if proxy is set to default or none.
             manager.findPreference(Constants.PREF_PROXY_TYPE.getKey()).setOnPreferenceChangeListener(new ProxyPreferenceChangeListener(new Preference[]{
                     manager.findPreference(Constants.PREF_PROXY_HOST.getKey()),
                     manager.findPreference(Constants.PREF_PROXY_PORT.getKey())
             }));
+
+            // Update night mode when its preference is changed.
+            manager.findPreference(Constants.PREF_NIGHT_MODE.getKey()).setOnPreferenceChangeListener(new NightModeChangeListener());
+        }
+
+        @Override
+        public void onAttach(Context ctx) {
+            super.onAttach(ctx);
+            this.ctx = ctx;
         }
     }
 }

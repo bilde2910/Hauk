@@ -16,7 +16,7 @@ public abstract class Resolver<T1 extends IndexedEnum<T1>, T2 extends Serializab
 
     private final T2 mapping;
 
-    Resolver(int index, T2 mapping) {
+    protected Resolver(int index, T2 mapping) {
         super(index);
         this.mapping = mapping;
     }

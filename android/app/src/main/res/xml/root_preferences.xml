@@ -87,4 +87,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/prefs_header_appearance">
+
+        <ListPreference
+            app:key="nightMode"
+            app:title="@string/prefs_nightMode_title"
+            app:useSimpleSummaryProvider="true"
+            app:entries="@array/night_mode_modes"
+            app:entryValues="@array/night_mode_mode_values" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

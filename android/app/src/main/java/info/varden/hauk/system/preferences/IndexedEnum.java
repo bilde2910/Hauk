@@ -39,9 +39,14 @@ public abstract class IndexedEnum<T extends IndexedEnum<T>> implements Serializa
      */
     @SuppressWarnings("unchecked")
     final T fromIndex(int index) throws IllegalAccessException, InstantiationException {
-        Field[] fields = getClass().getFields();
+        return (T) fromIndex(getClass(), index);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends IndexedEnum<T>> T fromIndex(Class<T> type, int index) throws IllegalAccessException, InstantiationException {
+        Field[] fields = type.getFields();
         for (Field field : fields) {
-            if (field.getType().isAssignableFrom(getClass())) {
+            if (field.getType().isAssignableFrom(type)) {
                 IndexedEnum<T> instance = (IndexedEnum<T>) field.get(null);
                 if (instance != null && instance.getIndex() == index) {
                     return (T) instance;

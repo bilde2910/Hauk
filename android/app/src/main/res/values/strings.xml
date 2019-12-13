@@ -144,4 +144,12 @@
         <string name="tls_validation_all">Always validate certificates (recommended)</string>
         <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
         <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
+
+    <!-- Appearance settings -->
+    <string name="prefs_header_appearance">Appearance</string>
+    <string name="prefs_nightMode_title">Night mode</string>
+        <string name="night_mode_system">Follow system preference</string>
+        <string name="night_mode_battery">When battery saver is enabled</string>
+        <string name="night_mode_always">Always</string>
+        <string name="night_mode_never">Never</string>
 </resources>

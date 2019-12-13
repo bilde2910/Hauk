@@ -3,6 +3,7 @@ package info.varden.hauk;
 import info.varden.hauk.http.security.CertificateValidationPolicy;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.system.preferences.Preference;
+import info.varden.hauk.system.preferences.indexresolver.NightModeStyle;
 import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 
 /**
@@ -42,6 +43,7 @@ public enum Constants {
     public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
+    public static final Preference<NightModeStyle> PREF_NIGHT_MODE = new Preference.Enum<>("nightMode", NightModeStyle.FOLLOW_SYSTEM);
 
     @Deprecated // Use PREF_SERVER_ENCRYPTED instead
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");

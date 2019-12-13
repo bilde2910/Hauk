@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
@@ -289,6 +290,9 @@ public final class MainActivity extends AppCompatActivity {
         //noinspection OverlyStrongTypeCast
         ((Spinner) findViewById(R.id.selUnit)).setSelection(prefs.get(Constants.PREF_DURATION_UNIT));
         ((Checkable) findViewById(R.id.chkAllowAdopt)).setChecked(prefs.get(Constants.PREF_ALLOW_ADOPTION));
+
+        // Set night mode preference.
+        AppCompatDelegate.setDefaultNightMode(prefs.get(Constants.PREF_NIGHT_MODE).resolve());
     }
 
     /**

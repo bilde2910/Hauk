@@ -22,7 +22,6 @@
         <item>@string/proxy_mode_http</item>
         <item>@string/proxy_mode_socks</item>
     </string-array>
-
     <string-array name="proxy_type_values">
         <item>0</item>
         <item>1</item>
@@ -35,10 +34,22 @@
         <item>@string/tls_validation_no_anchor_onion</item>
         <item>@string/tls_validation_none_for_onion</item>
     </string-array>
-
     <string-array name="tls_validation_type_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <string-array name="night_mode_modes">
+        <item>@string/night_mode_system</item>
+        <item>@string/night_mode_battery</item>
+        <item>@string/night_mode_always</item>
+        <item>@string/night_mode_never</item>
+    </string-array>
+    <string-array name="night_mode_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 </resources>
