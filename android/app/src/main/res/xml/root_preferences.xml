@@ -17,70 +17,70 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/header_connection">
+    <PreferenceCategory app:title="@string/prefs_header_connection">
 
         <EditTextPreference
             app:key="cryptServer"
-            app:title="@string/label_server"
+            app:title="@string/pref_cryptServer_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="cryptUsername"
-            app:title="@string/label_username"
+            app:title="@string/pref_cryptUsername_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="cryptPassword"
-            app:title="@string/label_password"
+            app:title="@string/pref_cryptPassword_title"
             app:summary="@string/password_mask" />
 
         <EditTextPreference
             app:key="requestLink"
-            app:title="@string/label_custom_id"
+            app:title="@string/pref_requestLink_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="interval"
-            app:title="@string/label_interval"
+            app:title="@string/pref_interval_title"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             app:key="enableE2E"
-            app:title="@string/label_use_e2e"
-            app:summaryOff="@string/chk_dont_use_e2e"
-            app:summaryOn="@string/chk_use_e2e" />
+            app:title="@string/pref_enableE2E_title"
+            app:summaryOff="@string/pref_enableE2E_off"
+            app:summaryOn="@string/pref_enableE2E_on" />
 
         <EditTextPreference
             app:key="e2ePassword"
-            app:title="@string/label_e2e_password"
+            app:title="@string/pref_e2ePassword_title"
             app:summary="@string/password_mask"
             app:dependency="enableE2E" />
 
         <ListPreference
             app:key="proxyType"
-            app:title="@string/label_proxy_type"
+            app:title="@string/pref_proxyType_title"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/proxy_types"
             app:entryValues="@array/proxy_type_values" />
 
         <EditTextPreference
             app:key="proxyHost"
-            app:title="@string/label_proxy_host"
+            app:title="@string/pref_proxyHost_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="proxyPort"
-            app:title="@string/label_proxy_port"
+            app:title="@string/pref_proxyPort_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="connectTimeout"
-            app:title="@string/label_connect_timeout"
+            app:title="@string/pref_connectTimeout_title"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:key="tlsCertValidation"
-            app:title="@string/label_certificate_validation"
+            app:title="@string/pref_tlsCertValidation_title"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/tls_validation_types"
             app:entryValues="@array/tls_validation_type_values" />

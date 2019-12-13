@@ -64,11 +64,11 @@ public final class SettingsActivity extends AppCompatActivity {
             // Set InputType and other attributes for text edit boxes.
             ((EditTextPreference) manager.findPreference(Constants.PREF_SERVER_ENCRYPTED.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI),
-                    new HintBindListener(R.string.label_server_hint)
+                    new HintBindListener(R.string.pref_cryptServer_hint)
             }));
             ((EditTextPreference) manager.findPreference(Constants.PREF_USERNAME_ENCRYPTED.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME),
-                    new HintBindListener(R.string.label_username_hint)
+                    new HintBindListener(R.string.pref_cryptUsername_hint)
             }));
             ((EditTextPreference) manager.findPreference(Constants.PREF_PASSWORD_ENCRYPTED.getKey())).setOnBindEditTextListener(
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
@@ -81,7 +81,7 @@ public final class SettingsActivity extends AppCompatActivity {
             );
             ((EditTextPreference) manager.findPreference(Constants.PREF_CUSTOM_ID.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE),
-                    new HintBindListener(R.string.label_custom_id_hint)
+                    new HintBindListener(R.string.pref_requestLink_hint)
             }));
             ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_HOST.getKey())).setOnBindEditTextListener(
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI)

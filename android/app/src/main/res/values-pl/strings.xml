@@ -26,10 +26,10 @@
     <string name="label_explain_adopt">(Co to znaczy\?)</string>
     <string name="chk_allow_adopt">Pozwalam innym na dołączenie mnie do swojej grupy</string>
     <string name="label_mode">Tryb udostępniania:</string>
-    <string name="label_interval">Okres aktualizacji pozycji (s):</string>
+    <string name="pref_interval_title">Okres aktualizacji pozycji (s):</string>
     <string name="label_duration">Czas udostępniania:</string>
-    <string name="label_password">Hasło</string>
-    <string name="label_server">URL serwera</string>
+    <string name="pref_cryptPassword_title">Hasło</string>
+    <string name="pref_cryptServer_title">URL serwera</string>
     <string name="label_heading">Otwarte oprogramowanie do udostępniania lokalizacji</string>
     <string name="link_added_title">Link został utworzony</string>
     <string name="req_perms_title">Potrzebne pozwolenie</string>

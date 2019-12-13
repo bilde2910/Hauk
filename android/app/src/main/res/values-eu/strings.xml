@@ -5,10 +5,10 @@
     <string name="btn_ok">Ados</string>
     <string name="err_malformed_url">Sartu duzun zerbitzari URL-a baliogabea da.</string>
     <string name="req_perms_message">Aplikazio honek zure kokalekua atzitzeko baimena behar du funtzionatzeko, baina baimen hau ez da oraindik eman. Onartu hurrengo baimen eskaera eta gero sakatu hasi botoia berriro saiatzeko.</string>
-    <string name="label_server">Zerbitzariaren URLa</string>
-    <string name="label_password">Pasahitza</string>
+    <string name="pref_cryptServer_title">Zerbitzariaren URLa</string>
+    <string name="pref_cryptPassword_title">Pasahitza</string>
     <string name="label_duration">Partekatzearen iraupena:</string>
-    <string name="label_interval">Eguneraketa tartea (s):</string>
+    <string name="pref_interval_title">Eguneraketa tartea (s):</string>
     <string name="label_mode">Partekatze modua:</string>
     <string name="label_allow_adopt">Baimendu adopzioa:</string>
     <string name="label_explain_adopt">(Zer da hau\?)</string>

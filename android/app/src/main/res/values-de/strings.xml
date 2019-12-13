@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_heading">Teilen Ihrer Position mit Open Source Software</string>
-    <string name="label_server">Server URL</string>
-    <string name="label_password">Passwort</string>
+    <string name="pref_cryptServer_title">Server URL</string>
+    <string name="pref_cryptPassword_title">Passwort</string>
     <string name="label_status">Status:</string>
     <string name="btn_start">Freigabe starten</string>
     <string name="btn_stop">Freigabe stoppen [%s]</string>
@@ -26,7 +26,7 @@
     <string name="link_type_group_member">Gruppenfreigabe (Mitglied)</string>
     <string name="label_status_coarse">Warte auf Präzisions-Fix…</string>
     <string name="label_duration">Freigabedauer:</string>
-    <string name="label_interval">Aktualisierungsintervall (Sekunden)</string>
+    <string name="pref_interval_title">Aktualisierungsintervall (Sekunden)</string>
     <string name="label_mode">Freigabemodus:</string>
     <string name="label_allow_adopt">Adoption erlauben:</string>
     <string name="label_explain_adopt">(Was ist das\?)</string>
@@ -108,18 +108,18 @@
     <string name="create_link_body">Sie können mehrere Links erstellen, um auf Ihren gemeinsamen Standort zuzugreifen. Jede Verbindung kann einzeln gestoppt werden, so dass Sie jederzeit genau steuern können, wer Ihren Standort sehen kann.
 \n
 \nAlle zusätzlichen Links, die Sie auf diese Weise erstellen, sind einzelne Standortfreigaben, die nur Ihren Standort anzeigen.</string>
-    <string name="label_username">Benutzername</string>
-    <string name="label_custom_id_hint">&lt;zufällig generiert&gt;</string>
-    <string name="label_custom_id">Bevorzugte Link ID</string>
-    <string name="label_username_hint">&lt;optional&gt;</string>
-    <string name="chk_dont_use_e2e">End-to-End-Verschlüsselung deaktivieren</string>
-    <string name="chk_use_e2e">Ende-zu-Ende-Verschlüsselung aktivieren</string>
+    <string name="pref_cryptUsername_title">Benutzername</string>
+    <string name="pref_requestLink_hint">&lt;zufällig generiert&gt;</string>
+    <string name="pref_requestLink_title">Bevorzugte Link ID</string>
+    <string name="pref_cryptUsername_hint">&lt;optional&gt;</string>
+    <string name="pref_enableE2E_off">End-to-End-Verschlüsselung deaktivieren</string>
+    <string name="pref_enableE2E_on">Ende-zu-Ende-Verschlüsselung aktivieren</string>
     <string name="password_mask">Zum Bearbeiten tippen</string>
-    <string name="header_connection">Verbindung</string>
+    <string name="prefs_header_connection">Verbindung</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="err_ver_e2e">Der Server unterstützt keine End-to-End-Verschlüsselung. Die End-to-End-Verschlüsselung wird ab Version %s und höher unterstützt; auf dem Server läuft derzeit Version %s. Die Freigabe wird ohne End-to-End-Verschlüsselung erstellt, um Kompatibilität zu gewährleisten.</string>
     <string name="label_status_disconnected">Der Backend-Server kann nicht erreicht werden</string>
-    <string name="label_e2e_password">Verschlüsselungspasswort</string>
-    <string name="label_use_e2e">Passwortgeschützte Freigabe</string>
+    <string name="pref_e2ePassword_title">Verschlüsselungspasswort</string>
+    <string name="pref_enableE2E_title">Passwortgeschützte Freigabe</string>
     <string name="action_settings">Einstellungen</string>
 </resources>

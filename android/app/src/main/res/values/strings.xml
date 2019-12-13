@@ -4,31 +4,26 @@
     <string name="action_settings">Settings</string>
     <string name="label_heading">Open source location sharing</string>
     <string name="label_source_link" translatable="false">https://github.com/bilde2910/Hauk</string>
-    <string name="label_server">Server URL</string>
-    <string name="label_server_hint" translatable="false">https://example.com/</string>
-    <string name="label_username">Username</string>
-    <string name="label_username_hint">&lt;optional&gt;</string>
-    <string name="label_password">Password</string>
+
     <string name="label_duration">Share duration:</string>
-    <string name="label_interval">Update interval (seconds)</string>
-    <string name="label_custom_id">Preferred link ID</string>
-    <string name="label_custom_id_hint">&lt;randomly generated&gt;</string>
-    <string name="label_use_e2e">Password protect share</string>
-    <string name="label_proxy_type">Proxy</string>
-    <string name="label_proxy_host">Proxy hostname</string>
-    <string name="label_proxy_port">Proxy port</string>
-    <string name="label_connect_timeout">Connection timeout (seconds)</string>
-    <string name="label_certificate_validation">HTTPS certificate validation</string>
-
-    <string name="label_e2e_password">Encryption password</string>
+        <string name="sel_unit_opt_minutes">minute(s)</string>
+        <string name="sel_unit_opt_hours">hour(s)</string>
+        <string name="sel_unit_opt_days">day(s)</string>
     <string name="label_mode">Sharing mode:</string>
+        <string name="sel_mode_opt_alone">Share my own location only</string>
+        <string name="sel_mode_opt_create_group">Create a group share</string>
+        <string name="sel_mode_opt_join_group">Join a group share</string>
     <string name="label_allow_adopt">Allow adoption:</string>
-
-    <string name="label_explain_adopt">(What\'s this?)</string>
+        <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
+        <string name="label_explain_adopt">(What\'s this?)</string>
     <string name="label_nickname">Nickname:</string>
     <string name="label_pin">Group PIN:</string>
     <string name="label_status">Status:</string>
-    <string name="label_share_url">Share ID/URL:</string>
+        <string name="label_status_none">Location sharing inactive</string>
+        <string name="label_status_wait">Waiting for initial GNSS fix…</string>
+        <string name="label_status_coarse">Waiting for high accuracy fix…</string>
+        <string name="label_status_ok">Location sharing active!</string>
+        <string name="label_status_disconnected">Unable to reach backend server</string>
 
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
@@ -43,29 +38,6 @@
     <string name="link_type_group_host">Group share (host)</string>
     <string name="link_type_group_member">Group share (member)</string>
 
-    <string name="sel_mode_opt_alone">Share my own location only</string>
-    <string name="sel_mode_opt_create_group">Create a group share</string>
-    <string name="sel_mode_opt_join_group">Join a group share</string>
-
-    <string name="proxy_mode_default">System default</string>
-    <string name="proxy_mode_none">Do not proxy</string>
-    <string name="proxy_mode_http">HTTP</string>
-    <string name="proxy_mode_socks">SOCKS 4/5</string>
-
-    <string name="tls_validation_all">Always validate certificates (recommended)</string>
-    <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
-    <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
-
-    <string name="sel_unit_opt_minutes">minute(s)</string>
-    <string name="sel_unit_opt_hours">hour(s)</string>
-    <string name="sel_unit_opt_days">day(s)</string>
-
-    <string name="label_status_none">Location sharing inactive</string>
-    <string name="label_status_wait">Waiting for initial GNSS fix…</string>
-    <string name="label_status_coarse">Waiting for high accuracy fix…</string>
-    <string name="label_status_ok">Location sharing active!</string>
-    <string name="label_status_disconnected">Unable to reach backend server</string>
-
     <string name="label_pin_head">YOUR GROUP PIN:</string>
     <string name="label_pin_help">Share this PIN with the others in your group to let them join your location sharing group</string>
 
@@ -73,6 +45,7 @@
     <string name="explain_adopt_body">Hauk allows you to create location sharing sessions for yourself as well as for a group of people. If someone creates a group share, they get a group code that others can use to join the sharing session.\n\nHowever, the person creating the group share also gets the option to add an already existing location share into their group. This process is called adoption.\n\nYou can decide whether or not you want to allow others to incorporate your location share into their group share by checking this checkbox.\n\nIf you enable this option and share your location to a group of friends, and someone else also wants to share their location, they can create a group share and add you to their map, so both of you appear on the same shared location map. This is useful if you are e.g. driving and cannot use your phone, as adoption of your share by others requires no interaction on your part.</string>
     <string name="adopt_title">Adopt an existing share</string>
     <string name="adopt_body">You can adopt an existing individual location share to incorporate it in this group share. Please paste the URL or share ID of the share you wish to adopt (e.g. %s?XXXX-XXXX) and assign a nickname to this share.</string>
+    <string name="label_share_url">Share ID/URL:</string>
 
     <string name="create_link_title">Create new sharing link</string>
     <string name="create_link_body">You can create several links to access your shared location. Each link can be stopped individually, allowing fine-grained control over who can see your location at any time.\n\nAny additional links you create this way will be single-user shares that show your location only.</string>
@@ -100,19 +73,18 @@
     <string name="progress_new_link_body">Creating new sharing link…</string>
 
     <string name="err_client">Invalid settings</string>
+        <string name="err_malformed_url">The server URL you entered is invalid.</string>
+        <string name="err_missing_perms">Location permission is required to use this app.</string>
+        <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
     <string name="err_connect">Connection error</string>
+        <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
+        <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
     <string name="err_server">Server error</string>
-    <string name="err_malformed_url">The server URL you entered is invalid.</string>
-    <string name="err_missing_perms">Location permission is required to use this app.</string>
-    <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
-    <string name="err_empty">The server returned an empty response.</string>
-    <string name="err_response_code">Received HTTP %s from server!</string>
-    <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
-    <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
-
+        <string name="err_empty">The server returned an empty response.</string>
+        <string name="err_response_code">Received HTTP %s from server!</string>
     <string name="err_outdated">Server is out of date</string>
-    <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
-    <string name="err_ver_e2e">The server does not support end-to-end encryption. End-to-end encryption is supported in version %s and above; the server is currently running version %s. Your share will be created without end-to-end encryption to maintain compatibility.</string>
+        <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
+        <string name="err_ver_e2e">The server does not support end-to-end encryption. End-to-end encryption is supported in version %s and above; the server is currently running version %s. Your share will be created without end-to-end encryption to maintain compatibility.</string>
 
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
@@ -141,13 +113,34 @@
     <string name="authorize_body">Hauk received and blocked an attempt to create a new location sharing session from a broadcast source which identified itself as</string>
     <string name="authorize_question">Do you wish to allow sessions to be created from broadcasts with this identification in the future?</string>
 
+    <!-- Preferences menu. -->
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="header_connection">Connection</string>
+    <!-- Connection preferences -->
+    <string name="prefs_header_connection">Connection</string>
     <string name="password_mask">Tap to edit</string>
-
-    <string name="chk_use_e2e">Enable end-to-end encryption</string>
-    <string name="chk_dont_use_e2e">Disable end-to-end encryption</string>
-    <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
+    <string name="pref_cryptServer_title">Server URL</string>
+    <string name="pref_cryptServer_hint" translatable="false">https://example.com/</string>
+    <string name="pref_cryptUsername_title">Username</string>
+    <string name="pref_cryptUsername_hint">&lt;optional&gt;</string>
+    <string name="pref_cryptPassword_title">Password</string>
+    <string name="pref_interval_title">Update interval (seconds)</string>
+    <string name="pref_requestLink_title">Preferred link ID</string>
+    <string name="pref_requestLink_hint">&lt;randomly generated&gt;</string>
+    <string name="pref_enableE2E_title">Password protect share</string>
+        <string name="pref_enableE2E_on">Enable end-to-end encryption</string>
+        <string name="pref_enableE2E_off">Disable end-to-end encryption</string>
+    <string name="pref_e2ePassword_title">Encryption password</string>
+    <string name="pref_proxyType_title">Proxy</string>
+        <string name="proxy_mode_default">System default</string>
+        <string name="proxy_mode_none">Do not proxy</string>
+        <string name="proxy_mode_http">HTTP</string>
+        <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="pref_proxyHost_title">Proxy hostname</string>
+    <string name="pref_proxyPort_title">Proxy port</string>
+    <string name="pref_connectTimeout_title">Connection timeout (seconds)</string>
+    <string name="pref_tlsCertValidation_title">HTTPS certificate validation</string>
+        <string name="tls_validation_all">Always validate certificates (recommended)</string>
+        <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
+        <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
 </resources>

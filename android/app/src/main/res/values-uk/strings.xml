@@ -28,10 +28,10 @@
     <string name="label_explain_adopt">(Що це\?)</string>
     <string name="notify_title">Шарінг місцеположення активний</string>
     <string name="label_heading">Ділимося місцеположенням за допомогою відкритого ПЗ</string>
-    <string name="label_server">URL сервера</string>
-    <string name="label_password">Пароль</string>
+    <string name="pref_cryptServer_title">URL сервера</string>
+    <string name="pref_cryptPassword_title">Пароль</string>
     <string name="label_duration">Час життя шари:</string>
-    <string name="label_interval">Інтервал поновлення (сек):</string>
+    <string name="pref_interval_title">Інтервал поновлення (сек):</string>
     <string name="label_mode">Режим шари:</string>
     <string name="progress_adopt_body">Додавання %s…</string>
     <string name="err_connect">Помилка підключення</string>

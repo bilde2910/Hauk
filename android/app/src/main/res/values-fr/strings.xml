@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_server">URL du serveur</string>
+    <string name="pref_cryptServer_title">URL du serveur</string>
     <string name="label_duration">Durée du partage :</string>
-    <string name="label_interval">Intervalle de mise à jour (s) :</string>
+    <string name="pref_interval_title">Intervalle de mise à jour (s) :</string>
     <string name="label_mode">Mode de partage :</string>
     <string name="label_explain_adopt">(Qu\'est-ce que c\'est\?)</string>
     <string name="label_nickname">Surnom :</string>
@@ -26,7 +26,7 @@
     <string name="label_pin_head">VOTRE PIN DE GROUPE :</string>
     <string name="explain_adopt_title">Partager l\'ajout</string>
     <string name="label_heading">Logiciel libre de partage de localisation</string>
-    <string name="label_password">Mot de passe</string>
+    <string name="pref_cryptPassword_title">Mot de passe</string>
     <string name="btn_stop">Arrêter le partage [%s]</string>
     <string name="label_heading_links">Liens actuellement actifs</string>
     <string name="label_status_ok">Partage de localisation actif!</string>

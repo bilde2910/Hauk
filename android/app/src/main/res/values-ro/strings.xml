@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Setări</string>
-    <string name="label_server">Adresă server</string>
-    <string name="label_username">Nume utilizator</string>
-    <string name="label_username_hint">&lt;opțional&gt;</string>
-    <string name="label_password">Parolă</string>
-    <string name="label_interval">Interval actualizare (secunde)</string>
-    <string name="label_custom_id">ID preferat adresă</string>
-    <string name="label_e2e_password">Parolă criptare</string>
+    <string name="pref_cryptServer_title">Adresă server</string>
+    <string name="pref_cryptUsername_title">Nume utilizator</string>
+    <string name="pref_cryptUsername_hint">&lt;opțional&gt;</string>
+    <string name="pref_cryptPassword_title">Parolă</string>
+    <string name="pref_interval_title">Interval actualizare (secunde)</string>
+    <string name="pref_requestLink_title">ID preferat adresă</string>
+    <string name="pref_e2ePassword_title">Parolă criptare</string>
     <string name="label_mode">Mod partajare:</string>
     <string name="label_allow_adopt">Permite adopția:</string>
     <string name="label_explain_adopt">(Ce este aceasta\?)</string>
@@ -77,17 +77,17 @@
     <string name="share_via">Partajează adresa Hauk prin</string>
     <string name="share_subject">Urmărește-mi locația prin Hauk!</string>
     <string name="title_activity_settings">Setări</string>
-    <string name="header_connection">Conexiune</string>
+    <string name="prefs_header_connection">Conexiune</string>
     <string name="password_mask">Atingeți pentru a edita</string>
     <string name="chk_allow_adopt">Permite altora să adauge partajarea mea la o partajare în grup</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="authorize_header">Cerere de autorizare difuzare</string>
     <string name="authorize_body">Hauk a primit și blocat o încercare de a crea o nouă sesiune de partajare a locației de la o sursa de difuzare care s-a identificat ca</string>
     <string name="authorize_question">Doriți să permiteți crearea de sesiuni de la difuzări cu acest identificator și pe viitor\?</string>
-    <string name="chk_use_e2e">Activare criptare de la un capăt la altul</string>
-    <string name="chk_dont_use_e2e">Dezactivare criptarea de la un capăt la altul</string>
+    <string name="pref_enableE2E_on">Activare criptare de la un capăt la altul</string>
+    <string name="pref_enableE2E_off">Dezactivare criptarea de la un capăt la altul</string>
     <string name="label_duration">Durată partajare:</string>
-    <string name="label_custom_id_hint">&lt;generat aleator&gt;</string>
+    <string name="pref_requestLink_hint">&lt;generat aleator&gt;</string>
     <string name="label_status">Stare:</string>
     <string name="btn_link">Creează o nouă adresă de urmărire</string>
     <string name="label_heading_links">Adrese active acum</string>
@@ -109,7 +109,7 @@
 \nEste recomandat să vă asigurați că Hauk este în lista de excepții de la economisirea bateriei astfel încât aplicația să nu se oprească din funcționare în mod neașteptat. 
 \n 
 \nAcest mesaj nu se va mai afișa.</string>
-    <string name="label_use_e2e">Protejează partajarea cu parolă</string>
+    <string name="pref_enableE2E_title">Protejează partajarea cu parolă</string>
     <string name="label_pin_help">Partajați acest PIN cu ceilalți din grup pentru a le permite și lor să participe la partajare</string>
     <string name="explain_adopt_body">Hauk permite să vă creați sesiuni de partajare a locației atât pentru dumneavoastră cât și pentru un grup de persoane. Dacă cineva creează o partajare în grup, va primii un cod al grupului pe care alte persoane îl pot folosi pentru a se alătura sesiunii de partajare.
 \n
@@ -129,12 +129,12 @@
     <string name="proxy_mode_http">HTTP</string>
     <string name="proxy_mode_none">Fără proxy</string>
     <string name="proxy_mode_default">Implicit sistem</string>
-    <string name="label_proxy_port">Port proxy</string>
-    <string name="label_proxy_host">Gazdă proxy</string>
-    <string name="label_proxy_type">Proxy</string>
+    <string name="pref_proxyPort_title">Port proxy</string>
+    <string name="pref_proxyHost_title">Gazdă proxy</string>
+    <string name="pref_proxyType_title">Proxy</string>
     <string name="tls_validation_none_for_onion">Dezactivează validarea lanțului de încredere și a numelui de gazdă pentru adresele .onion (nu este recomandat)</string>
     <string name="tls_validation_no_anchor_onion">Dezactivează validarea lanțului de încredere pentru adresele .onion (nu este recomandat)</string>
     <string name="tls_validation_all">Validează mereu certificatele (recomandat)</string>
-    <string name="label_certificate_validation">Validare certificat HTTPS</string>
-    <string name="label_connect_timeout">Expirare conexiune (secunde)</string>
+    <string name="pref_tlsCertValidation_title">Validare certificat HTTPS</string>
+    <string name="pref_connectTimeout_title">Expirare conexiune (secunde)</string>
 </resources>

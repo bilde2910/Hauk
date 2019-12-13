@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_password">Passord</string>
+    <string name="pref_cryptPassword_title">Passord</string>
     <string name="label_duration">Varighet:</string>
     <string name="label_heading">Åpen løsning for posisjonsdeling</string>
     <string name="label_allow_adopt">Tillat adopsjon:</string>
@@ -51,8 +51,8 @@
     <string name="err_missing_perms">Tilgang til stedstjenester kreves for å bruke denne appen.</string>
     <string name="err_empty">Serveren returnerte en tom respons.</string>
     <string name="err_response_code">Mottok HTTP %s fra serveren!</string>
-    <string name="label_server">Serveradresse</string>
-    <string name="label_interval">Intervall (sekunder)</string>
+    <string name="pref_cryptServer_title">Serveradresse</string>
+    <string name="pref_interval_title">Intervall (sekunder)</string>
     <string name="label_mode">Delingsmodus:</string>
     <string name="chk_allow_adopt">La andre legge meg til i en delingsgruppe når jeg deler posisjonen min</string>
     <string name="btn_link">Lag en ny delingslink</string>
@@ -108,18 +108,18 @@
     <string name="manufacturer_xiaomi">Xiaomi</string>
     <string name="btn_show_settings">Åpne innstillinger</string>
     <string name="btn_dismiss">Lukk</string>
-    <string name="label_custom_id_hint">&lt;tilfeldig generert&gt;</string>
-    <string name="label_custom_id">Foretrukket link-ID</string>
-    <string name="label_username_hint">&lt;valgfritt&gt;</string>
-    <string name="label_username">Brukernavn</string>
+    <string name="pref_requestLink_hint">&lt;tilfeldig generert&gt;</string>
+    <string name="pref_requestLink_title">Foretrukket link-ID</string>
+    <string name="pref_cryptUsername_hint">&lt;valgfritt&gt;</string>
+    <string name="pref_cryptUsername_title">Brukernavn</string>
     <string name="err_ver_e2e">Serveren støtter ikke ende-til-ende-kryptering. Ende-til-ende-kryptering støttes i versjon %s og høyere; serveren kjører nå versjon %s. Delingen din vil bli opprettet uten ende-til-ende-kryptering for å beholde kompatibilitet.</string>
-    <string name="label_e2e_password">Krypteringspassord</string>
-    <string name="chk_use_e2e">Aktiver ende-til-ende-kryptering</string>
-    <string name="label_use_e2e">Krev passord for deling</string>
+    <string name="pref_e2ePassword_title">Krypteringspassord</string>
+    <string name="pref_enableE2E_on">Aktiver ende-til-ende-kryptering</string>
+    <string name="pref_enableE2E_title">Krev passord for deling</string>
     <string name="label_status_disconnected">Serveren kan ikke nås akkurat nå</string>
-    <string name="chk_dont_use_e2e">Deaktiver ende-til-ende-kryptering</string>
+    <string name="pref_enableE2E_off">Deaktiver ende-til-ende-kryptering</string>
     <string name="password_mask">Trykk for å endre</string>
-    <string name="header_connection">Tilkobling</string>
+    <string name="prefs_header_connection">Tilkobling</string>
     <string name="title_activity_settings">Innstillinger</string>
     <string name="action_settings">Innstillinger</string>
     <string name="err_proxy_failure">En feil oppstod under oppslag av vertsnavnet til den konfigurerte proxyen: %s</string>
@@ -129,12 +129,12 @@
     <string name="proxy_mode_http">HTTP</string>
     <string name="proxy_mode_none">Ikke bruk proxy</string>
     <string name="proxy_mode_default">Bruk standard for systemet</string>
-    <string name="label_proxy_port">Proxy-port</string>
-    <string name="label_proxy_host">Proxy-vertsnavn</string>
-    <string name="label_proxy_type">Proxy</string>
+    <string name="pref_proxyPort_title">Proxy-port</string>
+    <string name="pref_proxyHost_title">Proxy-vertsnavn</string>
+    <string name="pref_proxyType_title">Proxy</string>
     <string name="tls_validation_none_for_onion">Deaktiver sertifikatkjede- og vertsnavnvalidering for .onion-verter (ikke anbefalt)</string>
     <string name="tls_validation_no_anchor_onion">Deaktiver sertifikatkjedevalidering for .onion-verter (ikke anbefalt)</string>
     <string name="tls_validation_all">Alltid valider sertifikater (anbefalt)</string>
-    <string name="label_certificate_validation">HTTPS-sertifikatvalidering</string>
-    <string name="label_connect_timeout">Tidsavbrudd for oppkobling (sekunder)</string>
+    <string name="pref_tlsCertValidation_title">HTTPS-sertifikatvalidering</string>
+    <string name="pref_connectTimeout_title">Tidsavbrudd for oppkobling (sekunder)</string>
 </resources>

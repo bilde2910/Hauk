@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_username">Nom d\'usuari</string>
-    <string name="label_username_hint">&lt;opcional&gt;</string>
-    <string name="label_password">Password:</string>
+    <string name="pref_cryptUsername_title">Nom d\'usuari</string>
+    <string name="pref_cryptUsername_hint">&lt;opcional&gt;</string>
+    <string name="pref_cryptPassword_title">Password:</string>
     <string name="label_duration">Durada de la compartició:</string>
-    <string name="label_interval">Interval d\'actualització (s):</string>
-    <string name="chk_use_e2e">Activa el xifrat d\'extrem a extrem</string>
-    <string name="label_e2e_password">Clau de xifrat</string>
+    <string name="pref_interval_title">Interval d\'actualització (s):</string>
+    <string name="pref_enableE2E_on">Activa el xifrat d\'extrem a extrem</string>
+    <string name="pref_e2ePassword_title">Clau de xifrat</string>
     <string name="label_mode">Sistema de compartició:</string>
     <string name="label_allow_adopt">Permetre l\'adopció:</string>
     <string name="label_explain_adopt">(Què és això\?)</string>
     <string name="label_nickname">Nom d\'usuari:</string>
-    <string name="label_use_e2e">Xifra la compartició</string>
+    <string name="pref_enableE2E_title">Xifra la compartició</string>
     <string name="label_pin">PIN del grup:</string>
     <string name="label_status">Estat:</string>
     <string name="label_share_url">Comparteix ID/URL:</string>
@@ -79,9 +79,9 @@
     <string name="authorize_body">"Hauk ha rebut i blocat un intent de crear una nova sessió de localització  des d\'una font de transmissió que s\'ha identificat a si mateixa com a"</string>
     <string name="authorize_question">Voleu permetre que en el futur es crein sessions a partir d’emissions amb aquesta identificació\?</string>
     <string name="label_heading">Ús compartit de la ubicació de codi obert</string>
-    <string name="label_server">URL del servidor</string>
-    <string name="label_custom_id">Identificador d\'enllaç preferit</string>
-    <string name="label_custom_id_hint">&lt;generat aleatòriament&gt;</string>
+    <string name="pref_cryptServer_title">URL del servidor</string>
+    <string name="pref_requestLink_title">Identificador d\'enllaç preferit</string>
+    <string name="pref_requestLink_hint">&lt;generat aleatòriament&gt;</string>
     <string name="chk_allow_adopt">Permetre als altres d\'afegir la meva compartició en un grup compartit</string>
     <string name="btn_stop">Atura la compartició [%s]</string>
     <string name="btn_share_short">Comparteix</string>

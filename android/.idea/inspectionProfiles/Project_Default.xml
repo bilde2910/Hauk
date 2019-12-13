@@ -20,6 +20,7 @@
     <inspection_tool class="AndroidLintGoogleAppIndexingWarning" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="AndroidLintLogConditional" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintMangledCRLF" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintMissingTranslation" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="AndroidLintNegativeMargin" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintSelectableText" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintUnusedIds" enabled="true" level="WARNING" enabled_by_default="true" />
