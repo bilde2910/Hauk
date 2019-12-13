@@ -19,7 +19,7 @@ import info.varden.hauk.global.ui.toast.SessionInitiationResponseHandlerImpl;
 import info.varden.hauk.global.ui.toast.ShareListenerImpl;
 import info.varden.hauk.http.ConnectionParameters;
 import info.varden.hauk.http.SessionInitiationPacket;
-import info.varden.hauk.http.proxy.TypeIndexResolver;
+import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.manager.SessionManager;
 import info.varden.hauk.struct.AdoptabilityPreference;
 import info.varden.hauk.system.LocationPermissionsNotGrantedException;
@@ -189,7 +189,7 @@ public final class Receiver extends BroadcastReceiver {
 
         int timeout = fallback.get(Constants.PREF_CONNECTION_TIMEOUT) * (int) TimeUtils.MILLIS_PER_SECOND;
         ConnectionParameters connParams;
-        Proxy.Type proxyType = TypeIndexResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
+        Proxy.Type proxyType = ProxyTypeResolver.fromIndex(fallback.get(Constants.PREF_PROXY_TYPE)).getProxyType();
         if (proxyType == Proxy.Type.DIRECT) {
             connParams = new ConnectionParameters(Proxy.NO_PROXY.type(), Proxy.NO_PROXY.address(), timeout);
         } else if (proxyType != null) {

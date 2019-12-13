@@ -1,4 +1,4 @@
-package info.varden.hauk.http.proxy;
+package info.varden.hauk.system.preferences.indexresolver;
 
 import java.net.Proxy;
 
@@ -8,7 +8,7 @@ import java.net.Proxy;
  *
  * @author Marius Lindvall
  */
-public enum TypeIndexResolver {
+public enum ProxyTypeResolver {
     SYSTEM_DEFAULT(0, null),
     DIRECT(1, Proxy.Type.DIRECT),
     HTTP(2, Proxy.Type.HTTP),
@@ -24,7 +24,7 @@ public enum TypeIndexResolver {
      */
     private final Proxy.Type type;
 
-    TypeIndexResolver(int index, Proxy.Type type) {
+    ProxyTypeResolver(int index, Proxy.Type type) {
         this.index = index;
         this.type = type;
     }
@@ -36,16 +36,16 @@ public enum TypeIndexResolver {
      * @return A proxy type enum member.
      * @throws EnumConstantNotPresentException if there is no matching type for the given index.
      */
-    public static TypeIndexResolver fromIndex(int index) throws EnumConstantNotPresentException {
-        for (TypeIndexResolver type : TypeIndexResolver.values()) {
+    public static ProxyTypeResolver fromIndex(int index) throws EnumConstantNotPresentException {
+        for (ProxyTypeResolver type : ProxyTypeResolver.values()) {
             if (type.getIndex() == index) return type;
         }
-        throw new EnumConstantNotPresentException(TypeIndexResolver.class, "index=" + index);
+        throw new EnumConstantNotPresentException(ProxyTypeResolver.class, "index=" + index);
     }
 
     @Override
     public String toString() {
-        return "TypeIndexResolver{index=" + this.index + ",type=" + this.type + "}";
+        return "ProxyTypeResolver{index=" + this.index + ",type=" + this.type + "}";
     }
 
     public int getIndex() {

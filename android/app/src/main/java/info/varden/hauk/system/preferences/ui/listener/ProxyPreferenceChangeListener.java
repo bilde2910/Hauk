@@ -2,7 +2,7 @@ package info.varden.hauk.system.preferences.ui.listener;
 
 import androidx.preference.Preference;
 
-import info.varden.hauk.http.proxy.TypeIndexResolver;
+import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 
 /**
  * Value change listener for the proxy type selection preference that disables the other proxy
@@ -20,7 +20,7 @@ public final class ProxyPreferenceChangeListener implements Preference.OnPrefere
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         int choice = Integer.valueOf((String) newValue);
-        boolean enable = choice != TypeIndexResolver.SYSTEM_DEFAULT.getIndex() && choice != TypeIndexResolver.DIRECT.getIndex();
+        boolean enable = choice != ProxyTypeResolver.SYSTEM_DEFAULT.getIndex() && choice != ProxyTypeResolver.DIRECT.getIndex();
         for (Preference pref : this.prefsToDisable) {
             pref.setEnabled(enable);
         }

@@ -1,5 +1,6 @@
 package info.varden.hauk;
 
+import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.system.preferences.Preference;
 
@@ -25,7 +26,7 @@ public enum Constants {
 
     // Keys for use in stored server preferences.
     public static final Preference<String> PREF_SERVER_ENCRYPTED = new Preference.EncryptedString("cryptServer", "");
-    public static final Preference<Integer> PREF_PROXY_TYPE = new Preference.Integer("proxyType", 0);
+    public static final Preference<Integer> PREF_PROXY_TYPE = new Preference.Integer("proxyType", ProxyTypeResolver.SYSTEM_DEFAULT.getIndex());
     public static final Preference<String> PREF_PROXY_HOST = new Preference.String("proxyHost", "localhost");
     public static final Preference<Integer> PREF_PROXY_PORT = new Preference.Integer("proxyPort", 9050);
     public static final Preference<Integer> PREF_CONNECTION_TIMEOUT = new Preference.Integer("connectTimeout", 10);
