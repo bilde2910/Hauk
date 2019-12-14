@@ -15,9 +15,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -28,6 +30,7 @@ import info.varden.hauk.http.security.CertificateValidationPolicy;
 import info.varden.hauk.http.security.InsecureHostnameVerifier;
 import info.varden.hauk.http.security.InsecureTrustManager;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.utils.Log;
 
 /**
  * An asynchronous task that HTTP-POSTs data to a given URL with the given POST fields.
@@ -35,11 +38,6 @@ import info.varden.hauk.struct.Version;
  * @author Marius Lindvall
  */
 public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String, ConnectionThread.Response> {
-    /**
-     * The maximum time to wait for the request to complete before the request times out.
-     */
-    private static final int TIMEOUT = 10000;
-
     /**
      * A callback that is called after the request is completed. Contains received data, or errors,
      * if applicable.
@@ -68,8 +66,10 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
     @Override
     @SuppressWarnings("HardCodedStringLiteral")
     protected final Response doInBackground(Request... params) {
+        int seq = new Random().nextInt();
         try {
             Request req = params[0];
+            Log.v("Assigning seq=%s for request %s", seq, req);
 
             // Configure and open the connection.
             Proxy proxy = req.getParameters().getProxy();
@@ -78,14 +78,17 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             if (url.getHost().endsWith(".onion") && url.getProtocol().equals("https")) {
                 // Check if TLS validation should be disabled for .onion addresses over HTTPS.
                 if (req.getParameters().getTLSPolicy().equals(CertificateValidationPolicy.DISABLE_TRUST_ANCHOR_ONION)) {
+                    Log.v("[seq:%s] Setting insecure SSL socket factory for connection to comply with TLS policy", seq);
                     ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
                 } else if (req.getParameters().getTLSPolicy().equals(CertificateValidationPolicy.DISABLE_ALL_ONION)) {
+                    Log.v("[seq:%s] Setting insecure SSL socket factory and disabling hostname validation for connection to comply with TLS policy", seq);
                     ((HttpsURLConnection) client).setSSLSocketFactory(InsecureTrustManager.getSocketFactory());
                     ((HttpsURLConnection) client).setHostnameVerifier(new InsecureHostnameVerifier());
                 }
             }
 
             // Post the data.
+            Log.v("[seq:%s] Setting connection parameters", seq);
             client.setConnectTimeout(req.getParameters().getTimeout());
             client.setRequestMethod("POST");
             client.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
@@ -94,6 +97,7 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             client.setDoInput(true);
             client.setDoOutput(true);
 
+            Log.v("[seq:%s] Writing data to socket", seq);
             OutputStream os = client.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             writer.write(params[0].getURLEncodedData());
@@ -101,6 +105,7 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             os.close();
 
             int response = client.getResponseCode();
+            Log.v("[seq:%s] Response code for request is %s", seq, response);
             if (response == HttpURLConnection.HTTP_OK) {
                 // The response should be returned as an array of strings where each element of the
                 // array is one line of output. Hauk uses this array as an argument array when
@@ -109,16 +114,20 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
                 ArrayList<String> lines = new ArrayList<>();
                 BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream(), StandardCharsets.UTF_8));
                 while ((line = br.readLine()) != null) {
+                    Log.v("[seq:%s] resp += \"%s\"", seq, line);
                     lines.add(line);
                 }
                 br.close();
+                Log.v("[seq:%s] Returning success response", seq);
                 return new Response(null, lines.toArray(new String[0]), new Version(client.getHeaderField(Constants.HTTP_HEADER_HAUK_VERSION)));
             } else {
                 // Hauk only returns HTTP 200; any other response should be considered an error.
+                Log.v("[seq:%s] Returning HTTP code failure response", seq);
                 return new Response(new ServerException(String.format(params[0].getContext().getString(R.string.err_response_code), String.valueOf(response))), null, null);
             }
         } catch (Exception ex) {
             // If an exception occurred, return no data.
+            Log.v("[seq:%s] Returning exception failure response", ex, seq);
             return new Response(ex, null, null);
         }
     }
@@ -184,6 +193,22 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             }
             return sb.toString();
         }
+
+        @Override
+        public final String toString() {
+            String body;
+            try {
+                body = getURLEncodedData();
+            } catch (UnsupportedEncodingException e) {
+                Log.e("Unsupported encoding used in Request#toString()", e);
+                body = "<exception>";
+            }
+            return "Request{"
+                    + "url=" + this.url
+                    + ",body=" + body
+                    + ",params=" + this.params
+                    + "}";
+        }
     }
 
     /**
@@ -222,6 +247,15 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
          */
         Version getServerVersion() {
             return this.ver;
+        }
+
+        @Override
+        public String toString() {
+            return "Response{"
+                    + "ex=" + this.ex
+                    + ",data=" + Arrays.toString(this.data)
+                    + ",ver=" + this.ver
+                    + "}";
         }
     }
 
