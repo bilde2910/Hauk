@@ -138,4 +138,10 @@
     <string name="pref_tlsCertValidation_title">Validare certificat HTTPS</string>
     <string name="pref_connectTimeout_title">Expirare conexiune (secunde)</string>
     <string name="err_server_not_configured">Nu ați configurat încă un server. Vă rugăm să introduceți detaliile pentru serverul dumneavoastră în setări și să reîncercați.</string>
+    <string name="night_mode_never">Niciodată</string>
+    <string name="night_mode_always">Mereu</string>
+    <string name="night_mode_battery">Când economizorul de baterie este activat</string>
+    <string name="night_mode_system">Respectă setările de sistem</string>
+    <string name="prefs_nightMode_title">Mod întunecat</string>
+    <string name="prefs_header_appearance">Interfață</string>
 </resources>
