@@ -137,4 +137,11 @@
     <string name="tls_validation_all">Alltid valider sertifikat (anbefalt)</string>
     <string name="pref_tlsCertValidation_title">HTTPS-sertifikatvalidering</string>
     <string name="pref_connectTimeout_title">Tidsavbrot for oppkopling (sekund)</string>
+    <string name="night_mode_never">Aldri</string>
+    <string name="night_mode_always">Alltid</string>
+    <string name="night_mode_battery">Når batterisparer er på</string>
+    <string name="night_mode_system">Følg systeminnstillingar</string>
+    <string name="prefs_nightMode_title">Nattmodus</string>
+    <string name="prefs_header_appearance">Utsjåande</string>
+    <string name="err_server_not_configured">Du har ikkje stilt inn ein servar endå. Skriv inn informasjon om servaren din i innstillingar og prøv igjen.</string>
 </resources>
