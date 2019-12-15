@@ -12,5 +12,17 @@
     "gnss_signal_body": "Verzender is aan het wachten op GPS signaal",
     "gnss_signal_head": "Wacht alstublieft",
     "expired_body": "The locatiedeling die u probeerde te bekijken kon niet gevonden worden op de server. Als deze link eerder wel werkte, dan zou de sessie verlopen kunnen zijn.",
-    "expired_head": "Locatie verlopen"
+    "expired_head": "Locatie verlopen",
+    "btn_decrypt": "Ontgrendelen",
+    "btn_cancel": "Annuleren",
+    "last_update_days": "{{time}}d geleden",
+    "last_update_hours": "{{time}}u geleden",
+    "last_update_minutes": "{{time}}m geleden",
+    "last_update_seconds": "{{time}}s geleden",
+    "e2e_unsupported": "Deze locatiedeling is met wachtwoord beveiligd. Uw browser mist functionaliteit vereist om deze locatiedelingen te openen. Probeer het alstublieft met een andere browser.",
+    "e2e_unavailable_secure": "Deze locatiedeling is met wachtwoord beveiligd. U kunt de locatiedeling niet ontgrendelen omdat u geen HTTPS gebruikt. Zorg ervoor dat u met HTTPS verbindt, en probeer het dan opnieuw.",
+    "e2e_incorrect": "Het ingevoerde wachtwoord is incorrect. Probeer het alstublieft nog eens.",
+    "e2e_password_prompt": "Deze deling is met wachtwoord beveiligd. Vul het wachtwoord in om toegang te krijgen tot de deling.",
+    "e2e_placeholder": "Voer wachtwoord in",
+    "e2e_title": "Beveiligd met wachtwoord"
 }
