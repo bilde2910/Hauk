@@ -7,7 +7,7 @@
     <string name="pref_cryptServer_title">Server URL</string>
     <string name="pref_cryptPassword_title">Wachtwoord</string>
     <string name="label_duration">Deelduratie:</string>
-    <string name="pref_interval_title">Updatefrequentie (s):</string>
+    <string name="pref_interval_title">Updatefrequentie (seconden)</string>
     <string name="label_mode">Deelmodus:</string>
     <string name="label_explain_adopt">(Wat is dit\?)</string>
     <string name="label_nickname">Bijnaam:</string>
@@ -64,7 +64,7 @@
     <string name="err_outdated">Server is verouderd</string>
     <string name="ok_title">Verbinding gemaakt</string>
     <string name="ended_title">Delen beëindigd</string>
-    <string name="ended_message">Uw locatiedeling is verlopen.</string>
+    <string name="ended_message">Uw locatiedeling is beëindigd.</string>
     <string name="adopted_title">Locatiedeling geadopteerd</string>
     <string name="adopted_body">%s is toegevoegd aan uw groepsdeling!</string>
     <string name="resume_title">Sessie hervatten</string>
@@ -108,4 +108,40 @@
 \nHet wordt aanbevolen dat u ervoor zorgt dat Hauk is vrijgesteld van batterijbesparingen om ervoor te zorgen dat de app niet onverwachts stopt met werken.
 \n
 \nDit bericht zal niet opnieuw getoond worden.</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="night_mode_never">Nooit</string>
+    <string name="night_mode_always">Altijd</string>
+    <string name="night_mode_battery">Wanneer batterijbesparing-modus ingeschakeld is</string>
+    <string name="night_mode_system">Volg systeemvoorkeur</string>
+    <string name="prefs_nightMode_title">Nacht-modus</string>
+    <string name="prefs_header_appearance">Uiterlijk</string>
+    <string name="tls_validation_none_for_onion">Trust anchor en hostnaam validatie voor .onion hosts uitschakelen (niet aanbevolen)</string>
+    <string name="tls_validation_no_anchor_onion">Trust anchor validatie voor .onion hosts uitschakelen (niet aanbevolen)</string>
+    <string name="tls_validation_all">Certificaten altijd valideren (aanbevolen)</string>
+    <string name="pref_tlsCertValidation_title">HTTPS certificaat validatie</string>
+    <string name="pref_connectTimeout_title">Connectie time-out (seconden)</string>
+    <string name="pref_proxyPort_title">Proxy poort</string>
+    <string name="pref_proxyHost_title">Proxy hostnaam</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Geen proxy gebruiken</string>
+    <string name="proxy_mode_default">Systeem-standaard</string>
+    <string name="pref_proxyType_title">Proxy</string>
+    <string name="pref_e2ePassword_title">Encryptie wachtwoord</string>
+    <string name="pref_enableE2E_off">End-to-end encryptie uitschakelen</string>
+    <string name="pref_enableE2E_on">End-to-end encryptie inschakelen</string>
+    <string name="pref_enableE2E_title">Deling met wachtwoord beveiligen</string>
+    <string name="pref_requestLink_hint">&lt;willekeurig gegenereerd&gt;</string>
+    <string name="pref_requestLink_title">Gewenste link ID</string>
+    <string name="pref_cryptUsername_hint">&lt;optioneel&gt;</string>
+    <string name="pref_cryptUsername_title">Gebruikersnaam</string>
+    <string name="password_mask">Klik om te bewerken</string>
+    <string name="prefs_header_connection">Verbindingen</string>
+    <string name="err_ver_e2e">De server ondersteunt geen end-to-end encryptie. End-to-end encryptie is ondersteund in versie %s en verder; de server draait momenteel versie %s. Uw locatiedeling zal gecreëerd worden zonder end-to-end encryptie om compatibiliteit te behouden.</string>
+    <string name="err_proxy_host_resolution">Het IP-adres van de ingestelde proxy (%s) Kon niet gevonden worden!</string>
+    <string name="err_proxy_failure">Er is een fout opgetreden bij het oplossen van de hostnaam van de ingestelde proxy: %s</string>
+    <string name="err_server_not_configured">U heeft nog geen backend ingesteld. Vul alstublieft de details voor uw backend server in via de instellingen en probeer het opnieuw.</string>
+    <string name="progress_resolving_proxy">Proxy hostnaam oplossen…</string>
+    <string name="label_status_disconnected">Kan de backend-server niet bereiken</string>
+    <string name="action_settings">Instellingen</string>
 </resources>
