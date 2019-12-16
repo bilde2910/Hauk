@@ -239,6 +239,41 @@ public abstract class Preference<T> {
     }
 
     /**
+     * Represents a Float-value preference.
+     */
+    public static final class Float extends Preference<java.lang.Float> {
+        private final java.lang.String key;
+        private final float def;
+
+        public Float(java.lang.String key, float def) {
+            super(key, def, java.lang.Float.class);
+            this.key = key;
+            this.def = def;
+        }
+
+        @Override
+        java.lang.Float get(SharedPreferences prefs) {
+            return prefs.getFloat(this.key, this.def);
+        }
+
+        @Override
+        void set(SharedPreferences.Editor prefs, java.lang.Float value) {
+            prefs.putFloat(this.key, value);
+        }
+
+        @Override
+        boolean isSensitive() {
+            return false;
+        }
+
+        @SuppressWarnings("DuplicateStringLiteralInspection")
+        @Override
+        public java.lang.String toString() {
+            return "Preference<Float>{key=" + this.key + ",default=" + this.def + "}";
+        }
+    }
+
+    /**
      * Represents a Boolean-value preference.
      */
     public static final class Boolean extends Preference<java.lang.Boolean> {

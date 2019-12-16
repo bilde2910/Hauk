@@ -192,12 +192,12 @@ public final class LocationPushService extends Service {
     private void attachToLocationServices() throws SecurityException {
         Log.i("Requesting location updates from device location services"); //NON-NLS
         try {
-            this.locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenCoarse);
+            this.locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.share.getSession().getIntervalMillis(), this.share.getSession().getMinimumDistance(), this.listenCoarse);
         } catch (IllegalArgumentException ex) {
             Log.w("Coarse location provider does not exist!", ex); //NON-NLS
             this.listenCoarse = null;
         }
-        this.locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.share.getSession().getIntervalMillis(), 0.0F, this.listenFine);
+        this.locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.share.getSession().getIntervalMillis(), this.share.getSession().getMinimumDistance(), this.listenFine);
     }
 
     /**

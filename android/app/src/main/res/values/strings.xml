@@ -130,6 +130,7 @@
     <string name="pref_cryptUsername_hint">&lt;optional&gt;</string>
     <string name="pref_cryptPassword_title">Password</string>
     <string name="pref_interval_title">Update interval (seconds)</string>
+    <string name="pref_minUpdateDistance_title">Minimum distance between updates (meters)</string>
     <string name="pref_requestLink_title">Preferred link ID</string>
     <string name="pref_requestLink_hint">&lt;randomly generated&gt;</string>
     <string name="pref_enableE2E_title">Password protect share</string>

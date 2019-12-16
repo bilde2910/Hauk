@@ -155,7 +155,16 @@ public class SessionInitiationPacket extends Packet {
             }
 
             // Create a share and pass it upstream.
-            Session session = new Session(this.params.getServerURL(), this.params.getConnectionParameters(), backendVersion, sessionID, this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(), this.params.getInterval(), e2eParams);
+            Session session = new Session(
+                    this.params.getServerURL(),
+                    this.params.getConnectionParameters(),
+                    backendVersion,
+                    sessionID,
+                    this.params.getDuration() * TimeUtils.MILLIS_PER_SECOND + System.currentTimeMillis(),
+                    this.params.getInterval(),
+                    this.params.getMinimumDistance(),
+                    e2eParams
+            );
             Share share = new Share(session, viewURL, viewID, joinCode, this.mode);
 
             this.handler.onSessionInitiated(share);
@@ -219,6 +228,7 @@ public class SessionInitiationPacket extends Packet {
         private final String password;
         private final int duration;
         private final int interval;
+        private final float minDistance;
         private final String customID;
         private final String e2ePass;
 
@@ -233,13 +243,14 @@ public class SessionInitiationPacket extends Packet {
          * @param duration The duration, in seconds, to run the share for.
          * @param interval The interval, in seconds, between each sent location update.
          */
-        public InitParameters(String server, String username, String password, int duration, int interval, String customID, String e2ePass) {
+        public InitParameters(String server, String username, String password, int duration, int interval, float minDistance, String customID, String e2ePass) {
             this.server = server;
             this.connParams = null;
             this.username = username == null || username.isEmpty() ? null : username;
             this.password = password;
             this.duration = duration;
             this.interval = interval;
+            this.minDistance = minDistance;
             this.customID = customID == null || customID.isEmpty() ? null : customID;
             this.e2ePass = e2ePass == null || e2ePass.isEmpty() ? null : e2ePass;
         }
@@ -271,6 +282,10 @@ public class SessionInitiationPacket extends Packet {
 
         int getInterval() {
             return this.interval;
+        }
+
+        float getMinimumDistance() {
+            return this.minDistance;
         }
 
         @Nullable

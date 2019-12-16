@@ -185,6 +185,7 @@ public final class MainActivity extends AppCompatActivity {
         String password = prefs.get(Constants.PREF_PASSWORD_ENCRYPTED);
         int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
         int interval = prefs.get(Constants.PREF_INTERVAL);
+        float minDistance = prefs.get(Constants.PREF_UPDATE_DISTANCE);
         String customID = prefs.get(Constants.PREF_CUSTOM_ID).trim();
         boolean useE2E = prefs.get(Constants.PREF_ENABLE_E2E);
         String e2ePass = !useE2E ? "" : prefs.get(Constants.PREF_E2E_PASSWORD);
@@ -217,7 +218,7 @@ public final class MainActivity extends AppCompatActivity {
         // The backend takes duration in seconds, so convert the minutes supplied by the user.
         duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
-        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, minDistance, customID, e2ePass);
         new ProxyHostnameResolverImpl(this, this.manager, this.uiResetTask, prefs, new SessionInitiationResponseHandlerImpl(), initParams, mode, allowAdoption, nickname, groupPin).resolve();
     }
 

@@ -44,6 +44,11 @@
             app:title="@string/pref_interval_title"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:key="minUpdateDistance"
+            app:title="@string/pref_minUpdateDistance_title"
+            app:useSimpleSummaryProvider="true" />
+
         <SwitchPreference
             app:key="enableE2E"
             app:title="@string/pref_enableE2E_title"

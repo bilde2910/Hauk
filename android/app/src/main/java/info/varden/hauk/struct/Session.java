@@ -52,17 +52,23 @@ public final class Session implements Serializable {
     private final int interval;
 
     /**
+     * The minimum distance between each location update, in meters.
+     */
+    private final float minDistance;
+
+    /**
      * End-to-end encryption parameters.
      */
     @Nullable
     private final KeyDerivable e2eParams;
 
-    public Session(String serverURL, ConnectionParameters connParams, Version backendVersion, String sessionID, long expiry, int interval, @Nullable KeyDerivable e2eParams) {
+    public Session(String serverURL, ConnectionParameters connParams, Version backendVersion, String sessionID, long expiry, int interval, float minDistance, @Nullable KeyDerivable e2eParams) {
         this.serverURL = serverURL;
         this.backendVersion = backendVersion;
         this.sessionID = sessionID;
         this.expiry = expiry;
         this.interval = interval;
+        this.minDistance = minDistance;
         this.e2eParams = e2eParams;
         this.connParams = connParams;
     }
@@ -150,6 +156,13 @@ public final class Session implements Serializable {
      */
     public long getIntervalMillis() {
         return getIntervalSeconds() * TimeUtils.MILLIS_PER_SECOND;
+    }
+
+    /**
+     * Returns the minimum distance between each location update, in meters.
+     */
+    public float getMinimumDistance() {
+        return this.minDistance;
     }
 
     @Nullable

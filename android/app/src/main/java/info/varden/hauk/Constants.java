@@ -37,6 +37,7 @@ public enum Constants {
     public static final Preference<String> PREF_PASSWORD_ENCRYPTED = new Preference.EncryptedString("cryptPassword", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
+    public static final Preference<Float> PREF_UPDATE_DISTANCE = new Preference.Float("minUpdateDistance", 0.0F);
     public static final Preference<String> PREF_CUSTOM_ID = new Preference.String("requestLink", "");
     public static final Preference<Boolean> PREF_ENABLE_E2E = new Preference.Boolean("enableE2E", false);
     public static final Preference<String> PREF_E2E_PASSWORD = new Preference.EncryptedString("e2ePassword", "");
@@ -82,6 +83,7 @@ public enum Constants {
     public static final String EXTRA_SESSION_CUSTOM_ID = "requestLink";
     public static final String EXTRA_SESSION_E2E_PASSWORD = "e2ePassword";
     public static final String EXTRA_SESSION_INTERVAL = "interval";
+    public static final String EXTRA_SESSION_MIN_DISTANCE = "minDistance";
     public static final String EXTRA_SESSION_ALLOW_ADOPT = "adoptable";
 
     // Content types for intents.

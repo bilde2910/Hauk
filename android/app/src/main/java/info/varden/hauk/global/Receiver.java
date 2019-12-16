@@ -175,6 +175,7 @@ public final class Receiver extends BroadcastReceiver {
         String password = intent.hasExtra(Constants.EXTRA_SESSION_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_PASSWORD) : fallback.get(Constants.PREF_PASSWORD_ENCRYPTED);
         int duration = intent.hasExtra(Constants.EXTRA_SESSION_DURATION) ? intent.getIntExtra(Constants.EXTRA_SESSION_DURATION, 0) : TimeUtils.timeUnitsToSeconds(fallback.get(Constants.PREF_DURATION), fallback.get(Constants.PREF_DURATION_UNIT));
         int interval = intent.hasExtra(Constants.EXTRA_SESSION_INTERVAL) ? intent.getIntExtra(Constants.EXTRA_SESSION_INTERVAL, 0) : fallback.get(Constants.PREF_INTERVAL);
+        float minDistance = intent.hasExtra(Constants.EXTRA_SESSION_MIN_DISTANCE) ? intent.getIntExtra(Constants.EXTRA_SESSION_MIN_DISTANCE, 0) : fallback.get(Constants.PREF_UPDATE_DISTANCE);
         String customID = intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID) ? intent.getStringExtra(Constants.EXTRA_SESSION_CUSTOM_ID) : fallback.get(Constants.PREF_CUSTOM_ID);
 
         String e2ePass = "";
@@ -200,7 +201,7 @@ public final class Receiver extends BroadcastReceiver {
             connParams = new ConnectionParameters(null, null, timeout, tlsPolicy);
         }
 
-        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
+        SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, minDistance, customID, e2ePass);
         initParams.setConnectionParameters(connParams);
         return initParams;
     }

@@ -74,6 +74,9 @@ public final class SettingsActivity extends AppCompatActivity {
             ((EditTextPreference) manager.findPreference(Constants.PREF_INTERVAL.getKey())).setOnBindEditTextListener(
                     new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
             );
+            ((EditTextPreference) manager.findPreference(Constants.PREF_UPDATE_DISTANCE.getKey())).setOnBindEditTextListener(
+                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+            );
             ((EditTextPreference) manager.findPreference(Constants.PREF_CUSTOM_ID.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
                     new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE),
                     new HintBindListener(R.string.pref_requestLink_hint)
