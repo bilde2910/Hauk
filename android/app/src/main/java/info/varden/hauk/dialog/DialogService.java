@@ -135,7 +135,7 @@ public final class DialogService {
      * @param buttons The buttons to display on the dialog.
      * @param builder A dialog builder that builds a View and handles the dialog buttons.
      */
-    public void showDialog(int title, int message, Buttons buttons, CustomDialogBuilder builder) {
+    public void showDialog(int title, int message, Buttons.Two buttons, CustomDialogBuilder builder) {
         showDialog(title, this.ctx.getString(message), buttons, builder);
     }
 
@@ -147,7 +147,7 @@ public final class DialogService {
      * @param buttons The buttons to display on the dialog.
      * @param builder A dialog builder that builds a View and handles the dialog buttons.
      */
-    public void showDialog(int title, String message, Buttons buttons, CustomDialogBuilder builder) {
+    public void showDialog(int title, String message, Buttons.Two buttons, CustomDialogBuilder builder) {
         showDialog(this.ctx.getString(title), message, buttons, builder);
     }
 
@@ -159,7 +159,7 @@ public final class DialogService {
      * @param buttons The buttons to display on the dialog.
      * @param builder A dialog builder that builds a View and handles the dialog buttons.
      */
-    private void showDialog(String title, String message, Buttons buttons, CustomDialogBuilder builder) {
+    private void showDialog(String title, String message, Buttons.Two buttons, CustomDialogBuilder builder) {
         View view = builder.createView(this.ctx);
         if (view != null) {
             TypedValue tv = new TypedValue();
@@ -179,6 +179,64 @@ public final class DialogService {
 
         dlgAlert.setPositiveButton(this.ctx.getString(buttons.getPositiveButton()), new PositiveClickListener(builder));
         dlgAlert.setNegativeButton(this.ctx.getString(buttons.getNegativeButton()), new NegativeClickListener(builder));
+
+        dlgAlert.setCancelable(false);
+        dlgAlert.create().show();
+    }
+
+    /**
+     * Shows a dialog box with a custom rendered View.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string resource representing the body of the dialog box.
+     * @param buttons The buttons to display on the dialog.
+     * @param builder A dialog builder that builds a View and handles the dialog buttons.
+     */
+    public void showDialog(int title, int message, Buttons.Three buttons, CustomDialogBuilder.Three builder) {
+        showDialog(title, this.ctx.getString(message), buttons, builder);
+    }
+
+    /**
+     * Shows a dialog box with a custom rendered View.
+     *
+     * @param title   A string resource representing the title of the dialog box.
+     * @param message A string representing the body of the dialog box.
+     * @param buttons The buttons to display on the dialog.
+     * @param builder A dialog builder that builds a View and handles the dialog buttons.
+     */
+    public void showDialog(int title, String message, Buttons.Three buttons, CustomDialogBuilder.Three builder) {
+        showDialog(this.ctx.getString(title), message, buttons, builder);
+    }
+
+    /**
+     * Shows a dialog box with a custom rendered View.
+     *
+     * @param title   A string representing the title of the dialog box.
+     * @param message A string representing the body of the dialog box.
+     * @param buttons The buttons to display on the dialog.
+     * @param builder A dialog builder that builds a View and handles the dialog buttons.
+     */
+    private void showDialog(String title, String message, Buttons.Three buttons, CustomDialogBuilder.Three builder) {
+        View view = builder.createView(this.ctx);
+        if (view != null) {
+            TypedValue tv = new TypedValue();
+            int padding = 0;
+            if (this.ctx.getTheme().resolveAttribute(R.attr.dialogPreferredPadding, tv, true)) {
+                padding = TypedValue.complexToDimensionPixelSize(tv.data, this.ctx.getResources().getDisplayMetrics());
+            }
+            view.setPadding(padding, padding, padding, 0);
+        }
+
+        Log.d("Showing dialog with title=%s, message=%s, builder=%s, view=%s", title, message, builder, view); //NON-NLS
+
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this.ctx);
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle(title);
+        if (view != null) dlgAlert.setView(view);
+
+        dlgAlert.setPositiveButton(this.ctx.getString(buttons.getPositiveButton()), new PositiveClickListener(builder));
+        dlgAlert.setNegativeButton(this.ctx.getString(buttons.getNegativeButton()), new NegativeClickListener(builder));
+        dlgAlert.setNeutralButton(this.ctx.getString(buttons.getNeutralButton()), new NeutralClickListener(builder));
 
         dlgAlert.setCancelable(false);
         dlgAlert.create().show();
@@ -215,6 +273,24 @@ public final class DialogService {
         public void onClick(DialogInterface dialogInterface, int which) {
             Log.d("Closing dialog, which=%s (positive)", which); //NON-NLS
             this.builder.onPositive();
+        }
+    }
+
+    /**
+     * A click listener for a dialog button that calls the neutral action handler of the given
+     * {@link CustomDialogBuilder} when the button is clicked.
+     */
+    private static final class NeutralClickListener implements DialogInterface.OnClickListener {
+        private final CustomDialogBuilder.Three builder;
+
+        private NeutralClickListener(CustomDialogBuilder.Three builder) {
+            this.builder = builder;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialogInterface, int which) {
+            Log.d("Closing dialog, which=%s (neutral)", which); //NON-NLS
+            this.builder.onNeutral();
         }
     }
 

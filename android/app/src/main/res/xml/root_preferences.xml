@@ -96,6 +96,12 @@
             app:entries="@array/night_mode_modes"
             app:entryValues="@array/night_mode_mode_values" />
 
+        <SwitchPreference
+            app:key="confirmStop"
+            app:title="@string/pref_confirmStop_title"
+            app:summaryOff="@string/pref_confirmStop_off"
+            app:summaryOn="@string/pref_confirmStop_on" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

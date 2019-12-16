@@ -141,7 +141,7 @@ public final class ProxyHostnameResolverImpl extends NameResolverTask {
             Log.e("Share initiation was stopped because location services are disabled", e); //NON-NLS
             final Context ctx = this.ctx.get();
             if (ctx != null) {
-                new DialogService(ctx).showDialog(R.string.err_client, R.string.err_location_disabled, Buttons.SETTINGS_OK, new CustomDialogBuilder() {
+                new DialogService(ctx).showDialog(R.string.err_client, R.string.err_location_disabled, Buttons.Two.SETTINGS_OK, new CustomDialogBuilder() {
                     @Override
                     public void onPositive() {
                         // OK button

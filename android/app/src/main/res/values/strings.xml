@@ -30,6 +30,9 @@
     <string name="btn_link">Create new tracking link</string>
     <string name="btn_adopt">Add an existing share</string>
 
+    <string name="dialog_confirm_stop_title">Stop sharing?</string>
+    <string name="dialog_confirm_stop_body">Are you sure you wish to stop sharing your location?</string>
+
     <string name="btn_stop_short">Stop</string>
     <string name="btn_share_short">Share</string>
 
@@ -57,6 +60,7 @@
     <string name="btn_create">Create</string>
     <string name="btn_show_settings">Open settings</string>
     <string name="btn_dismiss">Dismiss</string>
+    <string name="btn_remember">Don\'t show again</string>
 
     <string name="action_copy">Copy link</string>
     <string name="action_copied">Copied link from Hauk</string>
@@ -152,4 +156,7 @@
         <string name="night_mode_battery">When battery saver is enabled</string>
         <string name="night_mode_always">Always</string>
         <string name="night_mode_never">Never</string>
+    <string name="pref_confirmStop_title">Confirm before stopping shares</string>
+        <string name="pref_confirmStop_on">Prompt for confirmation when stopping shares in the app</string>
+        <string name="pref_confirmStop_off">Do not prompt for confirmation when stopping shares in the app</string>
 </resources>

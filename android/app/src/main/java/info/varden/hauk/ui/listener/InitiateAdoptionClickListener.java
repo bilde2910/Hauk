@@ -45,7 +45,7 @@ public final class InitiateAdoptionClickListener implements View.OnClickListener
         this.dialogSvc.showDialog(
                 R.string.adopt_title,
                 String.format(this.ctx.getString(R.string.adopt_body), this.share.getSession().getServerURL()),
-                Buttons.OK_CANCEL,
+                Buttons.Two.OK_CANCEL,
                 new AdoptDialogBuilder(this.ctx, this.share) {
 
             @Override

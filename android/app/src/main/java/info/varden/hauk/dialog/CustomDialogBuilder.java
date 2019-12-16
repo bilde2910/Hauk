@@ -30,4 +30,11 @@ public interface CustomDialogBuilder {
      */
     @Nullable
     View createView(Context ctx);
+
+    interface Three extends CustomDialogBuilder {
+        /**
+         * Fires when the neutral button is clicked in the dialog.
+         */
+        void onNeutral();
+    }
 }

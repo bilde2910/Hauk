@@ -28,6 +28,7 @@ import info.varden.hauk.caching.ResumePrompt;
 import info.varden.hauk.dialog.Buttons;
 import info.varden.hauk.dialog.CustomDialogBuilder;
 import info.varden.hauk.dialog.DialogService;
+import info.varden.hauk.dialog.StopSharingConfirmationPrompt;
 import info.varden.hauk.http.SessionInitiationPacket;
 import info.varden.hauk.manager.PromptCallback;
 import info.varden.hauk.manager.SessionInitiationReason;
@@ -127,7 +128,7 @@ public final class MainActivity extends AppCompatActivity {
                 new DialogService(ctx).showDialog(
                         R.string.resume_title,
                         String.format(ctx.getString(R.string.resume_body), shares.length, session.getExpiryString()),
-                        Buttons.YES_NO,
+                        Buttons.Two.YES_NO,
                         new ResumeDialogBuilder(response)
                 );
             }
@@ -165,19 +166,19 @@ public final class MainActivity extends AppCompatActivity {
      * On-tap handler for the "start sharing" and "stop sharing" button.
      */
     public void startSharing(@SuppressWarnings("unused") View view) {
+        PreferenceManager prefs = new PreferenceManager(this);
+
         // If there is an executable stop task, that means that sharing is already active. Shut down
         // the share by running the stop task instead of starting a new share.
         if (this.manager.isSessionActive()) {
             Log.i("Sharing is being stopped from main activity"); //NON-NLS
-            this.manager.stopSharing();
+            stopSharing(prefs);
             return;
         }
 
         // Disable the UI while we attempt to connect to the Hauk backend.
         findViewById(R.id.btnShare).setEnabled(false);
         disableUI();
-
-        PreferenceManager prefs = new PreferenceManager(this);
 
         String server = prefs.get(Constants.PREF_SERVER_ENCRYPTED).trim();
         String username = prefs.get(Constants.PREF_USERNAME_ENCRYPTED).trim();
@@ -218,6 +219,20 @@ public final class MainActivity extends AppCompatActivity {
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, customID, e2ePass);
         new ProxyHostnameResolverImpl(this, this.manager, this.uiResetTask, prefs, new SessionInitiationResponseHandlerImpl(), initParams, mode, allowAdoption, nickname, groupPin).resolve();
+    }
+
+    /**
+     * Stops sharing. If the setting to prompt for confirmation is enabled, a dialog box is shown to
+     * confirm that the share should be stopped.
+     *
+     * @param prefs A preference manager.
+     */
+    private void stopSharing(PreferenceManager prefs) {
+        if (prefs.get(Constants.PREF_CONFIRM_STOP)) {
+            this.dialogSvc.showDialog(R.string.dialog_confirm_stop_title, R.string.dialog_confirm_stop_body, Buttons.Three.YES_NO_REMEMBER, new StopSharingConfirmationPrompt(prefs, this.manager));
+        } else {
+            this.manager.stopSharing();
+        }
     }
 
     /**
@@ -450,7 +465,7 @@ public final class MainActivity extends AppCompatActivity {
 
             // Service relaunches should be handled silently.
             if (reason != SessionInitiationReason.SERVICE_RELAUNCH) {
-                MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.OK_SHARE, new CustomDialogBuilder() {
+                MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.Two.OK_SHARE, new CustomDialogBuilder() {
                     @Override
                     public void onPositive() {
                         // OK button

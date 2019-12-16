@@ -62,7 +62,7 @@ public abstract class AddLinkClickListener implements View.OnClickListener {
 
     @Override
     public final void onClick(View view) {
-        this.dialogSvc.showDialog(R.string.create_link_title, R.string.create_link_body, Buttons.CREATE_CANCEL, new CustomDialogBuilder() {
+        this.dialogSvc.showDialog(R.string.create_link_title, R.string.create_link_body, Buttons.Two.CREATE_CANCEL, new CustomDialogBuilder() {
 
             private CheckBox chkAdopt;
 

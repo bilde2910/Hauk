@@ -48,7 +48,7 @@ public final class DeviceChecker {
                 dialogSvc.showDialog(
                         R.string.battery_savings_title,
                         String.format(this.ctx.getString(R.string.battery_savings_body), this.ctx.getString(device.getManufacturerStringResource())),
-                        Buttons.SETTINGS_DISMISS,
+                        Buttons.Two.SETTINGS_DISMISS,
                         new WarningDialog(this.ctx, prefs, device)
                 );
             } else {

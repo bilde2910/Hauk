@@ -44,6 +44,7 @@ public enum Constants {
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
     public static final Preference<NightModeStyle> PREF_NIGHT_MODE = new Preference.Enum<>("nightMode", NightModeStyle.FOLLOW_SYSTEM);
+    public static final Preference<Boolean> PREF_CONFIRM_STOP = new Preference.Boolean("confirmStop", true);
 
     @Deprecated // Use PREF_SERVER_ENCRYPTED instead
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
