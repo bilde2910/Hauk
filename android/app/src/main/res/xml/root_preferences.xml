@@ -20,17 +20,20 @@
     <PreferenceCategory app:title="@string/prefs_header_connection">
 
         <EditTextPreference
+            app:icon="@drawable/ic_server"
             app:key="cryptServer"
             app:title="@string/pref_cryptServer_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="cryptUsername"
+            app:icon="@drawable/ic_person"
             app:title="@string/pref_cryptUsername_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="cryptPassword"
+            app:icon="@drawable/ic_lock_open"
             app:title="@string/pref_cryptPassword_title"
             app:summary="@string/password_mask" />
 
@@ -41,11 +44,13 @@
 
         <EditTextPreference
             app:key="interval"
+            app:icon="@drawable/ic_timer"
             app:title="@string/pref_interval_title"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             app:key="minUpdateDistance"
+            app:icon="@drawable/ic_directions_walk"
             app:title="@string/pref_minUpdateDistance_title"
             app:useSimpleSummaryProvider="true" />
 
@@ -63,6 +68,7 @@
 
         <ListPreference
             app:key="proxyType"
+            app:icon="@drawable/ic_proxy"
             app:title="@string/pref_proxyType_title"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/proxy_types"
@@ -80,11 +86,13 @@
 
         <EditTextPreference
             app:key="connectTimeout"
+            app:icon="@drawable/ic_no_connection"
             app:title="@string/pref_connectTimeout_title"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:key="tlsCertValidation"
+            app:icon="@drawable/ic_security"
             app:title="@string/pref_tlsCertValidation_title"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/tls_validation_types"
@@ -96,6 +104,7 @@
 
         <ListPreference
             app:key="nightMode"
+            app:icon="@drawable/ic_brightness_3"
             app:title="@string/prefs_nightMode_title"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/night_mode_modes"
@@ -118,11 +127,13 @@
 
         <Preference
             app:key="dummy_sourceCode"
+            app:icon="@drawable/ic_code"
             app:title="@string/about_source_code_title"
             app:summary="@string/label_source_link" />
 
         <Preference
             app:key="dummy_reportIssue"
+            app:icon="@drawable/ic_bug_report"
             app:title="@string/about_report_issue_title" />
 
     </PreferenceCategory>
