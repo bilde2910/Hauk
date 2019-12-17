@@ -30,5 +30,7 @@
     "btn_close": "Close",
     "btn_show_all": "Show all",
     "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
-    "google_play_badge_url": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+    "f_droid_badge_text": "Get it on F-Droid",
+    "google_play_badge_url": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png",
+    "google_play_badge_text": "Get it on Google Play"
 }

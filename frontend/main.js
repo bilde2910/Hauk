@@ -73,8 +73,12 @@ function init() {
 
         var urlE = document.getElementById("url");
         var indexE = document.getElementById("index");
+        var storeIconFdroidE = document.getElementById("store-icon-fdroid");
+        var storeIconGplayE = document.getElementById("store-icon-gplay");
         if (urlE !== null) urlE.textContent = url;
         if (indexE !== null) indexE.style.display = "block";
+        if (storeIconFdroidE !== null) storeIconFdroidE.src = LANG["f_droid_badge_url"];
+        if (storeIconGplayE !== null) storeIconGplayE.src = LANG["google_play_badge_url"];
     } else {
         // Attempt to fetch location data from the server once.
         getJSON("./api/fetch.php?id=" + id, function(data) {
