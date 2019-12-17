@@ -36,7 +36,7 @@ phone, and you're good to go!
    given by the install script. Make sure to set a secure hashed password and
    edit your site's domain in the configuration file after installation.
 3. Start the web server and make sure Memcached or Redis is running.
-4. Install the companion Android app _(from your favourite store linked above)_
+4. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
 ## Manual installation
@@ -50,7 +50,7 @@ files manually.
 3. Modify `include/config.php` to your liking. Make sure to set a secure hashed
    password and edit your site's domain in this file.
 4. Start the web server and make sure Memcached or Redis is running.
-5. Install the companion Android app _(from your favourite store linked above)_
+5. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
 ## Via Docker Compose
