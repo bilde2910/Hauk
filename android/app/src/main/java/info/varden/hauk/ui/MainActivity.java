@@ -199,6 +199,8 @@ public final class MainActivity extends AppCompatActivity {
         try {
             // Try to parse the duration.
             duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
+            prefs.set(Constants.PREF_DURATION, duration);
+
             // The backend takes duration in seconds, hence it must be converted.
             duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
         } catch (NumberFormatException | ArithmeticException ex) {
@@ -210,7 +212,6 @@ public final class MainActivity extends AppCompatActivity {
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
         Log.i("Updating connection preferences"); //NON-NLS
-        prefs.set(Constants.PREF_DURATION, duration);
         prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
         prefs.set(Constants.PREF_NICKNAME, nickname);
         prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
