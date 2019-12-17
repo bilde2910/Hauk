@@ -641,6 +641,7 @@ function processUpdate(data, init) {
             var listE = document.createElement("p");
             listE.textContent = user;
             listE.dataset.user = user;
+            listE.style.display = "none";
             listE.addEventListener("click", function() {
                 var userListPopupE = document.getElementById("user-list-popup");
                 if (userListPopupE !== null && userDetailsE !== null) {
@@ -667,6 +668,7 @@ function processUpdate(data, init) {
 
         // Get the last location received.
         var lastPoint = shares[user].points.length > 0 ? shares[user].points[shares[user].points.length - 1] : null;
+        if (lastPoint !== null) shares[user].listEntry.style.display = "block";
 
         for (var i = 0; i < users[user].length; i++) {
             var lat = users[user][i][0];
