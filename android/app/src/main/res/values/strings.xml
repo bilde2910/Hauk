@@ -14,7 +14,7 @@
         <string name="sel_mode_opt_create_group">Create a group share</string>
         <string name="sel_mode_opt_join_group">Join a group share</string>
     <string name="label_allow_adopt">Allow adoption:</string>
-        <string name="chk_allow_adopt">Allow others to add my share into a group share</string>
+        <string name="chk_allow_adopt">Allow others to add me into a group share</string>
         <string name="label_explain_adopt">(What\'s this?)</string>
     <string name="label_nickname">Nickname:</string>
     <string name="label_pin">Group PIN:</string>
@@ -28,7 +28,7 @@
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
     <string name="btn_link">Create new tracking link</string>
-    <string name="btn_adopt">Add an existing share</string>
+    <string name="btn_adopt">Merge an existing sharing link</string>
 
     <string name="dialog_confirm_stop_title">Stop sharing?</string>
     <string name="dialog_confirm_stop_body">Are you sure you wish to stop sharing your location?</string>
@@ -46,9 +46,9 @@
     <string name="label_pin_help">Share this PIN with the others in your group to let them join your location sharing group</string>
 
     <string name="explain_adopt_title">Share adoption</string>
-    <string name="explain_adopt_body">Hauk allows you to create location sharing sessions for yourself as well as for a group of people. If someone creates a group share, they get a group code that others can use to join the sharing session.\n\nHowever, the person creating the group share also gets the option to add an already existing location share into their group. This process is called adoption.\n\nYou can decide whether or not you want to allow others to incorporate your location share into their group share by checking this checkbox.\n\nIf you enable this option and share your location to a group of friends, and someone else also wants to share their location, they can create a group share and add you to their map, so both of you appear on the same shared location map. This is useful if you are e.g. driving and cannot use your phone, as adoption of your share by others requires no interaction on your part.</string>
-    <string name="adopt_title">Adopt an existing share</string>
-    <string name="adopt_body">You can adopt an existing individual location share to incorporate it in this group share. Please paste the URL or share ID of the share you wish to adopt (e.g. %s?XXXX-XXXX) and assign a nickname to this share.</string>
+    <string name="explain_adopt_body">Hauk allows you to create location sharing sessions for yourself as well as for a group of people. If someone creates a group share, they get a group code that others can use to join the sharing session.\n\nHowever, the person creating the group share also gets the option to add others who are already sharing their locations into their group. This process is called adoption.\n\nYou can decide whether or not you want to allow others to incorporate your shared location into their group share by checking this checkbox.\n\nIf you enable this option and share your location to a group of friends, and someone else also wants to share their location, they can create a group share and add you to their map, so both of you appear on the same shared location map. This is useful if you are e.g. driving and cannot use your phone, as adoption of your shared location by others requires no interaction on your part.</string>
+    <string name="adopt_title">Adopt another user\'s session</string>
+    <string name="adopt_body">You can adopt an existing individual location sharing session to incorporate it in this group share. Please paste the URL or share ID of the person you wish to adopt (e.g. %s?XXXX-XXXX) and assign a nickname to this person.</string>
     <string name="label_share_url">Share ID/URL:</string>
 
     <string name="create_link_title">Create new sharing link</string>
@@ -103,7 +103,7 @@
     <string name="resume_title">Resume session</string>
     <string name="resume_body">You have an unfinished session:\n\nActive sharing link(s): %d\nExpires: %s\n\nDo you wish to resume this session?</string>
     <string name="link_added_title">Link created</string>
-    <string name="link_added_body">A new link was successfully created for your location share! Click the share button to copy the publicly viewable URL for your share.</string>
+    <string name="link_added_body">A new link was successfully created for your shared location! Click the share button to copy the publicly viewable URL for your new share.</string>
 
     <string name="req_perms_title">Permission required</string>
     <string name="req_perms_message">This app requires access to your location to function, but this permission has not been granted yet. Please approve the following permission request, then click the start button again to retry.</string>
