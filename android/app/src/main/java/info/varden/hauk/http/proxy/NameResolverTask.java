@@ -96,7 +96,7 @@ public abstract class NameResolverTask extends AsyncTask<Void, Void, Proxy> impl
             }
 
         } catch (Exception ex) {
-            Log.e("Proxy setup failed for proxy %s:%d", ex, this.proxyHost, this.proxyPort); //NON-NLS
+            Log.e("Proxy setup failed for proxy %s:%s", ex, this.proxyHost, this.proxyPort); //NON-NLS
             this.wasSuccessful = false;
             onFailure(ex);
             return null;
