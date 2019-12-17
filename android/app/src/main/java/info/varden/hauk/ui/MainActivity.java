@@ -40,6 +40,7 @@ import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.ShareMode;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.system.launcher.OpenLinkListener;
 import info.varden.hauk.system.powersaving.DeviceChecker;
 import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.system.preferences.ui.SettingsActivity;
@@ -261,6 +262,13 @@ public final class MainActivity extends AppCompatActivity {
     public void explainAdoption(@SuppressWarnings("unused") View view) {
         Log.i("Explaining share adoption upon user request"); //NON-NLS
         this.dialogSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
+    }
+
+    /**
+     * On-tap handler for the header logo and link that opens the Hauk project page on GitHub.
+     */
+    public void openProjectSite(View view) {
+        new OpenLinkListener(this, R.string.label_source_link).onClick(view);
     }
 
     /**

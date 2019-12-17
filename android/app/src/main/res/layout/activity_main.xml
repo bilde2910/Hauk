@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="143dp"
                 android:contentDescription="@string/img_alt_logo"
+                android:onClick="openProjectSite"
                 app:srcCompat="@drawable/ic_logo" />
 
             <Space
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="openProjectSite"
                 android:text="@string/label_heading"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -53,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="openProjectSite"
                 android:text="@string/label_source_link" />
 
             <Space

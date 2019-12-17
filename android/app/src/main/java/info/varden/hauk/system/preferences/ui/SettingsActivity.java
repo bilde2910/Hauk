@@ -14,6 +14,7 @@ import androidx.preference.PreferenceManager;
 import info.varden.hauk.BuildConfig;
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.system.launcher.OpenLinkListener;
 import info.varden.hauk.system.preferences.PreferenceHandler;
 import info.varden.hauk.system.preferences.ui.listener.CascadeBindListener;
 import info.varden.hauk.system.preferences.ui.listener.CascadeChangeListener;
@@ -23,7 +24,6 @@ import info.varden.hauk.system.preferences.ui.listener.InputTypeBindListener;
 import info.varden.hauk.system.preferences.ui.listener.IntegerBoundChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.NightModeChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.ProxyPreferenceChangeListener;
-import info.varden.hauk.ui.listener.OpenLinkListener;
 import info.varden.hauk.utils.Log;
 
 /**
