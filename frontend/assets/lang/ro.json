@@ -24,5 +24,11 @@
     "gnss_signal_head": "Vă rugăm să așteptați",
     "e2e_placeholder": "Introduceți parola",
     "e2e_title": "Protejată cu parolă",
-    "expired_head": "Sesiune expirată"
+    "expired_head": "Sesiune expirată",
+    "btn_show_all": "Arată toate",
+    "btn_close": "Închide",
+    "control_show_self": "Arată locația mea",
+    "dialog_user_navigate": "Navighează",
+    "dialog_user_follow": "Arată pe hartă",
+    "dialog_active_head": "Utilizatori activi"
 }
