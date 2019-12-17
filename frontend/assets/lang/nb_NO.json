@@ -24,5 +24,11 @@
     "last_update_days": "{{time}}d siden",
     "last_update_hours": "{{time}}t siden",
     "last_update_minutes": "{{time}}m siden",
-    "last_update_seconds": "{{time}}s siden"
+    "last_update_seconds": "{{time}}s siden",
+    "btn_show_all": "Vis alle",
+    "btn_close": "Lukk",
+    "control_show_self": "Vis posisjonen min",
+    "dialog_user_navigate": "Naviger til",
+    "dialog_user_follow": "Vis på kartet",
+    "dialog_active_head": "Aktive brukere"
 }
