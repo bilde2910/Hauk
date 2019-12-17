@@ -196,6 +196,16 @@ public final class MainActivity extends AppCompatActivity {
         boolean allowAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
         @SuppressWarnings("OverlyStrongTypeCast") int durUnit = ((Spinner) findViewById(R.id.selUnit)).getSelectedItemPosition();
 
+        assert mode != null;
+        server = server.endsWith("/") ? server : server + "/";
+
+        // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
+        // every time.
+        Log.i("Updating connection preferences"); //NON-NLS
+        prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
+        prefs.set(Constants.PREF_NICKNAME, nickname);
+        prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
+
         try {
             // Try to parse the duration.
             duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
@@ -209,12 +219,11 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
-        // every time.
-        Log.i("Updating connection preferences"); //NON-NLS
-        prefs.set(Constants.PREF_DURATION_UNIT, durUnit);
-        prefs.set(Constants.PREF_NICKNAME, nickname);
-        prefs.set(Constants.PREF_ALLOW_ADOPTION, allowAdoption);
+        if ((mode == ShareMode.CREATE_GROUP || mode == ShareMode.JOIN_GROUP) && nickname.isEmpty()) {
+            Log.e("No nickname set!"); //NON-NLS
+            this.dialogSvc.showDialog(R.string.err_client, R.string.err_no_nickname, this.uiResetTask);
+            return;
+        }
 
         if (server.isEmpty()) {
             // If the user hasn't set up a server yet, open the settings menu and prompt them to
@@ -224,9 +233,6 @@ public final class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
             return;
         }
-
-        assert mode != null;
-        server = server.endsWith("/") ? server : server + "/";
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, minDistance, customID, e2ePass);
         new ProxyHostnameResolverImpl(this, this.manager, this.uiResetTask, prefs, new SessionInitiationResponseHandlerImpl(), initParams, mode, allowAdoption, nickname, groupPin).resolve();

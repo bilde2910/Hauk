@@ -83,6 +83,7 @@
         <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
         <string name="err_server_not_configured">You haven\'t configured a backend yet. Please enter the details for your backend server in settings and try again.</string>
         <string name="err_invalid_duration">The duration you entered is invalid. Please choose a different duration.</string>
+        <string name="err_no_nickname">You have to set a nickname before you can join group shares. Please set a nickname and try again.</string>
     <string name="err_connect">Connection error</string>
         <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
         <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
