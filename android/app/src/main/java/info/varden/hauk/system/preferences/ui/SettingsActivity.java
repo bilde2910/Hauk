@@ -54,6 +54,7 @@ public final class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             PreferenceManager manager = getPreferenceManager();
+            info.varden.hauk.system.preferences.PreferenceManager prefs = new info.varden.hauk.system.preferences.PreferenceManager(this.ctx);
 
             // Intercept all reads and writes so that values are properly validated and encrypted if
             // required by Preference.
@@ -85,6 +86,8 @@ public final class SettingsActivity extends AppCompatActivity {
                     manager.findPreference(Constants.PREF_PROXY_HOST.getKey()),
                     manager.findPreference(Constants.PREF_PROXY_PORT.getKey())
             }));
+            Preference proxyTypePref = manager.findPreference(Constants.PREF_PROXY_TYPE.getKey());
+            if (proxyTypePref != null) proxyTypePref.callChangeListener(String.valueOf(prefs.get(Constants.PREF_PROXY_TYPE).getIndex()));
 
             // Update night mode when its preference is changed.
             setChangeListeners(manager, Constants.PREF_NIGHT_MODE, new NightModeChangeListener());
