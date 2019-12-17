@@ -144,4 +144,18 @@
     <string name="prefs_nightMode_title">Nattmodus</string>
     <string name="prefs_header_appearance">Utseende</string>
     <string name="err_server_not_configured">Du har ikke stilt inn en server enda. Skriv inn informasjon om serveren din i innstillinger og prøv igjen.</string>
+    <string name="about_report_issue_title">Rapporter om feil</string>
+    <string name="about_source_code_title">Kildekode</string>
+    <string name="about_version_title">Appversjon</string>
+    <string name="prefs_header_about">Om Hauk</string>
+    <string name="pref_confirmStop_off">Ikke be om bekreftelse når du stopper delinger i appen</string>
+    <string name="pref_confirmStop_on">Be om bekreftelse når du stopper delinger i appen</string>
+    <string name="pref_confirmStop_title">Bekreft før delinger avsluttes</string>
+    <string name="pref_minUpdateDistance_title">Minste avstand mellom oppdateringer (meter)</string>
+    <string name="err_no_nickname">Du må stille inn et kallenavn før du kan bli med i delingsgrupper. Vennligst velg et kallenavn og prøv igjen.</string>
+    <string name="err_invalid_duration">Varigheten du skrev inn er ugyldig. Vennligst skriv inn en annen varighet.</string>
+    <string name="btn_remember">Ikke vis igjen</string>
+    <string name="dialog_confirm_stop_share">Er du sikker på at du vil slette denne linken\?</string>
+    <string name="dialog_confirm_stop_body">Er du sikker på at du vil slutte å dele posisjonen din\?</string>
+    <string name="dialog_confirm_stop_title">Avslutt deling\?</string>
 </resources>
