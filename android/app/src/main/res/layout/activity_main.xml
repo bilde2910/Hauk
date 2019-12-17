@@ -242,7 +242,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="?attr/editTextColor"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:text="@string/label_pin_head" />
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="55dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="?attr/editTextColor"
                     android:textStyle="bold"
                     android:letterSpacing="0.1"
                     android:textIsSelectable="true"
