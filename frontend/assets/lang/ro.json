@@ -1,5 +1,5 @@
 {
-    "dialog_connection_body": "S-a pierdut conexiunea la serverul Hauk. Hauk va încerca să se reconecteze în fundal. Vă rugăm să verificați dacă aveți conectivitate la rețea.",
+    "dialog_connection_body": "S-a pierdut conexiunea la serverul. Hauk va încerca să se reconecteze în fundal. Vă rugăm să verificați dacă aveți conectivitate la rețea.",
     "e2e_unsupported": "Această partajare este protejată cu parolă. Aplicația dumneavoastră de navigare pe internet nu are funcționalitatea necesară pentru a deschide o asemenea partajare. Vă rugăm să reîncercați cu alta.",
     "e2e_unavailable_secure": "Această partajare este protejată cu parolă. Nu puteți debloca această partajare pentru ca nu utilizați HTTPS. Vă rugăm să vă asigurați că folosiți HTTPS, apoi reîncercați.",
     "e2e_incorrect": "Parola introdusă este eronată. Vă rugăm să reîncercați.",
@@ -30,5 +30,5 @@
     "control_show_self": "Arată locația mea",
     "dialog_user_navigate": "Navighează",
     "dialog_user_follow": "Arată pe hartă",
-    "dialog_active_head": "Utilizatori activi"
+    "dialog_active_head": "Partajări active"
 }
