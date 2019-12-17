@@ -66,8 +66,10 @@ public enum Constants {
     // Regular expression for extracting a share ID from a URL when adopting a share.
     public static final String REGEX_ADOPT_ID_FROM_LINK = "\\?([A-Za-z0-9-]+)";
 
-    // Default date format.
+    // Formatting and input validation.
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    public static final int PORT_MIN = 0;
+    public static final int PORT_MAX = 65536;
 
     // Keys for intent extras.
     public static final String EXTRA_SHARE = "share";

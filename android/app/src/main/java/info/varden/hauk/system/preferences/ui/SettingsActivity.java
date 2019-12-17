@@ -15,10 +15,14 @@ import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.system.preferences.PreferenceHandler;
 import info.varden.hauk.system.preferences.ui.listener.CascadeBindListener;
+import info.varden.hauk.system.preferences.ui.listener.CascadeChangeListener;
+import info.varden.hauk.system.preferences.ui.listener.FloatBoundChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.HintBindListener;
 import info.varden.hauk.system.preferences.ui.listener.InputTypeBindListener;
+import info.varden.hauk.system.preferences.ui.listener.IntegerBoundChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.NightModeChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.ProxyPreferenceChangeListener;
+import info.varden.hauk.utils.Log;
 
 /**
  * Settings activity that allows the user to change app preferences.
@@ -57,48 +61,49 @@ public final class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
             // Set InputType and other attributes for text edit boxes.
-            ((EditTextPreference) manager.findPreference(Constants.PREF_SERVER_ENCRYPTED.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI),
-                    new HintBindListener(R.string.pref_cryptServer_hint)
-            }));
-            ((EditTextPreference) manager.findPreference(Constants.PREF_USERNAME_ENCRYPTED.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME),
-                    new HintBindListener(R.string.pref_cryptUsername_hint)
-            }));
-            ((EditTextPreference) manager.findPreference(Constants.PREF_PASSWORD_ENCRYPTED.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_E2E_PASSWORD.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_INTERVAL.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_UPDATE_DISTANCE.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_CUSTOM_ID.getKey())).setOnBindEditTextListener(new CascadeBindListener(new EditTextPreference.OnBindEditTextListener[]{
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE),
-                    new HintBindListener(R.string.pref_requestLink_hint)
-            }));
-            ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_HOST.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_PROXY_PORT.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
-            );
-            ((EditTextPreference) manager.findPreference(Constants.PREF_CONNECTION_TIMEOUT.getKey())).setOnBindEditTextListener(
-                    new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER)
-            );
+            setTextEditParams(manager, Constants.PREF_SERVER_ENCRYPTED, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI), new HintBindListener(R.string.pref_cryptServer_hint));
+            setTextEditParams(manager, Constants.PREF_USERNAME_ENCRYPTED, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME), new HintBindListener(R.string.pref_cryptUsername_hint));
+            setTextEditParams(manager, Constants.PREF_PASSWORD_ENCRYPTED, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+            setTextEditParams(manager, Constants.PREF_E2E_PASSWORD, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+            setTextEditParams(manager, Constants.PREF_INTERVAL, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
+            setTextEditParams(manager, Constants.PREF_UPDATE_DISTANCE, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL));
+            setTextEditParams(manager, Constants.PREF_CUSTOM_ID, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE), new HintBindListener(R.string.pref_requestLink_hint));
+            setTextEditParams(manager, Constants.PREF_PROXY_HOST, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI));
+            setTextEditParams(manager, Constants.PREF_PROXY_PORT, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
+            setTextEditParams(manager, Constants.PREF_CONNECTION_TIMEOUT, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
+
+            // Set value bounds checks.
+            setChangeListeners(manager, Constants.PREF_INTERVAL, new IntegerBoundChangeListener(1, Integer.MAX_VALUE));
+            setChangeListeners(manager, Constants.PREF_UPDATE_DISTANCE, new FloatBoundChangeListener(0.0F, Float.MAX_VALUE));
+            setChangeListeners(manager, Constants.PREF_PROXY_PORT, new IntegerBoundChangeListener(Constants.PORT_MIN, Constants.PORT_MAX));
+            setChangeListeners(manager, Constants.PREF_CONNECTION_TIMEOUT, new IntegerBoundChangeListener(1, Integer.MAX_VALUE));
 
             // Set proxy settings disabled if proxy is set to default or none.
-            manager.findPreference(Constants.PREF_PROXY_TYPE.getKey()).setOnPreferenceChangeListener(new ProxyPreferenceChangeListener(new Preference[]{
+            setChangeListeners(manager, Constants.PREF_PROXY_TYPE, new ProxyPreferenceChangeListener(new Preference[]{
                     manager.findPreference(Constants.PREF_PROXY_HOST.getKey()),
                     manager.findPreference(Constants.PREF_PROXY_PORT.getKey())
             }));
 
             // Update night mode when its preference is changed.
-            manager.findPreference(Constants.PREF_NIGHT_MODE.getKey()).setOnPreferenceChangeListener(new NightModeChangeListener());
+            setChangeListeners(manager, Constants.PREF_NIGHT_MODE, new NightModeChangeListener());
+        }
+
+        private static void setTextEditParams(PreferenceManager manager, info.varden.hauk.system.preferences.Preference<?> preference, EditTextPreference.OnBindEditTextListener... listeners) {
+            EditTextPreference pref = manager.findPreference(preference.getKey());
+            if (pref != null) {
+                pref.setOnBindEditTextListener(new CascadeBindListener(listeners));
+            } else {
+                Log.wtf("Could not find setting for preference %s setting OnBindEditTextListener", preference); //NON-NLS
+            }
+        }
+
+        private static void setChangeListeners(PreferenceManager manager, info.varden.hauk.system.preferences.Preference<?> preference, Preference.OnPreferenceChangeListener... listeners) {
+            Preference pref = manager.findPreference(preference.getKey());
+            if (pref != null) {
+                pref.setOnPreferenceChangeListener(new CascadeChangeListener(listeners));
+            } else {
+                Log.wtf("Could not find setting for preference %s when setting OnPreferenceChangeListener", preference); //NON-NLS
+            }
         }
 
         @Override

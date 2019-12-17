@@ -44,15 +44,21 @@ public enum TimeUtils {
         return sb.toString();
     }
 
-    public static int timeUnitsToSeconds(int scalar, int unit) {
+    public static int timeUnitsToSeconds(int scalar, int unit) throws ArithmeticException {
         switch (unit) {
             case Constants.DURATION_UNIT_MINUTES:
+                if (Integer.MAX_VALUE / SECONDS_PER_MINUTE < scalar)
+                    throw new ArithmeticException(String.format("Integer will overflow when converting %d minutes to seconds", scalar));
                 return scalar * SECONDS_PER_MINUTE;
 
             case Constants.DURATION_UNIT_HOURS:
+                if (Integer.MAX_VALUE / SECONDS_PER_HOUR < scalar)
+                    throw new ArithmeticException(String.format("Integer will overflow when converting %d hours to seconds", scalar));
                 return scalar * SECONDS_PER_HOUR;
 
             case Constants.DURATION_UNIT_DAYS:
+                if (Integer.MAX_VALUE / SECONDS_PER_DAY < scalar)
+                    throw new ArithmeticException(String.format("Integer will overflow when converting %d days to seconds", scalar));
                 return scalar * SECONDS_PER_DAY;
 
             default:

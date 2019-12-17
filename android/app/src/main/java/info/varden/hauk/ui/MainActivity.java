@@ -183,7 +183,7 @@ public final class MainActivity extends AppCompatActivity {
         String server = prefs.get(Constants.PREF_SERVER_ENCRYPTED).trim();
         String username = prefs.get(Constants.PREF_USERNAME_ENCRYPTED).trim();
         String password = prefs.get(Constants.PREF_PASSWORD_ENCRYPTED);
-        int duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
+        int duration;
         int interval = prefs.get(Constants.PREF_INTERVAL);
         float minDistance = prefs.get(Constants.PREF_UPDATE_DISTANCE);
         String customID = prefs.get(Constants.PREF_CUSTOM_ID).trim();
@@ -194,6 +194,17 @@ public final class MainActivity extends AppCompatActivity {
         String groupPin = ((TextView) findViewById(R.id.txtGroupCode)).getText().toString();
         boolean allowAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
         @SuppressWarnings("OverlyStrongTypeCast") int durUnit = ((Spinner) findViewById(R.id.selUnit)).getSelectedItemPosition();
+
+        try {
+            // Try to parse the duration.
+            duration = Integer.parseInt(((TextView) findViewById(R.id.txtDuration)).getText().toString());
+            // The backend takes duration in seconds, hence it must be converted.
+            duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
+        } catch (NumberFormatException | ArithmeticException ex) {
+            Log.e("Illegal duration value", ex); //NON-NLS
+            this.dialogSvc.showDialog(R.string.err_client, R.string.err_invalid_duration, this.uiResetTask);
+            return;
+        }
 
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
         // every time.
@@ -214,9 +225,6 @@ public final class MainActivity extends AppCompatActivity {
 
         assert mode != null;
         server = server.endsWith("/") ? server : server + "/";
-
-        // The backend takes duration in seconds, so convert the minutes supplied by the user.
-        duration = TimeUtils.timeUnitsToSeconds(duration, durUnit);
 
         SessionInitiationPacket.InitParameters initParams = new SessionInitiationPacket.InitParameters(server, username, password, duration, interval, minDistance, customID, e2ePass);
         new ProxyHostnameResolverImpl(this, this.manager, this.uiResetTask, prefs, new SessionInitiationResponseHandlerImpl(), initParams, mode, allowAdoption, nickname, groupPin).resolve();
