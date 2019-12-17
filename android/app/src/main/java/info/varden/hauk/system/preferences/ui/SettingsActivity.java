@@ -11,6 +11,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import info.varden.hauk.BuildConfig;
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
 import info.varden.hauk.system.preferences.PreferenceHandler;
@@ -22,6 +23,7 @@ import info.varden.hauk.system.preferences.ui.listener.InputTypeBindListener;
 import info.varden.hauk.system.preferences.ui.listener.IntegerBoundChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.NightModeChangeListener;
 import info.varden.hauk.system.preferences.ui.listener.ProxyPreferenceChangeListener;
+import info.varden.hauk.ui.listener.OpenLinkListener;
 import info.varden.hauk.utils.Log;
 
 /**
@@ -86,6 +88,10 @@ public final class SettingsActivity extends AppCompatActivity {
 
             // Update night mode when its preference is changed.
             setChangeListeners(manager, Constants.PREF_NIGHT_MODE, new NightModeChangeListener());
+
+            manager.findPreference("dummy_version").setSummary(BuildConfig.VERSION_NAME);
+            manager.findPreference("dummy_sourceCode").setOnPreferenceClickListener(new OpenLinkListener(this.ctx, R.string.label_source_link));
+            manager.findPreference("dummy_reportIssue").setOnPreferenceClickListener(new OpenLinkListener(this.ctx, R.string.link_issue_tracker));
         }
 
         private static void setTextEditParams(PreferenceManager manager, info.varden.hauk.system.preferences.Preference<?> preference, EditTextPreference.OnBindEditTextListener... listeners) {

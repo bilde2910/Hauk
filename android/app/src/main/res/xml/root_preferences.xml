@@ -109,4 +109,22 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/prefs_header_about">
+
+        <Preference
+            app:key="dummy_version"
+            app:enabled="false"
+            app:title="@string/about_version_title" />
+
+        <Preference
+            app:key="dummy_sourceCode"
+            app:title="@string/about_source_code_title"
+            app:summary="@string/label_source_link" />
+
+        <Preference
+            app:key="dummy_reportIssue"
+            app:title="@string/about_report_issue_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
