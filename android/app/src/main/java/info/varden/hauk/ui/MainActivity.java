@@ -473,7 +473,7 @@ public final class MainActivity extends AppCompatActivity {
             findViewById(R.id.btnShare).setEnabled(true);
 
             // Service relaunches should be handled silently.
-            if (reason != SessionInitiationReason.SERVICE_RELAUNCH) {
+            if (reason == SessionInitiationReason.USER_STARTED) {
                 MainActivity.this.dialogSvc.showDialog(R.string.ok_title, R.string.ok_message, Buttons.Two.OK_SHARE, new CustomDialogBuilder() {
                     @Override
                     public void onPositive() {
