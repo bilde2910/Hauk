@@ -91,7 +91,7 @@
     <string name="label_status">Stare:</string>
     <string name="btn_link">Creează o nouă adresă de urmărire</string>
     <string name="label_heading_links">Adrese active acum</string>
-    <string name="link_type_solo">Doar locația ta</string>
+    <string name="link_type_solo">Doar locația mea</string>
     <string name="sel_mode_opt_alone">Partajează doar locația mea</string>
     <string name="label_heading">Partajarea locației, cu sursă deschisă</string>
     <string name="adopt_body">Puteți adopta o partajare individuală deja existentă pentru a o incorpora în acest grup. Vă rugăm să scrieți adresa sau ID-ul partajării pe care doriți să o adoptați (ex. %s\?XXXX-XXXX) și să îi atribuiți un nume de afișare.</string>
@@ -144,4 +144,11 @@
     <string name="night_mode_system">Respectă setările de sistem</string>
     <string name="prefs_nightMode_title">Mod întunecat</string>
     <string name="prefs_header_appearance">Interfață</string>
+    <string name="pref_confirmStop_off">Nu cere confirmarea atunci când se face oprirea partajărilor din aplicație</string>
+    <string name="pref_confirmStop_on">Cere confirmarea atunci când se face oprirea partajărilor din aplicație</string>
+    <string name="pref_confirmStop_title">Confirmă înainte de a oprii partajări</string>
+    <string name="pref_minUpdateDistance_title">Distanța minimă între actualizări (metrii)</string>
+    <string name="btn_remember">Nu mai arăta</string>
+    <string name="dialog_confirm_stop_body">Sigur doriți să opriți partajarea locației dumneavoastră\?</string>
+    <string name="dialog_confirm_stop_title">Opriți partajarea\?</string>
 </resources>
