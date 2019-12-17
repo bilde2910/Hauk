@@ -36,7 +36,7 @@ phone, and you're good to go!
    given by the install script. Make sure to set a secure hashed password and
    edit your site's domain in the configuration file after installation.
 3. Start the web server and make sure Memcached or Redis is running.
-4. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
+4. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
 ## Manual installation
@@ -50,7 +50,7 @@ files manually.
 3. Modify `include/config.php` to your liking. Make sure to set a secure hashed
    password and edit your site's domain in this file.
 4. Start the web server and make sure Memcached or Redis is running.
-5. Install the [companion Android app](https://f-droid.org/packages/info.varden.hauk/)
+5. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
 ## Via Docker Compose
@@ -139,7 +139,7 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 - **Norwegian Bokmål** - bilde2910
 - **Norwegian Nynorsk** - bilde2910
 - **Polish** - krystiancha and RuralYak
-- **Romanian** - licaon-kter
+- **Romanian** - Licaon_Kter
 - **Russian** - RuralYak
 - **Ukrainian** - RuralYak
 
