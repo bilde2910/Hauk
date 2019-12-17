@@ -167,6 +167,31 @@ a:last-child > .store-icon {
     background-size: cover;
 }
 
+.leaflet-control-radar {
+    background: url(./assets/controls/radar.svg) no-repeat;
+    background-size: cover;
+}
+
+/** User list. **/
+.popup-list {
+    max-height: 60vh;
+    overflow-y: scroll;
+    margin: 0;
+}
+.popup-list > a {
+    text-decoration: none;
+    color: #000;
+}
+.popup-list p {
+    background-color: #eee;
+    margin: 0;
+    padding: 9px 20px;
+    cursor: pointer;
+}
+.popup-list p:hover {
+    background-color: #ddd;
+}
+
 /* The notch at the top of the screen that shows the time remaining of the
    share. Outer container. */
 #notch {

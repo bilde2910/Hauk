@@ -14,8 +14,12 @@
     "dialog_expired_body": "This location share has expired.",
     "dialog_connection_head": "Connection error",
     "dialog_connection_body": "Connection to the Hauk server was lost. Hauk will try to reconnect in the background. Please check that you have network connectivity.",
+    "dialog_active_head": "Active users",
+    "dialog_user_follow": "Show on map",
+    "dialog_user_navigate": "Navigate to",
     "status_expired": "Expired",
     "status_offline": "Offline",
+    "control_show_self": "Show my location",
     "last_update_seconds": "{{time}}s ago",
     "last_update_minutes": "{{time}}m ago",
     "last_update_hours": "{{time}}h ago",
@@ -23,6 +27,8 @@
     "btn_dismiss": "Dismiss",
     "btn_cancel": "Cancel",
     "btn_decrypt": "Unlock",
+    "btn_close": "Close",
+    "btn_show_all": "Show all",
     "f_droid_badge_url": "https://fdroid.gitlab.io/artwork/badge/get-it-on.png",
     "google_play_badge_url": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 }

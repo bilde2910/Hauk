@@ -106,7 +106,7 @@ L.control.Locate = L.Control.extend({
         btn.appendChild(anchor);
 
         anchor.href = '#';
-        anchor.title = 'Show my location';
+        anchor.title = LANG["control_show_self"];
         anchor.onclick = function(e) {
             // Prevent # from appearing in URL.
             e.preventDefault();
@@ -165,9 +165,42 @@ L.control.Locate = L.Control.extend({
     }
 });
 
-// Function for spawning the geolocation control.
+// Create a "show list of users" control.
+L.control.Radar = L.Control.extend({
+    onAdd: function(map) {
+        var btn = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        var anchor = L.DomUtil.create('a', 'leaflet-control-radar');
+
+		btn.style.backgroundColor = '#fff';
+        btn.appendChild(anchor);
+
+        anchor.href = '#';
+        anchor.title = LANG["control_show_self"];
+        anchor.onclick = function(e) {
+            // Prevent # from appearing in URL.
+            e.preventDefault();
+            var userListPopupE = document.getElementById("user-list-popup");
+            if (userListPopupE !== null) {
+                userListPopupE.style.display = 'block';
+            }
+            var userListE = document.getElementById("user-list");
+            if (userListE !== null) {
+                var users = userListE.getElementsByTagName("p");
+                if (users.length == 1) users[0].click();
+            }
+            return false;
+        };
+
+		return btn;
+    }
+});
+
+// Function for spawning the controls.
 L.control.locate = function(opts) {
     return new L.control.Locate(opts);
+}
+L.control.radar = function(opts) {
+    return new L.control.Radar(opts);
 }
 
 var map, circleLayer, markerLayer;
@@ -184,6 +217,7 @@ function initMap() {
     if ("geolocation" in navigator && window.isSecureContext) {
         L.control.locate({ position: 'topleft' }).addTo(map);
     }
+    L.control.radar({ position: 'topleft' }).addTo(map);
 
     circleLayer = L.layerGroup().addTo(map);
     markerLayer = L.layerGroup().addTo(map);
@@ -295,6 +329,60 @@ if (passwordCancelE !== null) {
     });
 }
 
+var userDetailsE = document.getElementById("user-details-popup");
+
+var userDetailsFollowE = document.getElementById("user-details-follow");
+if (userDetailsFollowE !== null) {
+    userDetailsFollowE.addEventListener("click", function() {
+        var user = userDetailsFollowE.dataset.user;
+        follow(user);
+        if (userDetailsE !== null) userDetailsE.style.display = "none";
+    });
+}
+
+var userDetailsNavigateE = document.getElementById("user-details-navigate");
+if (userDetailsNavigateE !== null) {
+    userDetailsNavigateE.addEventListener("click", function() {
+        var user = userDetailsNavigateE.dataset.user;
+        var points = shares[user].points;
+        if (points.length > 0) {
+            var last = points[points.length - 1];
+            window.open("geo:" + last.lat + "," + last.lon);
+        }
+        if (userDetailsE !== null) userDetailsE.style.display = "none";
+    });
+}
+
+var closeUserListE = document.getElementById("close-user-list");
+if (closeUserListE !== null) {
+    closeUserListE.addEventListener("click", function() {
+        var userListPopupE = document.getElementById("user-list-popup");
+        if (userListPopupE !== null) {
+            userListPopupE.style.display = 'none';
+        }
+    });
+}
+
+var showAllUsersE = document.getElementById("btn-show-all");
+if (showAllUsersE !== null) {
+    showAllUsersE.addEventListener("click", function() {
+        autoCenter();
+        var userListPopupE = document.getElementById("user-list-popup");
+        if (userListPopupE !== null) {
+            userListPopupE.style.display = 'none';
+        }
+    });
+}
+
+var closeUserDetailsE = document.getElementById("close-user-details");
+if (closeUserDetailsE !== null) {
+    closeUserDetailsE.addEventListener("click", function() {
+        if (userDetailsE !== null) {
+            userDetailsE.style.display = 'none';
+        }
+    });
+}
+
 var fetchIntv;
 var countIntv;
 
@@ -384,12 +472,34 @@ function byteArray(base64) {
     return arr;
 }
 
+// Follow a user on the map.
+function follow(user) {
+    following = shares[user].id;
+    var last = shares[user].points[shares[user].points.length - 1];
+    map.panTo([last.lat, last.lon]);
+}
+
+// Zoom and pan map to show all users.
+function autoCenter() {
+    var markers = [];
+    for (var share in shares) {
+        if (!shares.hasOwnProperty(share)) continue;
+        if (shares[share].marker === null) continue;
+        markers.push(shares[share].marker);
+    }
+    var fg = new L.featureGroup(markers);
+    map.fitBounds(fg.getBounds().pad(0.5));
+
+    // Do not exceed the default zoom level.
+    if (map.getZoom() > DEFAULT_ZOOM) map.setZoom(DEFAULT_ZOOM);
+}
+
 // Parses the data returned from ./api/fetch.php and updates the map marker.
 function processUpdate(data, init) {
     var users = {};
     var multiUser = false;
     if (data.type == SHARE_TYPE_ALONE) {
-        users["User"] = data.points;
+        users[""] = data.points;
         multiUser = false;
     } else if (data.type == SHARE_TYPE_GROUP) {
         users = data.points;
@@ -520,18 +630,40 @@ function processUpdate(data, init) {
 
     // If flagged to initialize, set up polling.
     if (init) setNewInterval(data.expire, data.interval, data.serverTime);
+    var userListE = document.getElementById("user-list");
 
     for (var user in users) {
         if (!users.hasOwnProperty(user)) continue;
         var locData = users[user];
 
-        if (!shares.hasOwnProperty(user)) shares[user] = {
-            "marker": null,
-            "circle": null,
-            "icon": null,
-            "points": [],
-            "id": Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
-        };
+        if (!shares.hasOwnProperty(user)) {
+            // Add an entry to the user list.
+            var listE = document.createElement("p");
+            listE.textContent = user;
+            listE.dataset.user = user;
+            listE.addEventListener("click", function() {
+                var userListPopupE = document.getElementById("user-list-popup");
+                if (userListPopupE !== null && userDetailsE !== null) {
+                    userListPopupE.style.display = "none";
+                    userDetailsE.style.display = "block";
+                    var user = this.dataset.user;
+                    var userDetailsHeaderE = document.getElementById("user-details-header");
+                    if (userDetailsHeaderE !== null) userDetailsHeaderE.textContent = user;
+                    if (userDetailsFollowE !== null) userDetailsFollowE.dataset.user = user;
+                    if (userDetailsNavigateE !== null) userDetailsNavigateE.dataset.user = user;
+                }
+            });
+            if (userListE !== null) userListE.appendChild(listE);
+
+            shares[user] = {
+                "marker": null,
+                "circle": null,
+                "icon": null,
+                "points": [],
+                "id": Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+                "listEntry": listE
+            };
+        }
 
         // Get the last location received.
         var lastPoint = shares[user].points.length > 0 ? shares[user].points[shares[user].points.length - 1] : null;
@@ -565,11 +697,10 @@ function processUpdate(data, init) {
                         iconAnchor: [33, 18]
                     });
                     shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon}).on("click", function() {
-                        // Follow the marker if requested.
-                        following = shares[user].id;
-                        var last = shares[user].points[shares[user].points.length - 1];
-                        map.panTo([last.lat, last.lon]);
-                    }).addTo(markerLayer);
+                        follow(this.haukUser);
+                    });
+                    shares[user].marker.haukUser = user;
+                    shares[user].marker.addTo(markerLayer);
                 } else {
                     // If there is a marker, draw a line from its last location
                     // instead and move the marker.
@@ -650,8 +781,28 @@ function processUpdate(data, init) {
             }
         }
 
+        // Prune the array of locations so it does not exceed our MAX_POINTS defined
+        // in the config.
+        if (shares[user].points.length > MAX_POINTS) {
+            var remove = shares[user].points.splice(0, shares[user].points.length - MAX_POINTS);
+            for (var j = 0; j < remove.length; j++) if (remove[j].line !== null) map.removeLayer(remove[j].line);
+        }
+
+        // Add the user's nickname if this is a group share.
+        var nameE = document.getElementById("nickname-" + shares[user].id);
+        if (nameE !== null && multiUser) {
+            nameE.textContent = user;
+            nameE.innerHTML += "<br />";
+            nameE.style.fontWeight = "bold";
+        }
+    }
+
+    for (var user in shares) {
+        if (!shares.hasOwnProperty(user)) continue;
+
         // Gray out the user's location if no data has been received for the
         // OFFLINE_TIMEOUT.
+        var eArrow = document.getElementById("arrow-" + shares[user].id);
         if (eArrow !== null) {
             var last = shares[user].points.length - 1;
             var point = shares[user].points[last];
@@ -693,21 +844,6 @@ function processUpdate(data, init) {
                 });
             }
         }
-
-        // Prune the array of locations so it does not exceed our MAX_POINTS defined
-        // in the config.
-        if (shares[user].points.length > MAX_POINTS) {
-            var remove = shares[user].points.splice(0, shares[user].points.length - MAX_POINTS);
-            for (var j = 0; j < remove.length; j++) if (remove[j].line !== null) map.removeLayer(remove[j].line);
-        }
-
-        // Add the user's nickname if this is a group share.
-        var nameE = document.getElementById("nickname-" + shares[user].id);
-        if (nameE !== null && multiUser) {
-            nameE.textContent = user;
-            nameE.innerHTML += "<br />";
-            nameE.style.fontWeight = "bold";
-        }
     }
 
     // On first location update, center the map so it shows all participants.
@@ -718,17 +854,7 @@ function processUpdate(data, init) {
         if (mapOuterE !== null) {
             mapOuterE.style.visibility = "visible";
         }
-        var markers = [];
-        for (var share in shares) {
-            if (!shares.hasOwnProperty(share)) continue;
-            if (shares[share].marker === null) continue;
-            markers.push(shares[share].marker);
-        }
-        var fg = new L.featureGroup(markers);
-        map.fitBounds(fg.getBounds().pad(0.5));
-
-        // Do not exceed the default zoom level.
-        if (map.getZoom() > DEFAULT_ZOOM) map.setZoom(DEFAULT_ZOOM);
+        autoCenter();
 
         // Auto-follow single-user shares.
         if (!multiUser) {
