@@ -32,6 +32,7 @@
 
     <string name="dialog_confirm_stop_title">Stop sharing?</string>
     <string name="dialog_confirm_stop_body">Are you sure you wish to stop sharing your location?</string>
+    <string name="dialog_confirm_stop_share">Are you sure you wish to delete this sharing link?</string>
 
     <string name="btn_stop_short">Stop</string>
     <string name="btn_share_short">Share</string>

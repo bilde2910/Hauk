@@ -112,7 +112,12 @@ public final class ShareLinkLayoutManager {
             Button btnStop = linkView.findViewById(R.id.linkBtnStop);
             if (this.share.getSession().getBackendVersion().isAtLeast(Constants.VERSION_COMPAT_VIEW_ID)) {
                 Log.i("Server is compatible with individual share termination"); //NON-NLS
-                btnStop.setOnClickListener(new StopLinkClickListener(ShareLinkLayoutManager.this.manager, this.share, ShareLinkLayoutManager.this));
+                btnStop.setOnClickListener(new StopLinkClickListener(
+                        ShareLinkLayoutManager.this.act,
+                        ShareLinkLayoutManager.this.manager,
+                        this.share,
+                        ShareLinkLayoutManager.this
+                ));
             } else {
                 Log.i("Server is not compatible with individual share termination"); //NON-NLS
                 btnStop.setVisibility(View.GONE);
