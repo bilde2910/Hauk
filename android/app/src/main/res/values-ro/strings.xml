@@ -33,7 +33,7 @@
     <string name="label_status_disconnected">Serverul de date nu este accesibil</string>
     <string name="label_pin_head">PIN-UL TĂU DE GRUP:</string>
     <string name="explain_adopt_title">Adopție partajare</string>
-    <string name="adopt_title">Adoptă o partajare existentă</string>
+    <string name="adopt_title">Adoptă sesiunea altei persoane</string>
     <string name="create_link_title">Creează o nouă adresă de partajare</string>
     <string name="btn_ok">Bine</string>
     <string name="btn_cancel">Anulare</string>
@@ -79,7 +79,7 @@
     <string name="title_activity_settings">Setări</string>
     <string name="prefs_header_connection">Conexiune</string>
     <string name="password_mask">Atingeți pentru a edita</string>
-    <string name="chk_allow_adopt">Permite altora să adauge partajarea mea la o partajare în grup</string>
+    <string name="chk_allow_adopt">Permite altora să mă adauge la o partajare în grup</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="authorize_header">Cerere de autorizare difuzare</string>
     <string name="authorize_body">Hauk a primit și blocat o încercare de a crea o nouă sesiune de partajare a locației de la o sursa de difuzare care s-a identificat ca</string>
@@ -94,7 +94,7 @@
     <string name="link_type_solo">Doar locația mea</string>
     <string name="sel_mode_opt_alone">Partajează doar locația mea</string>
     <string name="label_heading">Partajarea locației, cu sursă deschisă</string>
-    <string name="adopt_body">Puteți adopta o partajare individuală deja existentă pentru a o incorpora în acest grup. Vă rugăm să scrieți adresa sau ID-ul partajării pe care doriți să o adoptați (ex. %s\?XXXX-XXXX) și să îi atribuiți un nume de afișare.</string>
+    <string name="adopt_body">Puteți adopta o sesiune de partajare individuală deja existentă pentru a o incorpora în acest grup. Vă rugăm să scrieți adresa sau ID-ul partajării pe care doriți să o adoptați (ex. %s\?XXXX-XXXX) și să atribuiți un nume de afișare acestei persoane.</string>
     <string name="btn_create">Creare</string>
     <string name="action_copied">S-a copiat adresa din Hauk</string>
     <string name="progress_connect_body">Conectare la Hauk…</string>
@@ -102,7 +102,7 @@
     <string name="err_location_disabled">Serviciile de localizare sunt dezactivate. Vă rugăm să activați serviciile de localizare cu precizie înaltă pentru a vă putea partaja locația.</string>
     <string name="err_ver_group">Serverul nu suportă partajări în grup. Partajările în grup sunt suportate de versiunea %s sau mai nouă; serverul rulează versiunea %s. Partajarea dumneavoastră a fost convertită într-una individuală.</string>
     <string name="err_ver_e2e">Serverul nu suportă criptarea partajării. Partajările criptate sunt suportate de versiunea %s sau mai nouă; serverul rulează versiunea %s. Partajarea dumneavoastră va fi creată fără criptare pentru a păstra compatibilitatea.</string>
-    <string name="link_added_body">O noua adresă a fost creată cu succes pentru partajarea locației! Atingeți butonul de partajare pentru a copia adresa vizibilă public.</string>
+    <string name="link_added_body">O noua adresă a fost creată cu succes pentru locația dumneavoastră partajată! Atingeți butonul de partajare pentru a copia noua adresă vizibilă public.</string>
     <string name="req_perms_message">Această aplicație necesită acces la locația dumneavoastră pentru a funcționa, dar acestă permisiune nu a fost încă acordată. Vă rugăm să aprobați următoarea solicitare de permisiune, apoi apăsați din nou butonul de pornire pentru a reîncerca.</string>
     <string name="battery_savings_body">Se pare că utilizați un dispozitiv %s. Acestea au setări deosebit de stricte în privința economisirii bateriei care pot împiedica Hauk să trimită actualizări ale locației cât timp este în fundal. 
 \n 
@@ -111,13 +111,13 @@
 \nAcest mesaj nu se va mai afișa.</string>
     <string name="pref_enableE2E_title">Protejează partajarea cu parolă</string>
     <string name="label_pin_help">Partajați acest PIN cu ceilalți din grup pentru a le permite și lor să participe la partajare</string>
-    <string name="explain_adopt_body">Hauk permite să vă creați sesiuni de partajare a locației atât pentru dumneavoastră cât și pentru un grup de persoane. Dacă cineva creează o partajare în grup, va primii un cod al grupului pe care alte persoane îl pot folosi pentru a se alătura sesiunii de partajare.
-\n
-\nDe asemenea, persoana care creează partajarea în grup are posibilitatea să adauge o sesiune de partajare deja existentă la acest grup. Acest proces este numit adoptare.
-\n
-\nPuteți decide dacă doriți sau nu să permiteți altora să incorporeze partajarea dumneavoastră de locație în grupul lor bifând această căsuță.
-\n
-\nDacă activați această opțiune și vă partajați locația într-un grup de prieteni, iar altcineva vrea de asemenea să partajeze locația sa, ei pot crea o partajare de grup și să vă adauge astfel încât să apăreți împreună pe aceeași hartă partajată. Asta e util dacă de exemplu conduceți și nu vă puteți utiliza telefonul, adoptarea partajării dumneavoastră de către alte persoane nu necesită vreo interacțiune.</string>
+    <string name="explain_adopt_body">Hauk permite să vă creați sesiuni de partajare a locației atât pentru dumneavoastră cât și pentru un grup de persoane. Dacă cineva creează o partajare în grup, va primii un cod al grupului pe care alte persoane îl pot folosi pentru a se alătura sesiunii de partajare. 
+\n 
+\nDe asemenea, persoana care creează partajarea în grup are posibilitatea să adauge și alte persoane care deja își partajau locația. Acest proces este numit adoptare. 
+\n 
+\nPuteți decide dacă doriți sau nu să permiteți altora să vă incorporeze locația partajată în grupul lor bifând această căsuță. 
+\n 
+\nDacă activați această opțiune și vă partajați locația într-un grup de prieteni, iar altcineva vrea de asemenea să partajeze locația sa, ei pot crea o partajare de grup și să vă adauge astfel încât să apăreți împreună pe aceeași hartă partajată. Asta e util dacă de exemplu conduceți și nu vă puteți utiliza telefonul, adoptarea locației dumneavoastră partajate de către alte persoane nu necesită vreo interacțiune.</string>
     <string name="create_link_body">Puteți crea multiple adrese pentru a vă accesa locația partajată. Fiecare poate fi oprită în mod individual, permițând controlul precis al persoanelor care vă pot vizualiza locația în orice moment. 
 \n 
 \nOrice adresă adițională creată în acest mod va fi doar individuală și va arăta doar locația dumneavoastră.</string>
