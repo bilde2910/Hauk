@@ -1,10 +1,12 @@
 package info.varden.hauk.ui;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -106,7 +108,7 @@ public final class ShareLinkLayoutManager {
 
             // Get the table row layout and inflate it into a view.
             LayoutInflater inflater = ShareLinkLayoutManager.this.act.getLayoutInflater();
-            View linkView = inflater.inflate(R.layout.content_link, null);
+            View linkView = inflater.inflate(R.layout.content_link, ShareLinkLayoutManager.this.linkLayout, false);
 
             // Add an event handler for the stop button. This will stop the given share only.
             Button btnStop = linkView.findViewById(R.id.linkBtnStop);
@@ -118,6 +120,7 @@ public final class ShareLinkLayoutManager {
                         this.share,
                         ShareLinkLayoutManager.this
                 ));
+                btnStop.setLayoutParams(new TableRow.LayoutParams(calculateRealWidth(btnStop), ViewGroup.LayoutParams.WRAP_CONTENT));
             } else {
                 Log.i("Server is not compatible with individual share termination"); //NON-NLS
                 btnStop.setVisibility(View.GONE);
@@ -126,6 +129,7 @@ public final class ShareLinkLayoutManager {
             // Add an event handler for the share button.
             Button btnShare = linkView.findViewById(R.id.linkBtnShare);
             btnShare.setOnClickListener(new ShareLinkClickListener(ShareLinkLayoutManager.this.act, this.share));
+            btnShare.setLayoutParams(new TableRow.LayoutParams(calculateRealWidth(btnShare), ViewGroup.LayoutParams.WRAP_CONTENT));
 
             // Update the text on the UI.
             TextView txtLink = linkView.findViewById(R.id.linkTxtLink);
@@ -139,5 +143,31 @@ public final class ShareLinkLayoutManager {
             ShareLinkLayoutManager.this.shareViewMap.put(this.share, linkView);
             ShareLinkLayoutManager.this.linkLayout.addView(linkView);
         }
+    }
+
+    /**
+     * Calculates the real displayed with of a {@link TextView}. The measurement of text view
+     * (button) width is unreliable when inflating views, as it does not appear to take into account
+     * drawables or padding properly. This method calculates the drawn width manually instead,
+     * giving a reliable width that prevents character wrapping.
+     *
+     * @param view The text view to calculate the width for.
+     * @return A width in pixels.
+     */
+    private static int calculateRealWidth(TextView view) {
+        // Calculate the padding of the view.
+        int realWidth = view.getCompoundDrawablePadding() + view.getTotalPaddingStart() + view.getTotalPaddingEnd();
+
+        // Add the width of the contained text.
+        String text = view.getTransformationMethod().getTransformation(view.getText(), view).toString();
+        realWidth += view.getPaint().measureText(text);
+
+        // Add the widths of any drawables on the button.
+        for (Drawable drawable : view.getCompoundDrawablesRelative()) {
+            if (drawable != null) realWidth += drawable.getIntrinsicWidth();
+        }
+
+        // Return the result.
+        return realWidth;
     }
 }
