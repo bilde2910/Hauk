@@ -485,6 +485,7 @@ public final class MainActivity extends AppCompatActivity {
             MainActivity.this.shareCountdown.start(session.getRemainingSeconds());
 
             // Re-enable the start (stop) button and inform the user.
+            disableUI();
             findViewById(R.id.btnShare).setEnabled(true);
 
             // Service relaunches should be handled silently.
