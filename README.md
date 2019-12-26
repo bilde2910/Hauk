@@ -125,6 +125,20 @@ Password: `demo`
 
 Location shares on the demo server is limited to 2 minutes and is only meant for demonstration purposes. Set up your own server to use Hauk to its full extent.
 
+<details>
+    <summary>Demo server privacy policy - Last updated December 26, 2019</summary>
+
+**Last updated: December 26, 2019**
+
+The demo server is limited by configuration to shares no longer than 2 minutes. This means that no matter what happens, the location data you send to the demo server will be deleted automatically after at most 2 minutes from session initiation. Location data is never logged to disk in any way and only stays in RAM for this time. After the session ends, the data is no longer available. It is a vanilla installation of Hauk from GitHub and the code has not been altered in any way.
+
+The server currently uses CloudFlare for DDoS protection, hence CloudFlare can see the data in transit. You may refer to their privacy policy as well.
+
+The HTTP daemon keeps a standard access log for 7 days. This log contains the link ID (which is useless after the 2 minute session expiration), full URLs, user agents, timestamps, and referring URL (if any). It also logs the IP addresses of the CloudFlare proxy server you connect through. It does *not* contain *your* IP address, only that of a CloudFlare data center somewhere. It's thus not possible to track individuals using it, and not possible to get any meaningful data from it. This log file is used for abuse prevention only.
+
+The server itself is located in Norway and is thus covered under Norwegian privacy regulations.
+</details>
+
 ## Translators
 
 Hauk depends on volunteers to translate the project. Want to help out? Head over to the [translation portal](https://traduki.varden.info/engage/hauk/) to get started.
