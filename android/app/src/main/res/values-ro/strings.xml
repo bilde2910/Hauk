@@ -43,7 +43,6 @@
     <string name="btn_dismiss">Revocare</string>
     <string name="action_copy">Copiere adresă</string>
     <string name="action_stop">Oprește partajarea</string>
-    <string name="notify_title">Partajarea locației este activă</string>
     <string name="notify_body">Hauk vă partajează locația la %s</string>
     <string name="progress_connect_title">Conectare</string>
     <string name="progress_adopt_title">Adoptare</string>

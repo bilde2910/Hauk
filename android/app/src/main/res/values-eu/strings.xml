@@ -45,7 +45,6 @@
     <string name="btn_create">Sortu</string>
     <string name="action_copy">Kopiatu esteka</string>
     <string name="action_stop">Gelditu partekatzea</string>
-    <string name="notify_title">Kokaleku partekatzea aktibo</string>
     <string name="notify_body">Hauk zure kokalekua hona partekatzen du: %s</string>
     <string name="progress_connect_title">Konektatzen</string>
     <string name="progress_adopt_title">Adoptatzen</string>

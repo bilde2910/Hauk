@@ -49,7 +49,6 @@
     <string name="btn_dismiss">Sluiten</string>
     <string name="action_copy">Kopieer link</string>
     <string name="action_stop">Stop met delen</string>
-    <string name="notify_title">Locatie delen actief</string>
     <string name="notify_body">Hauk deelt uw locatie op %s</string>
     <string name="progress_connect_body">Verbinden met Hauk…</string>
     <string name="progress_adopt_title">Adopteren</string>

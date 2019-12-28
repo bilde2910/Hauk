@@ -68,7 +68,6 @@
     <string name="action_copy">Link kopieren</string>
     <string name="action_copied">Kopierter link von Hauk</string>
     <string name="action_stop">Teilen stoppen</string>
-    <string name="notify_title">Standortfreigabe aktiv</string>
     <string name="progress_connect_title">Verbinden</string>
     <string name="progress_connect_body">Verbinde zu Hauk…</string>
     <string name="progress_adopt_title">Adoption</string>

@@ -61,6 +61,22 @@ public abstract class HaukNotification {
     protected abstract void build(NotificationCompat.Builder builder) throws Exception;
 
     /**
+     * Displays the notification, or updates if it is already displayed.
+     */
+    final void push() {
+        NotificationManager manager = (NotificationManager) this.ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            try {
+                manager.notify(this.id, create());
+            } catch (Exception e) {
+                Log.e("Error while pushing notification", e); //NON-NLS
+            }
+        } else {
+            Log.e("Notification manager is null"); //NON-NLS
+        }
+    }
+
+    /**
      * Creates a notification instance that can be displayed using NotificationManager.
      *
      * @return A Notification instance.

@@ -6,6 +6,7 @@ import androidx.core.app.NotificationCompat;
 
 import info.varden.hauk.R;
 import info.varden.hauk.manager.StopSharingTask;
+import info.varden.hauk.service.GNSSActiveHandler;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.ui.MainActivity;
 import info.varden.hauk.utils.Log;
@@ -15,7 +16,7 @@ import info.varden.hauk.utils.Log;
  *
  * @author Marius Lindvall
  */
-public final class SharingNotification extends HaukNotification {
+public final class SharingNotification extends HaukNotification implements GNSSActiveHandler {
     /**
      * The share that this notification represents.
      */
@@ -28,6 +29,16 @@ public final class SharingNotification extends HaukNotification {
     private final StopSharingTask stopSharingTask;
 
     /**
+     * A string resource representing the title currently displayed in the notification.
+     */
+    private int notifyTitle;
+
+    /**
+     * The old notification title, if switching to or from the "backend connection lost" title.
+     */
+    private int lastTitle;
+
+    /**
      * Creates a persistent notification.
      *
      * @param ctx             Android application context.
@@ -38,12 +49,14 @@ public final class SharingNotification extends HaukNotification {
         super(ctx);
         this.share = share;
         this.stopSharingTask = stopSharingTask;
+        this.notifyTitle = R.string.label_status_wait;
+        this.lastTitle = R.string.label_status_wait;
     }
 
     @Override
     public void build(NotificationCompat.Builder builder) throws Exception {
         Log.v("Building sharing notification"); //NON-NLS
-        builder.setContentTitle(getContext().getString(R.string.notify_title));
+        builder.setContentTitle(getContext().getString(this.notifyTitle));
         builder.setContentText(String.format(getContext().getString(R.string.notify_body), this.share.getSession().getServerURL()));
         builder.setSmallIcon(R.drawable.ic_notify);
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -54,5 +67,42 @@ public final class SharingNotification extends HaukNotification {
         builder.setContentIntent(new ReopenIntent(getContext(), MainActivity.class).toPending());
 
         builder.setOngoing(true);
+    }
+
+    @Override
+    public void onCoarseRebound() {
+        this.notifyTitle = R.string.label_status_lost_gnss;
+        this.lastTitle = this.notifyTitle;
+        push();
+    }
+
+    @Override
+    public void onCoarseLocationReceived() {
+        this.notifyTitle = R.string.label_status_coarse;
+        this.lastTitle = this.notifyTitle;
+        push();
+    }
+
+    @Override
+    public void onAccurateLocationReceived() {
+        this.notifyTitle = R.string.label_status_ok;
+        this.lastTitle = this.notifyTitle;
+        push();
+    }
+
+    @Override
+    public void onServerConnectionLost() {
+        this.notifyTitle = R.string.label_status_disconnected;
+        push();
+    }
+
+    @Override
+    public void onServerConnectionRestored() {
+        this.notifyTitle = this.lastTitle;
+        push();
+    }
+
+    @Override
+    public void onShareListReceived(String linkFormat, String[] shareIDs) {
     }
 }

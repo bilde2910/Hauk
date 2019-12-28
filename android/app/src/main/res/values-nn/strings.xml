@@ -40,7 +40,6 @@
     <string name="action_copy">Kopiér link</string>
     <string name="action_copied">Link kopiert frå Hauk</string>
     <string name="action_stop">Stopp deling</string>
-    <string name="notify_title">Posisjonsdeling aktiv</string>
     <string name="notify_body">Hauk deler posisjonen din til %s</string>
     <string name="progress_connect_title">Koplar til</string>
     <string name="progress_connect_body">Koplar til Hauk…</string>

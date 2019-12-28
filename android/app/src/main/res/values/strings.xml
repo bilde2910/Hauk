@@ -68,7 +68,6 @@
     <string name="action_copy">Copy link</string>
     <string name="action_copied">Copied link from Hauk</string>
     <string name="action_stop">Stop sharing</string>
-    <string name="notify_title">Location sharing active</string>
     <string name="notify_body">Hauk is sharing your location to %s</string>
 
     <string name="progress_connect_title">Connecting</string>

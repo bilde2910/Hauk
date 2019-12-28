@@ -48,7 +48,6 @@
     <string name="action_copy">Скопировать ссылку</string>
     <string name="action_copied">Скопированная ссылка из Hauk</string>
     <string name="action_stop">Остановить шаринг</string>
-    <string name="notify_title">Шаринг местоположения активен</string>
     <string name="notify_body">Hauk шарит ваше местоположение %s</string>
     <string name="btn_ok">OK</string>
     <string name="label_mode">Режим шары:</string>

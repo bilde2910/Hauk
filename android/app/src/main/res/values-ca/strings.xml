@@ -47,7 +47,6 @@
     <string name="action_copy">Copia l\'enllaç</string>
     <string name="action_copied">l\'enllaç de Hauk s\'ha copiat</string>
     <string name="action_stop">Atura la compartició</string>
-    <string name="notify_title">Compartició de localització activa</string>
     <string name="progress_connect_title">Connectant</string>
     <string name="progress_connect_body">Connectant a Hauk…</string>
     <string name="progress_adopt_title">Adoptant</string>

@@ -56,7 +56,6 @@
     <string name="action_copy">Lien à copier</string>
     <string name="action_copied">Lien copié d\'Hauk</string>
     <string name="action_stop">Arrêter le partage</string>
-    <string name="notify_title">Partage de localisation actif</string>
     <string name="notify_body">"Hauk partage votre  localisation à %s"</string>
     <string name="progress_connect_title">Connexion</string>
     <string name="progress_connect_body">Connexion à Hauk…</string>

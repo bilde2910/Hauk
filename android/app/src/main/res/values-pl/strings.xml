@@ -64,7 +64,6 @@
     <string name="action_copy">Kopiuj link</string>
     <string name="action_copied">Skopiowano link z aplikacji Hauk</string>
     <string name="action_stop">Zatrzymaj udostępnianie</string>
-    <string name="notify_title">Udostępnianie jest aktywne</string>
     <string name="notify_body">Hauk udostępnia twoją lokalizację serwerowi %s</string>
     <string name="progress_connect_title">Łączenie</string>
     <string name="progress_connect_body">Łączenie z Hauk…</string>

@@ -17,7 +17,6 @@ import info.varden.hauk.http.LocationUpdatePacket;
 import info.varden.hauk.http.ServerException;
 import info.varden.hauk.http.parameter.LocationProvider;
 import info.varden.hauk.manager.StopSharingTask;
-import info.varden.hauk.notify.HaukNotification;
 import info.varden.hauk.notify.SharingNotification;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.Version;
@@ -106,7 +105,7 @@ public final class LocationPushService extends Service {
         // A task that should be run when sharing ends, either automatically or by user request.
         StopSharingTask stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_STOP_TASK, -1));
         this.share = (Share) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_SHARE, -1));
-        this.gnssActiveTask = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, -1));
+        GNSSActiveHandler parentHandler = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, -1));
         this.handler = (Handler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_HANDLER, -1));
 
         try {
@@ -120,8 +119,11 @@ public final class LocationPushService extends Service {
                 // buttons that let the user interact with Hauk while in the background, but the
                 // real reason we need a notification is so that Android does not kill our app while
                 // it is in the background. Having an active notification stops this from happening.
-                HaukNotification notify = new SharingNotification(this, this.share, stopTask);
+                SharingNotification notify = new SharingNotification(this, this.share, stopTask);
                 startForeground(notify.getID(), notify.create());
+
+                // Send status changes both to the parent handler and the notification.
+                this.gnssActiveTask = new MultiTargetGNSSHandlerProxy(parentHandler, notify);
 
                 // Create and bind location listeners.
                 this.listenCoarse = new CoarseLocationListener();
