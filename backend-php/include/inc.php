@@ -28,6 +28,7 @@ const REDIS = 1;
 // Authentication methods.
 const PASSWORD = 0;
 const HTPASSWD = 1;
+const LDAP = 2;
 
 // Share link types.
 const LINK_4_PLUS_4_UPPER_CASE = 0;
@@ -125,6 +126,12 @@ const DEFAULTS = array(
     "auth_method"           => PASSWORD,
     "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
     "htpasswd_path"         => '/etc/hauk/users.htpasswd',
+    "ldap_uri"              => 'ldaps://ldap.example.com:636',
+    "ldap_start_tls"        => false,
+    "ldap_base_dn"          => 'ou=People,dc=example,dc=com',
+    "ldap_bind_dn"          => 'cn=admin,dc=example,dc=com',
+    "ldap_bind_pass"        => 'Adm1nP4ssw0rd',
+    "ldap_user_filter"      => '(uid=%s)',
     "allow_link_req"        => true,
     "reserved_links"        => [],
     "reserve_whitelist"     => false,
@@ -776,12 +783,12 @@ function requirePOST(...$args) {
 function authenticated() {
     switch (getConfig("auth_method")) {
         case PASSWORD:
-            // Static shared password authentication
+            // Static shared password authentication.
             requirePOST("pwd");
             return password_verify($_POST["pwd"], getConfig("password_hash"));
 
         case HTPASSWD:
-            // .htpasswd file based authentication
+            // .htpasswd file based authentication.
             global $LANG;
             if (!isset($_POST["usr"])) die($LANG["username_required"]);
             requirePOST("pwd", "usr");
@@ -797,6 +804,55 @@ function authenticated() {
                 fclose($file);
                 return $authed;
             }
+
+        case LDAP:
+            // LDAP-based authentication.
+            global $LANG;
+            if (!extension_loaded("ldap")) die($LANG["ldap_extension_missing"]);
+            if (!isset($_POST["usr"])) die($LANG["username_required"]);
+            requirePOST("pwd", "usr");
+            if (strlen($_POST["pwd"]) == 0) die($LANG["incorrect_password"]);
+
+            // Connect to the LDAP server.
+            $ldc = @ldap_connect(getConfig("ldap_uri"));
+            if ($ldc === false) die($LANG["ldap_config_error"]);
+            ldap_set_option($ldc, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldc, LDAP_OPT_REFERRALS, 0);
+            if (getConfig("ldap_start_tls")) ldap_start_tls($ldc);
+
+            // Bind the admin user.
+            $ldbind = @ldap_bind($ldc, getConfig("ldap_bind_dn"), getConfig("ldap_bind_pass"));
+            if ($ldbind === false) die($LANG["ldap_connection_failed"]);
+
+            // Search for the user.
+            $ldsearch = @ldap_search($ldc, getConfig("ldap_base_dn"), str_replace("%s", $_POST["usr"], getConfig("ldap_user_filter")), array("dn"));
+            if ($ldsearch === false) {
+                ldap_unbind($ldc);
+                die($LANG["ldap_search_failed"]);
+            };
+            $ldentries = @ldap_get_entries($ldc, $ldsearch);
+            if ($ldentries["count"] == 0) {
+                // No users matched; throw a generic "incorrect password"
+                // message anyway to prevent user enumeration issues.
+                ldap_unbind($ldc);
+                die($LANG["ldap_user_unauthorized"]);
+            } elseif ($ldentries["count"] > 1) {
+                // Filter matched multiple users; most likely a misconfiguration
+                // of the filter.
+                ldap_unbind($ldc);
+                die($LANG["ldap_search_ambiguous"]);
+            }
+
+            // Bind as the user.
+            $ldbind = @ldap_bind($ldc, $ldentries[0]["dn"], $_POST["pwd"]);
+            if ($ldbind === false) {
+                ldap_unbind($ldc);
+                die($LANG["ldap_user_unauthorized"]);
+            }
+
+            // Successful authentication and authorization.
+            ldap_unbind($ldc);
+            return true;
 
         default:
             return false;

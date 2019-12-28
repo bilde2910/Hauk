@@ -63,6 +63,7 @@
 //
 // - PASSWORD: Use a static, shared server password for everyone
 // - HTPASSWD: Require a username and separate password for each user
+// - LDAP: Authenticate users against an LDAP server
 "auth_method"       => PASSWORD,
 
 /*----------------------------------------------------------------------------*\
@@ -94,6 +95,37 @@
 // To add additional users to an existing file:
 //   - htpasswd -BC 10 /etc/hauk/users.htpasswd <username>
 "htpasswd_path"     => '/etc/hauk/users.htpasswd',
+
+/*----------------------------------------------------------------------------*\
+|  LDAP AUTHENTICATION                                                         |
+\*----------------------------------------------------------------------------*/
+
+// URI that points to the LDAP server. Use "ldap://" for unencrypted LDAP as
+// well as when using StartTLS, use "ldaps://" for regular LDAP over TLS. Port
+// number is typically 389 (ldap) or 636 (ldaps).
+"ldap_uri"          => 'ldaps://ldap.example.com:636',
+
+// Whether or not you wish to use StartTLS. StartTLS cannot be used in
+// combination with `ldaps`.
+"ldap_start_tls"    => false,
+
+// Base DN to search for users.
+"ldap_base_dn"      => 'ou=People,dc=example,dc=com',
+
+// DN to bind to to perform user search. This should ideally be a read-only
+// account as the password is stored in plain-text in this config file.
+"ldap_bind_dn"      => 'cn=admin,dc=example,dc=com',
+"ldap_bind_pass"    => 'Adm1nP4ssw0rd',
+
+// A filter that finds the user trying to authenticate. %s is substituted with
+// the username provided by the user in the app.
+//
+// You can also use this to restrict access to Hauk to only authorized users if
+// you do not wish to grant all LDAP users permission to use your Hauk instance.
+// For example, (&(uid=%s)(memberOf=cn=HaukUsers,ou=Groups,dc=example,dc=com))
+// will only let the user connect if they are part of the "HaukUsers" group in
+// the "Groups" OU.
+"ldap_user_filter"  => '(uid=%s)',
 
 /*----------------------------------------------------------------------------*\
 |  GENERAL SETTINGS                                                            |
