@@ -5,26 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- The sharing mode. Currently, only solo shares are supported. -->
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:text="@string/label_mode" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center_vertical"
-            android:entries="@array/sel_new_mode_opts"
-            android:layout_weight="1" />
-
-    </TableRow>
-
     <!-- Whether or not to allow adoption by others. -->
     <TableRow
         android:layout_width="match_parent"
