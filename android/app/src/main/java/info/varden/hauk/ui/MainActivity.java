@@ -313,7 +313,7 @@ public final class MainActivity extends AppCompatActivity {
         this.manager.attachShareListener(new ShareListenerImpl());
         this.manager.attachSessionListener(new SessionListenerImpl());
 
-        this.linkList = new ShareLinkLayoutManager(this, this.manager, (ViewGroup) findViewById(R.id.tableLinks));
+        this.linkList = new ShareLinkLayoutManager(this, this.manager, (ViewGroup) findViewById(R.id.tableLinks), (TextView) findViewById(R.id.headerLinks));
     }
 
     /**

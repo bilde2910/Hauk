@@ -43,15 +43,21 @@ public final class ShareLinkLayoutManager {
     private final ViewGroup linkLayout;
 
     /**
+     * The header above the link list, used to change the text when there are no active shares.
+     */
+    private final TextView headerView;
+
+    /**
      * A list of links displayed on the UI that the client is contributing to, paired with the View
      * representing the link of that share and its controls in the link list.
      */
     private final Map<Share, View> shareViewMap;
 
-    ShareLinkLayoutManager(Activity act, SessionManager manager, ViewGroup linkLayout) {
+    ShareLinkLayoutManager(Activity act, SessionManager manager, ViewGroup linkLayout, TextView headerView) {
         this.act = act;
         this.manager = manager;
         this.linkLayout = linkLayout;
+        this.headerView = headerView;
         this.shareViewMap = new HashMap<>();
         removeAll();
     }
@@ -79,8 +85,17 @@ public final class ShareLinkLayoutManager {
      * @param share The share whose link should be removed from the link list.
      */
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
-    void remove(Share share) {
-        this.linkLayout.removeView(this.shareViewMap.remove(share));
+    void remove(final Share share) {
+        this.act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ShareLinkLayoutManager.this.linkLayout.removeView(ShareLinkLayoutManager.this.shareViewMap.remove(share));
+                if (ShareLinkLayoutManager.this.shareViewMap.isEmpty()) {
+                    ShareLinkLayoutManager.this.headerView.setText(R.string.label_heading_no_links);
+                }
+            }
+        });
+
     }
 
     /**
@@ -88,8 +103,14 @@ public final class ShareLinkLayoutManager {
      */
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     void removeAll() {
-        this.linkLayout.removeAllViews();
-        this.shareViewMap.clear();
+        this.act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ShareLinkLayoutManager.this.linkLayout.removeAllViews();
+                ShareLinkLayoutManager.this.shareViewMap.clear();
+                ShareLinkLayoutManager.this.headerView.setText(R.string.label_heading_no_links);
+            }
+        });
     }
 
     /**
@@ -142,6 +163,7 @@ public final class ShareLinkLayoutManager {
             Log.i("Putting share in class-level share list"); //NON-NLS
             ShareLinkLayoutManager.this.shareViewMap.put(this.share, linkView);
             ShareLinkLayoutManager.this.linkLayout.addView(linkView);
+            ShareLinkLayoutManager.this.headerView.setText(R.string.label_heading_links);
         }
     }
 
