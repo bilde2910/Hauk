@@ -26,8 +26,8 @@
     <string name="label_status_ok">Lokasjonsdeling aktiv!</string>
     <string name="label_pin_head">DIN GRUPPEKODE:</string>
     <string name="explain_adopt_title">Delingsadopsjon</string>
-    <string name="adopt_title">Adoptér ein annens deling</string>
-    <string name="adopt_body">Du kan adoptera ein annan persons delte posisjon for å integrera han/henne i denne gruppa. Lim inn linken eller delings-IDen til den personen du ønsker å adoptera (t.d. %s\?XXXX-XXXX) og tildel han/henne eit kallenavn.</string>
+    <string name="adopt_title">Adoptér ein annens sesjon</string>
+    <string name="adopt_body">Du kan adoptera ein annan persons sesjon for å innlemma han/henne i denne gruppa. Lim inn linken eller delings-IDen til den personen du ønsker å adoptera (t.d. %s\?XXXX-XXXX) og tildel han/henne eit kallenavn.</string>
     <string name="create_link_title">Lag ein ny delingslink</string>
     <string name="create_link_body">Du kan laga fleire delingslinker som andre kan bruka til å få tilgang til den delte posisjonen din. Kvar link kan stoppast individuelt, noko som gir deg detaljert kontroll over kven som kan sjå posisjonen din til kvar og ei tid. 
 \n 
@@ -72,7 +72,7 @@
 \n 
 \nØnsker du å gjenoppta denne sesjonen\?</string>
     <string name="link_added_title">Link oppretta</string>
-    <string name="link_added_body">Ein ny link vart oppretta for delingen din! Klikk på del-knappen for å kopiera visningslinken for delingen din.</string>
+    <string name="link_added_body">Ein ny link vart oppretta for den delte posisjonen din! Klikk på del-knappen for å kopiera visningslinken for den nye delingen din.</string>
     <string name="req_perms_title">Tilgang krevjast</string>
     <string name="req_perms_message">Denne appen krev tilgang til stadtenester for å fungera, men denne tilgangen har ikkje vorte gitt endå. Ver vennleg og godta følgjande tilgangsførespurnad, og klikk på startknappen for å prøva på nytt.</string>
     <string name="share_via">Del Hauk-lenkje via</string>
@@ -81,13 +81,13 @@
     <string name="label_pin_help">Del denne koden med dei andre i gruppa di for å la dei kopla seg på og bli med i delingsgruppa</string>
     <string name="explain_adopt_body">Hauk lèt deg laga delingssesjoner for deg sjølv i tillegg til for grupper. Viss nokon lagar ei gruppe, får dei ein kode som andre kan bruka til å bli med på å dela posisjonen sin til gruppa. 
 \n 
-\nPersonen som opprettar gruppa har òg moglegheit til å legga til ein eksisterande enkeltperson som allereie deler posisjonen sin inn i gruppa. Denne prosessen kallast for adopsjon. 
+\nPersonen som opprettar gruppa har òg moglegheit til å legga til andre som allereie deler posisjonen sin inn i gruppa. Denne prosessen kallast for adopsjon. 
 \n 
-\nDu kan avgjera om du ønsker å la andre fletta delingen din inn i ei gruppe ved å kryssa av i denne boksen. 
+\nDu kan avgjera om du ønsker å la andre innlemma deg i ei gruppe ved å kryssa av i denne boksen. 
 \n 
-\nViss du aktiverer dette og deler posisjonen din med ein gjeng med venner, og nokon andre i gjengen òg ønsker å dela posisjonen sin, kan dei oppretta ein delingsgruppe og legga deg til på kartet sitt, slik at de begge dukkar opp på same kart. Dette kan vera nyttig viss du t.d. køyrer bil og ikkje kan bruka telefonen din, sidan adopsjon av delingen din av andre ikkje krev noka handling frå deg.</string>
+\nViss du aktiverer dette og deler posisjonen din med ein gjeng med venner, og nokon andre i gjengen òg ønsker å dela posisjonen sin, kan dei oppretta ein delingsgruppe og legga deg til på kartet sitt, slik at de begge dukkar opp på same kart. Dette kan vera nyttig viss du t.d. køyrer bil og ikkje kan bruka telefonen din, sidan adopsjon av den delte posisjonen din av andre ikkje krev noka handling frå deg.</string>
     <string name="chk_allow_adopt">La andre legga meg til i ein delingsgruppe når eg deler posisjonen min</string>
-    <string name="btn_adopt">Legg til ein eksisterande sesjon</string>
+    <string name="btn_adopt">Slå saman ein eksisterande link</string>
     <string name="sel_mode_opt_join_group">Bli med i ein delingsgruppe</string>
     <string name="sel_mode_opt_alone">Berre del min eigen posisjon</string>
     <string name="sel_mode_opt_create_group">Lag ein delingsgruppe</string>
@@ -158,4 +158,7 @@
     <string name="dialog_confirm_stop_share">Er du sikker på at du vil sletta denne linken\?</string>
     <string name="dialog_confirm_stop_body">Er du sikker på at du vil slutta å dela posisjonen din\?</string>
     <string name="dialog_confirm_stop_title">Avslutt deling\?</string>
+    <string name="pref_noGnssFallback_title">Fall tilbake til nettverksposisjon viss GNSS er utilgjengeleg i (sekund)</string>
+    <string name="label_heading_no_links">Ingen aktive delinger</string>
+    <string name="label_status_lost_gnss">Ventar på posisjon…</string>
 </resources>
