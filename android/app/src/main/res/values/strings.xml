@@ -28,7 +28,7 @@
 
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
-    <string name="btn_link">Create new tracking link</string>
+    <string name="btn_link">Create new sharing link</string>
     <string name="btn_adopt">Merge an existing sharing link</string>
 
     <string name="dialog_confirm_stop_title">Stop sharing?</string>
