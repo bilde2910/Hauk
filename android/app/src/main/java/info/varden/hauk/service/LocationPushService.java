@@ -152,6 +152,7 @@ public final class LocationPushService extends Service {
 
         Log.i("Removing callbacks from handler"); //NON-NLS
         this.handler.removeCallbacksAndMessages(null);
+        this.gnssActiveTask = new MultiTargetGNSSHandlerProxy();
 
         Log.i("Stopping foreground service"); //NON-NLS
         stopForeground(true);
