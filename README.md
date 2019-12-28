@@ -24,8 +24,9 @@ phone, and you're good to go!
 
 ## System Requirements
 
-- Web server running PHP and Memcached or Redis
+- Web server running PHP and Memcached or Redis.
 - PHP `memcached`, `memcache` or `redis` extension installed on the web server.
+- PHP `ldap` extension if using LDAP authentication.
 - Android 6 or above to run the [companion Android app](https://f-droid.org/packages/info.varden.hauk/).
 
 ## Installation instructions

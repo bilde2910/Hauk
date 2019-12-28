@@ -1,0 +1,3 @@
+This update comes with major UI improvements, including dark theme, a settings menu and a cleaner interface. Along with this are a bunch of new features, like HTTP and SOCKS proxy support, LDAP authentication on the backend, and many additional configurable options. This version also fixes various bugs, including proper fallback to network-based location, homoglyphs appearing in links, and various UI and UX fixes.
+
+For the full changelog, please see https://github.com/bilde2910/Hauk/releases.
