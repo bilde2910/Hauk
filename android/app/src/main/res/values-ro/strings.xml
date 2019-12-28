@@ -89,7 +89,7 @@
     <string name="label_duration">Durată partajare:</string>
     <string name="pref_requestLink_hint">&lt;generat aleator&gt;</string>
     <string name="label_status">Stare:</string>
-    <string name="btn_link">Creează o nouă adresă de urmărire</string>
+    <string name="btn_link">Creează o nouă partajare</string>
     <string name="label_heading_links">Adrese active acum</string>
     <string name="link_type_solo">Doar locația mea</string>
     <string name="sel_mode_opt_alone">Partajează doar locația mea</string>
