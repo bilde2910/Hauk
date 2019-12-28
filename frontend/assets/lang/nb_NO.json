@@ -30,5 +30,7 @@
     "control_show_self": "Vis posisjonen min",
     "dialog_user_navigate": "Naviger til",
     "dialog_user_follow": "Vis på kartet",
-    "dialog_active_head": "Aktive brukere"
+    "dialog_active_head": "Aktive brukere",
+    "google_play_badge_text": "Tilgjengelig på Google Play",
+    "f_droid_badge_text": "Tilgjengelig på F-Droid"
 }
