@@ -49,12 +49,25 @@ final class GNSSStatusLabelUpdater implements GNSSStatusUpdateListener {
     }
 
     @Override
+    public void onGNSSConnectionLost() {
+        // Indicate to the user that the GNSS connection was lost, and that we are now searching for
+        // a location again.
+        Log.i("GNSS location provider has stopped working; bound to coarse location provider"); //NON-NLS
+        this.statusLabel.setText(R.string.label_status_lost_gnss);
+        this.statusLabel.setTextColor(this.ctx.getColor(R.color.statusWait));
+        this.lastStatus = R.string.label_status_lost_gnss;
+        this.lastColor = R.color.statusWait;
+    }
+
+    @Override
     public void onCoarseLocationReceived() {
         // Indicate to the user that GPS data is being received when the location pusher starts
         // receiving GPS data.
         Log.i("Initial coarse location was received, awaiting high accuracy fix"); //NON-NLS
         this.statusLabel.setText(R.string.label_status_coarse);
+        this.statusLabel.setTextColor(this.ctx.getColor(R.color.statusWait));
         this.lastStatus = R.string.label_status_coarse;
+        this.lastColor = R.color.statusWait;
     }
 
     @Override

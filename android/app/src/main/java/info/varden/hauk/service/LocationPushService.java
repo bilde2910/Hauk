@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.IBinder;
@@ -16,13 +15,16 @@ import androidx.annotation.Nullable;
 import info.varden.hauk.Constants;
 import info.varden.hauk.http.LocationUpdatePacket;
 import info.varden.hauk.http.ServerException;
+import info.varden.hauk.http.parameter.LocationProvider;
 import info.varden.hauk.manager.StopSharingTask;
 import info.varden.hauk.notify.HaukNotification;
 import info.varden.hauk.notify.SharingNotification;
 import info.varden.hauk.struct.Share;
 import info.varden.hauk.struct.Version;
+import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.utils.Log;
 import info.varden.hauk.utils.ReceiverDataRegistry;
+import info.varden.hauk.utils.TimeUtils;
 
 /**
  * This class is a location listener that POSTs all location updates to Hauk as it receives them. It
@@ -71,12 +73,12 @@ public final class LocationPushService extends Service {
     /**
      * The service's location listener for fine (GNSS, high-accuracy) location updates.
      */
-    private LocationListener listenFine;
+    private FineLocationListener listenFine;
 
     /**
      * The service's location listener for coarse (network, low-accuracy) location updates.
      */
-    private LocationListener listenCoarse;
+    private CoarseLocationListener listenCoarse;
 
     /**
      * The handler that has scheduled the stop task. This is needed so that the callback can be
@@ -121,42 +123,12 @@ public final class LocationPushService extends Service {
                 HaukNotification notify = new SharingNotification(this, this.share, stopTask);
                 startForeground(notify.getID(), notify.create());
 
-                this.listenCoarse = new LocationListenerBase() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        if (!LocationPushService.this.hasRunCoarseTask) {
-                            // Notify the main activity that coarse GPS data is now being received,
-                            // such that the UI can be updated.
-                            LocationPushService.this.hasRunCoarseTask = true;
-                            LocationPushService.this.gnssActiveTask.onCoarseLocationReceived();
-                        }
-                        Log.v("Location was received on coarse location provider"); //NON-NLS
-                        LocationPushService.this.onLocationChanged(location);
-                    }
-                };
+                // Create and bind location listeners.
+                this.listenCoarse = new CoarseLocationListener();
+                this.listenFine = new FineLocationListener();
+                if (!this.listenCoarse.request(this.locMan)) this.listenCoarse = null;
+                if (!this.listenFine.request(this.locMan)) this.listenFine = null;
 
-                this.listenFine = new LocationListenerBase() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        if (LocationPushService.this.listenCoarse != null) {
-                            // Unregister the coarse location listener, since we are now receiving
-                            // accurate location data.
-                            Log.i("Accurate location found; removing updates from coarse location provider"); //NON-NLS
-                            LocationPushService.this.locMan.removeUpdates(LocationPushService.this.listenCoarse);
-                            LocationPushService.this.listenCoarse = null;
-                        }
-                        if (!LocationPushService.this.hasRunAccurateTask) {
-                            // Notify the main activity that accurate GPS data is now being
-                            // received, such that the UI can be updated.
-                            LocationPushService.this.hasRunAccurateTask = true;
-                            LocationPushService.this.gnssActiveTask.onAccurateLocationReceived();
-                        }
-                        Log.v("Location was received on fine location provider"); //NON-NLS
-                        LocationPushService.this.onLocationChanged(location);
-                    }
-                };
-
-                attachToLocationServices();
             } else {
                 Log.e("Location permission that was granted earlier has been rejected - sharing aborted"); //NON-NLS
             }
@@ -173,6 +145,7 @@ public final class LocationPushService extends Service {
             this.locMan.removeUpdates(this.listenCoarse);
         }
         Log.i("Service destroyed; removing updates from fine location provider"); //NON-NLS
+        this.listenFine.onStopped();
         this.locMan.removeUpdates(this.listenFine);
 
         Log.i("Removing callbacks from handler"); //NON-NLS
@@ -185,30 +158,14 @@ public final class LocationPushService extends Service {
     }
 
     /**
-     * Attaches the listeners to the location manager to request updates.
-     *
-     * @throws SecurityException If location permission is missing.
-     */
-    private void attachToLocationServices() throws SecurityException {
-        Log.i("Requesting location updates from device location services"); //NON-NLS
-        try {
-            this.locMan.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, this.share.getSession().getIntervalMillis(), this.share.getSession().getMinimumDistance(), this.listenCoarse);
-        } catch (IllegalArgumentException ex) {
-            Log.w("Coarse location provider does not exist!", ex); //NON-NLS
-            this.listenCoarse = null;
-        }
-        this.locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, this.share.getSession().getIntervalMillis(), this.share.getSession().getMinimumDistance(), this.listenFine);
-    }
-
-    /**
      * Called when either the coarse or the fine location provider has received a location update.
      * Pushes the location update to the session backend.
      *
      * @param location The location received from the device's location services.
      */
-    private void onLocationChanged(Location location) {
+    private void onLocationChanged(Location location, LocationProvider accuracy) {
         Log.v("Sending location update packet"); //NON-NLS
-        new LocationUpdatePacketImpl(location).send();
+        new LocationUpdatePacketImpl(location, accuracy).send();
     }
 
     @Nullable
@@ -217,9 +174,116 @@ public final class LocationPushService extends Service {
         return null;
     }
 
+    /**
+     * Coarse location provider implementation (network-based location).
+     */
+    private final class CoarseLocationListener extends LocationListenerBase {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (!LocationPushService.this.hasRunCoarseTask) {
+                // Notify the main activity that coarse GPS data is now being received,
+                // such that the UI can be updated.
+                LocationPushService.this.hasRunCoarseTask = true;
+                LocationPushService.this.gnssActiveTask.onCoarseLocationReceived();
+            }
+            Log.v("Location was received on coarse location provider"); //NON-NLS
+            LocationPushService.this.onLocationChanged(location, LocationProvider.COARSE);
+        }
+
+        @Override
+        boolean request(LocationManager manager) throws SecurityException {
+            Log.i("Requesting location updates from device location services"); //NON-NLS
+            try {
+                manager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        LocationPushService.this.share.getSession().getIntervalMillis(),
+                        LocationPushService.this.share.getSession().getMinimumDistance(),
+                        this
+                );
+                return true;
+            } catch (IllegalArgumentException ex) {
+                Log.w("Coarse location provider does not exist!", ex); //NON-NLS
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Fine location provider implementation (GNSS-based location).
+     */
+    private final class FineLocationListener extends LocationListenerBase {
+        private final Handler noGnssTimer;
+        private final PreferenceManager prefs;
+
+        private FineLocationListener() {
+            this.noGnssTimer = new Handler();
+            this.prefs = new PreferenceManager(LocationPushService.this);
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if (LocationPushService.this.listenCoarse != null) {
+                // Unregister the coarse location listener, since we are now receiving
+                // accurate location data.
+                Log.i("Accurate location found; removing updates from coarse location provider"); //NON-NLS
+                LocationPushService.this.locMan.removeUpdates(LocationPushService.this.listenCoarse);
+                LocationPushService.this.listenCoarse = null;
+            }
+            if (!LocationPushService.this.hasRunAccurateTask) {
+                // Notify the main activity that accurate GPS data is now being
+                // received, such that the UI can be updated.
+                LocationPushService.this.hasRunAccurateTask = true;
+                LocationPushService.this.gnssActiveTask.onAccurateLocationReceived();
+            }
+            Log.v("Location was received on fine location provider"); //NON-NLS
+
+            // Set a timeout for the location updates to detect if the provider stops working. If
+            // that happens, fall back to the coarse location provider.
+            this.noGnssTimer.removeCallbacksAndMessages(null);
+            this.noGnssTimer.postDelayed(new CoarseLocationFallbackTask(), LocationPushService.this.share.getSession().getIntervalMillis() + this.prefs.get(Constants.PREF_NO_GNSS_FALLBACK) * TimeUtils.MILLIS_PER_SECOND);
+
+            LocationPushService.this.onLocationChanged(location, LocationProvider.FINE);
+        }
+
+        /**
+         * Should be called when the session is stopped and updates removed from this listener. This
+         * prevents the timeout from activating after the session has been stopped.
+         */
+        private void onStopped() {
+            this.noGnssTimer.removeCallbacksAndMessages(false);
+        }
+
+        @Override
+        boolean request(LocationManager manager) throws SecurityException {
+            manager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    LocationPushService.this.share.getSession().getIntervalMillis(),
+                    LocationPushService.this.share.getSession().getMinimumDistance(),
+                    this
+            );
+            return true;
+        }
+
+        private final class CoarseLocationFallbackTask implements Runnable {
+            @Override
+            public void run() {
+                // No location updates have been received for the timeout period. Rebind the coarse
+                // location listener while we wait for the fine listener to become functional again.
+                Log.w("Location fix lost. Rebinding coarse location provider."); //NON-NLS
+                LocationPushService.this.gnssActiveTask.onCoarseRebound();
+                LocationPushService.this.hasRunCoarseTask = false;
+                LocationPushService.this.hasRunAccurateTask = false;
+                LocationPushService.this.listenCoarse = new CoarseLocationListener();
+                if (!LocationPushService.this.listenCoarse.request(LocationPushService.this.locMan)) {
+                    LocationPushService.this.listenCoarse = null;
+                }
+            }
+        }
+    }
+
     private final class LocationUpdatePacketImpl extends LocationUpdatePacket {
-        private LocationUpdatePacketImpl(Location location) {
-            super(LocationPushService.this, LocationPushService.this.share.getSession(), location);
+        private LocationUpdatePacketImpl(Location location, LocationProvider accuracy) {
+            super(LocationPushService.this, LocationPushService.this.share.getSession(), location, accuracy);
         }
 
         @Override

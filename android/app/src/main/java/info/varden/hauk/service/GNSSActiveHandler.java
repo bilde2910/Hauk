@@ -7,6 +7,11 @@ package info.varden.hauk.service;
  */
 public interface GNSSActiveHandler {
     /**
+     * Called when the fine location provider times out and the coarse location provider is rebound.
+     */
+    void onCoarseRebound();
+
+    /**
      * Called when the initial low-accuracy GNSS fix has been obtained.
      */
     void onCoarseLocationReceived();

@@ -11,6 +11,7 @@ import javax.crypto.Cipher;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
+import info.varden.hauk.http.parameter.LocationProvider;
 import info.varden.hauk.struct.Session;
 import info.varden.hauk.struct.Version;
 import info.varden.hauk.utils.Log;
@@ -43,7 +44,7 @@ public abstract class LocationUpdatePacket extends Packet {
      * @param session  The session for which location is being updated.
      * @param location The updated location data obtained from GNSS/network sensors.
      */
-    protected LocationUpdatePacket(Context ctx, Session session, Location location) {
+    protected LocationUpdatePacket(Context ctx, Session session, Location location, LocationProvider accuracy) {
         super(ctx, session.getServerURL(), session.getConnectionParameters(), Constants.URL_PATH_POST_LOCATION);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
@@ -51,6 +52,7 @@ public abstract class LocationUpdatePacket extends Packet {
             // If not using end-to-end encryption, send parameters in plain text.
             setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
             setParameter(Constants.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
+            setParameter(Constants.PACKET_PARAM_PROVIDER_ACCURACY, String.valueOf(accuracy.getMode()));
             setParameter(Constants.PACKET_PARAM_TIMESTAMP, String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND));
 
             // Not all devices provide these parameters:
@@ -66,6 +68,7 @@ public abstract class LocationUpdatePacket extends Packet {
 
                 setParameter(Constants.PACKET_PARAM_LATITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLatitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
                 setParameter(Constants.PACKET_PARAM_LONGITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLongitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+                setParameter(Constants.PACKET_PARAM_PROVIDER_ACCURACY, Base64.encodeToString(cipher.doFinal(String.valueOf(accuracy.getMode()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
                 setParameter(Constants.PACKET_PARAM_TIMESTAMP, Base64.encodeToString(cipher.doFinal(String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
 
                 // Not all devices provide these parameters:

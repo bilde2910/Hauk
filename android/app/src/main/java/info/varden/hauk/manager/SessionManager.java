@@ -459,6 +459,13 @@ public abstract class SessionManager {
         }
 
         @Override
+        public void onCoarseRebound() {
+            for (GNSSStatusUpdateListener listener : SessionManager.this.upstreamUpdateHandlers) {
+                listener.onGNSSConnectionLost();
+            }
+        }
+
+        @Override
         public void onCoarseLocationReceived() {
             for (GNSSStatusUpdateListener listener : SessionManager.this.upstreamUpdateHandlers) {
                 listener.onCoarseLocationReceived();

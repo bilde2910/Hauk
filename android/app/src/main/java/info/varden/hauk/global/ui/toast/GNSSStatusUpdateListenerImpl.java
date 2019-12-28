@@ -33,6 +33,11 @@ public final class GNSSStatusUpdateListenerImpl implements GNSSStatusUpdateListe
     }
 
     @Override
+    public void onGNSSConnectionLost() {
+        Toast.makeText(this.ctx, R.string.label_status_lost_gnss, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onCoarseLocationReceived() {
         Toast.makeText(this.ctx, R.string.label_status_coarse, Toast.LENGTH_LONG).show();
     }

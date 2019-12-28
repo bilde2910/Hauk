@@ -37,6 +37,7 @@ public enum Constants {
     public static final Preference<String> PREF_PASSWORD_ENCRYPTED = new Preference.EncryptedString("cryptPassword", "");
     public static final Preference<Integer> PREF_DURATION = new Preference.Integer("duration", 30);
     public static final Preference<Integer> PREF_INTERVAL = new Preference.Integer("interval", 1);
+    public static final Preference<Integer> PREF_NO_GNSS_FALLBACK = new Preference.Integer("noGnssFallback", 45);
     public static final Preference<Float> PREF_UPDATE_DISTANCE = new Preference.Float("minUpdateDistance", 0.0F);
     public static final Preference<String> PREF_CUSTOM_ID = new Preference.String("requestLink", "");
     public static final Preference<Boolean> PREF_ENABLE_E2E = new Preference.Boolean("enableE2E", false);
@@ -111,6 +112,7 @@ public enum Constants {
     public static final String PACKET_PARAM_LONGITUDE = "lon";
     public static final String PACKET_PARAM_NICKNAME = "nic";
     public static final String PACKET_PARAM_PASSWORD = "pwd";
+    public static final String PACKET_PARAM_PROVIDER_ACCURACY = "prv";
     public static final String PACKET_PARAM_SALT = "salt";
     public static final String PACKET_PARAM_SESSION_ID = "sid";
     public static final String PACKET_PARAM_SHARE_ID = "lid";

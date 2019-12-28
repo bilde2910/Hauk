@@ -21,6 +21,7 @@
     <string name="label_status">Status:</string>
         <string name="label_status_none">Location sharing inactive</string>
         <string name="label_status_wait">Waiting for initial GNSS fix…</string>
+        <string name="label_status_lost_gnss">Searching for location…</string>
         <string name="label_status_coarse">Waiting for high accuracy fix…</string>
         <string name="label_status_ok">Location sharing active!</string>
         <string name="label_status_disconnected">Unable to reach backend server</string>
@@ -149,6 +150,7 @@
     <string name="pref_proxyHost_title">Proxy hostname</string>
     <string name="pref_proxyPort_title">Proxy port</string>
     <string name="pref_connectTimeout_title">Connection timeout (seconds)</string>
+    <string name="pref_noGnssFallback_title">Fall back to network location if GNSS is unavailable for (seconds)</string>
     <string name="pref_tlsCertValidation_title">HTTPS certificate validation</string>
         <string name="tls_validation_all">Always validate certificates (recommended)</string>
         <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>

@@ -18,6 +18,13 @@ public interface GNSSStatusUpdateListener {
     void onStarted();
 
     /**
+     * Called if the accurate GNSS location listener stops working. This implies that the coarse
+     * location listener is now back in use and {@link #onCoarseLocationReceived()} may be called
+     * again.
+     */
+    void onGNSSConnectionLost();
+
+    /**
      * <p>Called on first reception of low-accuracy location data from the network. Should be
      * available almost instantly if the user device has network-based or other non-GNSS location
      * sources available and enabled when the session is started.</p>

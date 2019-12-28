@@ -3,6 +3,13 @@
 const SHARE_TYPE_ALONE = 0;
 const SHARE_TYPE_GROUP = 1;
 
+const LOC_PROVIDER_FINE = 0;
+const LOC_PROVIDER_COARSE = 1;
+
+const STATE_LIVE_COLOR = '#d80037';
+const STATE_ROUGH_COLOR = '#ff9c00';
+const STATE_DEAD_COLOR = '#555555';
+
 const EARTH_DIAMETER_KM = 6371 * 2;
 const HAV_MOD = EARTH_DIAMETER_KM * 1000;
 
@@ -666,7 +673,8 @@ function processUpdate(data, init) {
                 "icon": null,
                 "points": [],
                 "id": Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
-                "listEntry": listE
+                "listEntry": listE,
+                "state": "live"
             };
         }
 
@@ -678,8 +686,16 @@ function processUpdate(data, init) {
             var lat = users[user][i][0];
             var lon = users[user][i][1];
             var time = users[user][i][2];
-            var acc = users[user][i][3];
-            var spd = users[user][i][4];
+            var prov = users[user][i][3];
+            var acc = users[user][i][4];
+            var spd = users[user][i][5];
+
+            // Default to "Fine" provider for older clients.
+            if (prov === null) prov = LOC_PROVIDER_FINE;
+            // Determine the icon color to use depending on provider.
+            shares[user].state = prov == LOC_PROVIDER_FINE ? "live" : "rough";
+            var iconColor = STATE_LIVE_COLOR;
+            if (shares[user].state == "rough") iconColor = STATE_ROUGH_COLOR;
 
             // Check if the location should be added. Only add new location points
             // if the point was not recorded before the last recorded point.
@@ -690,8 +706,8 @@ function processUpdate(data, init) {
                     shares[user].icon = L.divIcon({
                         html:
                             '<div class="marker">' +
-                                '<div class="arrow still-live" id="arrow-' + shares[user].id + '"></div>' +
-                                '<p class="live" id="label-' + shares[user].id + '">' +
+                                '<div class="arrow still-' + shares[user].state + '" id="arrow-' + shares[user].id + '"></div>' +
+                                '<p class="' + shares[user].state + '" id="label-' + shares[user].id + '">' +
                                     '<span id="nickname-' + shares[user].id + '"></span>' +
                                     '<span class="velocity">' +
                                         '<span id="velocity-' + shares[user].id + '">0.0</span> ' +
@@ -716,7 +732,7 @@ function processUpdate(data, init) {
                 // Draw an accuracy circle if GPS accuracy was provided by the
                 // client.
                 if (acc !== null && shares[user].circle == null) {
-                    shares[user].circle = L.circle([lat, lon], {radius: acc, fillColor: '#d80037', fillOpacity: 0.25, color: '#d80037', opacity: 0.5, interactive: false}).addTo(circleLayer);
+                    shares[user].circle = L.circle([lat, lon], {radius: acc, fillColor: iconColor, fillOpacity: 0.25, color: iconColor, opacity: 0.5, interactive: false}).addTo(circleLayer);
                 } else if (shares[user].circle !== null) {
                     shares[user].circle.setLatLng([lat, lon]);
                     if (acc !== null) shares[user].circle.setRadius(acc);
@@ -781,9 +797,9 @@ function processUpdate(data, init) {
             var last = shares[user].points.length - 1;
             eArrow.style.transform = "rotate(" + angle(shares[user].points[last - 1], shares[user].points[last]) + "deg)";
             if (vel.toFixed(1) == "0.0") {
-                eArrow.className = "arrow still-live";
+                eArrow.className = "arrow still-" + shares[user].state;
             } else {
-                eArrow.className = "arrow moving-live";
+                eArrow.className = "arrow moving-" + shares[user].state;
             }
         }
 
@@ -816,7 +832,7 @@ function processUpdate(data, init) {
             var eLastSeen = document.getElementById("last-seen-" + shares[user].id);
 
             if (point.time < data.serverTime - OFFLINE_TIMEOUT) {
-                eArrow.className = eArrow.className.split("live").join("dead");
+                eArrow.className = eArrow.className.split("live").join("dead").split("rough").join("dead");
                 if (eLabel !== null) eLabel.className = 'dead';
                 if (eLastSeen !== null) {
                     // Calculate time since last update and choose an
@@ -838,15 +854,17 @@ function processUpdate(data, init) {
                     eLastSeen.textContent = unit.split("{{time}}").join(time);
                 }
                 shares[user].circle.setStyle({
-                    fillColor: '#555555',
-                    color: '#555555'
+                    fillColor: STATE_DEAD_COLOR,
+                    color: STATE_DEAD_COLOR
                 })
             } else {
-                eArrow.className = eArrow.className.split("dead").join("live");
-                if (eLabel !== null) eLabel.className = 'live';
+                eArrow.className = eArrow.className.split("dead").join(shares[user].state);
+                if (eLabel !== null) eLabel.className = shares[user].state;
+                var iconColor = STATE_LIVE_COLOR;
+                if (shares[user].state == "rough") iconColor = STATE_ROUGH_COLOR;
                 shares[user].circle.setStyle({
-                    fillColor: '#d80037',
-                    color: '#d80037'
+                    fillColor: iconColor,
+                    color: iconColor
                 });
             }
         }

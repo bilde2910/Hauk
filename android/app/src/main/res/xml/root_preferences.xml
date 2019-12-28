@@ -90,6 +90,12 @@
             app:title="@string/pref_connectTimeout_title"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:key="noGnssFallback"
+            app:icon="@drawable/ic_location_disabled"
+            app:title="@string/pref_noGnssFallback_title"
+            app:useSimpleSummaryProvider="true" />
+
         <ListPreference
             app:key="tlsCertValidation"
             app:icon="@drawable/ic_security"

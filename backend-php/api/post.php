@@ -32,12 +32,13 @@ if (!$session->isEncrypted()) {
     // too.
     $speed = isset($_POST["spd"]) ? floatval($_POST["spd"]) : null;
     $accuracy = isset($_POST["acc"]) ? floatval($_POST["acc"]) : null;
+    $provider = isset($_POST["prv"]) && $_POST["prv"] == "1" ? 1 : 0;
 
     // The location data object contains the sharing interval (i), duration (d)
     // and a location list (l). Each entry in the location list contains a
-    // latitude, longitude, timestamp, accuracy and speed, in that order, as an
-    // array.
-    $session->addPoint([$lat, $lon, $time, $accuracy, $speed])->save();
+    // latitude, longitude, timestamp, provider, accuracy and speed, in that
+    // order, as an array.
+    $session->addPoint([$lat, $lon, $time, $provider, $accuracy, $speed])->save();
 
 } else {
     // Input validation cannot be performed for end-to-end encrypted data.
@@ -46,6 +47,7 @@ if (!$session->isEncrypted()) {
     $time = $_POST["time"];
     $speed = isset($_POST["spd"]) ? $_POST["spd"] : null;
     $accuracy = isset($_POST["acc"]) ? $_POST["acc"] : null;
+    $provider = isset($_POST["prv"]) ? $_POST["prv"] : null;
 
     // End-to-end encrypted connections also have an IV field used to decrypt
     // the data fields.
@@ -53,7 +55,7 @@ if (!$session->isEncrypted()) {
     $iv = $_POST["iv"];
 
     // The IV field is prepended to the array to send to the client.
-    $session->addPoint([$iv, $lat, $lon, $time, $accuracy, $speed])->save();
+    $session->addPoint([$iv, $lat, $lon, $time, $provider, $accuracy, $speed])->save();
 }
 
 if ($session->hasExpired()) {

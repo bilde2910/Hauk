@@ -263,12 +263,20 @@ a:last-child > .store-icon {
     background-image: url(./assets/markers/moving-live.svg);
 }
 
+.arrow.moving-rough {
+    background-image: url(./assets/markers/moving-rough.svg);
+}
+
 .arrow.moving-dead {
     background-image: url(./assets/markers/moving-dead.svg);
 }
 
 .arrow.still-live {
     background-image: url(./assets/markers/still-live.svg);
+}
+
+.arrow.still-rough {
+    background-image: url(./assets/markers/still-rough.svg);
 }
 
 .arrow.still-dead {
@@ -303,11 +311,11 @@ a:last-child > .store-icon {
 }
 
 /* Location data has been received recently. */
-.marker p.live {
+.marker p.live, .marker p.rough {
     background-color: rgba(0,0,0,0.5);
 }
 
-.marker p.live > span.offline {
+.marker p.live > span.offline, .marker p.rough > span.offline {
     display: none;
 }
 
