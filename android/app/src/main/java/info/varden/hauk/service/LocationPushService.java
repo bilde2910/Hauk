@@ -100,7 +100,7 @@ public final class LocationPushService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("Location push service was started, flags=%s, startId=%s", flags, startId); //NON-NLS
+        Log.i("Location push service %s was started, flags=%s, startId=%s", this, flags, startId); //NON-NLS
 
         // A task that should be run when sharing ends, either automatically or by user request.
         StopSharingTask stopTask = (StopSharingTask) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_STOP_TASK, -1));
@@ -108,7 +108,7 @@ public final class LocationPushService extends Service {
         GNSSActiveHandler parentHandler = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, -1));
         this.handler = (Handler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_HANDLER, -1));
 
-        Log.d("Pusher was given extras stopTask=%s, share=%s, parentHandler=%s, handler=%s", stopTask, this.share, parentHandler, this.handler); //NON-NLS
+        Log.d("Pusher %s was given extras stopTask=%s, share=%s, parentHandler=%s, handler=%s", this, stopTask, this.share, parentHandler, this.handler); //NON-NLS
 
         try {
             // Even though we previously requested location permission, we still have to check for
@@ -145,10 +145,10 @@ public final class LocationPushService extends Service {
     @Override
     public void onDestroy() {
         if (this.listenCoarse != null) {
-            Log.i("Service destroyed; removing updates from coarse location provider"); //NON-NLS
+            Log.i("Service %s destroyed; removing updates from coarse location provider", this); //NON-NLS
             this.locMan.removeUpdates(this.listenCoarse);
         }
-        Log.i("Service destroyed; removing updates from fine location provider"); //NON-NLS
+        Log.i("Service %s destroyed; removing updates from fine location provider", this); //NON-NLS
         this.listenFine.onStopped();
         this.locMan.removeUpdates(this.listenFine);
 
