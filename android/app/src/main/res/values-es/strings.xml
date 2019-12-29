@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="label_status_coarse">Esperando ubicación de alta precisión…</string>
+    <string name="label_status_lost_gnss">Buscando ubicación…</string>
+    <string name="label_status_wait">Esperando primera ubicación GNSS…</string>
+    <string name="label_status">Estado:</string>
+    <string name="label_pin">NIP del Grupo:</string>
+    <string name="label_nickname">Apodo:</string>
+    <string name="label_explain_adopt">(¿Qué es esto\?)</string>
+    <string name="chk_allow_adopt">Permitir que otros me agreguen a un grupo para compartir</string>
+    <string name="label_allow_adopt">Permitir adopción:</string>
+    <string name="sel_mode_opt_join_group">Unirse a un grupo para compartir</string>
+    <string name="sel_mode_opt_create_group">Crear un grupo para compartir</string>
+    <string name="sel_mode_opt_alone">Compartir mi ubicación solamente</string>
+    <string name="label_mode">Método de compartir:</string>
+    <string name="sel_unit_opt_days">día(s)</string>
+    <string name="sel_unit_opt_hours">hora(s)</string>
+    <string name="sel_unit_opt_minutes">minuto(s)</string>
+    <string name="label_heading">Compartir ubicación con software de código abierto</string>
+    <string name="action_settings">Configuración</string>
+</resources>
