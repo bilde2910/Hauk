@@ -825,7 +825,7 @@ function authenticated() {
             if ($ldbind === false) die($LANG["ldap_connection_failed"]);
 
             // Search for the user.
-            $ldsearch = @ldap_search($ldc, getConfig("ldap_base_dn"), str_replace("%s", $_POST["usr"], getConfig("ldap_user_filter")), array("dn"));
+            $ldsearch = @ldap_search($ldc, getConfig("ldap_base_dn"), str_replace("%s", ldap_escape($_POST["usr"]), getConfig("ldap_user_filter")), array("dn"));
             if ($ldsearch === false) {
                 ldap_unbind($ldc);
                 die($LANG["ldap_search_failed"]);
