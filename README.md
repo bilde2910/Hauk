@@ -54,6 +54,15 @@ files manually.
 5. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
+## Distribution-specific packages
+
+The Hauk backend is available as packages for the following distributions:
+
+### Arch Linux
+
+Install [`hauk-server`](https://aur.archlinux.org/packages/hauk-server/) from
+AUR. The backend will be installed to `/usr/share/webapps/hauk-server`.
+
 ## Via Docker Compose
 
 The official Docker image on Docker Hub is `bilde2910/hauk`. It comes with several different tags:
