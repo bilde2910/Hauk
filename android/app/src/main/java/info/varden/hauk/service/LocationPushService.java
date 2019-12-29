@@ -108,6 +108,8 @@ public final class LocationPushService extends Service {
         GNSSActiveHandler parentHandler = (GNSSActiveHandler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_GNSS_ACTIVE_TASK, -1));
         this.handler = (Handler) ReceiverDataRegistry.retrieve(intent.getIntExtra(Constants.EXTRA_HANDLER, -1));
 
+        Log.d("Pusher was given extras stopTask=%s, share=%s, parentHandler=%s, handler=%s", stopTask, this.share, parentHandler, this.handler); //NON-NLS
+
         try {
             // Even though we previously requested location permission, we still have to check for
             // it when we actually use the location API.
@@ -150,7 +152,7 @@ public final class LocationPushService extends Service {
         this.listenFine.onStopped();
         this.locMan.removeUpdates(this.listenFine);
 
-        Log.i("Removing callbacks from handler"); //NON-NLS
+        Log.i("Removing callbacks from handler %s", this.handler); //NON-NLS
         this.handler.removeCallbacksAndMessages(null);
         this.gnssActiveTask = new MultiTargetGNSSHandlerProxy();
 

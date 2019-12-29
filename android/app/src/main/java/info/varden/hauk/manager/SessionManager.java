@@ -127,6 +127,7 @@ public abstract class SessionManager {
                 // Called when sharing ends. Clear the active session, and all collections of active
                 // shares present in this class, then propagate this stop message upstream to all
                 // session listeners.
+                Log.d("Performing stop task cleanup for task %s and stopping timed callback on handler %s", this, SessionManager.this.handler); //NON-NLS
                 SessionManager.this.activeSession = null;
                 SessionManager.this.handler.removeCallbacksAndMessages(null);
                 SessionManager.this.resumable.clearResumableSession();
@@ -195,10 +196,12 @@ public abstract class SessionManager {
         // be created and attached when creating a new SessionManager in MainActivity. There is
         // probably a cleaner way to do this.
         if (pusher != null) {
+            Log.d("Pusher is non-null (%s), stopping and nulling it and calling service relauncher", pusher); //NON-NLS
             this.ctx.stopService(pusher);
             pusher = null;
             this.resumable.tryResumeShare(new ServiceRelauncher(this, this.resumable));
         } else {
+            Log.d("Pusher is null, calling resumption prompter"); //NON-NLS
             this.resumable.tryResumeShare(new AutoResumptionPrompter(this, this.resumable, prompt));
         }
     }
@@ -402,13 +405,14 @@ public abstract class SessionManager {
             this.stopTask.updateTask(pusher);
 
             // Required for session relaunches
+            Log.d("Setting static pusher %s (was %s)", pusher, SessionManager.pusher); //NON-NLS
             //noinspection AssignmentToStaticFieldFromInstanceMethod
             SessionManager.pusher = pusher;
 
             // stopTask is scheduled for expiration, but it could also be called if the user
             // manually stops the share, or if the app is destroyed.
             long expireIn = share.getSession().getRemainingMillis();
-            Log.i("Scheduling session expiration in %s milliseconds", expireIn); //NON-NLS
+            Log.i("Scheduling session task %s for expiration in %s milliseconds on handler %s", this.stopTask, expireIn, this.handler); //NON-NLS
             this.handler.postDelayed(this.stopTask, expireIn);
 
             // Push the start event to upstream listeners.

@@ -118,7 +118,7 @@ public final class Session implements Serializable {
      * Returns the expiration time of this session as a human-readable string.
      */
     public String getExpiryString() {
-        SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT_UI, Locale.getDefault());
         return formatter.format(getExpiryDate());
     }
 

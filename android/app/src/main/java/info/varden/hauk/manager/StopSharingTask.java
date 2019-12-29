@@ -59,7 +59,7 @@ public abstract class StopSharingTask implements Runnable {
      * @param pusher A location handler that should be unregistered when sharing is stopped.
      */
     final void updateTask(Intent pusher) {
-        Log.i("Setting new update task"); //NON-NLS
+        Log.i("Setting new update task %s in task %s", pusher, this); //NON-NLS
         this.pusher = pusher;
         this.canExecute = true;
     }
@@ -93,6 +93,7 @@ public abstract class StopSharingTask implements Runnable {
      */
     @Override
     public final void run() {
+        Log.d("Stop sharing task %s was called", this); //NON-NLS
         if (!this.canExecute) return;
         Log.i("Executing share stop task"); //NON-NLS
         this.canExecute = false;

@@ -68,7 +68,8 @@ public enum Constants {
     public static final String REGEX_ADOPT_ID_FROM_LINK = "\\?([A-Za-z0-9-]+)";
 
     // Formatting and input validation.
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    public static final String DATE_FORMAT_UI = "yyyy-MM-dd HH:mm:ss z";
+    public static final String DATE_FORMAT_LOG = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final int PORT_MIN = 0;
     public static final int PORT_MAX = 65536;
 
