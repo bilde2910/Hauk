@@ -17,8 +17,8 @@
     <string name="label_share_url">Deel ID/URL:</string>
     <string name="btn_start">Start met delen</string>
     <string name="btn_stop">Stop met delen van [%s]</string>
-    <string name="btn_link">Creëer nieuwe volg link</string>
-    <string name="btn_adopt">Voeg een bestaande deling toe</string>
+    <string name="btn_link">Creëer nieuwe deel link</string>
+    <string name="btn_adopt">Voeg een bestaande deling samen</string>
     <string name="btn_stop_short">Stop</string>
     <string name="btn_share_short">Delen</string>
     <string name="link_type_solo">Alleen uw locatie</string>
@@ -95,7 +95,7 @@
 \nVerloopt op: %s
 \n
 \nWilt u deze sessie hervatten\?</string>
-    <string name="chk_allow_adopt">Toestaan dat anderen mijn locatie aan een groep mogen toevoegen</string>
+    <string name="chk_allow_adopt">Toestaan dat anderen mij aan een groep mogen toevoegen</string>
     <string name="err_malformed_url">De ingevoerde server URL is ongeldig.</string>
     <string name="link_added_body">Een nieuwe link is succesvol aangemaakt voor uw locatiedeling! klik op de deel knop om de publiek bekijkbare URL voor uw deling te kopiëren.</string>
     <string name="label_heading_links">Momenteel actieve links</string>
@@ -143,4 +143,9 @@
     <string name="progress_resolving_proxy">Proxy hostnaam oplossen…</string>
     <string name="label_status_disconnected">Kan de backend-server niet bereiken</string>
     <string name="action_settings">Instellingen</string>
+    <string name="label_heading_no_links">Geen momenteel actieve links</string>
+    <string name="dialog_confirm_stop_share">Weet u zeker dat u deze deellink wilt verwijderen\?</string>
+    <string name="dialog_confirm_stop_body">weet je zeker dat je wilt stoppen met het delen van je locatie\?</string>
+    <string name="dialog_confirm_stop_title">Stoppen met delen\?</string>
+    <string name="label_status_lost_gnss">Zoeken naar locatie…</string>
 </resources>
