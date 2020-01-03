@@ -24,5 +24,13 @@
     "e2e_incorrect": "Das eingegebene Passwort ist falsch. Bitte noch einmal probieren.",
     "e2e_password_prompt": "Diese Freigabe ist passwortgeschützt. Bitte das Passwort eingeben, um der Freigabe beizutreten.",
     "e2e_placeholder": "Passwort eingeben",
-    "e2e_title": "Passwortgeschützt"
+    "e2e_title": "Passwortgeschützt",
+    "google_play_badge_text": "Hole es von Google Play",
+    "f_droid_badge_text": "Hole es von F-Droid",
+    "btn_show_all": "Zeige alle",
+    "btn_close": "Schließen",
+    "control_show_self": "Zeige meine Position",
+    "dialog_user_navigate": "Navigiere zu",
+    "dialog_user_follow": "Auf der Karte zeigen",
+    "dialog_active_head": "Aktive Personen"
 }
