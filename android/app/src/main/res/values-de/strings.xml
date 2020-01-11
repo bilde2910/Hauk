@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_heading">Teilen Ihrer Position mit Open Source Software</string>
-    <string name="pref_cryptServer_title">Server URL</string>
+    <string name="pref_cryptServer_title">Server-URL</string>
     <string name="pref_cryptPassword_title">Passwort</string>
     <string name="label_status">Status:</string>
     <string name="btn_start">Freigabe starten</string>
@@ -20,7 +20,7 @@
     <string name="label_status_none">Standortfreigabe inaktiv</string>
     <string name="label_status_wait">Warte auf ersten GNSS-Fix…</string>
     <string name="label_status_ok">Standortfreigabe aktiv!</string>
-    <string name="chk_allow_adopt">Anderen erlauben, meine Position einer Gruppenfreigabe hinzuzufügen</string>
+    <string name="chk_allow_adopt">Anderen erlauben, mich einer Gruppenfreigabe hinzuzufügen</string>
     <string name="label_share_url">ID/URL teilen:</string>
     <string name="btn_share_short">Teilen</string>
     <string name="link_type_group_member">Gruppenfreigabe (Mitglied)</string>
@@ -148,7 +148,7 @@
     <string name="pref_proxyHost_title">Proxy-Name</string>
     <string name="proxy_mode_none">Kein Proxy</string>
     <string name="proxy_mode_default">System-Voreinstellung</string>
-    <string name="pref_minUpdateDistance_title">Minimalabstand zwischen Aktualisierungen in Metern</string>
+    <string name="pref_minUpdateDistance_title">Minimalabstand zwischen Aktualisierungen (Meter)</string>
     <string name="err_proxy_host_resolution">Die IP-Adresse des konfigurierten Proxys (%s) konnte nicht ermittelt werden!</string>
     <string name="err_proxy_failure">Beim Auflösen des Proxy-Namens ist ein Fehler aufgetreten: %s</string>
     <string name="err_no_nickname">Du musst einen Spitznamen eintragen bevor du einer Gruppenfreigabe beitreten kannst. Bitte trage einen ein und versuche es erneut.</string>
