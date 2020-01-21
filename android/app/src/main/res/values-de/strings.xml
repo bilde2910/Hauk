@@ -6,8 +6,8 @@
     <string name="label_status">Status:</string>
     <string name="btn_start">Freigabe starten</string>
     <string name="btn_stop">Freigabe stoppen [%s]</string>
-    <string name="btn_link">Neuen Positions-Link erstellen</string>
-    <string name="btn_adopt">Eine bestehende Freigabe hinzufügen</string>
+    <string name="btn_link">Neuen Sharing-Link erstellen</string>
+    <string name="btn_adopt">Mit bestehender Freigabe zusammenführen</string>
     <string name="btn_stop_short">Stop</string>
     <string name="label_heading_links">Derzeit aktive Links</string>
     <string name="link_type_group_host">Gruppenfreigabe (Host)</string>
@@ -88,7 +88,7 @@
 \nSie können entscheiden, ob Sie anderen erlauben möchten, Ihre Standortfreigabe in ihre Gruppenfreigabe aufzunehmen, indem Sie das Kontrollkästchen aktivieren.
 \n
 \nWenn Sie diese Option aktivieren und Ihren Standort für eine Gruppe von Freunden freigeben, und jemand anderes möchte auch seinen Standort freigeben, kann er eine Gruppenfreigabe erstellen und Sie zu seiner Karte hinzufügen, so dass Sie beide auf derselben freigegebenen Standortkarte erscheinen. Dies ist nützlich, wenn Sie z. B. Auto fahren und Ihr Telefon nicht benutzen können, da die Übernahme Ihrer Freigabe durch andere keine Interaktion Ihrerseits erfordert.</string>
-    <string name="adopt_body">Sie können eine vorhandene Standortfreigabe übernehmen, um sie in diese Gruppenfreigabe zu integrieren. Bitte fügen Sie die URL oder Freigabe-ID der Freigabe ein, die Sie übernehmen möchten (z.B. %s\?XXXX-XXXX) und weisen Sie dieser Freigabe einen Spitznamen zu.</string>
+    <string name="adopt_body">Sie können eine vorhandene Standortfreigabe übernehmen, um sie in diese Gruppenfreigabe zu integrieren. Bitte fügen Sie die URL oder Freigabe-ID der Person ein, die Sie in die Gruppe übernehmen möchten (z.B. %s\?XXXX-XXXX) und weisen Sie dieser Person einen Spitznamen zu.</string>
     <string name="req_perms_message">Diese App benötigt Zugriff auf Ihren Standort, um zu funktionieren, aber diese Berechtigung wurde noch nicht erteilt. Bitte genehmigen Sie die folgende Berechtigungsanfrage und klicken Sie dann erneut auf die Schaltfläche Start, um es erneut zu versuchen.</string>
     <string name="battery_savings_title">Aggressive Batterieeinsparungen</string>
     <string name="battery_savings_body">Du scheinst ein %s-Gerät zu benutzen. Diese Geräte verfügen über besonders strenge Akkuspareinstellungen, die verhindern können, dass Hauk im Hintergrund Standortaktualisierungen sendet.
