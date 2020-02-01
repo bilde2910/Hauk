@@ -18,4 +18,21 @@
     <string name="sel_unit_opt_minutes">minuto(s)</string>
     <string name="label_heading">Compartir ubicación con software de código abierto</string>
     <string name="action_settings">Configuración</string>
+    <string name="label_duration">Tiempo compartido:</string>
+    <string name="adopt_title">Adoptar una compartición existente</string>
+    <string name="explain_adopt_title">Adopción compartida</string>
+    <string name="label_pin_help">Comparte este PIN con los otros miembros de tu grupo para permitirles unirse a tu grupo de compartir la localización</string>
+    <string name="label_pin_head">EL PIN DE TU GRUPO:</string>
+    <string name="link_type_group_member">Grupo compartido (miembro)</string>
+    <string name="link_type_solo">Solo tu localización</string>
+    <string name="label_heading_no_links">Links actualmente inactivos</string>
+    <string name="label_heading_links">Links actualmente activos</string>
+    <string name="btn_share_short">Compartir</string>
+    <string name="btn_stop_short">Parar</string>
+    <string name="dialog_confirm_stop_share">¿Estás seguro de que quieres eliminar este link compartido\?</string>
+    <string name="dialog_confirm_stop_body">¿Estás seguro que quieres parar de compartir tu localización\?</string>
+    <string name="dialog_confirm_stop_title">¿Parar de compartir\?</string>
+    <string name="btn_link">Crear un nuevo link de seguimiento</string>
+    <string name="btn_stop">Parar de compartir [%s]</string>
+    <string name="btn_start">Empezar a compartir</string>
 </resources>
