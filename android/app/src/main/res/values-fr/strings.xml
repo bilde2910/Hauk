@@ -10,8 +10,8 @@
     <string name="label_status">Statut :</string>
     <string name="label_share_url">URL/ID de partage :</string>
     <string name="btn_start">Commencer le partage</string>
-    <string name="btn_link">Créer un nouveau lien de suivi</string>
-    <string name="btn_adopt">Ajouter un partage existant</string>
+    <string name="btn_link">Créer un nouveau lien de partage</string>
+    <string name="btn_adopt">Fusionner un lien de partage existant</string>
     <string name="btn_stop_short">Arrêt</string>
     <string name="btn_share_short">Partage</string>
     <string name="link_type_solo">Votre localisation seule</string>
@@ -31,21 +31,21 @@
     <string name="label_heading_links">Liens actuellement actifs</string>
     <string name="label_status_ok">Partage de localisation actif!</string>
     <string name="label_pin_help">Partager ce PIN avec les autres membres du groupe pour qu\'il rejoignent votre groupe de partage de location</string>
-    <string name="explain_adopt_body">Hauk vous permet de partager votre localisation pour vous-même ou pour un groupe de personnes. Si une personne crée un partage de groupe, elle obtient un code groupe que d\'autres peuvent utiliser pour rejoindre le partage de localisation.
-\n
-\nCependant, la personne qui crée le partage de groupe a également l\'option d\'ajouter un partage de localisation existant dans le groupe de partage. Cette procédure est appelée l\'ajout de partage.
-\n
-\nVous pouvez décider si d\'autres ont la possibilité d\'ajouter votre partage de localisation dans leur groupe de partage en cochant cette option.
-\n
-\nSi vous ajouter cette option et partagez votre localisation à un groupe d\'amis, et qu\'une autre personne veut partager sa localisation, elle peut créer un groupe de partage et vous ajouter à sa carte, ainsi les deux personnes apparaîtront sur la carte de localisation partagée. Ceci peut être utile si par exemple vous conduisez et ne pouvez pas utiliser votre téléphone, car l\'ajout de partager par d\'autres personnes ne nécessite aucune action de votre part.</string>
-    <string name="adopt_title">Ajouter un partage existant</string>
+    <string name="explain_adopt_body">Hauk vous permet de partager votre position pour vous-même ou pour un groupe de personnes. Si une personne crée un partage de groupe, elle obtient un code groupe que d\'autres peuvent utiliser pour rejoindre le partage de position. 
+\n 
+\nCependant, la personne qui crée le partage de groupe a également l\'option d\'ajouter d\'autres personnes qui partagent déjà leur position dans leur groupe. Cette procédure est appelée \"adoption\".
+\n 
+\nVous pouvez décider si d\'autres ont la possibilité d\'ajouter votre position partagée dans leur groupe de partage en cochant cette option. 
+\n 
+\nSi vous ajouter cette option et partagez votre localisation à un groupe d\'amis, et qu\'une autre personne veut partager sa localisation, elle peut créer un groupe de partage et vous ajouter à sa carte, ainsi les deux personnes apparaîtront sur la carte de localisation partagée. Ceci peut être utile si par exemple vous conduisez et ne pouvez pas utiliser votre téléphone, car l\'adoption par d\'autres personnes de votre position partagée ne nécessite aucune action de votre part.</string>
+    <string name="adopt_title">Adopter la session d\'un autre utilisateur</string>
     <string name="label_status_wait">En attente de fix GNSS…</string>
     <string name="battery_savings_body">Vous semblez utiliser un appareil %s. Ces appareils ont des paramètres d\'économie de batterie stricts, qui peuvent empêcher Hauk d\'envoyer des mises à jour de votre localisation en tâche de fond.
 \n
 \nIl est recommande de s\'assurer qu\'Hauk n\'est pas dans ces économies de batterie pour s\'assurer que l\'app ne s\'arrête pas de fonctionner inopinément.
 \n
 \nCe message ne sera pas montré de nouveau.</string>
-    <string name="adopt_body">Vous pouvez ajotuer un partage existant pour l\'ajouter ensuite dans ce groupe de partage. Veuillez coller l\'URL ou l\'ID de partage du partage que vous souhaitez ajouter ( ex: %s\?XXXX-XXXX ) et assigner un nom à ce partage.</string>
+    <string name="adopt_body">Vous pouvez adopter un partage existant pour l\'ajouter ensuite dans ce groupe de partage. Veuillez coller l\'URL ou l\'ID de partage de la personne que vous souhaitez adopter ( ex: %s\?XXXX-XXXX ) et assigner un nom à cette personne.</string>
     <string name="create_link_title">Créer un nouveau lien de partage</string>
     <string name="btn_cancel">Annuler</string>
     <string name="btn_yes">Oui</string>
@@ -72,7 +72,7 @@
     <string name="ok_title">Connexion établie</string>
     <string name="ok_message">Partage de connexion actif! Cliquez le bouton de partage pour copier l\'URL publique pour votre partage.</string>
     <string name="ended_title">Partage terminé</string>
-    <string name="ended_message">Votre partage de localisation a expiré.</string>
+    <string name="ended_message">Votre partage de position s\'est terminé.</string>
     <string name="adopted_title">Partage ajouté</string>
     <string name="share_via">Partager le lien Hauk via</string>
     <string name="share_subject">Suis ma localisation sur Hauk !</string>
@@ -101,10 +101,63 @@
     <string name="manufacturer_oneplus">OnePlus</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="manufacturer_xiaomi">Xiaomi</string>
-    <string name="link_added_body">Un nouveau lien a été créé avec succès pour votre partage de localisation ! Cliquez sur le bouton de partage pour copier l\'URL publique de votre partage.</string>
+    <string name="link_added_body">Un nouveau lien a été créé avec succès pour votre partage de position ! Cliquez sur le bouton de partage pour copier l\'URL publique de votre nouveau partage.</string>
     <string name="btn_ok">OK</string>
     <string name="label_status_coarse">En attente de correctif…</string>
     <string name="sel_unit_opt_minutes">minute(s)</string>
     <string name="label_allow_adopt">Authoriser l\'ajout de partage :</string>
-    <string name="chk_allow_adopt">Authoriser d\'autres personnes à ajouter mon partage dans un groupe de partage</string>
+    <string name="chk_allow_adopt">Autoriser d\'autres personnes à m\'ajouter dans un groupe de partage</string>
+    <string name="label_heading_no_links">Aucun lien actif</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="about_report_issue_title">Signaler un problème</string>
+    <string name="about_source_code_title">Code source</string>
+    <string name="about_version_title">Version de l\'app</string>
+    <string name="prefs_header_about">À propos de Hauk</string>
+    <string name="pref_confirmStop_off">Ne pas demander de confirmation lors de l\'arrêt de partages dans l\'app</string>
+    <string name="pref_confirmStop_on">Demander la confirmation lors de l\'arrêt de partages dans l\'app</string>
+    <string name="pref_confirmStop_title">Confirmer avant d\'arrêter les partages</string>
+    <string name="night_mode_never">Jamais</string>
+    <string name="night_mode_always">Toujours</string>
+    <string name="night_mode_battery">Lorsque le mode économie d\'énergie est activé</string>
+    <string name="night_mode_system">Suivre les préférences système</string>
+    <string name="prefs_nightMode_title">Mode nuit</string>
+    <string name="prefs_header_appearance">Apparence</string>
+    <string name="tls_validation_none_for_onion">Désactiver la validation de l\'autorité de confiance ainsi que du nom d\'hôte pour les hôtes .onion (non recommandé)</string>
+    <string name="tls_validation_no_anchor_onion">Désactiver la validation de l\'autorité de confiance pour les hôtes .onion (non recommandé)</string>
+    <string name="tls_validation_all">Toujours valider les certificats (recommandé)</string>
+    <string name="pref_tlsCertValidation_title">Validation du certificat HTTPS</string>
+    <string name="pref_noGnssFallback_title">Se rabattre sur la localisation réseau si la GNSS n\'est pas disponible pendant (secondes)</string>
+    <string name="pref_connectTimeout_title">Expiration de la connexion (secondes)</string>
+    <string name="pref_proxyPort_title">Port du proxy</string>
+    <string name="pref_proxyHost_title">Nom d\'hôte du proxy</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Ne pas utiliser de proxy</string>
+    <string name="proxy_mode_default">Valeur par défaut du système</string>
+    <string name="pref_proxyType_title">Proxy</string>
+    <string name="pref_e2ePassword_title">Mot de passe de chiffrement</string>
+    <string name="pref_enableE2E_off">Désactiver le chiffrement de bout-en-bout</string>
+    <string name="pref_enableE2E_title">Protection du partage</string>
+    <string name="pref_enableE2E_on">Activer le chiffrement de bout en bout</string>
+    <string name="pref_requestLink_hint">&lt;Généré aléatoirement&gt;</string>
+    <string name="pref_requestLink_title">ID de lien préféré</string>
+    <string name="pref_minUpdateDistance_title">Distance minimale entre les mises à jours (mètres)</string>
+    <string name="pref_cryptUsername_hint">&lt;optionnel&gt;</string>
+    <string name="pref_cryptUsername_title">Nom d\'utilisateur</string>
+    <string name="password_mask">Touchez pour éditer</string>
+    <string name="prefs_header_connection">Connexion</string>
+    <string name="title_activity_settings">Configuration</string>
+    <string name="err_ver_e2e">Le serveur ne supporte pas le chiffrement de bout en bout. Le chiffrement de bout en bout est supporté depuis la version %s; ce serveur utilise la version %s. Votre partage sera créé sans chiffrement de bout en bout pour conserver la compatibilité.</string>
+    <string name="err_proxy_host_resolution">L\'adresse IP du proxy configuré (%s) n\'a pas pu être résolue !</string>
+    <string name="err_proxy_failure">Une erreur s\'est produite lors de la résolution du serveur proxy configuré: %s</string>
+    <string name="err_no_nickname">Vous devez choisir un pseudonyme avant de pouvoir rejoindre les partages de groupe. Veuillez choisir un pseudonyme et réessayez.</string>
+    <string name="err_invalid_duration">La durée que vous avez saisie n\'est pas valide. Merci d\'en choisir une autre.</string>
+    <string name="err_server_not_configured">Vous n\'avez pas encore configuré de serveur.Entrez les informations de votre serveur dans la configuration et réessayez.</string>
+    <string name="progress_resolving_proxy">Résolution du serveur proxy…</string>
+    <string name="btn_remember">Ne plus afficher</string>
+    <string name="dialog_confirm_stop_share">Êtes-vous sûr de vouloir supprimer ce lien de partage \?</string>
+    <string name="dialog_confirm_stop_body">Êtes-vous sûr de vouloir arrêter de partager votre position \?</string>
+    <string name="dialog_confirm_stop_title">Arrêter le partage \?</string>
+    <string name="label_status_disconnected">Impossible de contacter le serveur</string>
+    <string name="label_status_lost_gnss">Localisation en cours…</string>
 </resources>
