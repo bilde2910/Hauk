@@ -158,11 +158,12 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 - **Basque** - osoitz
 - **Catalan** - xordiet
 - **Dutch** - Jdekoning141
-- **French** - thifranc
+- **French** - thifranc and LukeMarlin
 - **German** - natrius, hurradiegams, lemmerk, code-surfer and Marmo
 - **Norwegian Bokmål** - bilde2910
 - **Norwegian Nynorsk** - bilde2910
 - **Polish** - krystiancha and RuralYak
+- **Portugese (Brazil)** - arajooj
 - **Romanian** - Licaon_Kter
 - **Russian** - RuralYak
 - **Spanish** - sdstolworthy
