@@ -1,1 +1,26 @@
 <?php
+$LANG['ldap_search_ambiguous'] = 'Trovati molteplici risultati - il filtro LDAP è troppo ampio!';
+$LANG['ldap_user_unauthorized'] = 'Utente non trovato, non autorizzato o password errata!';
+$LANG['ldap_search_failed'] = 'Non è stato possibile trovare l\'utente sul server LDAP!';
+$LANG['ldap_connection_failed'] = 'Connessione al server LDAP fallita!';
+$LANG['ldap_config_error'] = 'Impossibile impostare i parametri di connessione LDAP!';
+$LANG['ldap_extension_missing'] = 'L\'estensione LDAP non è attiva nella tua configurazione PHP!';
+$LANG['e2e_adoption_not_allowed'] = 'Questa condivisione è protetta da password e non può essere adottata!';
+$LANG['group_e2e_unsupported'] = 'Le condivisioni di gruppo non possono essere protette da password!';
+$LANG['location_invalid'] = 'Posizione errata!';
+$LANG['session_invalid'] = 'Sessione errata!';
+$LANG['group_pin_invalid'] = 'PIN di gruppo errato!';
+$LANG['share_mode_unsupported'] = 'Modalità condivisione non supportata!';
+$LANG['interval_too_short'] = 'Intervallo di aggiornamento troppo corto!';
+$LANG['interval_too_long'] = 'Intervallo di aggiornamento troppo lungo!';
+$LANG['share_too_long'] = 'Durata condivisione troppo lunga!';
+$LANG['username_required'] = 'Nome utente richiesto!';
+$LANG['incorrect_password'] = 'Password errata!';
+$LANG['share_adoption_not_allowed'] = 'L\'ospite della condivisione fornita non permette adozioni!';
+$LANG['group_share_not_adoptable'] = 'Non puoi adottare condivisioni di gruppo!';
+$LANG['share_not_found'] = 'La condivisione fornita non esiste!';
+$LANG['session_expired'] = 'Sessione scaduta!';
+$LANG['invalid_storage'] = 'storage_backend non è impostata correttamente in Hauk!';
+$LANG['no_redis_ext'] = 'Nessuna estensione compatibile con redi (redi) è attiva nella tua configurazione PHP!';
+$LANG['no_memcached_ext'] = 'Nessuna estensione compatibile con memcached (memecache o memecached) è attiva nella tua configurazione PHP!';
+$LANG['config_missing'] = 'Impossibile trovare config.php!';
