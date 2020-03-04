@@ -219,10 +219,14 @@ public final class LocationPushService extends Service {
     private final class FineLocationListener extends LocationListenerBase {
         private final Handler noGnssTimer;
         private final PreferenceManager prefs;
+        private Location locationOfLastUpdate;
+        private float minDistance;
 
         private FineLocationListener() {
             this.noGnssTimer = new Handler();
             this.prefs = new PreferenceManager(LocationPushService.this);
+            this.locationOfLastUpdate = null;
+            this.minDistance = LocationPushService.this.share.getSession().getMinimumDistance();
         }
 
         @Override
@@ -247,7 +251,17 @@ public final class LocationPushService extends Service {
             this.noGnssTimer.removeCallbacksAndMessages(null);
             this.noGnssTimer.postDelayed(new CoarseLocationFallbackTask(), LocationPushService.this.share.getSession().getIntervalMillis() + this.prefs.get(Constants.PREF_NO_GNSS_FALLBACK) * TimeUtils.MILLIS_PER_SECOND);
 
-            LocationPushService.this.onLocationChanged(location, LocationProvider.FINE);
+            // Only update the location if it is more than the minimum distance specified in
+            // settings. Done manually rather than delegating to
+            // LocationManager.requestLocationUpdates; see issue #124
+            float distance = this.locationOfLastUpdate == null ? -1 : this.locationOfLastUpdate.distanceTo(location);
+            if (this.locationOfLastUpdate == null || distance >= this.minDistance) {
+                Log.v("Received distance %s, more than minimum distance %s", distance, this.minDistance); //NON-NLS
+                this.locationOfLastUpdate = location;
+                LocationPushService.this.onLocationChanged(location, LocationProvider.FINE);
+            } else {
+                Log.v("Received distance %s, less than minimum distance %s", distance, this.minDistance); //NON-NLS
+            }
         }
 
         /**
@@ -263,7 +277,7 @@ public final class LocationPushService extends Service {
             manager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     LocationPushService.this.share.getSession().getIntervalMillis(),
-                    LocationPushService.this.share.getSession().getMinimumDistance(),
+                    0.0F, // See https://github.com/bilde2910/Hauk/issues/124
                     this
             );
             return true;
