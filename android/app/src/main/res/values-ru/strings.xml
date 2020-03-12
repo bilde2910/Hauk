@@ -12,8 +12,8 @@
     <string name="err_outdated">Сервер устарел</string>
     <string name="pref_cryptServer_title">URL Сервера</string>
     <string name="pref_cryptPassword_title">Пароль</string>
-    <string name="label_duration">Время жизни шары:</string>
-    <string name="pref_interval_title">Интервал обновления (сек):</string>
+    <string name="label_duration">Время жизни ссылки:</string>
+    <string name="pref_interval_title">Интервал обновления (сек)</string>
     <string name="label_explain_adopt">(Что это\?)</string>
     <string name="label_nickname">Ник:</string>
     <string name="label_pin">Групповой PIN:</string>
@@ -21,9 +21,9 @@
     <string name="label_share_url">ID/URL шары:</string>
     <string name="btn_start">Старт сессии</string>
     <string name="btn_stop">Остановить сессию [%s]</string>
-    <string name="btn_adopt">Добавить существующую шару</string>
+    <string name="btn_adopt">добавить к существующей ссылке</string>
     <string name="btn_share_short">Шара</string>
-    <string name="link_type_group_member">Групповая шара (участник)</string>
+    <string name="link_type_group_member">Группа (участник)</string>
     <string name="sel_unit_opt_minutes">минут</string>
     <string name="sel_unit_opt_hours">часов</string>
     <string name="sel_unit_opt_days">дней</string>
@@ -37,7 +37,7 @@
     <string name="link_added_title">Ссылка создана</string>
     <string name="req_perms_title">Необходимо разрешение</string>
     <string name="battery_savings_title">Агрессивное энергосбережение</string>
-    <string name="adopt_title">Добавить существующую шару</string>
+    <string name="adopt_title">Добавить другого пользователя</string>
     <string name="create_link_title">Создать новую ссылку на шару</string>
     <string name="btn_cancel">Отмена</string>
     <string name="btn_yes">Да</string>
@@ -51,13 +51,13 @@
     <string name="notify_body">Hauk шарит ваше местоположение %s</string>
     <string name="btn_ok">OK</string>
     <string name="label_mode">Режим шары:</string>
-    <string name="chk_allow_adopt">Другие пользователи могут добавлять мою сессию к своей</string>
+    <string name="chk_allow_adopt">Разрешить другим пользователям добавлять меня в группы</string>
     <string name="label_allow_adopt">Разрешить добавление:</string>
-    <string name="btn_link">Создать новую tracking-ссылку</string>
+    <string name="btn_link">Создать новую ссылку</string>
     <string name="btn_stop_short">Стоп</string>
     <string name="label_heading_links">Активные ссылки сейчас</string>
     <string name="link_type_solo">Только ваше местоположение</string>
-    <string name="link_type_group_host">Групповая шара (создатель)</string>
+    <string name="link_type_group_host">Группа (создатель)</string>
     <string name="sel_mode_opt_alone">Поделится только моим местоположением</string>
     <string name="sel_mode_opt_create_group">Создать групповую шару</string>
     <string name="sel_mode_opt_join_group">Присоединиться к групповой шаре</string>
@@ -73,7 +73,7 @@
     <string name="authorize_body">Hauk получил и заблокировал попытку создания новой сессии от широковещательного источника, который был определен как</string>
     <string name="authorize_question">Хотите разрешить создание сессий от широковещаний с таким же идентификатором в будущем\?</string>
     <string name="err_malformed_url">URL сервера неверный.</string>
-    <string name="label_heading">Делимся местоположением c помощью открытого ПО</string>
+    <string name="label_heading">Открытое ПО для отслеживания местоположения</string>
     <string name="err_missing_perms">Необходимы разрешения для использования местоположения для этого приложения.</string>
     <string name="err_location_disabled">Сервисы геолокации запрещены/выключены. Пожалуйста, включите высокоточную геолокацию, что бы делится своим местоположением.</string>
     <string name="err_ver_group">Сервер не поддерживает групповые шары. Групповые шары поддерживаются в версии %s и выше; текущая версия сервера %s. Ваша шара конвертирована в индивидуальную.</string>
@@ -89,7 +89,7 @@
 \nИстекает: %s
 \n
 \nХотите возобновить сессию\?</string>
-    <string name="link_added_body">Новая ссылка создана для вашей шары. Нажмите кнопку поделитя что бы скопировать публично доступный URL для вашей шары.</string>
+    <string name="link_added_body">Новая ссылка создана для вашей шары. Нажмите кнопку поделиться что бы скопировать публично доступный URL для вашей шары.</string>
     <string name="req_perms_message">Это приложение требует доступа к информации о вашем местоположении, но вы еще не дали разрешения на это. Пожалуйста подтвердите следующий запрос на получение разрешения, затем попробуйте нажать кнопку старт снова.</string>
     <string name="battery_savings_body">Кажется вы используете устройство %s. Такие устройства используют довольно консервативные настройки энергосбережения, которые мешают Hauk посылать информацию о местопложении в фоновом режиме.
 \n
@@ -107,4 +107,53 @@
 \n
 \nЕсли вы разрешите эту опцию и поделитесь своим местоположением со своими друзьями и кто то из них захочет поделится своим местоположением, то они могут создать групповую шару и добавить вас на их карту, так что вы все будете видны на одной и той же карте. Это полезно если вы ведете машину и не можете пользоваться телефоном. При этом добавление вас на их карту не требует взаимодействия вас с программой.</string>
     <string name="adopt_body">Вы можете добавить существующие индивидуальные шары что бы собрать их в групповую шару. Пожалуйста вставьте URL или ID шары которую вы ходите добавить. (к примеру %s\?XXXX-XXXX) и дайте ей ник.</string>
+    <string name="pref_tlsCertValidation_title">Проверка сертификата HTTPS</string>
+    <string name="action_settings">Настройки</string>
+    <string name="prefs_nightMode_title">Ночной режим</string>
+    <string name="night_mode_always">Всегда</string>
+    <string name="night_mode_system">Следовать настройкам системы</string>
+    <string name="prefs_header_appearance">Настройки внешнего вида</string>
+    <string name="pref_cryptUsername_hint">&lt;не обязательно&gt;</string>
+    <string name="pref_confirmStop_on">Подтверждение при отключении передачи местоположения</string>
+    <string name="pref_requestLink_hint">&lt;случайное значение&gt;</string>
+    <string name="pref_enableE2E_title">Защитить паролем</string>
+    <string name="pref_confirmStop_title">Подтверждение перед прекращением передачи местоположения</string>
+    <string name="pref_requestLink_title">Указать ID ссылки</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="prefs_header_connection">Настройки соединения</string>
+    <string name="password_mask">Нажмите для редактирования</string>
+    <string name="pref_e2ePassword_title">Пароль для шифрования</string>
+    <string name="pref_proxyType_title">Прокси</string>
+    <string name="pref_proxyHost_title">DNS имя</string>
+    <string name="pref_proxyPort_title">Порт</string>
+    <string name="pref_connectTimeout_title">Таймаут соединения (в секундах)</string>
+    <string name="label_status_disconnected">Сервер недоступен</string>
+    <string name="tls_validation_all">Всегда проверять сертификат (рекомендуется)</string>
+    <string name="pref_confirmStop_off">Не просить подтверждение при остановке передачи местоположения</string>
+    <string name="err_no_nickname">Вам необходимо указать свое имя прежде чем присоединяться к группе. Пожалуйста, укажите свое имя и повторите попытку.</string>
+    <string name="err_proxy_failure">Ошибка при попытке получения IP адреса прокси: %s</string>
+    <string name="dialog_confirm_stop_share">Вы уверены что хотите удалить эту ссылку\?</string>
+    <string name="progress_resolving_proxy">получение DNS-имени прокси…</string>
+    <string name="night_mode_never">Никогда</string>
+    <string name="proxy_mode_none">Отключить прокси</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="err_server_not_configured">Вы не настроили сервер. Пожалуйста, настройте сервер и попробуйте еще раз.</string>
+    <string name="pref_minUpdateDistance_title">Минимальное изменение местоположения для обновления данных(в метрах)</string>
+    <string name="night_mode_battery">Когда включено сохранение заряда батареи</string>
+    <string name="err_ver_e2e">Сервер не поддерживает сквозное шифрование. Сквозное шифрование поддерживается начиная с версии %s; Версия сервера %s. Ваша ссылка создана без сквозного шифрования для совместимости с предыдущими версиями.</string>
+    <string name="pref_enableE2E_on">Включить сквозное шифрование</string>
+    <string name="err_proxy_host_resolution">Не удается определить IP адрес прокси (%s). Отсутствует DNS запись!</string>
+    <string name="dialog_confirm_stop_title">Прекратить передачу местоположения\?</string>
+    <string name="dialog_confirm_stop_body">Вы уверены что хотите прекратить передачу своего местоположения\?</string>
+    <string name="pref_cryptUsername_title">Имя пользователя</string>
+    <string name="pref_enableE2E_off">Отключить сквозное шифрование</string>
+    <string name="btn_remember">Больше не показывать</string>
+    <string name="proxy_mode_default">Использовать настройки системы</string>
+    <string name="prefs_header_about">О Hauk</string>
+    <string name="about_version_title">Версия приложения</string>
+    <string name="about_source_code_title">Исходный код</string>
+    <string name="about_report_issue_title">Сообщить о ошибке</string>
+    <string name="label_heading_no_links">Нет активных ссылок</string>
+    <string name="label_status_lost_gnss">Поиск местоположения…</string>
 </resources>
