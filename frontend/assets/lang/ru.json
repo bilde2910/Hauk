@@ -12,5 +12,21 @@
     "gnss_signal_body": "Ждем сигнала GPS",
     "gnss_signal_head": "Пожалуйста подождите",
     "expired_body": "Шара к которой вы пытаетесь получить доступ не найдена на сервере. Если эта ссылка работала в прошлом, возможно истекло время жизни шары.",
-    "expired_head": "Местоположение устарело"
+    "expired_head": "Местоположение устарело",
+    "btn_decrypt": "Разблокировать",
+    "btn_cancel": "Отмена",
+    "e2e_placeholder": "Введите пароль",
+    "google_play_badge_text": "Установить из Google Play",
+    "btn_show_all": "Показать все",
+    "btn_close": "Закрыть",
+    "last_update_days": "был {{time}} дней назад",
+    "last_update_hours": "был {{time}} час(ов) назад",
+    "last_update_minutes": "был {{time}} минут назад",
+    "last_update_seconds": "был {{time}} назад",
+    "control_show_self": "Показать мое местоположение",
+    "dialog_user_follow": "Показать на карте",
+    "dialog_active_head": "Активные пользователи",
+    "e2e_incorrect": "Неверный пароль. Попробуйте еще раз.",
+    "e2e_password_prompt": "Это местоположение защищено паролем. Пожалуйста, введите пароль.",
+    "e2e_title": "Защищено паролем"
 }
