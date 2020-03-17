@@ -1,1 +1,26 @@
 <?php
+$LANG['ldap_search_ambiguous'] = 'Birçok kullanıcı eşleşti - LDAP filtresi çok geniş!';
+$LANG['ldap_search_failed'] = 'LDAP sunucusundaki kullanıcı aranamadı!';
+$LANG['ldap_connection_failed'] = 'LDAP sunucusuna bağlanılamadı!';
+$LANG['ldap_config_error'] = 'LDAP bağlantı parametreleri ayarlanamadı!';
+$LANG['ldap_extension_missing'] = 'PHP konfigürasyonunda ldap eklentisi etkin değil!';
+$LANG['share_mode_unsupported'] = 'Desteklenmeyen paylaşım modu!';
+$LANG['interval_too_short'] = 'Güncelleme aralığı çok kısa!';
+$LANG['interval_too_long'] = 'Güncelleme aralığı çok uzun!';
+$LANG['share_too_long'] = 'Paylaşım süresi çok uzun!';
+$LANG['share_adoption_not_allowed'] = 'Girilen paylaşımın sahibi sahipliğe izin vermiyor!';
+$LANG['group_share_not_adoptable'] = 'Grup paylaşımlarını sahiplenemezsiniz!';
+$LANG['share_not_found'] = 'Girilen paylaşım bulunamadı!';
+$LANG['invalid_storage'] = 'Hauk\'ta geçersiz bir storage_backend değeri tanımladınız!';
+$LANG['no_redis_ext'] = 'PHP konfigürasyonunda uyumlu bir redis eklentisi (redis) etkin değil!';
+$LANG['no_memcached_ext'] = 'PHP konfigürasyonunda uyumlu bir memcached eklentisi (memcache veya memcached) etkin değil!';
+$LANG['ldap_user_unauthorized'] = 'Kullanıcı bulunamadı, yetkisi yok veya hatalı parola!';
+$LANG['e2e_adoption_not_allowed'] = 'Bu paylaşım parola korumalı ve sahip olunamaz!';
+$LANG['group_e2e_unsupported'] = 'Grup paylaşımları parola korumalı olamaz!';
+$LANG['location_invalid'] = 'Geçersiz konum!';
+$LANG['group_pin_invalid'] = 'Geçersiz grup PIN!';
+$LANG['session_invalid'] = 'Geçersiz oturum!';
+$LANG['username_required'] = 'Kullanıcı adı gerekli!';
+$LANG['incorrect_password'] = 'Hatalı parola!';
+$LANG['session_expired'] = 'Oturum süresi doldu!';
+$LANG['config_missing'] = 'config.php bulunamıyor!';
