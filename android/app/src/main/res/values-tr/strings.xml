@@ -1,2 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="about_source_code_title">Kaynak kodu</string>
+    <string name="about_version_title">Uygulama versiyonu</string>
+    <string name="prefs_header_about">Hauk hakkında</string>
+    <string name="night_mode_never">Asla</string>
+    <string name="night_mode_always">Her zaman</string>
+    <string name="prefs_header_appearance">Görünüm</string>
+    <string name="prefs_nightMode_title">Gece modu</string>
+    <string name="pref_proxyType_title">Vekil sunucu</string>
+    <string name="proxy_mode_default">Sistem varsayılanı</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="pref_proxyHost_title">Vekil sunucu makine adı</string>
+    <string name="pref_proxyPort_title">Vekil sunucu portu</string>
+    <string name="about_report_issue_title">Sorun bildir</string>
+    <string name="btn_no">Hayır</string>
+    <string name="btn_yes">Evet</string>
+    <string name="btn_ok">TAMAM</string>
+    <string name="label_share_url">Paylaşım ID/URL:</string>
+    <string name="label_pin_head">GRUP PIN\'IN:</string>
+    <string name="link_type_solo">Sadece kendi konumun</string>
+    <string name="btn_share_short">Paylaş</string>
+    <string name="btn_stop_short">Durdur</string>
+    <string name="dialog_confirm_stop_share">Bu paylaşım linkini silmek istediğine emin misin\?</string>
+    <string name="dialog_confirm_stop_body">Konum paylaşımını durdurmak istediğine emin misin\?</string>
+    <string name="dialog_confirm_stop_title">Paylaşım durdurulsun mu\?</string>
+    <string name="btn_adopt">Varolan bir paylaşım linkini birleştir</string>
+    <string name="btn_link">Yeni paylaşım linki oluştur</string>
+    <string name="btn_stop">Paylaşımı durdur [%s]</string>
+    <string name="btn_start">Paylaşımı başlat</string>
+    <string name="label_status_none">Konum paylaşımı etkin değil</string>
+    <string name="label_status">Durum:</string>
+    <string name="label_pin">Grup PIN:</string>
+    <string name="label_nickname">Takma ad:</string>
+    <string name="label_explain_adopt">(Bu nedir\?)</string>
+    <string name="sel_mode_opt_alone">Sadece kendi konumumu paylaş</string>
+    <string name="sel_unit_opt_days">gün</string>
+    <string name="sel_unit_opt_hours">saat</string>
+    <string name="sel_unit_opt_minutes">dakika</string>
+    <string name="action_settings">Ayarlar</string>
+</resources>
