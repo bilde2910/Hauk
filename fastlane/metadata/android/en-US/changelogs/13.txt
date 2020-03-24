@@ -1,0 +1,3 @@
+This update adds more languages to Hauk and fixes layout issues that were present in some languages, such as French and Dutch. A handful of minor issues are also fixed.
+
+For the full changelog, please see https://github.com/bilde2910/Hauk/releases.
