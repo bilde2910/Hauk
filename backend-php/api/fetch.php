@@ -15,6 +15,7 @@ $share = Share::fromShareID($memcache, $_GET["id"]);
 
 // If the link data key is not set, the session probably expired.
 if (!$share->exists()) {
+    header("HTTP/1.1 404 Not Found");
     die($LANG['session_invalid']."\n");
 } else {
     header("Content-Type: text/json");
@@ -24,7 +25,10 @@ if (!$share->exists()) {
     switch ($share->getType()) {
         case SHARE_TYPE_ALONE:
             $session = $share->getHost();
-            if (!$session->exists()) die($LANG['session_invalid']."\n");
+            if (!$session->exists()) {
+                header("HTTP/1.1 404 Not Found");
+                die($LANG['session_invalid']."\n");
+            }
             echo json_encode(array(
                 "type" => $share->getType(),
                 "expire" => $share->getExpirationTime(),
