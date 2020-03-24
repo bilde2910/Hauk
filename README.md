@@ -160,13 +160,15 @@ Hauk depends on volunteers to translate the project. Want to help out? Head over
 - **Dutch** - Jdekoning141
 - **French** - thifranc and LukeMarlin
 - **German** - natrius, hurradiegams, lemmerk, code-surfer and Marmo
+- **Italian** - Vieler
 - **Norwegian Bokmål** - bilde2910
 - **Norwegian Nynorsk** - bilde2910
 - **Polish** - krystiancha and RuralYak
 - **Portugese (Brazil)** - arajooj
 - **Romanian** - Licaon_Kter
-- **Russian** - RuralYak
+- **Russian** - RuralYak, Brujerizmo90
 - **Spanish** - sdstolworthy
+- **Turkish** - kylethedeveloper, ayyilmaz
 - **Ukrainian** - RuralYak
 
 ### Translation status
