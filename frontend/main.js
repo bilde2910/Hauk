@@ -14,7 +14,7 @@ const EARTH_DIAMETER_KM = 6371 * 2;
 const HAV_MOD = EARTH_DIAMETER_KM * 1000;
 
 // Find preferred language.
-var locales = ['ca', 'de', 'en', 'eu', 'fr', 'nb_NO', 'nl', 'nn', 'ro', 'ru', 'uk'];
+var locales = ['ca', 'de', 'en', 'eu', 'fr', 'it', 'nb_NO', 'nl', 'nn', 'pt_BR', 'ro', 'ru', 'tr', 'uk'];
 var prefLang = 'en';
 if (navigator.languages) {
     for (var i = navigator.languages.length - 1; i >= 0; i--) {
