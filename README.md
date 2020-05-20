@@ -36,7 +36,8 @@ phone, and you're good to go!
    to install Hauk in, for example `/var/www/html`. Follow the instructions
    given by the install script. Make sure to set a secure hashed password and
    edit your site's domain in the configuration file after installation.
-3. Start the web server and make sure Memcached or Redis is running.
+3. Start the web server and make sure Memcached or Redis is running and
+   [properly configured and firewalled](https://github.com/bilde2910/Hauk/wiki/FAQ#how-do-i-securely-configure-memcachedredis).
 4. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
@@ -50,7 +51,8 @@ files manually.
    in your web root, for example `/var/www/html`.
 3. Modify `include/config.php` to your liking. Make sure to set a secure hashed
    password and edit your site's domain in this file.
-4. Start the web server and make sure Memcached or Redis is running.
+4. Start the web server and make sure Memcached or Redis is running and
+   [properly configured and firewalled](https://github.com/bilde2910/Hauk/wiki/FAQ#how-do-i-securely-configure-memcachedredis).
 5. Install the companion Android app (from your favourite store linked above)
    on your phone and enter your server's settings.
 
