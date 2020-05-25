@@ -14,10 +14,20 @@ hauk_help() {
     echo "Installs Hauk to the specified web root directory, e.g. /var/www/html"
     echo ""
     echo -e "\033[1mOptions:\033[0m"
-    echo -e "\033[91m-c\t\033[0mInstall config file to /etc/hauk"
+    echo -e "\033[91m-c\t\033[0mInstall config file to $config"
     echo -e "\033[91m-f\t\033[0mOverwrite without asking"
     exit 1
 }
+
+# Centralized configuration
+if [ "X$(uname -s)" = "XFreeBSD" ]; then
+    confdir=/usr/local/etc/hauk
+    config=/usr/local/etc/hauk/config.php
+else
+    confdir=/etc/hauk
+    config=/etc/hauk/config.php
+fi
+useconf=0
 
 # Print help if no arguments given
 if [ "$#" -eq 0 ]; then
@@ -32,11 +42,6 @@ if [ "$webroot" = "-f" ] || [ "$webroot" = "-c" ]; then
     hauk_help
 fi
 
-# Centralized configuration
-confdir=/etc/hauk
-config=/etc/hauk/config.php
-useconf=0
-
 hauk_config() {
     if [ -f "$config" ]; then
         if [ "$1" != "-f" ] && [ "$2" != "-f" ]; then
@@ -46,7 +51,7 @@ hauk_config() {
                     rm "$config" >/dev/null 2>&1
                     if [ -f "$config" ]; then
                         echo "You do not have permissions to install the configuration file in"
-                        echo "/etc/hauk. Please run this script as root."
+                        echo "${confdir}. Please run this script as root."
                         exit 5
                     fi
                     ;;
@@ -55,7 +60,7 @@ hauk_config() {
             rm "$config" >/dev/null 2>&1
             if [ -f "$config" ]; then
                 echo "You do not have permissions to install the configuration file in"
-                echo "/etc/hauk. Please run this script as root."
+                echo "${confdir}. Please run this script as root."
                 exit 5
             fi
         fi
@@ -133,9 +138,7 @@ cp -R backend-php/* "$webroot"
 cp -R frontend/* "$webroot"
 
 # Determine the path in which config is saved
-if [ "$useconf" -eq 1 ]; then
-    confpath=/etc/hauk/config.php
-else
+if [ "$useconf" -eq 0 ]; then
     confpath="$webroot/include/config.php"
     cp backend-php/include/config-sample.php "$confpath" >/dev/null 2>&1
 fi
