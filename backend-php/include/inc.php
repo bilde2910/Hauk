@@ -158,6 +158,7 @@ const DEFAULTS = array(
 // one found from this list.
 const CONFIG_PATHS = array(
     "/etc/hauk/config.php",
+    "/usr/local/etc/hauk/config.php",
     __DIR__."/config.php"
 );
 
