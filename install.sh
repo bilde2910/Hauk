@@ -20,7 +20,7 @@ hauk_help() {
 }
 
 # Centralized configuration
-if [ "X$(uname -s)" = "XFreeBSD" ]; then
+if [ "$(uname -s)" = "FreeBSD" ]; then
     confdir=/usr/local/etc/hauk
     config=/usr/local/etc/hauk/config.php
 else
