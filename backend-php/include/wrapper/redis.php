@@ -8,8 +8,13 @@ class MemWrapper {
 
     function __construct() {
         $this->redis = new Redis();
-        $this->redis->connect(getConfig("redis_host"), getConfig("redis_port"))
-                   or die ("Server could not connect to Redis!\n");
+        if(substr(getConfig("redis_host"), 0, 1) === "/") {
+                $this->redis->connect(getConfig("redis_host"))
+                           or die ("Server could not connect to Redis socket!\n");
+        } else {
+                $this->redis->connect(getConfig("redis_host"), getConfig("redis_port"))
+                           or die ("Server could not connect to Redis!\n");
+        }
         if (getConfig("redis_use_auth")) {
             $this->redis->auth(getConfig("redis_auth"))
                 or die("Incorrect Redis authentication!");
