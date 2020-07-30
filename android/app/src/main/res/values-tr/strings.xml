@@ -48,4 +48,5 @@
     <string name="label_mode">Paylaşım modu:</string>
     <string name="label_duration">Paylaşım süresi:</string>
     <string name="label_heading">Açık kaynak konum paylaşımı</string>
+    <string name="label_heading_links">Aktif linkler</string>
 </resources>

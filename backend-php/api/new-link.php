@@ -8,7 +8,7 @@ header("X-Hauk-Version: ".BACKEND_VERSION);
 
 requirePOST(
     "sid", // Existing session ID.
-    "ado", // Whether or not to allow adoption.
+    "ado"  // Whether or not to allow adoption.
 );
 
 $memcache = memConnect();
