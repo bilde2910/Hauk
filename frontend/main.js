@@ -258,7 +258,7 @@ function getJSON(url, callback, invalid) {
         if (this.readyState == 4) {
             var offlineE = document.getElementById("offline");
             var notchE = document.getElementById("notch");
-            if (this.status === 200 || this.status === 404) {
+            if (this.status === 200) {
                 // Request successful. Reset offline state and parse the JSON.
                 knownOffline = false;
                 if (offlineE !== null) {
@@ -274,6 +274,8 @@ function getJSON(url, callback, invalid) {
                     console.log(ex);
                     invalid();
                 }
+            } else if (this.status === 404) {
+                invalid();
             } else {
                 // Requested failed; offline.
                 if (!knownOffline) {
