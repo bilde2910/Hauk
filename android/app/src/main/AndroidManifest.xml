@@ -30,6 +30,7 @@
             android:name=".ui.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/HomeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
