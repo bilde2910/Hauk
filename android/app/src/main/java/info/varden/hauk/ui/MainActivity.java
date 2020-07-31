@@ -163,6 +163,15 @@ public final class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set app logo visibility.
+        PreferenceManager prefs = new PreferenceManager(this);
+        findViewById(R.id.imgLogo).setVisibility(prefs.get(Constants.PREF_HIDE_LOGO) ? View.GONE : View.VISIBLE);
+    }
+
     /**
      * On-tap handler for the "start sharing" and "stop sharing" button.
      */
@@ -332,6 +341,8 @@ public final class MainActivity extends AppCompatActivity {
 
         // Set night mode preference.
         AppCompatDelegate.setDefaultNightMode(prefs.get(Constants.PREF_NIGHT_MODE).resolve());
+        // Set app logo visibility.
+        findViewById(R.id.imgLogo).setVisibility(prefs.get(Constants.PREF_HIDE_LOGO) ? View.GONE : View.VISIBLE);
     }
 
     /**

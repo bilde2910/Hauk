@@ -122,6 +122,13 @@
             app:summaryOff="@string/pref_confirmStop_off"
             app:summaryOn="@string/pref_confirmStop_on" />
 
+        <SwitchPreference
+            app:key="hideLogo"
+            app:icon="@drawable/ic_image"
+            app:title="@string/prefs_hideLogo_title"
+            app:summaryOff="@string/pref_hideLogo_off"
+            app:summaryOn="@string/pref_hideLogo_on" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/prefs_header_about">

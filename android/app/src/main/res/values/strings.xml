@@ -165,6 +165,9 @@
     <string name="pref_confirmStop_title">Confirm before stopping shares</string>
         <string name="pref_confirmStop_on">Prompt for confirmation when stopping shares in the app</string>
         <string name="pref_confirmStop_off">Do not prompt for confirmation when stopping shares in the app</string>
+    <string name="prefs_hideLogo_title">Hide logo on main screen</string>
+        <string name="pref_hideLogo_on">Hide the Hauk logo from the app\'s main screen</string>
+        <string name="pref_hideLogo_off">Show the Hauk logo at the top of the app\'s main screen</string>
 
     <!-- About section -->
     <string name="prefs_header_about">About Hauk</string>

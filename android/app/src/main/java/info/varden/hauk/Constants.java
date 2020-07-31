@@ -47,6 +47,7 @@ public enum Constants {
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
     public static final Preference<NightModeStyle> PREF_NIGHT_MODE = new Preference.Enum<>("nightMode", NightModeStyle.FOLLOW_SYSTEM);
     public static final Preference<Boolean> PREF_CONFIRM_STOP = new Preference.Boolean("confirmStop", true);
+    public static final Preference<Boolean> PREF_HIDE_LOGO = new Preference.Boolean("hideLogo", false);
 
     @Deprecated // Use PREF_SERVER_ENCRYPTED instead
     public static final Preference<String> PREF_SERVER = new Preference.String("server", "");
