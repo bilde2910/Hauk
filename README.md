@@ -128,6 +128,22 @@ server {
 }
 ```
 
+## Upgrading to newer versions
+
+Hauk is versioned according to [Semantic Versioning 2.0.0](https://semver.org/). Any update that is **not a major update** is guaranteed to be without breaking changes, and you can keep the same configuration file for the updated release.
+
+- Major updates add breaking changes that either require manual intervention, or breaks backward compatibility. Update instructions for major versions will be listed in the release notes, as well as either this README or in the wiki. To date there have been no major updates.
+- Minor updates add functionality, but does not break backward compatibility. You can still use an older client on a newer server, or a newer client on an older server, though some functionality may be missing. This will be dynamically detected by the client and server, which could e.g. lead to some UI elements being disabled in the app, or a notification made if a user tries to use new functionality that the other endpoint does not support.
+- Patch updates are primarily bugfixes.
+
+Aside from certain major changes, you can keep your configuration file. New options may have been added to the config, but these will have sane defaults applied automatically. If you wish to change any new options, you can either reconfigure Hauk from the new config.php template, or copy and paste the relevant options from the new template to your existing file and change the appropriate values.
+
+Installations done using either the installer (`install.sh`) or via manual file copy can be upgraded simply by pulling the latest version of this repository and running the installer again, or overwriting the installation with the new files.
+
+Installations done via distribution-specific packages will be updated to the latest version by your package manager.
+
+Docker installations will be updated whenever you pull the image. If you're using Docker, you can reserve yourself from receiving major updates (which may contain breaking changes) by using the `stable-*` tag instead of `latest`. If you use a specific versioned tag, your installation will be locked at that specific version and you will not receive feature updates or bugfixes unless you manually change the tag and pull.
+
 ## Demo server
 
 If you'd like to see what Hauk can do, download the app and insert connection details for the demo server:
