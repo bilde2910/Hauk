@@ -34,8 +34,8 @@
     <string name="label_status_ok">Locatie delen actief!</string>
     <string name="label_pin_head">UW GROEP PIN:</string>
     <string name="explain_adopt_title">Deling adoptatie</string>
-    <string name="adopt_title">Een bestaande deling adopteren</string>
-    <string name="adopt_body">U kunt een bestaande individuele locatiedeling toevoegen aan deze groepsdeling. Voer daarvoor alstublieft de URL of deel ID van de locatie in die u wilt adopteren (bijvoorbeeld %s\?XXXX-XXXX) en wijs een bijnaam toe aan deze locatiedeling.</string>
+    <string name="adopt_title">Een sessie van een andere gebruiker adopteren</string>
+    <string name="adopt_body">U kunt een bestaande individuele locatiedeling toevoegen aan deze groepsdeling. Voer daarvoor alstublieft de URL of deel ID van de persoon in die u wilt adopteren (bijvoorbeeld %s\?XXXX-XXXX) en wijs een bijnaam toe aan deze persoon.</string>
     <string name="create_link_title">Creëer nieuwe deel link</string>
     <string name="create_link_body">U kunt meerdere links creëren waarmee uw locatie bekeken kan worden. Elke link kan individueel uitgezet worden, om op elk moment precieze controle te hebben over wie uw locatie kan zien.
 \n
@@ -70,12 +70,12 @@
     <string name="req_perms_title">Toestemming vereist</string>
     <string name="link_added_title">Link gecreëerd</string>
     <string name="req_perms_message">Deze app vereist toegang tot uw locatie om te functioneren, maar deze toestemming is nog niet verleend. Sta alstublieft het volgende toestemmingsverzoek toe, en klik daarna op de startknop om het opnieuw te proberen.</string>
-    <string name="explain_adopt_body">Hauk staat u toe om locatiedelingssessies aan te maken voor uzelf alsook voor een groep. Als iemand een groepsdeling aanmaakt, krijgen zij een groepscode die anderen kunnen gebruiken om aan de groepssessie deel te nemen.
-\n
-\nMaar de persoon die de groep aanmaakt, krijgt ook een optie om een al bestaande deling toe te voegen aan de groep. Dit proces heet \"adoptie\".
-\n
-\nU kunt zelf bepalen of anderen uw locatiedeling mogen toevoegen aan een groep of niet middels deze checkbox.
-\n
+    <string name="explain_adopt_body">Hauk staat u toe om locatiedelingssessies aan te maken voor uzelf alsook voor een groep. Als iemand een groepsdeling aanmaakt, krijgen zij een groepscode die anderen kunnen gebruiken om aan de groepssessie deel te nemen. 
+\n 
+\nMaar de persoon die de groep aanmaakt, krijgt ook een optie om anderen die reeds hun locatie delen toe te voegen aan de groep. Dit proces heet \"adoptie\". 
+\n 
+\nU kunt zelf bepalen of anderen uw locatiedeling mogen toevoegen aan een groep of niet middels deze checkbox. 
+\n 
 \nAls u deze optie aanzet en uw locatie deelt met vrienden of iemand die zijn locatie ook wilt delen, dan kunnen zij een groep aanmaken en uw locatie toevoegen aan de groep. Dan kunnen jullie elkaar op dezelfde gedeelde kaart zien. Dit is bijvoorbeeld handig als u aan het rijden bent, omdat u dan niet zelf uw telefoon hoeft te gebruiken om aan een groep deel te nemen.</string>
     <string name="battery_savings_title">Agressieve batterijbesparingen</string>
     <string name="manufacturer_huawei">Hauwei</string>
@@ -97,7 +97,7 @@
 \nWilt u deze sessie hervatten\?</string>
     <string name="chk_allow_adopt">Toestaan dat anderen mij aan een groep mogen toevoegen</string>
     <string name="err_malformed_url">De ingevoerde server URL is ongeldig.</string>
-    <string name="link_added_body">Een nieuwe link is succesvol aangemaakt voor uw locatiedeling! klik op de deel knop om de publiek bekijkbare URL voor uw deling te kopiëren.</string>
+    <string name="link_added_body">Een nieuwe link is succesvol aangemaakt voor uw locatiedeling! Klik op de deel knop om de publiek bekijkbare URL voor uw nieuwe deling te kopiëren.</string>
     <string name="label_heading_links">Momenteel actieve links</string>
     <string name="sel_mode_opt_join_group">Neem deel aan een groepsdeling</string>
     <string name="label_status_wait">Wachten op initiële GNSS fix…</string>
@@ -148,4 +148,16 @@
     <string name="dialog_confirm_stop_body">weet je zeker dat je wilt stoppen met het delen van je locatie\?</string>
     <string name="dialog_confirm_stop_title">Stoppen met delen\?</string>
     <string name="label_status_lost_gnss">Zoeken naar locatie…</string>
+    <string name="pref_confirmStop_off">Vraag niet om een bevestiging bij het stoppen van de locatiedeling</string>
+    <string name="pref_confirmStop_on">Vraag voor bevestinging wanneer een locatiedeling in de app wordt gestopt</string>
+    <string name="pref_confirmStop_title">Bevestig voor het stoppen van de locatiedelin</string>
+    <string name="about_report_issue_title">Rapporteer een probleem</string>
+    <string name="about_source_code_title">Broncode</string>
+    <string name="about_version_title">App versie</string>
+    <string name="prefs_header_about">Over Hauk</string>
+    <string name="pref_noGnssFallback_title">Terugvallen op locatiebepaling via netwerk wanneer GNSS niet beschikbaar is (seconden)</string>
+    <string name="pref_minUpdateDistance_title">Minimale afstand tussen updates (in meters)</string>
+    <string name="err_no_nickname">Je moet eerst een nickname instellen voordat je lid kan worden van een groep. Stel een nickname is en probeer het opnieuw.</string>
+    <string name="err_invalid_duration">De opgegeven duratie is ongeldig. Geef een nieuwe duratie op.</string>
+    <string name="btn_remember">Niet opnieuw tonen</string>
 </resources>
