@@ -24,5 +24,13 @@
     "e2e_incorrect": "Het ingevoerde wachtwoord is incorrect. Probeer het alstublieft nog eens.",
     "e2e_password_prompt": "Deze deling is met wachtwoord beveiligd. Vul het wachtwoord in om toegang te krijgen tot de deling.",
     "e2e_placeholder": "Voer wachtwoord in",
-    "e2e_title": "Beveiligd met wachtwoord"
+    "e2e_title": "Beveiligd met wachtwoord",
+    "google_play_badge_text": "Download op Google Play",
+    "f_droid_badge_text": "Download op F-Droid",
+    "btn_show_all": "Toon alle",
+    "btn_close": "Sluiten",
+    "control_show_self": "Toon mijn locatie",
+    "dialog_user_navigate": "Navigeer naar",
+    "dialog_user_follow": "Toon op kaart",
+    "dialog_active_head": "Actieve gebruikers"
 }
