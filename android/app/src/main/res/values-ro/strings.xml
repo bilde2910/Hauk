@@ -160,4 +160,7 @@
     <string name="pref_noGnssFallback_title">Folosește localizarea de rețea dacă cea GNSS este indisponibilă timp de (secunde)</string>
     <string name="label_heading_no_links">Nici o adresă activă</string>
     <string name="label_status_lost_gnss">Se caută locația…</string>
+    <string name="pref_hideLogo_off">Logoul Hauk va fi afișat în partea de sus a ecranului principal</string>
+    <string name="pref_hideLogo_on">Logoul Hauk va fi ascuns de pe ecranul principal</string>
+    <string name="prefs_hideLogo_title">Ascunde logoul</string>
 </resources>
