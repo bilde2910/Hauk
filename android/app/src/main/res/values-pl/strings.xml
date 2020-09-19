@@ -2,7 +2,7 @@
 <resources>
     <string name="label_pin_help">Podaj ten PIN osobom, które mają dołączyć do grupy</string>
     <string name="label_pin_head">PIN TWOJEJ GRUPY:</string>
-    <string name="label_status_ok">Udostępnianie lokalizacji jest włączone!</string>
+    <string name="label_status_ok">Udostępnianie lokalizacji jest aktywne!</string>
     <string name="label_status_coarse">Oczekiwanie na dokładną lokalizację…</string>
     <string name="label_status_wait">Oczekiwanie na sygnał GPS…</string>
     <string name="label_status_none">Udostępnianie lokalizacji jest wyłączone</string>
@@ -11,7 +11,7 @@
     <string name="sel_unit_opt_minutes">minut</string>
     <string name="sel_mode_opt_join_group">Dołącz do grupy</string>
     <string name="sel_mode_opt_create_group">Stwórz grupę</string>
-    <string name="sel_mode_opt_alone">Jedynie moja lokalizacja</string>
+    <string name="sel_mode_opt_alone">Tylko moja lokalizacja</string>
     <string name="link_type_group_member">Udostępnianie grupowe (członek)</string>
     <string name="link_type_group_host">Udostępnianie grupowe (gospodarz)</string>
     <string name="link_type_solo">Tylko twoja lokalizacja</string>
@@ -24,13 +24,13 @@
     <string name="label_pin">PIN grupy:</string>
     <string name="label_nickname">Pseudonim:</string>
     <string name="label_explain_adopt">(Co to znaczy\?)</string>
-    <string name="chk_allow_adopt">Pozwalam innym na dołączenie mnie do swojej grupy</string>
+    <string name="chk_allow_adopt">Pozwól innym na dołączenie siebie do swojej grupy</string>
     <string name="label_mode">Tryb udostępniania:</string>
-    <string name="pref_interval_title">Okres aktualizacji pozycji (s):</string>
+    <string name="pref_interval_title">Interwał między aktualizacjami pozycji (s)</string>
     <string name="label_duration">Czas udostępniania:</string>
     <string name="pref_cryptPassword_title">Hasło</string>
     <string name="pref_cryptServer_title">URL serwera</string>
-    <string name="label_heading">Otwarte oprogramowanie do udostępniania lokalizacji</string>
+    <string name="label_heading">Otwartoźródłowe oprogramowanie do udostępniania lokalizacji</string>
     <string name="link_added_title">Link został utworzony</string>
     <string name="req_perms_title">Potrzebne pozwolenie</string>
     <string name="req_perms_message">Ta aplikacja potrzebuje dostępu do twojej lokalizacji, a nie zostało ono udzielone. Udziel pozwolenia i spróbuj ponownie rozpocząć udostępnianie.</string>
@@ -40,7 +40,7 @@
     <string name="err_connect">Błąd połączenia</string>
     <string name="err_server">Błąd serwera</string>
     <string name="err_missing_perms">Pozwolenie na lokalizację jest wymagane do korzystania z tej aplikacji.</string>
-    <string name="err_outdated">Serwer nie ma zainstalowanych aktualizacji</string>
+    <string name="err_outdated">Wersja Hauk na serwerze jest przestarzała</string>
     <string name="ok_title">Połączono</string>
     <string name="adopted_body">Dodano %s do twojej grupy!</string>
     <string name="resume_title">Wznów sesję</string>
@@ -49,7 +49,7 @@
     <string name="label_share_url">ID/URL sesji:</string>
     <string name="btn_share_short">Udostępnij</string>
     <string name="btn_adopt">Dołącz osobę do grupy</string>
-    <string name="battery_savings_title">Oszczędzanie baterii</string>
+    <string name="battery_savings_title">Agresywne oszczędzanie baterii</string>
     <string name="manufacturer_huawei">Huawei</string>
     <string name="manufacturer_oneplus">OnePlus</string>
     <string name="manufacturer_xiaomi">Xiaomi</string>
@@ -69,7 +69,8 @@
     <string name="progress_connect_body">Łączenie z Hauk…</string>
     <string name="progress_adopt_title">Dołączanie do grupy</string>
     <string name="adopt_title">Dołączanie osoby do grupy</string>
-    <string name="create_link_body">Jeśli udostępniasz swoją lokalizację więcej niż jednej osobie na raz, to warto utworzyć kilka linków, każdy dla jednej osoby. Tym sposobem można wyłączać pojedyncze linki, aby wyłączyć udostępnianie konkretnym osobom.</string>
+    <string name="create_link_body">Jeśli udostępniasz swoją lokalizację więcej niż jednej osobie na raz, to warto utworzyć kilka linków, każdy dla jednej osoby. 
+\nTym sposobem można wyłączać pojedyncze linki, aby wyłączyć udostępnianie konkretnym osobom.</string>
     <string name="progress_adopt_body">Dołączanie %s do grupy…</string>
     <string name="err_malformed_url">Wprowadzony URL serwera jest nieprawidłowy.</string>
     <string name="err_location_disabled">Usługi lokalizacyjne są obecnie wyłączone. Włącz lokalizację w swoim urządzeniu aby korzystać z aplikacji.</string>
@@ -77,5 +78,87 @@
     <string name="err_response_code">Serwer zwrócił odpowiedź o kodzie HTTP %s!</string>
     <string name="err_ver_group">Podany serwer nie wspiera udostępniania grupowego. Ta funkcja jest dostępna od wersji %s, a obecna wersja serwera to %s. Sposób udostępniania zostanie zmieniony na udostępnianie indywidualne.</string>
     <string name="ok_message">Udostępnianie aktualizacji jest aktywne! Skorzystaj z przycisku \"Udostępnij\", aby udostępnić komuś swoją lokalizację.</string>
-    <string name="adopted_title">Udostępnianie podjęty</string>
+    <string name="adopted_title">Dołączono do grupy</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="authorize_header">Prośba autoryzacji rozgłoszenia</string>
+    <string name="explain_adopt_body">Hauk pozwala na tworzenie jednoosobowych sesji udostępniania, jak i sesji dla więcej niż jednej osoby jednocześnie. Jeśli ktoś utworzy grupowe udostępnianie, dostaje kod który pozwala na dołączenie innych osób do grupy.
+\n
+\nOsoba która tworzy grupę ma także opcję dodania wszystkich aktualnie udostępniających lokalizację do swojej grupy. Proces ten nazywany jest adopcją lub dołączaniem do grupy.
+\n
+\nMożesz decydować czy chcesz pozwolić na dołączanie siebie do swoich grup zaznaczając to pole.
+\n
+\nJeśli włączysz tą opcję, udostępnisz swoją lokalizację grupie przyjaciół i ktoś będzie chciał również udostępnić swoją lokalizację, może stworzyć grupę i dodać cię do swojej mapy - oboje będziecie widoczni na jednej mapie. Funkcja ta jest użyteczna jeśli przykładowo prowadzisz samochów i nie możesz używać swojego telefonu. Dołączanie do grupy (adopcja) nie wymaga żadnej interakcji z twojej strony.</string>
+    <string name="authorize_question">Czy chcesz zezwolić w przyszłości na tworzenie sesji z rozgłoszeń o tym identyfikatorze\?</string>
+    <string name="authorize_body">Hauk otrzymał i zablokował próbę utworzenia nowej sesji udostępniania ze źródła które identyfikuje się jako</string>
+    <string name="err_proxy_host_resolution">Adres IP skonfigurowanego proxy ($s) nie może zostać rozwiązany!</string>
+    <string name="progress_resolving_proxy">Rozwiązywanie adresu proxy…</string>
+    <string name="explain_adopt_title">Dołączanie do grupy</string>
+    <string name="about_report_issue_title">Zgłoś problem</string>
+    <string name="about_source_code_title">Kod źródłowy</string>
+    <string name="about_version_title">Wersja aplikacji</string>
+    <string name="prefs_header_about">O Hauk</string>
+    <string name="pref_hideLogo_off">Pokaż logo Hauk na górze głównego ekranu</string>
+    <string name="pref_hideLogo_on">Ukryj logo Hauk z głównego ekranu</string>
+    <string name="prefs_hideLogo_title">Ukryj logo na głównym ekranie</string>
+    <string name="pref_confirmStop_off">Nie pytaj przed zatrzymaniem sesji udostępniania</string>
+    <string name="pref_confirmStop_on">Potwierdź przed zatrzymaniem sesji udostępniania</string>
+    <string name="pref_confirmStop_title">Potwierdź przed zatrzymaniem udostępniania</string>
+    <string name="night_mode_never">Nigdy</string>
+    <string name="night_mode_always">Zawsze</string>
+    <string name="night_mode_battery">Gdy włączone jest osczędzanie baterii</string>
+    <string name="night_mode_system">Zgodnie z ustawieniami systemowymi</string>
+    <string name="prefs_nightMode_title">Tryb nocny</string>
+    <string name="prefs_header_appearance">Wygląd</string>
+    <string name="tls_validation_none_for_onion">Wyłącz walidację \"Trust anchor\" oraz nazwy hosta dla hostów TOR .onion (niezalecane)</string>
+    <string name="tls_validation_no_anchor_onion">Wyłącz walidację \"Trust anchor\" dla hostów TOR .onion (niezalecane)</string>
+    <string name="tls_validation_all">Zawsze weryfikuj certyfikaty (zalecane)</string>
+    <string name="pref_tlsCertValidation_title">Weryfikacja certyfikatu HTTPS</string>
+    <string name="pref_noGnssFallback_title">Użyj lokalizacji sieciowej gdy GPS jest niedostępny przez (s)</string>
+    <string name="pref_connectTimeout_title">Limit czasu połączenia (s)</string>
+    <string name="pref_proxyPort_title">Port proxy</string>
+    <string name="pref_proxyHost_title">Adres proxy</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_none">Nie używaj proxy</string>
+    <string name="proxy_mode_default">System (domyślne)</string>
+    <string name="pref_proxyType_title">Proxy</string>
+    <string name="pref_e2ePassword_title">Hasło szyfrowania</string>
+    <string name="pref_enableE2E_off">Wyłącz szyfrowanie</string>
+    <string name="pref_enableE2E_on">Włącz szyfrowanie</string>
+    <string name="pref_enableE2E_title">Chroń udostępnianie hasłem</string>
+    <string name="pref_requestLink_hint">&lt;losowo generowane&gt;</string>
+    <string name="pref_requestLink_title">Preferowane ID</string>
+    <string name="pref_minUpdateDistance_title">Minimalna przebyta odległość pomiędzy aktualizacjami (m)</string>
+    <string name="pref_cryptUsername_hint">&lt;opcjonalny&gt;</string>
+    <string name="pref_cryptUsername_title">Nazwa użytkownika</string>
+    <string name="password_mask">Dotknij aby edytować</string>
+    <string name="prefs_header_connection">Połączenie</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="share_subject">Śledź moją aktualną lokalizację na Hauk!</string>
+    <string name="share_via">Udostępnij link Hauk przez</string>
+    <string name="battery_savings_body">"Wygląda na to, że uzywasz urządzenia %s. Te urządzenia mają włączone oszczędzanie baterii, które mogą uniemożliwić Hauk wysyłanie aktualizacji lokalizacji w tle.
+\n
+\nZalecane jest, żeby wyłączyć oszczędzanie baterii dla aplikacji Hauk,  aby aplikacja nagle nie przestała działać.
+\n
+\nTa wiadomość nie będzie wyświetlana ponownie."</string>
+    <string name="link_added_body">Nowy link został pomyślnie utworzony. Kliknij przycisk udostępniania aby go skopiować.</string>
+    <string name="resume_body">Masz niezakończoną sesję:
+\nAktywnych linków: %d
+\nCzas wygaśnięcia: %s
+\n
+\nChciałbyś wznowić tą sesję\?</string>
+    <string name="err_ver_e2e">"Podany serwer nie wspiera szyfrowania.  Ta funkcja jest dostępna od wersji %s, a obecna wersja serwera to %s. Szyfrowanie zostanie wyłączone."</string>
+    <string name="err_proxy_failure">Wystąpił błąd podczas rozwiązywania nazwy hosta proxy: %s</string>
+    <string name="err_no_nickname">Musisz ustawić pseudonim zanim dołączysz do grupy. Ustaw pseudonim i spróbuj ponownie.</string>
+    <string name="err_invalid_duration">Wprowadzony czas udostępniania jest nieprawidłowe. Proszę wprowadzić poprawny czas.</string>
+    <string name="err_server_not_configured">Nie skonfigurowano danych serwera. Proszę wprowadzić dane serwera w ustawieniach i spróbować ponownie.</string>
+    <string name="btn_remember">Nie pokazuj ponownie</string>
+    <string name="adopt_body">Możesz dołączyć istniejącą sesję udostępniania lokalizacji do tej grupy. Proszę wkleić adres lub ID udostępnianej osoby którą chciałbyś dołączyć (np. %s\?XXXX-XXXX) i przypisz pseudonim do tej osoby.</string>
+    <string name="label_heading_no_links">Brak aktywnych linków</string>
+    <string name="dialog_confirm_stop_share">Czy jesteś pewien, że chcesz usunąć ten link\?</string>
+    <string name="dialog_confirm_stop_title">Zatrzymać udostępnianie\?</string>
+    <string name="dialog_confirm_stop_body">Czy jesteś pewien, że chcesz zatrzymać udostępnianie\?</string>
+    <string name="label_status_disconnected">Błąd serwera</string>
+    <string name="label_status_lost_gnss">Szukanie lokalizacji…</string>
+    <string name="label_allow_adopt">Zezwól na adopcję:</string>
 </resources>
