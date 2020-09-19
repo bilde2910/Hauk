@@ -1,1 +1,26 @@
 <?php
+$LANG['no_redis_ext'] = 'Nie znaleziono rozszerzenia redis (redis) w PHP!';
+$LANG['no_memcached_ext'] = 'Nie odnaleziono kompatybilnego rozszerzenia memcached (memcache lub memcached) w PHP!';
+$LANG['ldap_search_ambiguous'] = 'Znaleziono kilku użytkowników - zmień filtr LDAP!';
+$LANG['ldap_user_unauthorized'] = 'Nie znaleziono użytkownika, nie autoryzowano lub hasło jest niepoprawne!';
+$LANG['ldap_search_failed'] = 'Błąd wyszukiwania na serwerze LDAP!';
+$LANG['ldap_connection_failed'] = 'Błąd podczas łączenia z serwerem LDAP!';
+$LANG['ldap_config_error'] = 'Błąd podczas ustawiania parametrów połączenia LDAP!';
+$LANG['ldap_extension_missing'] = 'Rozszerzenie ldap nie jest dostępne w PHP!';
+$LANG['e2e_adoption_not_allowed'] = 'Ta sesja jest chroniona hasłem i nie może zostać dołączona!';
+$LANG['group_e2e_unsupported'] = 'Sesje grupowe nie mogą być zabezpieczone hasłem!';
+$LANG['location_invalid'] = 'Niepoprawna lokalizacja!';
+$LANG['session_invalid'] = 'Niepoprawna sesja!';
+$LANG['group_pin_invalid'] = 'Niepoprawny PIN grupy!';
+$LANG['share_mode_unsupported'] = 'Niewspierany tryb udostępniania!';
+$LANG['interval_too_short'] = 'Interwał między aktualizacjami jest za krótki!';
+$LANG['interval_too_long'] = 'Interwał między aktualizacjami jest za długi!';
+$LANG['share_too_long'] = 'Czas trwania sesji jest za długi!';
+$LANG['username_required'] = 'Wymagana nazwa użytkownika!';
+$LANG['incorrect_password'] = 'Niepoprawne hasło!';
+$LANG['share_adoption_not_allowed'] = 'Host danej sesji nie zezwala na dołączanie!';
+$LANG['group_share_not_adoptable'] = 'Nie możesz dołączać sesji grupowych!';
+$LANG['share_not_found'] = 'Ta sesja nie istnieje!';
+$LANG['session_expired'] = 'Sesja wygasła!';
+$LANG['invalid_storage'] = 'Ustawiłeś niepoprawny storage_backend w Hauk!';
+$LANG['config_missing'] = 'Nie można odnaleźć pliku config.php!';
