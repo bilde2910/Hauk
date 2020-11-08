@@ -682,7 +682,6 @@ function processUpdate(data, init) {
 
         // Get the last location received.
         var lastPoint = shares[user].points.length > 0 ? shares[user].points[shares[user].points.length - 1] : null;
-        if (lastPoint !== null) shares[user].listEntry.style.display = "block";
 
         for (var i = 0; i < users[user].length; i++) {
             var lat = users[user][i][0];
@@ -743,6 +742,8 @@ function processUpdate(data, init) {
                 lastPoint = shares[user].points[shares[user].points.length - 1];
             }
         }
+
+        if (lastPoint !== null) shares[user].listEntry.style.display = "block";
 
         var eVelocity = document.getElementById("velocity-" + shares[user].id)
         var vel = 0;
