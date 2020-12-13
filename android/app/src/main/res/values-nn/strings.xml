@@ -148,7 +148,7 @@
     <string name="about_version_title">Appversjon</string>
     <string name="prefs_header_about">Om Hauk</string>
     <string name="pref_confirmStop_off">Ikkje be om stadfesting når du stoppar delingar i appen</string>
-    <string name="pref_confirmStop_on">Be om stadfesting når du stoppar delingar i *appen</string>
+    <string name="pref_confirmStop_on">Be om stadfesting når du stoppar delingar i appen</string>
     <string name="pref_confirmStop_title">Stadfest før delingar blir avslutta</string>
     <string name="pref_minUpdateDistance_title">Minste avstand mellom oppdateringar (meter)</string>
     <string name="err_no_nickname">Du må stilla inn eit kallenamn før du kan bli med i delingsgruppar. Ver vennleg og vel eit kallenamn og prøv igjen.</string>
@@ -160,4 +160,7 @@
     <string name="pref_noGnssFallback_title">Fall tilbake til nettverksposisjon viss GNSS er utilgjengeleg i (sekund)</string>
     <string name="label_heading_no_links">Ingen aktive delinger</string>
     <string name="label_status_lost_gnss">Ventar på posisjon…</string>
+    <string name="pref_hideLogo_off">Vis Hauk-logoen på appens startside</string>
+    <string name="pref_hideLogo_on">Skjul Hauk-logoen frå appens startside</string>
+    <string name="prefs_hideLogo_title">Skjul logoen på framsida</string>
 </resources>
