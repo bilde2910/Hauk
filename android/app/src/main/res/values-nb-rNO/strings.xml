@@ -160,4 +160,7 @@
     <string name="pref_noGnssFallback_title">Fall tilbake til nettverksposisjon hvis GNSS er utilgjengelig i (sekunder)</string>
     <string name="label_heading_no_links">Ingen aktive delinger</string>
     <string name="label_status_lost_gnss">Venter på posisjon…</string>
+    <string name="pref_hideLogo_off">Vis Hauk-logoen på appens startside</string>
+    <string name="pref_hideLogo_on">Skjul Hauk-logoen fra appens startside</string>
+    <string name="prefs_hideLogo_title">Skjul logoen på forsiden</string>
 </resources>
