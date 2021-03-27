@@ -684,12 +684,13 @@ function processUpdate(data, init) {
         var lastPoint = shares[user].points.length > 0 ? shares[user].points[shares[user].points.length - 1] : null;
 
         for (var i = 0; i < users[user].length; i++) {
-            var lat = users[user][i][0];
-            var lon = users[user][i][1];
-            var time = users[user][i][2];
-            var prov = users[user][i][3];
-            var acc = users[user][i][4];
-            var spd = users[user][i][5];
+            var lat = getValueOrNull(users[user][i],0);
+            var lon = getValueOrNull(users[user][i],1);
+            var time = getValueOrNull(users[user][i],2);
+            var prov = getValueOrNull(users[user][i],3);
+            var acc = getValueOrNull(users[user][i],4);
+            var spd = getValueOrNull(users[user][i],5);
+            var alt = getValueOrNull(users[user][i],6);
 
             // Default to "Fine" provider for older clients.
             if (prov === null) prov = LOC_PROVIDER_FINE;
@@ -713,11 +714,17 @@ function processUpdate(data, init) {
                                     '<span class="velocity">' +
                                         '<span id="velocity-' + shares[user].id + '">0.0</span> ' +
                                         VELOCITY_UNIT.unit +
-                                    '</span><span class="offline" id="last-seen-' + shares[user].id + '">' +
+                                    ' | </span>' + 
+                                    '<span class="altitude">' +
+                                    // FIXME: add altitude unit
+                                        '<span id="altitude-' + shares[user].id + '">0.0</span> m' +
+                                    '</span>' + 
+                                    '<span class="offline" id="last-seen-' + shares[user].id + '">' +
                                     '</span>' +
                                 '</p>' +
                             '</div>',
-                        iconAnchor: [33, 18]
+                        // FIXME: hard-coded and dependend on style.css .marker
+                        iconAnchor: [60, 18]
                     });
                     shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon}).on("click", function() {
                         follow(this.haukUser);
@@ -738,7 +745,7 @@ function processUpdate(data, init) {
                     shares[user].circle.setLatLng([lat, lon]);
                     if (acc !== null) shares[user].circle.setRadius(acc);
                 }
-                shares[user].points.push({lat: lat, lon: lon, line: line, time: time, spd: spd, acc: acc});
+                shares[user].points.push({lat: lat, lon: lon, line: line, time: time, spd: spd, acc: acc, alt: alt});
                 lastPoint = shares[user].points[shares[user].points.length - 1];
             }
         }
@@ -780,6 +787,14 @@ function processUpdate(data, init) {
             // Update the UI with the velocity.
             vel = velocity(dist, time);
             eVelocity.textContent = vel.toFixed(1);;
+        }
+        
+        // Altitude (If available)
+        var eAltitude = document.getElementById("altitude-" + shares[user].id);
+        var alt = 0;
+        if (lastPoint !== null && lastPoint.alt !== null && eAltitude !== null) {
+            alt = lastPoint.alt
+            eAltitude.textContent = alt.toFixed(1)
         }
 
         // Flag that the first location has been received, for map centering.
@@ -888,6 +903,14 @@ function processUpdate(data, init) {
             following = true;
         }
     }
+}
+
+function getValueOrNull(points,idx) {
+    var value = null;
+    if (idx < points.length) {
+        value = points[idx];
+    }
+    return value;
 }
 
 // Calculates the distance between two points on a sphere using the Haversine
