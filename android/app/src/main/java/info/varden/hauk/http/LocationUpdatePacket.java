@@ -48,6 +48,7 @@ public abstract class LocationUpdatePacket extends Packet {
         super(ctx, session.getServerURL(), session.getConnectionParameters(), Constants.URL_PATH_POST_LOCATION);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
+        // FIXME: Get rid of duplicate code
         if (session.getDerivableE2EKey() == null) {
             // If not using end-to-end encryption, send parameters in plain text.
             setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
@@ -58,6 +59,7 @@ public abstract class LocationUpdatePacket extends Packet {
             // Not all devices provide these parameters:
             if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, String.valueOf(location.getSpeed()));
             if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, String.valueOf(location.getAccuracy()));
+            if (location.hasAltitude()) setParameter(Constants.PACKET_PARAM_ALTITUDE, String.valueOf(location.getAltitude()));
         } else {
             // We're using end-to-end encryption - generate an IV and encrypt all parameters.
             try {
@@ -74,6 +76,7 @@ public abstract class LocationUpdatePacket extends Packet {
                 // Not all devices provide these parameters:
                 if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getSpeed()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
                 if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getAccuracy()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+                if (location.hasAltitude()) setParameter(Constants.PACKET_PARAM_ALTITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getAltitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
             } catch (Exception e) {
                 Log.e("Error was thrown when encrypting location data", e); //NON-NLS
             }
