@@ -274,6 +274,10 @@
 // KILOMETERS_PER_HOUR, MILES_PER_HOUR, METERS_PER_SECOND
 "velocity_unit"     => KILOMETERS_PER_HOUR,
 
+// The unit of measurement of altitude. Valid are:
+// METERS, FEET
+"altitude_unit"     => METERS,
+
 // The publicly accessible URL to reach Hauk, with trailing slash.
 "public_url"        => 'https://example.com/'
 

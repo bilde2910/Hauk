@@ -716,8 +716,8 @@ function processUpdate(data, init) {
                                         VELOCITY_UNIT.unit +
                                     ' | </span>' + 
                                     '<span class="altitude">' +
-                                    // FIXME: add altitude unit
-                                        '<span id="altitude-' + shares[user].id + '">0.0</span> m' +
+                                        '<span id="altitude-' + shares[user].id + '">0.0</span> ' +
+                                        ALTITUDE_UNIT.unit +
                                     '</span>' + 
                                     '<span class="offline" id="last-seen-' + shares[user].id + '">' +
                                     '</span>' +
@@ -793,8 +793,8 @@ function processUpdate(data, init) {
         var eAltitude = document.getElementById("altitude-" + shares[user].id);
         var alt = 0;
         if (lastPoint !== null && lastPoint.alt !== null && eAltitude !== null) {
-            alt = lastPoint.alt
-            eAltitude.textContent = alt.toFixed(1)
+            alt = lastPoint.alt * ALTITUDE_UNIT.metersMultiplier;
+            eAltitude.textContent = alt.toFixed(1);
         }
 
         // Flag that the first location has been received, for map centering.
