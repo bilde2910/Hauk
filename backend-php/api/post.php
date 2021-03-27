@@ -21,6 +21,7 @@ $sid = $_POST["sid"];
 $session = new Client($memcache, $sid);
 if (!$session->exists()) die($LANG['session_expired']."\n");
 
+// FIXME: Get rid of duplicate code
 if (!$session->isEncrypted()) {
     // Perform input validation.
     $lat = floatval($_POST["lat"]);
@@ -31,6 +32,7 @@ if (!$session->isEncrypted()) {
     // Not all devices report speed and accuracy, but if available, report them
     // too.
     $speed = isset($_POST["spd"]) ? floatval($_POST["spd"]) : null;
+    $altitude = isset($_POST["alt"]) ? doubleval($_POST["alt"]) : null;
     $accuracy = isset($_POST["acc"]) ? floatval($_POST["acc"]) : null;
     $provider = isset($_POST["prv"]) && $_POST["prv"] == "1" ? 1 : 0;
 
@@ -38,7 +40,7 @@ if (!$session->isEncrypted()) {
     // and a location list (l). Each entry in the location list contains a
     // latitude, longitude, timestamp, provider, accuracy and speed, in that
     // order, as an array.
-    $session->addPoint([$lat, $lon, $time, $provider, $accuracy, $speed])->save();
+    $session->addPoint([$lat, $lon, $time, $provider, $accuracy, $speed, $altitude])->save();
 
 } else {
     // Input validation cannot be performed for end-to-end encrypted data.
@@ -48,6 +50,7 @@ if (!$session->isEncrypted()) {
     $speed = isset($_POST["spd"]) ? $_POST["spd"] : null;
     $accuracy = isset($_POST["acc"]) ? $_POST["acc"] : null;
     $provider = isset($_POST["prv"]) ? $_POST["prv"] : null;
+    $altitude = isset($_POST["alt"]) ? $_POST["alt"] : null;
 
     // End-to-end encrypted connections also have an IV field used to decrypt
     // the data fields.
@@ -55,7 +58,7 @@ if (!$session->isEncrypted()) {
     $iv = $_POST["iv"];
 
     // The IV field is prepended to the array to send to the client.
-    $session->addPoint([$iv, $lat, $lon, $time, $provider, $accuracy, $speed])->save();
+    $session->addPoint([$iv, $lat, $lon, $time, $provider, $accuracy, $speed, $altitude])->save();
 }
 
 if ($session->hasExpired()) {
