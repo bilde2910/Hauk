@@ -732,8 +732,8 @@ function processUpdate(data, init) {
                 }
                 // Draw an accuracy circle if GPS accuracy was provided by the
                 // client.
-                if (acc !== null && shares[user].circle == null) {
-                    shares[user].circle = L.circle([lat, lon], {radius: acc, fillColor: iconColor, fillOpacity: 0.25, color: iconColor, opacity: 0.5, interactive: false}).addTo(circleLayer);
+                if (shares[user].circle == null) {
+                    shares[user].circle = L.circle([lat, lon], {radius: acc != null ? acc : 0, fillColor: iconColor, fillOpacity: 0.25, color: iconColor, opacity: 0.5, interactive: false}).addTo(circleLayer);
                 } else if (shares[user].circle !== null) {
                     shares[user].circle.setLatLng([lat, lon]);
                     if (acc !== null) shares[user].circle.setRadius(acc);
