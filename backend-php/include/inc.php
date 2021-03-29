@@ -565,12 +565,12 @@ class GroupShare extends Share {
     }
 
     // Returns a map of nicknames and the users' corresponding coordinates.
-    public function getAllPoints() {
+    public function getAllPoints($sinceTime) {
         $points = array();
         $hosts = $this->getHosts();
         foreach ($hosts as $nick => $host) {
             if ($host->exists()) {
-                $points[$nick] = $host->getPoints();
+                $points[$nick] = $host->getPoints($sinceTime);
             }
         }
         return $points;
@@ -758,8 +758,22 @@ class Client {
     }
 
     // Returns a list of all point arrays for this session.
-    public function getPoints() {
+    public function getPoints($sinceTime) {
+        if (is_null($sinceTime)) {
+            // return all memcached points
         return $this->sessionData["points"];
+        } else {
+            $newPoints = [];
+            // FIXME: use map instead of indices
+            $timeIndex = $this->isEncrypted() ? 3 : 2;
+            // only return points which are more recent than $oldestPointTime
+            foreach ($this->sessionData["points"] as $point) {
+                if (floatval($point[$timeIndex]) > $sinceTime) {
+                    array_push($newPoints, $point);
+                }
+            }
+            return $newPoints;
+        }
     }
 
     // Generates a random session ID for new sessions.

@@ -437,7 +437,8 @@ function setNewInterval(expire, interval, serverTime) {
             showMessage(LANG["dialog_expired_head"], LANG["dialog_expired_body"]);
         }
 
-        getJSON("./api/fetch.php?id=" + id, function(data) {
+        // Start incremental fetch
+        getJSON("./api/fetch.php?id=" + id + "&since=" + getOldestPointTime(), function(data) {
             // Recreate the interval timers if the interval or expiration
             // change.
             if (data.expire != expire || data.interval != interval) {
@@ -454,6 +455,21 @@ function setNewInterval(expire, interval, serverTime) {
             showMessage(LANG["dialog_expired_head"], LANG["dialog_expired_body"]);
         });
     }, interval * 1000);
+}
+
+// Scans across all most recent points and returns the time of the oldest one
+function getOldestPointTime() {
+    var oldestTime = Number.MAX_VALUE;
+    var foundTime = false;
+    for (var share in shares) {
+        var points = shares[share].points
+        if (points && points.length > 0 ) {
+            var mostRecentTime = points[ points.length-1 ].time
+            oldestTime = mostRecentTime < oldestTime ? mostRecentTime : oldestTime;
+            foundTime = true;
+        }
+    }
+    return foundTime ? oldestTime : 0;
 }
 
 var noGPS = document.getElementById("searching");
