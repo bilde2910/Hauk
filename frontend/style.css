@@ -61,6 +61,16 @@ body {
     font-weight: bold;
 }
 
+/* Searching for GNSS signal header (SVG image above, no need for margin). */
+#searching > p.header {
+    margin-top: 0;
+}
+
+/* Default page header. (Logo above, need custom margin.) */
+.point-app-to {
+    margin-top: 7vmin;
+}
+
 /* Popup information. */
 .cover > p.body {
     font-size: 4vmin;

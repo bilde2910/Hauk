@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src * data:; connect-src 'self'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; worker-src 'none'; manifest-src 'none';">
 
         <!-- Load Leaflet for the map. -->
         <link rel="stylesheet" href="./lib/leaflet/1.6.0/leaflet.css" />
@@ -57,13 +58,13 @@
 
         <div class="cover hidden" id="searching">
             <img src="./assets/location-pending.svg" class="pending">
-            <p class="header" style="margin-top:0;" data-i18n="gnss_signal_head"></p>
+            <p class="header" data-i18n="gnss_signal_head"></p>
             <p class="body" data-i18n="gnss_signal_body"></p>
         </div>
 
         <div class="cover hidden" id="index">
             <img src="./assets/logo.svg" class="logo">
-            <p class="body" style="margin-top:7vmin;" data-i18n="point_app_to"></p>
+            <p class="body point-app-to" data-i18n="point_app_to"></p>
             <p class="body" id="url">https://localhost/</p>
             <p class="body"><a href="https://f-droid.org/packages/info.varden.hauk">
                 <img data-i18n="f_droid_badge_text"
