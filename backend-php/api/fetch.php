@@ -20,6 +20,8 @@ if (!$share->exists()) {
 } else {
     header("Content-Type: text/json");
 
+    $sinceTime=$_GET["since"] ?? null;
+
     // Solo and group shares have different internal structures. Figure out the
     // correct type so that it can be output.
     switch ($share->getType()) {
@@ -34,7 +36,7 @@ if (!$share->exists()) {
                 "expire" => $share->getExpirationTime(),
                 "serverTime" => microtime(true),
                 "interval" => $session->getInterval(),
-                "points" => $session->getPoints(),
+                "points" => $session->getPoints($sinceTime),
                 "encrypted" => $session->isEncrypted(),
                 "salt" => $session->getEncryptionSalt()
             ));
@@ -46,7 +48,7 @@ if (!$share->exists()) {
                 "expire" => $share->getExpirationTime(),
                 "serverTime" => microtime(true),
                 "interval" => $share->getAutoInterval(),
-                "points" => $share->getAllPoints()
+                "points" => $share->getAllPoints($sinceTime)
             ));
             break;
     }
