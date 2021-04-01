@@ -712,19 +712,20 @@ function processUpdate(data, init) {
                                 '<p class="' + shares[user].state + '" id="label-' + shares[user].id + '">' +
                                     '<span id="nickname-' + shares[user].id + '"></span>' +
                                     '<span class="metric">' +
-                                        '<span id="velocity-' + shares[user].id + '">0.0</span> ' +
-                                        VELOCITY_UNIT.unit +
-                                    ' | </span>' + 
-                                    '<span class="metric">' +
-                                        '<span id="altitude-' + shares[user].id + '">0.0</span> ' +
-                                        ALTITUDE_UNIT.unit +
+                                        '<span class="metric-label">vel:</span>' +
+                                        '<span class="metric-value"><span id="velocity-' + shares[user].id + '">0.0</span> ' +
+                                        VELOCITY_UNIT.unit + '</span>' +
+                                        '<br>' + 
+                                        '<span class="metric-label">alt:</span>' +
+                                        '<span class="metric-value"><span id="altitude-' + shares[user].id + '">0.0</span> ' +
+                                        ALTITUDE_UNIT.unit + '</span>' +
                                     '</span>' + 
                                     '<span class="offline" id="last-seen-' + shares[user].id + '">' +
                                     '</span>' +
                                 '</p>' +
                             '</div>',
                         // FIXME: hard-coded and dependend on style.css .marker
-                        iconAnchor: [60, 18]
+                        iconAnchor: [48, 18]
                     });
                     shares[user].marker = L.marker([lat, lon], {icon: shares[user].icon}).on("click", function() {
                         follow(this.haukUser);

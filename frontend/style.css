@@ -254,7 +254,7 @@ a:last-child > .store-icon {
 
 /* The outer marker div. */
 .marker {
-    width: 120px;
+    width: 96px;
     height: 62px;
 }
 
@@ -302,8 +302,8 @@ a:last-child > .store-icon {
     width: 100%;
     border-radius: 15px;
     text-align: center;
-    padding: 2px 0;
-    line-height: 100%;
+    padding: 5px 0 5px;
+    line-height: 125%;
     font-family: sans-serif;
     overflow: hidden;
     white-space: nowrap;
@@ -332,4 +332,21 @@ a:last-child > .store-icon {
 .leaflet-div-icon {
     background: none;
     border: none;
+}
+
+.metric-label {
+    display:inline-block;
+    width: 30%;
+    text-align:right;
+    vertical-align: bottom;
+    padding-right: 0.5em;
+}
+  
+.metric-value {
+    display:inline-block;
+    width: 70%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
 }
