@@ -799,7 +799,9 @@ function processUpdate(data, init) {
         if (lastPoint !== null && lastPoint.alt !== null && eAltitude !== null) {
             alt = lastPoint.alt * ALTITUDE_UNIT.metersMultiplier;
             eAltitude.textContent = alt.toFixed(1);
-            eAltitudeContainer.classList.remove("hidden");
+            if (SHOW_ALTITUDE_AMSL) {
+                eAltitudeContainer.classList.remove("hidden");
+            }
         } else {
             eAltitudeContainer.classList.add("hidden");
         }
