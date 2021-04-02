@@ -278,6 +278,12 @@
 // METERS, FEET
 "altitude_unit"     => METERS,
 
+// Display velocity below marker
+"show_velocity"     => true,
+
+// Display altitude AMSL below marker
+"show_altitude_amsl"=> true,
+
 // The publicly accessible URL to reach Hauk, with trailing slash.
 "public_url"        => 'https://example.com/'
 

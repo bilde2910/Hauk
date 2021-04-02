@@ -160,6 +160,8 @@ const DEFAULTS = array(
     "trail_color"           => '#d80037',
     "velocity_unit"         => KILOMETERS_PER_HOUR,
     "altitude_unit"         => METERS,
+    "show_velocity"         => true,
+    "show_altitude_amsl"    => true,
     "public_url"            => 'https://example.com/'
 
 );

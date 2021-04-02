@@ -711,11 +711,13 @@ function processUpdate(data, init) {
                                 '<div class="arrow still-' + shares[user].state + '" id="arrow-' + shares[user].id + '"></div>' +
                                 '<p class="' + shares[user].state + '" id="label-' + shares[user].id + '">' +
                                     '<span id="nickname-' + shares[user].id + '"></span>' +
-                                    '<span class="metric">' +
+                                    '<span class="metric' + (SHOW_VELOCITY ? "" : " hidden") + '">' +
                                         '<span class="metric-label">vel:</span>' +
                                         '<span class="metric-value"><span id="velocity-' + shares[user].id + '">0.0</span> ' +
                                         VELOCITY_UNIT.unit + '</span>' +
                                         '<br>' + 
+                                    '</span>' + 
+                                    '<span class="metric'+ (SHOW_ALTITUDE_AMSL ? "" : " hidden") + '">' +
                                         '<span class="metric-label">alt:</span>' +
                                         '<span class="metric-value"><span id="altitude-' + shares[user].id + '">0.0</span> ' +
                                         ALTITUDE_UNIT.unit + '</span>' +
