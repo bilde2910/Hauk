@@ -51,7 +51,7 @@ import info.varden.hauk.utils.TimeUtils;
  * @since 1.3
  * @author Marius Lindvall
  */
-public final class Receiver extends BroadcastReceiver {
+public final class ExportedReceiver extends BroadcastReceiver {
     @SuppressWarnings("HardCodedStringLiteral")
     private static final String ACTION_START_SHARING_ALONE_WITH_MENU = "info.varden.hauk.START_ALONE_THEN_SHARE_VIA";
     @SuppressWarnings("HardCodedStringLiteral")

@@ -104,6 +104,11 @@
             app:entries="@array/tls_validation_types"
             app:entryValues="@array/tls_validation_type_values" />
 
+        <SwitchPreference
+            app:key="restartOnBoot"
+            app:title="@string/pref_restartOnBoot_title"
+            app:summaryOff="@string/pref_restartOnBoot_summaryOff"
+            app:summaryOn="@string/pref_restartOnBoot_summaryOn" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/prefs_header_appearance">
