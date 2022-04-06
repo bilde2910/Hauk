@@ -808,7 +808,7 @@ function authenticated() {
             if (!isset($_POST["usr"])) die($LANG["username_required"]);
             requirePOST("pwd", "usr");
 			// Jump out if we cannot find the htpasswd file.
-			if (!file_exists(getConfig("htpasswd_path"))) die($LANG["cannot_find_htpasswd_file"]);
+			if (!file_exists(getConfig("htpasswd_path"))) die($LANG["cannot_find_password_file"]);
 			$file = fopen(getConfig("htpasswd_path"), "r");
 			$authed = false;
 			while (($line = fgets($file)) !== false && !$authed) {
