@@ -24,3 +24,4 @@ $LANG['username_required'] = 'Kullanıcı adı gerekli!';
 $LANG['incorrect_password'] = 'Hatalı parola!';
 $LANG['session_expired'] = 'Oturum süresi doldu!';
 $LANG['config_missing'] = 'config.php bulunamıyor!';
+$LANG['cannot_find_password_file'] = 'Şifre dosyasını bulamıyor';

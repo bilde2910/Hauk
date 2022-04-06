@@ -24,3 +24,4 @@ $LANG['invalid_storage'] = 'storage_backend non è impostata correttamente in Ha
 $LANG['no_redis_ext'] = 'Nessuna estensione compatibile con redi (redi) è attiva nella tua configurazione PHP!';
 $LANG['no_memcached_ext'] = 'Nessuna estensione compatibile con memcached (memecache o memecached) è attiva nella tua configurazione PHP!';
 $LANG['config_missing'] = 'Impossibile trovare config.php!';
+$LANG['cannot_find_password_file'] = 'Impossibile trovare il file della password!';

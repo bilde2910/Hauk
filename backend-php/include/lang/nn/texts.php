@@ -24,3 +24,4 @@ $LANG['ldap_search_failed'] = 'Kunne ikkje slå opp brukaren på LDAP-serveren!'
 $LANG['ldap_connection_failed'] = 'Kunne ikkje kopla til LDAP-serveren!';
 $LANG['ldap_config_error'] = 'Kunne ikkje setja LDAP-tilkoplingsparametrar!';
 $LANG['ldap_extension_missing'] = 'ldap-utvidinga er ikkje aktivert i PHP-konfigurasjonen din!';
+$LANG['cannot_find_password_file'] = 'Kan ikke finne passordfil!';
