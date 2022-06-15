@@ -5,9 +5,15 @@ import android.location.Location;
 import android.util.Base64;
 
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
@@ -48,36 +54,17 @@ public abstract class LocationUpdatePacket extends Packet {
         super(ctx, session.getServerURL(), session.getConnectionParameters(), Constants.URL_PATH_POST_LOCATION);
         setParameter(Constants.PACKET_PARAM_SESSION_ID, session.getID());
 
-        if (session.getDerivableE2EKey() == null) {
-            // If not using end-to-end encryption, send parameters in plain text.
-            setParameter(Constants.PACKET_PARAM_LATITUDE, String.valueOf(location.getLatitude()));
-            setParameter(Constants.PACKET_PARAM_LONGITUDE, String.valueOf(location.getLongitude()));
-            setParameter(Constants.PACKET_PARAM_PROVIDER_ACCURACY, String.valueOf(accuracy.getMode()));
-            setParameter(Constants.PACKET_PARAM_TIMESTAMP, String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND));
+        Cipher cipher = initCipher(session);
 
-            // Not all devices provide these parameters:
-            if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, String.valueOf(location.getSpeed()));
-            if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, String.valueOf(location.getAccuracy()));
-        } else {
-            // We're using end-to-end encryption - generate an IV and encrypt all parameters.
-            try {
-                Cipher cipher = Cipher.getInstance(Constants.E2E_TRANSFORMATION);
-                cipher.init(Cipher.ENCRYPT_MODE, session.getDerivableE2EKey().deriveSpec(), new SecureRandom());
-                byte[] iv = cipher.getIV();
-                setParameter(Constants.PACKET_PARAM_INIT_VECTOR, Base64.encodeToString(iv, Base64.DEFAULT));
+        encryptAndSetParameter(Constants.PACKET_PARAM_LATITUDE, location.getLatitude(), cipher);
+        encryptAndSetParameter(Constants.PACKET_PARAM_LONGITUDE, location.getLongitude(), cipher);
+        encryptAndSetParameter(Constants.PACKET_PARAM_PROVIDER_ACCURACY, accuracy.getMode(), cipher);
+        encryptAndSetParameter(Constants.PACKET_PARAM_TIMESTAMP, System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND, cipher);
 
-                setParameter(Constants.PACKET_PARAM_LATITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLatitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-                setParameter(Constants.PACKET_PARAM_LONGITUDE, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getLongitude()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-                setParameter(Constants.PACKET_PARAM_PROVIDER_ACCURACY, Base64.encodeToString(cipher.doFinal(String.valueOf(accuracy.getMode()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-                setParameter(Constants.PACKET_PARAM_TIMESTAMP, Base64.encodeToString(cipher.doFinal(String.valueOf(System.currentTimeMillis() / (double) TimeUtils.MILLIS_PER_SECOND).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-
-                // Not all devices provide these parameters:
-                if (location.hasSpeed()) setParameter(Constants.PACKET_PARAM_SPEED, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getSpeed()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-                if (location.hasAccuracy()) setParameter(Constants.PACKET_PARAM_ACCURACY, Base64.encodeToString(cipher.doFinal(String.valueOf(location.getAccuracy()).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
-            } catch (Exception e) {
-                Log.e("Error was thrown when encrypting location data", e); //NON-NLS
-            }
-        }
+        // Not all devices provide these parameters:
+        if (location.hasSpeed()) encryptAndSetParameter(Constants.PACKET_PARAM_SPEED, location.getSpeed(), cipher);
+        if (location.hasAccuracy()) encryptAndSetParameter(Constants.PACKET_PARAM_ACCURACY, location.getAccuracy(), cipher);
+        if (location.hasAltitude()) encryptAndSetParameter(Constants.PACKET_PARAM_ALTITUDE, location.getAltitude(), cipher);
     }
 
     @SuppressWarnings("DesignForExtension")
@@ -111,6 +98,35 @@ public abstract class LocationUpdatePacket extends Packet {
                 err.append(System.lineSeparator());
             }
             throw new ServerException(err.toString());
+        }
+    }
+
+    private Cipher initCipher(Session session) {
+        Cipher cipher = null;
+        if (session.getDerivableE2EKey() != null) {
+            try {
+                cipher = Cipher.getInstance(Constants.E2E_TRANSFORMATION);
+                cipher.init(Cipher.ENCRYPT_MODE, session.getDerivableE2EKey().deriveSpec(), new SecureRandom());
+                byte[] iv = cipher.getIV();
+                setParameter(Constants.PACKET_PARAM_INIT_VECTOR, Base64.encodeToString(iv, Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException | InvalidKeyException | InvalidKeySpecException | NoSuchPaddingException exception) {
+                Log.e("Error was thrown while initializing E2E encryption", exception); //NON-NLS
+            }
+        }
+        return cipher;
+    }
+
+    private <V> void encryptAndSetParameter(String key, V value, Cipher cipher) {
+        if (cipher != null) {
+            // We're using end-to-end encryption - generate an IV and encrypt all parameters.
+            try {
+                setParameter(key, Base64.encodeToString(cipher.doFinal(String.valueOf(value).getBytes(StandardCharsets.UTF_8)), Base64.DEFAULT));
+            } catch (BadPaddingException | IllegalBlockSizeException exception) {
+                Log.e("Error was thrown while encrypting location data", exception); //NON-NLS
+            }
+        } else {
+            // If not using end-to-end encryption, send parameters in plain text.
+            setParameter(key, String.valueOf(value));
         }
     }
 }

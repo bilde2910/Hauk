@@ -59,6 +59,16 @@ const METERS_PER_SECOND = array(
     "mpsMultiplier" => 1,
     "unit" => "m/s"
 );
+const METERS = array(
+    // Absolute distance in meters
+    "metersMultiplier" => 1,
+    "unit" => "m"
+);
+const FEET = array(
+    // Absolute distance in feet
+    "metersMultiplier" => 3.280839895,
+    "unit" => "ft"
+);
 
 // Load fallback language.
 include(__DIR__."/lang/en/texts.php");
@@ -149,6 +159,9 @@ const DEFAULTS = array(
     "v_data_points"         => 2,
     "trail_color"           => '#d80037',
     "velocity_unit"         => KILOMETERS_PER_HOUR,
+    "altitude_unit"         => METERS,
+    "show_velocity"         => true,
+    "show_altitude_amsl"    => true,
     "public_url"            => 'https://example.com/'
 
 );
