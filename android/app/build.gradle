@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace 'info.varden.hauk'
+
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "info.varden.hauk"
         minSdkVersion 23
