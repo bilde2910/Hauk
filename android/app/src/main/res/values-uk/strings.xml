@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_nickname">Нік:</string>
+    <string name="action_settings">налаштування</string>
     <string name="err_ver_group">Сервер не підтримує групові шари. Групові шари підтримуються в версії %s та вище; цей сервер зараз має версію %s. Ваша шара була перетворена на індивідуальну.</string>
     <string name="btn_link">Створити новий відстежувальний лінк</string>
     <string name="ok_message">Шарінг місцеположення активний! Нажміть кнопку поділитися щоб скопіювати публічно доступний URL для вашої шари.</string>
