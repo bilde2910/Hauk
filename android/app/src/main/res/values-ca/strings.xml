@@ -2,6 +2,7 @@
 <resources>
     <string name="pref_cryptUsername_title">Nom d\'usuari</string>
     <string name="pref_cryptUsername_hint">&lt;opcional&gt;</string>
+    <string name="action_settings">Configuracions</string>
     <string name="pref_cryptPassword_title">Password:</string>
     <string name="label_duration">Durada de la compartició:</string>
     <string name="pref_interval_title">Interval d\'actualització (s):</string>

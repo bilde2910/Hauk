@@ -45,6 +45,7 @@ public enum Constants {
     public static final Preference<String> PREF_NICKNAME = new Preference.String("nickname", "");
     public static final Preference<Integer> PREF_DURATION_UNIT = new Preference.Integer("durUnit", Constants.DURATION_UNIT_MINUTES);
     public static final Preference<Boolean> PREF_ALLOW_ADOPTION = new Preference.Boolean("allowAdoption", true);
+    public static final Preference<Boolean> PREF_RESTART_ON_BOOT = new Preference.Boolean("restartOnBoot", true);
     public static final Preference<NightModeStyle> PREF_NIGHT_MODE = new Preference.Enum<>("nightMode", NightModeStyle.FOLLOW_SYSTEM);
     public static final Preference<Boolean> PREF_CONFIRM_STOP = new Preference.Boolean("confirmStop", true);
     public static final Preference<Boolean> PREF_HIDE_LOGO = new Preference.Boolean("hideLogo", false);
@@ -122,6 +123,7 @@ public enum Constants {
     public static final String PACKET_PARAM_SPEED = "spd";
     public static final String PACKET_PARAM_TIMESTAMP = "time";
     public static final String PACKET_PARAM_USERNAME = "usr";
+    public static final String PACKET_PARAM_ALTITUDE = "alt";
 
     // Packet OK response header. All valid packets start with this line.
     public static final String PACKET_RESPONSE_OK = "OK";

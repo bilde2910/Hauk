@@ -3,6 +3,7 @@
     <string name="label_heading">Kode irekiko kokaleku partekatzea</string>
     <string name="label_status_none">Kokaleku partekatzea inaktibo</string>
     <string name="btn_ok">Ados</string>
+    <string name="action_settings">Ezarpenak</string>
     <string name="err_malformed_url">Sartu duzun zerbitzari URL-a baliogabea da.</string>
     <string name="req_perms_message">Aplikazio honek zure kokalekua atzitzeko baimena behar du funtzionatzeko, baina baimen hau ez da oraindik eman. Onartu hurrengo baimen eskaera eta gero sakatu hasi botoia berriro saiatzeko.</string>
     <string name="pref_cryptServer_title">Zerbitzariaren URLa</string>

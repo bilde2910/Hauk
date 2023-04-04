@@ -206,6 +206,15 @@ public abstract class SessionManager {
         }
     }
 
+    public final void resumeShares() {
+        if (pusher != null) {
+            Log.d("Pusher is non-null (%s), stopping and nulling it before calling service relauncher", pusher); //NON-NLS
+            this.ctx.stopService(pusher);
+            pusher = null;
+        }
+            this.resumable.tryResumeShare(new ServiceRelauncher(this, this.resumable));
+    }
+
     /**
      * A preparation step for initiating sessions. Checks location services status and instantiates
      * a response handler for the session initiation packet.
@@ -447,6 +456,7 @@ public abstract class SessionManager {
             return true;
         }
     }
+
 
     /**
      * The GNSS status handler that the {@link SessionManager} itself uses to receive status updates
