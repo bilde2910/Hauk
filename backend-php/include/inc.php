@@ -136,7 +136,7 @@ const DEFAULTS = array(
     "reserved_links"        => [],
     "reserve_whitelist"     => false,
     "link_style"            => LINK_4_PLUS_4_UPPER_CASE,
-    "map_tile_uri"          => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    "map_tile_uri"          => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     "map_attribution"       => 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     "default_zoom"          => 14,
     "max_zoom"              => 19,
