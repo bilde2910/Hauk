@@ -4,7 +4,7 @@ COPY    frontend/ /var/www/html/
 COPY    docker/start.sh .
 
 RUN     apt-get update && \
-        apt-get install -y memcached libmemcached-dev zlib1g-dev libldap2-dev && \
+        apt-get install -y memcached libmemcached-dev zlib1g-dev libldap2-dev libssl-dev && \
         pecl install memcached && \
         docker-php-ext-enable memcached && \
         docker-php-ext-configure ldap --with-libdir=lib/*-linux-gnu*/ && \
