@@ -34,7 +34,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern=v{{version}}
-            type=semver,pattern=v{{major}}.x-stable
+            type=semver,pattern=stable-{{major}}.x
       - # Log in to Docker Hub
         name: Login to Docker Hub
         if: github.event_name != 'pull_request'
