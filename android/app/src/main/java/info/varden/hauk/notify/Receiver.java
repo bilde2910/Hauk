@@ -56,6 +56,6 @@ final class Receiver<T> {
         // the intent.
         intent.putExtra(Constants.EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX, ReceiverDataRegistry.register(this.data));
 
-        return PendingIntent.getBroadcast(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 }

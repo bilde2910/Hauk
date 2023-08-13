@@ -32,6 +32,6 @@ final class ReopenIntent {
     PendingIntent toPending() {
         Intent intent = new Intent(this.ctx, this.activity);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        return PendingIntent.getActivity(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(this.ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 }
