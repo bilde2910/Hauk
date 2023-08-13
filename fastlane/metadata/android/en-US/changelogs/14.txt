@@ -1,0 +1,3 @@
+This updated adds support for Android versions up to Android 13. Due to compatibility issues, support for Android 6 has also been dropped in this release for now.
+
+For the full changelog, please see https://github.com/bilde2910/Hauk/releases.

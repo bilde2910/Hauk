@@ -3,7 +3,7 @@
 // An include file containing constants and common functions for the Hauk
 // backend. It loads the configuration file and declares it as a constant.
 
-const BACKEND_VERSION = "1.6.1";
+const BACKEND_VERSION = "1.6.2";
 const LANGUAGES = ["ca", "de", "en", "eu", "fr", "it", "nb_NO", "nl", "nn", "ro", "ru", "tr", "uk"];
 
 // Create mode for create.php. Corresponds with the constants from the Android
