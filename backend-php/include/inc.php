@@ -147,7 +147,7 @@ const DEFAULTS = array(
     "max_cached_pts"        => 3,
     "max_shown_pts"         => 100,
     "v_data_points"         => 2,
-    "trail_color"           => '#d80037',
+    "trail_colors"          => ['#d80037', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080'],
     "velocity_unit"         => KILOMETERS_PER_HOUR,
     "public_url"            => 'https://example.com/'
 
