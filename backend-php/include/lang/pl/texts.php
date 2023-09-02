@@ -24,3 +24,4 @@ $LANG['share_not_found'] = 'Ta sesja nie istnieje!';
 $LANG['session_expired'] = 'Sesja wygasła!';
 $LANG['invalid_storage'] = 'Ustawiłeś niepoprawny storage_backend w Hauk!';
 $LANG['config_missing'] = 'Nie można odnaleźć pliku config.php!';
+$LANG['cannot_find_password_file'] = 'Nie można znaleźć pliku hasła!';

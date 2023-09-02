@@ -15,3 +15,4 @@ $LANG['share_mode_unsupported'] = 'Euskarririk gabeko parekatze modua!';
 $LANG['group_pin_invalid'] = 'Baliogabeko talde PIN-a!';
 $LANG['session_invalid'] = 'Saio baliogabea!';
 $LANG['location_invalid'] = 'Kokaleku baliogabea!';
+$LANG['cannot_find_password_file'] = 'Ezin da pasahitz fitxategia aurkitu!';

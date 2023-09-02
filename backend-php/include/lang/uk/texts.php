@@ -15,3 +15,4 @@ $LANG['group_pin_invalid'] = 'Невірний груповий PIN!';
 $LANG['session_invalid'] = 'Недійсний сеанс!';
 $LANG['location_invalid'] = 'Недійсне місцезнаходження!';
 $LANG['config_missing'] = 'Не можу знайти config.php!';
+$LANG['cannot_find_password_file'] = 'Не вдається знайти файл пароля';

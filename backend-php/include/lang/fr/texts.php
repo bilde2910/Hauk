@@ -24,3 +24,4 @@ $LANG['ldap_extension_missing'] = 'L\'extension LDAP n\'est pas activée dans vo
 $LANG['e2e_adoption_not_allowed'] = 'Ce partage est protégé par un mot de passe et ne peut pas être adopté !';
 $LANG['group_e2e_unsupported'] = 'Les partages de groupe ne peuvent pas être protégés par un mot de passe !';
 $LANG['username_required'] = 'Nom d\'utilisateur requis !';
+$LANG['cannot_find_password_file'] = 'Impossible de trouver le fichier de mot de passe !';

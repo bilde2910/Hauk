@@ -24,3 +24,4 @@ $LANG['ldap_connection_failed'] = 'Failed to connect to the LDAP server!';
 $LANG['ldap_search_failed'] = 'Failed to look up user on the LDAP server!';
 $LANG['ldap_user_unauthorized'] = 'User not found, not authorized, or incorrect password!';
 $LANG['ldap_search_ambiguous'] = 'Matched multiple users - the LDAP filter is too broad!';
+$LANG['cannot_find_password_file'] = 'Cannot find password file!';

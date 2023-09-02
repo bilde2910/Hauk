@@ -24,3 +24,4 @@ $LANG['ldap_search_failed'] = 'Nu s-a putut găsi utilizatorul pe serverul LDAP!
 $LANG['ldap_connection_failed'] = 'Nu s-a putut face conexiunea cu serverul LDAP!';
 $LANG['ldap_config_error'] = 'Nu s-au putut seta parametrii conexiunii LDAP!';
 $LANG['ldap_extension_missing'] = 'Extensia ldap nu este activată în configurația PHP!';
+$LANG['cannot_find_password_file'] = 'Nu pot găsi fișierul de parolă!';
