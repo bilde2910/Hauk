@@ -15,3 +15,4 @@ $LANG['invalid_storage'] = 'У вас неверный storage_backend для Ha
 $LANG['no_redis_ext'] = 'Нет включенных совместимых расширений redis в вашей конфигурации PHP!';
 $LANG['no_memcached_ext'] = 'Нет включенных совместимых расширений в вашей конфигурации PHP (memcache or memcached)!';
 $LANG['config_missing'] = 'Не могу найти config.php!';
+$LANG['cannot_find_password_file'] = 'Не удается найти файл пароля';

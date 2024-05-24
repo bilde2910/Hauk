@@ -18,3 +18,4 @@ $LANG['invalid_storage'] = 'Heu establert un storage_backend d\'emmagatzematge n
 $LANG['no_redis_ext'] = 'No hi ha habilitada cap extensió redis compatible (redis) a la vostra configuració PHP!';
 $LANG['no_memcached_ext'] = 'No hi ha habilitada cap extensió confidencial (memcache o memcached) a la configuració de PHP!';
 $LANG['config_missing'] = 'No es pot trobar config.php!';
+$LANG['cannot_find_password_file'] = 'No es troba el fitxer de contrasenya!';

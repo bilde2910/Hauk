@@ -24,3 +24,4 @@ $LANG['ldap_search_failed'] = 'Fout tijdens het opzoeken van de gebruiker op de 
 $LANG['ldap_connection_failed'] = 'Kan geen verbinding maken met de LDAP server!';
 $LANG['ldap_config_error'] = 'Niet gelukt om LDAP connectieparameters in te stellen!';
 $LANG['ldap_extension_missing'] = 'De LDAP extensie is niet actief in uw PHP configuratie!';
+$LANG['cannot_find_password_file'] = 'Kan geen wachtwoordbestand vinden!';

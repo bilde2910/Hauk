@@ -24,3 +24,4 @@ $LANG['ldap_search_failed'] = 'Benutzer konnte am LDAP Server nicht gefunden wer
 $LANG['ldap_connection_failed'] = 'Fehler beim Verbinden zum LDAP Server!';
 $LANG['ldap_config_error'] = 'LDAP-Verbindungsparameter konnten nicht eingestellt werden!';
 $LANG['ldap_extension_missing'] = 'Die LDAP Erweiterung ist in der PHP config nicht aktiviert!';
+$LANG['cannot_find_password_file'] = 'Kennwortdatei kann nicht gefunden werden!';
