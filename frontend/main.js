@@ -885,7 +885,7 @@ function processUpdate(data, init) {
 }
 
 function setAccuracyCircleColor(circle, color) {
-    if( circle ) {
+    if (circle) {
         circle.setStyle({
             fillColor: color,
             color: color
