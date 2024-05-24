@@ -872,19 +872,13 @@ function processUpdate(data, init) {
                     }
                     eLastSeen.textContent = unit.split("{{time}}").join(time);
                 }
-                shares[user].circle.setStyle({
-                    fillColor: STATE_DEAD_COLOR,
-                    color: STATE_DEAD_COLOR
-                })
+                setAccuracyCircleColor(shares[user].circle, STATE_DEAD_COLOR);
             } else {
                 eArrow.className = eArrow.className.split("dead").join(shares[user].state);
                 if (eLabel !== null) eLabel.className = shares[user].state;
                 var iconColor = STATE_LIVE_COLOR;
                 if (shares[user].state == "rough") iconColor = STATE_ROUGH_COLOR;
-                shares[user].circle.setStyle({
-                    fillColor: iconColor,
-                    color: iconColor
-                });
+                setAccuracyCircleColor(shares[user].circle, iconColor);
             }
         }
     }
@@ -903,6 +897,15 @@ function processUpdate(data, init) {
         if (!multiUser) {
             following = true;
         }
+    }
+}
+
+function setAccuracyCircleColor(circle, color) {
+    if (circle) {
+        circle.setStyle({
+            fillColor: color,
+            color: color
+        });
     }
 }
 
