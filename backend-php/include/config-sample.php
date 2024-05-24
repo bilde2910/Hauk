@@ -267,8 +267,8 @@
 // Number of seconds of data that should be used to calculate velocity.
 "v_data_points"     => 2,
 
-// The color of the marker trails. HTML color name or #rrggbb hex color code.
-"trail_color"       => '#d80037',
+// The colors of the marker trails. An array of HTML color names or #rrggbb hex color codes.
+"trail_colors"       => ['#d80037', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080'],
 
 // The unit of measurement of velocity. Valid are:
 // KILOMETERS_PER_HOUR, MILES_PER_HOUR, METERS_PER_SECOND

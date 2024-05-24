@@ -743,7 +743,7 @@ function processUpdate(data, init) {
                 } else {
                     // If there is a marker, draw a line from its last location
                     // instead and move the marker.
-                    line = L.polyline([shares[user].marker.getLatLng(), [lat, lon]], {color: TRAIL_COLOR}).addTo(markerLayer);
+                    line = L.polyline([shares[user].marker.getLatLng(), [lat, lon]], {color: getTrackColor(user)}).addTo(markerLayer);
                     shares[user].marker.setLatLng([lat, lon]);
                 }
                 // Draw an accuracy circle if GPS accuracy was provided by the
@@ -904,6 +904,18 @@ function processUpdate(data, init) {
             following = true;
         }
     }
+}
+
+var currColorIndex = 0;
+// Gets a new color from TRAIL_COLORS array for each new user of the share
+function getTrackColor(user) {
+    var trackColor = shares[user].color;
+    if (!trackColor) {
+        trackColor = TRAIL_COLORS[currColorIndex];
+        shares[user].color = trackColor;
+        currColorIndex=(currColorIndex+1) % TRAIL_COLORS.length;
+    }
+    return trackColor;
 }
 
 // Calculates the distance between two points on a sphere using the Haversine
