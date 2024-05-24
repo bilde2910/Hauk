@@ -807,18 +807,18 @@ function authenticated() {
             global $LANG;
             if (!isset($_POST["usr"])) die($LANG["username_required"]);
             requirePOST("pwd", "usr");
-			// Jump out if we cannot find the htpasswd file.
-			if (!file_exists(getConfig("htpasswd_path"))) die($LANG["cannot_find_password_file"]);
-			$file = fopen(getConfig("htpasswd_path"), "r");
-			$authed = false;
-			while (($line = fgets($file)) !== false && !$authed) {
-				$creds = explode(":", trim($line));
-				if ($creds[0] == $_POST["usr"]) {
-					$authed = password_verify($_POST["pwd"], $creds[1]);
-				}
-			}
-			fclose($file);
-			return $authed;
+            // Jump out if we cannot find the htpasswd file.
+            if (!file_exists(getConfig("htpasswd_path"))) die($LANG["cannot_find_password_file"]);
+            $file = fopen(getConfig("htpasswd_path"), "r");
+            $authed = false;
+            while (($line = fgets($file)) !== false && !$authed) {
+                $creds = explode(":", trim($line));
+                if ($creds[0] == $_POST["usr"]) {
+                    $authed = password_verify($_POST["pwd"], $creds[1]);
+                }
+            }
+            fclose($file);
+            return $authed;
 
         case LDAP:
             // LDAP-based authentication.
