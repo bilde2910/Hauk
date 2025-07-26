@@ -64,8 +64,9 @@ const METERS_PER_SECOND = array(
 include(__DIR__."/lang/en/texts.php");
 
 // Load the preferred language.
-$acceptLang = str_replace("-", "_", filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE"));
+$acceptLang = filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE");
 if ($acceptLang) {
+    $acceptLang = str_replace("-", "_", $acceptLang);
 
     // Split the Accept-Language header into an array of possible languages.
     preg_match_all("/(([a-z]{1,8})(_([a-zA-Z]{1,8}))?)(\s*;\s*q\s*=\s*([01](\.\d{0,3})?))?\s*(,|$)/i", $acceptLang, $clientReq, PREG_SET_ORDER);
@@ -124,7 +125,7 @@ const DEFAULTS = array(
     "redis_auth"            => '',
     "redis_prefix"          => 'hauk',
     "auth_method"           => PASSWORD,
-    "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
+    "password_hash"         => '',
     "htpasswd_path"         => '/etc/hauk/users.htpasswd',
     "ldap_uri"              => 'ldaps://ldap.example.com:636',
     "ldap_start_tls"        => false,

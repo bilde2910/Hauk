@@ -833,7 +833,8 @@ function processUpdate(data, init) {
         var nameE = document.getElementById("nickname-" + shares[user].id);
         if (nameE !== null && multiUser) {
             nameE.textContent = user;
-            nameE.innerHTML += "<br />";
+            var br = document.createElement("br");
+            nameE.appendChild(br);
             nameE.style.fontWeight = "bold";
         }
     }
