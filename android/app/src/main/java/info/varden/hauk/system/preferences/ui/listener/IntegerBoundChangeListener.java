@@ -1,5 +1,6 @@
 package info.varden.hauk.system.preferences.ui.listener;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 
 import info.varden.hauk.utils.Log;
@@ -20,7 +21,7 @@ public final class IntegerBoundChangeListener implements Preference.OnPreference
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
         try {
             int value = Integer.parseInt((String) newValue);
             return value >= this.min && value <= this.max;

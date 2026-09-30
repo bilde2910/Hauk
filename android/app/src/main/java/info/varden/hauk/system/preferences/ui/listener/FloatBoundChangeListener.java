@@ -1,5 +1,6 @@
 package info.varden.hauk.system.preferences.ui.listener;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 
 import info.varden.hauk.utils.Log;
@@ -20,7 +21,7 @@ public final class FloatBoundChangeListener implements Preference.OnPreferenceCh
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
         try {
             float value = Float.parseFloat((String) newValue);
             return value >= this.min && value <= this.max;

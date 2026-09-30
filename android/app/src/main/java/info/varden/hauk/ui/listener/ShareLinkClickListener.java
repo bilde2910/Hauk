@@ -34,7 +34,7 @@ public final class ShareLinkClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Log.i("User requested to share %s", this.share); //NON-NLS
+        Log.i("User requested to share %s from share link list", this.share); //NON-NLS
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, this.ctx.getString(R.string.share_subject));

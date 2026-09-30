@@ -1,5 +1,7 @@
 package info.varden.hauk.struct;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
@@ -68,6 +70,7 @@ public final class Share implements Serializable {
         this.type = type;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Share{session=" + this.session

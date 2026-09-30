@@ -21,7 +21,6 @@ import info.varden.hauk.utils.Log;
  * @author Marius Lindvall
  */
 public final class KeyStoreHelper {
-    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
     @SuppressWarnings("HardCodedStringLiteral")
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";

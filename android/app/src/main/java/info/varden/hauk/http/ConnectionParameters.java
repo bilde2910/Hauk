@@ -1,5 +1,6 @@
 package info.varden.hauk.http;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -56,6 +57,7 @@ public final class ConnectionParameters implements Serializable {
         return this.tlsPolicy;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ConnectionParameters{"

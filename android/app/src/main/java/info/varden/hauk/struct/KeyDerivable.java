@@ -1,5 +1,7 @@
 package info.varden.hauk.struct;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -61,6 +63,7 @@ public final class KeyDerivable implements Serializable {
         return this.keySpec;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "KeyDerivable{password=<hidden>"

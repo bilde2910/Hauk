@@ -13,7 +13,7 @@ import info.varden.hauk.system.preferences.PreferenceManager;
 import info.varden.hauk.utils.Log;
 
 /**
- * Async task that checks whether or not a proxy address must be resolved, resolves it if necessary,
+ * Async task that checks whether a proxy address must be resolved, resolves it if necessary,
  * and passes execution back to callbacks. This is necessary because proxy hostname resolution is
  * network-dependent and therefore not permitted on the UI thread.
  *

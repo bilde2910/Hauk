@@ -1,6 +1,7 @@
 package info.varden.hauk.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -147,14 +148,11 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -175,7 +173,7 @@ public final class MainActivity extends AppCompatActivity {
     /**
      * On-tap handler for the "start sharing" and "stop sharing" button.
      */
-    public void startSharing(@SuppressWarnings("unused") View view) {
+    public void startSharing(View view) {
         PreferenceManager prefs = new PreferenceManager(this);
 
         // If there is an executable stop task, that means that sharing is already active. Shut down
@@ -205,7 +203,6 @@ public final class MainActivity extends AppCompatActivity {
         boolean allowAdoption = ((Checkable) findViewById(R.id.chkAllowAdopt)).isChecked();
         @SuppressWarnings("OverlyStrongTypeCast") int durUnit = ((Spinner) findViewById(R.id.selUnit)).getSelectedItemPosition();
 
-        assert mode != null;
         server = server.endsWith("/") ? server : server + "/";
 
         // Save connection preferences for next launch, so the user doesn't have to enter URL etc.
@@ -234,7 +231,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (server.isEmpty()) {
+        if (server.equals("/")) {
             // If the user hasn't set up a server yet, open the settings menu and prompt them to
             // configure the backend.
             this.uiResetTask.run();
@@ -275,7 +272,7 @@ public final class MainActivity extends AppCompatActivity {
      * On-tap handler for the "what's this" link underneath the checkbox for allowing adoption.
      * Opens an explanation of adoption.
      */
-    public void explainAdoption(@SuppressWarnings("unused") View view) {
+    public void explainAdoption(View view) {
         Log.i("Explaining share adoption upon user request"); //NON-NLS
         this.dialogSvc.showDialog(R.string.explain_adopt_title, R.string.explain_adopt_body);
     }
@@ -328,6 +325,7 @@ public final class MainActivity extends AppCompatActivity {
     /**
      * Loads preferences from storage and applies them to the UI.
      */
+    @SuppressLint("WrongConstant")
     private void loadPreferences() {
         Log.i("Loading preferences..."); //NON-NLS
         PreferenceManager prefs = new PreferenceManager(this);
@@ -510,7 +508,7 @@ public final class MainActivity extends AppCompatActivity {
                     @Override
                     public void onNegative() {
                         // Share button
-                        Log.i("User requested to share %s", share); //NON-NLS
+                        Log.i("User requested to share %s from dialog", share); //NON-NLS
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType(Constants.INTENT_TYPE_COPY_LINK);
                         shareIntent.putExtra(Intent.EXTRA_SUBJECT, MainActivity.this.getString(R.string.share_subject));

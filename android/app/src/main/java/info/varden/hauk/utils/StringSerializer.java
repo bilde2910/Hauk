@@ -47,7 +47,6 @@ public enum StringSerializer {
     public static <T extends Serializable> T deserialize(String pref) {
         if (pref == null) return null;
         T obj = null;
-        @SuppressWarnings("SpellCheckingInspection")
         ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(pref, Base64.DEFAULT));
         try (ObjectInputStream ois = new ObjectInputStream(bais)) {
             //noinspection unchecked

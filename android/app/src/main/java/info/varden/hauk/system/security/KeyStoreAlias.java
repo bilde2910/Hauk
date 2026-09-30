@@ -9,7 +9,6 @@ public enum KeyStoreAlias {
     /**
      * Key store alias for use in encrypting and decrypting shared preferences.
      */
-    @SuppressWarnings("HardCodedStringLiteral")
     PREFERENCES("sharedPrefs");
 
     /**

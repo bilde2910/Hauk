@@ -146,16 +146,16 @@ public final class PreferenceHandler extends PreferenceDataStore {
         // must be handled properly.
         Class<?> type = map.get(key).getPreferenceType();
         if (type == Integer.class) {
-            putInt(key, Integer.valueOf(value));
+            putInt(key, Integer.parseInt(value));
         } else if (type == Float.class) {
-            putFloat(key, Float.valueOf(value));
+            putFloat(key, Float.parseFloat(value));
         } else if (type == Long.class) {
-            putLong(key, Long.valueOf(value));
+            putLong(key, Long.parseLong(value));
         } else if (type == IndexedEnum.class) {
             @SuppressWarnings("unchecked")
             Preference<IndexedEnum> pref = (Preference<IndexedEnum>) map.get(key);
             try {
-                this.manager.set(pref, pref.getDefault().fromIndex(Integer.valueOf(value)));
+                this.manager.set(pref, pref.getDefault().fromIndex(Integer.parseInt(value)));
             } catch (Exception e) {
                 throw new PreferenceAssignmentException(e);
             }

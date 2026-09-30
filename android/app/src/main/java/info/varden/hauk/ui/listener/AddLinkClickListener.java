@@ -95,7 +95,6 @@ public abstract class AddLinkClickListener implements View.OnClickListener {
                 // Create a dialog that prompts the user for the new share's adoption state.
                 Log.v("Inflating view for add-link dialog"); //NON-NLS
                 LayoutInflater inflater = AddLinkClickListener.this.act.getLayoutInflater();
-                @SuppressWarnings("HardCodedStringLiteral")
                 @SuppressLint("InflateParams")
                 View dialogView = inflater.inflate(R.layout.dialog_create_link, null);
 
@@ -121,7 +120,7 @@ public abstract class AddLinkClickListener implements View.OnClickListener {
          * Creates the packet.
          *
          * @param progress      A progress dialog to dismiss after a response has been received.
-         * @param allowAdoption Whether or not this share should be adoptable.
+         * @param allowAdoption Whether this share should be adoptable.
          */
         private AssociatedPacket(ProgressDialog progress, boolean allowAdoption) {
             super(AddLinkClickListener.this.act, AddLinkClickListener.this.session, allowAdoption);

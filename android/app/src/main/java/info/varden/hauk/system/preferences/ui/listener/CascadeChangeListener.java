@@ -1,5 +1,6 @@
 package info.varden.hauk.system.preferences.ui.listener;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 
 /**
@@ -16,7 +17,7 @@ public final class CascadeChangeListener implements Preference.OnPreferenceChang
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
         for (Preference.OnPreferenceChangeListener listener : this.listeners) {
             if (!listener.onPreferenceChange(preference, newValue)) return false;
         }

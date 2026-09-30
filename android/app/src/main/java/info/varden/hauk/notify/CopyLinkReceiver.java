@@ -13,8 +13,6 @@ import info.varden.hauk.utils.Log;
  * @author Marius Lindvall
  */
 public final class CopyLinkReceiver extends HaukBroadcastReceiver<String> {
-
-    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ACTION_ID = "info.varden.hauk.COPY_LINK";
 
     public CopyLinkReceiver() {

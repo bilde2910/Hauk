@@ -1,5 +1,9 @@
 package info.varden.hauk.http.security;
 
+import android.annotation.SuppressLint;
+
+import androidx.annotation.Nullable;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -15,17 +19,19 @@ import info.varden.hauk.utils.Log;
 /**
  * Intentionally insecure trust manager that accepts all trust anchors. Should be used with caution.
  */
+@SuppressLint("CustomX509TrustManager")
 public final class InsecureTrustManager implements X509TrustManager {
     @Override
-    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
-        Log.v("Client certificate presented for %s", s); //NON-NLS
+    public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        Log.v("Client certificate presented for %s", authType); //NON-NLS
     }
 
     @Override
-    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
-        Log.v("Server certificate presented for %s", x509Certificates[0]); //NON-NLS
+    public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        Log.v("Server certificate presented for %s", chain[0]); //NON-NLS
     }
 
+    @Nullable
     @Override
     public X509Certificate[] getAcceptedIssuers() {
         Log.v("Got request for accepted issuers"); //NON-NLS

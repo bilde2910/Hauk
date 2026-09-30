@@ -1,5 +1,7 @@
 package info.varden.hauk.struct;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 import info.varden.hauk.R;
@@ -47,6 +49,7 @@ public enum ShareMode implements Serializable {
         this.descriptorResource = descriptorResource;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ShareMode{index=" + this.index + "}";

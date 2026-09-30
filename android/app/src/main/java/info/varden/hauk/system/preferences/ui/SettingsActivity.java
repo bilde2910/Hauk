@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
@@ -116,9 +117,9 @@ public final class SettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onAttach(Context ctx) {
-            super.onAttach(ctx);
-            this.ctx = ctx;
+        public void onAttach(@NonNull Context context) {
+            super.onAttach(context);
+            this.ctx = context;
         }
     }
 }

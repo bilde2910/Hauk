@@ -12,7 +12,7 @@ import info.varden.hauk.Constants;
  *
  * @author Marius Lindvall
  */
-@SuppressWarnings({"unused", "ClassWithTooManyMethods", "OverloadedVarargsMethod"})
+@SuppressWarnings({"ClassWithTooManyMethods", "OverloadedVarargsMethod"})
 public enum Log {
     ;
     private static final int STACK_DEPTH = 4;

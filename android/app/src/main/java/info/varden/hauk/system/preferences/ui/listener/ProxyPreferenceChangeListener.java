@@ -1,5 +1,6 @@
 package info.varden.hauk.system.preferences.ui.listener;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 
 import info.varden.hauk.system.preferences.indexresolver.ProxyTypeResolver;
@@ -18,8 +19,8 @@ public final class ProxyPreferenceChangeListener implements Preference.OnPrefere
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        int choice = Integer.valueOf((String) newValue);
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+        int choice = Integer.parseInt((String) newValue);
         boolean enable = choice != ProxyTypeResolver.SYSTEM_DEFAULT.getIndex() && choice != ProxyTypeResolver.DIRECT.getIndex();
         for (Preference pref : this.prefsToDisable) {
             pref.setEnabled(enable);
