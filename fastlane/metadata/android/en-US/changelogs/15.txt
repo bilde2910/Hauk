@@ -1,0 +1,3 @@
+This update adds support for Android versions up to Android 16, along with a handful of bugfixes.
+
+For the full changelog, please see https://github.com/bilde2910/Hauk/releases.
