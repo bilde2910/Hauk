@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Checkable;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.R;
@@ -106,7 +109,19 @@ public final class MainActivity extends AppCompatActivity {
 
         Log.i("Creating main activity"); //NON-NLS
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.mainToolbar));
+        setSupportActionBar(findViewById(R.id.mainToolbar));
+
+        // Fix toolbar for edge-to-edge layout
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            mlp.leftMargin = insets.left;
+            mlp.bottomMargin = insets.bottom;
+            mlp.rightMargin = insets.right;
+            mlp.topMargin = insets.top;
+            v.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         setClassVariables();
         ((TextView) findViewById(R.id.labelAdoptWhatsThis)).setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
