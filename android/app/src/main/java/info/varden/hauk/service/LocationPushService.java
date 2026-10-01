@@ -9,7 +9,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import info.varden.hauk.Constants;
@@ -33,8 +35,6 @@ import info.varden.hauk.utils.TimeUtils;
  * @author Marius Lindvall
  */
 public final class LocationPushService extends Service {
-
-    @SuppressWarnings("HardCodedStringLiteral")
     public static final String ACTION_ID = "info.varden.hauk.LOCATION_SERVICE";
 
     /**
@@ -157,7 +157,7 @@ public final class LocationPushService extends Service {
         this.gnssActiveTask = new MultiTargetGNSSHandlerProxy();
 
         Log.i("Stopping foreground service"); //NON-NLS
-        stopForeground(true);
+        stopForeground(STOP_FOREGROUND_REMOVE);
 
         super.onDestroy();
     }
@@ -184,7 +184,7 @@ public final class LocationPushService extends Service {
      */
     private final class CoarseLocationListener extends LocationListenerBase {
         @Override
-        public void onLocationChanged(Location location) {
+        public void onLocationChanged(@NonNull Location location) {
             if (!LocationPushService.this.hasRunCoarseTask) {
                 // Notify the main activity that coarse GPS data is now being received,
                 // such that the UI can be updated.
@@ -220,17 +220,17 @@ public final class LocationPushService extends Service {
         private final Handler noGnssTimer;
         private final PreferenceManager prefs;
         private Location locationOfLastUpdate;
-        private float minDistance;
+        private final float minDistance;
 
         private FineLocationListener() {
-            this.noGnssTimer = new Handler();
+            this.noGnssTimer = new Handler(Looper.getMainLooper());
             this.prefs = new PreferenceManager(LocationPushService.this);
             this.locationOfLastUpdate = null;
             this.minDistance = LocationPushService.this.share.getSession().getMinimumDistance();
         }
 
         @Override
-        public void onLocationChanged(Location location) {
+        public void onLocationChanged(@NonNull Location location) {
             if (LocationPushService.this.listenCoarse != null) {
                 // Unregister the coarse location listener, since we are now receiving
                 // accurate location data.

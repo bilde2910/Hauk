@@ -3,9 +3,14 @@ package info.varden.hauk.system.preferences.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -45,6 +50,18 @@ public final class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // Fix toolbar for edge-to-edge layout
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settingsRootLayout), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            mlp.leftMargin = insets.left;
+            mlp.bottomMargin = insets.bottom;
+            mlp.rightMargin = insets.right;
+            mlp.topMargin = insets.top;
+            v.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     public static final class SettingsFragment extends PreferenceFragmentCompat {
@@ -116,9 +133,9 @@ public final class SettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onAttach(Context ctx) {
-            super.onAttach(ctx);
-            this.ctx = ctx;
+        public void onAttach(@NonNull Context context) {
+            super.onAttach(context);
+            this.ctx = context;
         }
     }
 }

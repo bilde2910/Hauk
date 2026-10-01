@@ -19,7 +19,7 @@ public final class ShareListenerImpl implements ShareListener {
     private final Context ctx;
 
     /**
-     * Whether or not the sharing dialog should be displayed.
+     * Whether the sharing dialog should be displayed.
      */
     private boolean enabled = true;
 

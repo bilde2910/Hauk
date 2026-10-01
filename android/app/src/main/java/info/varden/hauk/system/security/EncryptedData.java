@@ -20,8 +20,8 @@ public final class EncryptedData implements Serializable {
      * @param data Encrypted binary data.
      */
     EncryptedData(byte[] iv, byte[] data) {
-        this.iv = iv;
-        this.data = data;
+        this.iv = iv.clone();
+        this.data = data.clone();
     }
 
     byte[] getIV() {

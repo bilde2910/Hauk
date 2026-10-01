@@ -2,7 +2,8 @@ package info.varden.hauk.service;
 
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 
 import info.varden.hauk.utils.Log;
 
@@ -14,17 +15,12 @@ import info.varden.hauk.utils.Log;
  */
 abstract class LocationListenerBase implements LocationListener {
     @Override
-    public final void onStatusChanged(String provider, int status, Bundle bundle) {
-        Log.v("Location status changed for provider %s, status=%s", provider, status); //NON-NLS
-    }
-
-    @Override
-    public final void onProviderEnabled(String provider) {
+    public final void onProviderEnabled(@NonNull String provider) {
         Log.i("Location provider %s was enabled", provider); //NON-NLS
     }
 
     @Override
-    public final void onProviderDisabled(String provider) {
+    public final void onProviderDisabled(@NonNull String provider) {
         Log.w("Location provider %s was disabled", provider); //NON-NLS
     }
 

@@ -3,6 +3,8 @@ package info.varden.hauk.system.launcher;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 /**
  * Activity starter that launches an intent by an action name.
  *
@@ -24,6 +26,7 @@ public final class ActionLauncher implements Launcher {
         ctx.startActivity(intent);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ActionLauncher{"

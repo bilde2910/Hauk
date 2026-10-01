@@ -11,7 +11,7 @@ import info.varden.hauk.utils.Log;
 
 /**
  * {@link ResumeHandler} implementation used by {@link SessionManager} to prompt users for whether
- * or not they want to resume stored sessions, as well as handling their response to said prompt.
+ * they want to resume stored sessions, as well as handling their response to said prompt.
  *
  * @author Marius Lindvall
  */
@@ -30,7 +30,7 @@ public final class AutoResumptionPrompter implements ResumeHandler {
     private final ResumableSessions resumptionHandler;
 
     /**
-     * The implementation that prompts the user for whether or not they want to resume the shares.
+     * The implementation that prompts the user for whether they want to resume the shares.
      */
     private final ResumePrompt prompt;
 

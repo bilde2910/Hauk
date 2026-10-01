@@ -24,7 +24,7 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Checks whether or not this version number is equal to or greater than the version number
+     * Checks whether this version number is equal to or greater than the version number
      * passed as the argument to this function.
      *
      * @param other The version to compare to.

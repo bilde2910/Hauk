@@ -3,6 +3,8 @@ package info.varden.hauk.http;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -194,6 +196,7 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             return sb.toString();
         }
 
+        @NonNull
         @Override
         public final String toString() {
             String body;
@@ -249,6 +252,7 @@ public class ConnectionThread extends AsyncTask<ConnectionThread.Request, String
             return this.ver;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "Response{"

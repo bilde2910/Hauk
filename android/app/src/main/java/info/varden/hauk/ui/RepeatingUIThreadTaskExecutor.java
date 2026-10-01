@@ -1,6 +1,7 @@
 package info.varden.hauk.ui;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.UiThread;
 
@@ -30,7 +31,7 @@ abstract class RepeatingUIThreadTaskExecutor {
 
     @UiThread
     RepeatingUIThreadTaskExecutor() {
-        this.handler = new Handler();
+        this.handler = new Handler(Looper.getMainLooper());
     }
 
     /**

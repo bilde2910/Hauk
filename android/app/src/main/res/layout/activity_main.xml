@@ -3,11 +3,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
-    
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
@@ -121,7 +122,7 @@
 
                 </TableRow>
 
-                <!-- If doing a solo share, whether or not to allow adoption by others. -->
+                <!-- If doing a solo share, whether to allow adoption by others. -->
                 <TableRow
                     android:id="@+id/rowAllowAdopt"
                     android:layout_width="match_parent"

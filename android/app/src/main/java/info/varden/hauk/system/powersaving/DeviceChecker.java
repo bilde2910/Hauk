@@ -28,7 +28,7 @@ public final class DeviceChecker {
     }
 
     /**
-     * Checks whether or not the current device has aggressive battery savings, and shows a warning
+     * Checks whether the current device has aggressive battery savings, and shows a warning
      * dialog if this is the case.
      */
     public void performCheck() {

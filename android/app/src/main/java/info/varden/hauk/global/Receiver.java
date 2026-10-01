@@ -36,10 +36,6 @@ import info.varden.hauk.utils.TimeUtils;
  * <ul>
  *     <li><b>source: </b><i>(required)</i>
  *          An identifier for the broadcast source, e.g. package name of source app.</li>
- *     <li><b>server: </b><i>(optional)</i>
- *          The Hauk backend to connect to. Defaults to saved preference.</li>
- *     <li><b>password: </b><i>(optional)</i>
- *          The backend password. Defaults to saved preference.</li>
  *     <li><b>duration: </b><i>(optional)</i>
  *          Number of seconds to share for. Defaults to saved preference.</li>
  *     <li><b>interval: </b><i>(optional)</i>
@@ -52,9 +48,7 @@ import info.varden.hauk.utils.TimeUtils;
  * @author Marius Lindvall
  */
 public final class Receiver extends BroadcastReceiver {
-    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ACTION_START_SHARING_ALONE_WITH_MENU = "info.varden.hauk.START_ALONE_THEN_SHARE_VIA";
-    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ACTION_START_SHARING_ALONE_WITH_TOAST = "info.varden.hauk.START_ALONE_THEN_MAKE_TOAST";
 
     @Override
@@ -82,7 +76,7 @@ public final class Receiver extends BroadcastReceiver {
     }
 
     /**
-     * Checks whether or not the given broadcast source is authorized to start sharing without user
+     * Checks whether the given broadcast source is authorized to start sharing without user
      * interaction, and prompts the user if this status is unknown.
      *
      * @param ctx    Android application context.
@@ -170,18 +164,16 @@ public final class Receiver extends BroadcastReceiver {
      * @return Session initiation parameters.
      */
     private static SessionInitiationPacket.InitParameters buildSessionParams(Intent intent, PreferenceManager fallback) {
-        String server = intent.hasExtra(Constants.EXTRA_SESSION_SERVER_URL) ? intent.getStringExtra(Constants.EXTRA_SESSION_SERVER_URL) : fallback.get(Constants.PREF_SERVER_ENCRYPTED);
-        String username = intent.hasExtra(Constants.EXTRA_SESSION_USERNAME) ? intent.getStringExtra(Constants.EXTRA_SESSION_USERNAME) : fallback.get(Constants.PREF_USERNAME_ENCRYPTED);
-        String password = intent.hasExtra(Constants.EXTRA_SESSION_PASSWORD) ? intent.getStringExtra(Constants.EXTRA_SESSION_PASSWORD) : fallback.get(Constants.PREF_PASSWORD_ENCRYPTED);
+        String server = fallback.get(Constants.PREF_SERVER_ENCRYPTED);
+        String username = fallback.get(Constants.PREF_USERNAME_ENCRYPTED);
+        String password = fallback.get(Constants.PREF_PASSWORD_ENCRYPTED);
         int duration = intent.hasExtra(Constants.EXTRA_SESSION_DURATION) ? intent.getIntExtra(Constants.EXTRA_SESSION_DURATION, 0) : TimeUtils.timeUnitsToSeconds(fallback.get(Constants.PREF_DURATION), fallback.get(Constants.PREF_DURATION_UNIT));
         int interval = intent.hasExtra(Constants.EXTRA_SESSION_INTERVAL) ? intent.getIntExtra(Constants.EXTRA_SESSION_INTERVAL, 0) : fallback.get(Constants.PREF_INTERVAL);
         float minDistance = intent.hasExtra(Constants.EXTRA_SESSION_MIN_DISTANCE) ? intent.getIntExtra(Constants.EXTRA_SESSION_MIN_DISTANCE, 0) : fallback.get(Constants.PREF_UPDATE_DISTANCE);
         String customID = intent.hasExtra(Constants.EXTRA_SESSION_CUSTOM_ID) ? intent.getStringExtra(Constants.EXTRA_SESSION_CUSTOM_ID) : fallback.get(Constants.PREF_CUSTOM_ID);
 
         String e2ePass = "";
-        if (intent.hasExtra(Constants.EXTRA_SESSION_E2E_PASSWORD)) {
-            e2ePass = intent.getStringExtra(Constants.EXTRA_SESSION_E2E_PASSWORD);
-        } else if (fallback.get(Constants.PREF_ENABLE_E2E)) {
+        if (fallback.get(Constants.PREF_ENABLE_E2E)) {
             e2ePass = fallback.get(Constants.PREF_E2E_PASSWORD);
         }
 

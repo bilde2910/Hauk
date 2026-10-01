@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 
 /**
@@ -32,7 +33,7 @@ public final class OpenLinkListener implements Preference.OnPreferenceClickListe
     }
 
     @Override
-    public boolean onPreferenceClick(Preference preference) {
+    public boolean onPreferenceClick(@NonNull Preference preference) {
         this.ctx.startActivity(new Intent(Intent.ACTION_VIEW, this.uri));
         return false;
     }

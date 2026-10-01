@@ -81,12 +81,8 @@ public enum Constants {
     public static final String EXTRA_GNSS_ACTIVE_TASK = "gnssActiveTask";
     public static final String EXTRA_BROADCAST_RECEIVER_REGISTRY_INDEX = "dataRegistryIndex";
     public static final String EXTRA_BROADCAST_AUTHORIZATION_IDENTIFIER = "source";
-    public static final String EXTRA_SESSION_SERVER_URL = "server";
-    public static final String EXTRA_SESSION_USERNAME = "username";
-    public static final String EXTRA_SESSION_PASSWORD = "password";
     public static final String EXTRA_SESSION_DURATION = "duration";
     public static final String EXTRA_SESSION_CUSTOM_ID = "requestLink";
-    public static final String EXTRA_SESSION_E2E_PASSWORD = "e2ePassword";
     public static final String EXTRA_SESSION_INTERVAL = "interval";
     public static final String EXTRA_SESSION_MIN_DISTANCE = "minDistance";
     public static final String EXTRA_SESSION_ALLOW_ADOPT = "adoptable";
