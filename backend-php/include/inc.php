@@ -127,6 +127,7 @@ const DEFAULTS = array(
     "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
     "htpasswd_path"         => '/etc/hauk/users.htpasswd',
     "ldap_uri"              => 'ldaps://ldap.example.com:636',
+    "ldap_tls_require_cert" => LDAP_OPT_X_TLS_DEMAND,
     "ldap_start_tls"        => false,
     "ldap_base_dn"          => 'ou=People,dc=example,dc=com',
     "ldap_bind_dn"          => 'cn=admin,dc=example,dc=com',
@@ -829,6 +830,7 @@ function authenticated() {
             if (strlen($_POST["pwd"]) == 0) die($LANG["incorrect_password"]);
 
             // Connect to the LDAP server.
+            ldap_set_option(null, LDAP_OPT_X_TLS_REQUIRE_CERT, getConfig("ldap_tls_require_cert"));
             $ldc = @ldap_connect(getConfig("ldap_uri"));
             if ($ldc === false) die($LANG["ldap_config_error"]);
             ldap_set_option($ldc, LDAP_OPT_PROTOCOL_VERSION, 3);

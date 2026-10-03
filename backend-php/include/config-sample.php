@@ -109,6 +109,14 @@
 // combination with `ldaps`.
 "ldap_start_tls"    => false,
 
+// Specifies the certificate checking strategy. This must be one of:
+// LDAP_OPT_X_TLS_NEVER
+// LDAP_OPT_X_TLS_HARD
+// LDAP_OPT_X_TLS_DEMAND
+// LDAP_OPT_X_TLS_ALLOW
+// LDAP_OPT_X_TLS_TRY
+"ldap_tls_require_cert" => LDAP_OPT_X_TLS_ALLOW,
+
 // Base DN to search for users.
 "ldap_base_dn"      => 'ou=People,dc=example,dc=com',
 
