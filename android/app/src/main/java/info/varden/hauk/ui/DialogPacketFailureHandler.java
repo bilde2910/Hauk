@@ -16,7 +16,7 @@ import info.varden.hauk.utils.Log;
  */
 public abstract class DialogPacketFailureHandler implements FailureHandler {
     /**
-     * Callback that is called before the dialog is showed. Can be used to dismiss other dialogs.
+     * Callback that is called before the dialog is shown. Can be used to dismiss other dialogs.
      */
     protected abstract void onBeforeShowFailureDialog();
 

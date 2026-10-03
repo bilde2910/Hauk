@@ -1,5 +1,7 @@
 package info.varden.hauk.http.parameter;
 
+import androidx.annotation.NonNull;
+
 /**
  * An enum that identifies the currently active location provider on the device.
  */
@@ -17,6 +19,7 @@ public enum LocationProvider {
         return this.mode;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "LocationProvider<mode=" + this.mode + ">";

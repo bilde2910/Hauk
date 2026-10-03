@@ -1,5 +1,7 @@
 package info.varden.hauk.http.security;
 
+import androidx.annotation.NonNull;
+
 import info.varden.hauk.system.preferences.IndexedEnum;
 
 /**
@@ -19,6 +21,7 @@ public final class CertificateValidationPolicy extends IndexedEnum<CertificateVa
         super(index);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "CertificateValidationPolicy{" + super.toString() + "}";

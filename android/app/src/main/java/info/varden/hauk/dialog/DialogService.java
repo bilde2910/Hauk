@@ -170,7 +170,7 @@ public final class DialogService {
             view.setPadding(padding, padding, padding, 0);
         }
 
-        Log.d("Showing dialog with title=%s, message=%s, builder=%s, view=%s", title, message, builder, view); //NON-NLS
+        Log.d("Showing two-button dialog with title=%s, message=%s, builder=%s, view=%s", title, message, builder, view); //NON-NLS
 
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this.ctx);
         dlgAlert.setMessage(message);
@@ -227,7 +227,7 @@ public final class DialogService {
             view.setPadding(padding, padding, padding, 0);
         }
 
-        Log.d("Showing dialog with title=%s, message=%s, builder=%s, view=%s", title, message, builder, view); //NON-NLS
+        Log.d("Showing three-button dialog with title=%s, message=%s, builder=%s, view=%s", title, message, builder, view); //NON-NLS
 
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this.ctx);
         dlgAlert.setMessage(message);
@@ -253,7 +253,7 @@ public final class DialogService {
             this.run = run;
         }
 
-        public void onClick(DialogInterface dialogInterface, int which) {
+        public void onClick(DialogInterface dialog, int which) {
             Log.v("Closing dialog, which=%s (unknown, run=%s)", which, this.run); //NON-NLS
             if (this.run != null) this.run.run();
         }
@@ -270,7 +270,7 @@ public final class DialogService {
             this.builder = builder;
         }
 
-        public void onClick(DialogInterface dialogInterface, int which) {
+        public void onClick(DialogInterface dialog, int which) {
             Log.d("Closing dialog, which=%s (positive)", which); //NON-NLS
             this.builder.onPositive();
         }
@@ -288,7 +288,7 @@ public final class DialogService {
         }
 
         @Override
-        public void onClick(DialogInterface dialogInterface, int which) {
+        public void onClick(DialogInterface dialog, int which) {
             Log.d("Closing dialog, which=%s (neutral)", which); //NON-NLS
             this.builder.onNeutral();
         }
@@ -306,7 +306,7 @@ public final class DialogService {
         }
 
         @Override
-        public void onClick(DialogInterface dialogInterface, int which) {
+        public void onClick(DialogInterface dialog, int which) {
             Log.d("Closing dialog, which=%s (negative)", which); //NON-NLS
             this.builder.onNegative();
         }

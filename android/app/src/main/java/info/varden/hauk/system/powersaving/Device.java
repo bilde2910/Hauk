@@ -3,6 +3,8 @@ package info.varden.hauk.system.powersaving;
 import android.content.Context;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import info.varden.hauk.R;
@@ -19,7 +21,7 @@ import info.varden.hauk.system.launcher.Launcher;
  * @author Marius Lindvall
  */
 public enum Device {
-    @SuppressWarnings({"HardCodedStringLiteral", "SpellCheckingInspection"})
+    @SuppressWarnings("HardCodedStringLiteral")
     HUAWEI(1,
             R.string.manufacturer_huawei,
             Build.DISPLAY,
@@ -84,7 +86,7 @@ public enum Device {
     }
 
     /**
-     * Checks whether or not the given device matches the device the app is currently running on.
+     * Checks whether the given device matches the device the app is currently running on.
      */
     public boolean matches() {
         return this.buildRegex.matcher(this.buildProp).find();
@@ -107,6 +109,7 @@ public enum Device {
         return this.manufacturer;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Device{"

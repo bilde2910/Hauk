@@ -90,7 +90,7 @@
 \nJeśli włączysz tą opcję, udostępnisz swoją lokalizację grupie przyjaciół i ktoś będzie chciał również udostępnić swoją lokalizację, może stworzyć grupę i dodać cię do swojej mapy - oboje będziecie widoczni na jednej mapie. Funkcja ta jest użyteczna jeśli przykładowo prowadzisz samochów i nie możesz używać swojego telefonu. Dołączanie do grupy (adopcja) nie wymaga żadnej interakcji z twojej strony.</string>
     <string name="authorize_question">Czy chcesz zezwolić w przyszłości na tworzenie sesji z rozgłoszeń o tym identyfikatorze\?</string>
     <string name="authorize_body">Hauk otrzymał i zablokował próbę utworzenia nowej sesji udostępniania ze źródła które identyfikuje się jako</string>
-    <string name="err_proxy_host_resolution">Adres IP skonfigurowanego proxy ($s) nie może zostać rozwiązany!</string>
+    <string name="err_proxy_host_resolution">Adres IP skonfigurowanego proxy (%s) nie może zostać rozwiązany!</string>
     <string name="progress_resolving_proxy">Rozwiązywanie adresu proxy…</string>
     <string name="explain_adopt_title">Dołączanie do grupy</string>
     <string name="about_report_issue_title">Zgłoś problem</string>

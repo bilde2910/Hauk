@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 37
     defaultConfig {
         applicationId "info.varden.hauk"
         minSdkVersion 24
-        targetSdkVersion 33
-        versionCode 14
-        versionName "1.6.2"
+        targetSdkVersion 36
+        versionCode 15
+        versionName "1.6.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,6 +17,9 @@ android {
         }
     }
     namespace 'info.varden.hauk'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {

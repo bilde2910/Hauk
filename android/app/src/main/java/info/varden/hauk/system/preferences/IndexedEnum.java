@@ -1,5 +1,7 @@
 package info.varden.hauk.system.preferences;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
@@ -10,7 +12,7 @@ import java.lang.reflect.Field;
  *
  * @param <T> The type that extends this class.
  */
-public abstract class IndexedEnum<T extends IndexedEnum<T>> implements Serializable {
+public class IndexedEnum<T extends IndexedEnum<T>> implements Serializable {
     private static final long serialVersionUID = -1867612075461184507L;
 
     /**
@@ -57,6 +59,7 @@ public abstract class IndexedEnum<T extends IndexedEnum<T>> implements Serializa
     }
 
     @SuppressWarnings("DesignForExtension")
+    @NonNull
     @Override
     public String toString() {
         return "index=" + this.index;

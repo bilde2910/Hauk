@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,11 +60,6 @@ public abstract class SessionManager {
     private final StopSharingTask stopTask;
 
     /**
-     * A callback instance that is called upon when sharing is stopped, to reset the UI.
-     */
-    private final StopSharingCallback stopCallback;
-
-    /**
      * Intent for the location pusher, so that it can be stopped if already running when launching
      * the app.
      */
@@ -112,7 +108,6 @@ public abstract class SessionManager {
      */
     protected SessionManager(Context ctx, StopSharingCallback stopCallback) {
         this.ctx = ctx;
-        this.stopCallback = stopCallback;
 
         this.upstreamUpdateHandlers = new ArrayList<>();
         this.upstreamShareListeners = new ArrayList<>();
@@ -120,8 +115,8 @@ public abstract class SessionManager {
         this.knownShares = new HashMap<>();
 
         this.resumable = new ResumableSessions(ctx);
-        this.handler = new Handler();
-        this.stopTask = new StopSharingTask(this.ctx, this.stopCallback) {
+        this.handler = new Handler(Looper.getMainLooper());
+        this.stopTask = new StopSharingTask(this.ctx, stopCallback) {
             @Override
             public void cleanup() {
                 // Called when sharing ends. Clear the active session, and all collections of active
@@ -185,7 +180,7 @@ public abstract class SessionManager {
     /**
      * Attempts to resume shares.
      *
-     * @param prompt A callback to prompt the user for whether or not they want to resume shares if
+     * @param prompt A callback to prompt the user for whether they want to resume shares if
      *               any are found in storage.
      */
     public final void resumeShares(ResumePrompt prompt) {

@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 /**
  * Activity starter that launches an intent based on a component name.
  *
@@ -32,6 +34,7 @@ public final class ComponentLauncher implements Launcher {
         ctx.startActivity(intent);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ComponentLauncher{"

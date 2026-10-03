@@ -1,5 +1,6 @@
 package info.varden.hauk.struct;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -73,6 +74,7 @@ public final class Session implements Serializable {
         this.connParams = connParams;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Session{serverURL=" + this.serverURL
@@ -81,6 +83,7 @@ public final class Session implements Serializable {
                 + ",sessionID=" + this.sessionID
                 + ",expiry=" + this.expiry
                 + ",interval=" + this.interval
+                + ",minDistance=" + this.minDistance
                 + ",e2eParams=" + this.e2eParams
                 + "}";
     }

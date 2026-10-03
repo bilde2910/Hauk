@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import info.varden.hauk.BuildConfig;
@@ -118,11 +117,7 @@ public final class ResumableSessions {
         if (shares == null) return;
 
         // Remove the share and save the updated list.
-        for (Iterator<Share> it = shares.iterator(); it.hasNext();) {
-            if (it.next().getID().equals(shareID)) {
-                it.remove();
-            }
-        }
+        shares.removeIf(share -> share.getID().equals(shareID));
         SharedPreferences.Editor editor = this.prefs.edit();
         editor.putString(Constants.RESUME_SHARE_PARAMS, StringSerializer.serialize(shares));
         editor.apply();

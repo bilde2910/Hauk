@@ -1,5 +1,8 @@
 package info.varden.hauk.system.preferences.ui.listener;
 
+import android.annotation.SuppressLint;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.Preference;
 
@@ -15,11 +18,12 @@ import info.varden.hauk.utils.Log;
  */
 public final class NightModeChangeListener implements Preference.OnPreferenceChangeListener {
 
+    @SuppressLint("WrongConstant")
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
         try {
             // Resolve the night mode (an instance of NightModeStyle is required for this).
-            int mode = IndexedEnum.fromIndex(NightModeStyle.class, Integer.valueOf((String) newValue)).resolve();
+            int mode = IndexedEnum.fromIndex(NightModeStyle.class, Integer.parseInt((String) newValue)).resolve();
             Log.i("Setting night mode %s", mode); //NON-NLS
             AppCompatDelegate.setDefaultNightMode(mode);
             return true;

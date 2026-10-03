@@ -33,14 +33,14 @@ public final class AuthorizationActivity extends AppCompatActivity {
     /**
      * Called if the user presses the Yes button.
      */
-    public void accept(@SuppressWarnings("unused") View view) {
+    public void accept(View view) {
         savePreference(true);
     }
 
     /**
      * Called if the user presses the No button.
      */
-    public void deny(@SuppressWarnings("unused") View view) {
+    public void deny(View view) {
         savePreference(false);
     }
 

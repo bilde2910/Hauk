@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 
 /**
- * Edit text bind listener that sets the input type of an {@link EditTextPreference}.
+ * Edit text bind listener that sets the input type of {@link EditTextPreference}.
  *
  * @author Marius Lindvall
  */

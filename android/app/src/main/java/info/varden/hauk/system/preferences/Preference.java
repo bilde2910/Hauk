@@ -2,6 +2,8 @@ package info.varden.hauk.system.preferences;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import info.varden.hauk.system.security.EncryptedData;
 import info.varden.hauk.system.security.EncryptionException;
 import info.varden.hauk.system.security.KeyStoreAlias;
@@ -62,7 +64,7 @@ public abstract class Preference<T> {
     abstract void set(SharedPreferences.Editor prefs, T value);
 
     /**
-     * Checks whether or not the preference exists in the given preference object.
+     * Checks whether the preference exists in the given preference object.
      *
      * @param prefs The shared preferences to check for preference existence in.
      */
@@ -80,7 +82,7 @@ public abstract class Preference<T> {
     }
 
     /**
-     * Returns whether or not this preference is expected to contain sensitive information that
+     * Returns whether this preference is expected to contain sensitive information that
      * should not be logged.
      */
     abstract boolean isSensitive();
@@ -114,6 +116,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<String>{key=" + this.key + ",default=" + this.def + "}";
@@ -161,6 +164,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<String+Encrypted>{key=" + this.key + ",default=" + this.def + "}";
@@ -196,6 +200,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<Integer>{key=" + this.key + ",default=" + this.def + "}";
@@ -232,6 +237,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<Enum>{key=" + this.key + ",default=" + this.def + "}";
@@ -267,6 +273,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<Float>{key=" + this.key + ",default=" + this.def + "}";
@@ -303,6 +310,7 @@ public abstract class Preference<T> {
         }
 
         @SuppressWarnings("DuplicateStringLiteralInspection")
+        @NonNull
         @Override
         public java.lang.String toString() {
             return "Preference<Boolean>{key=" + this.key + ",default=" + this.def + "}";

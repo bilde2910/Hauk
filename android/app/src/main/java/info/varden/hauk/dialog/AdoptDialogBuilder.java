@@ -78,7 +78,7 @@ public abstract class AdoptDialogBuilder implements CustomDialogBuilder {
 
         // Create a processing dialog, since we are interacting with an external server, which can
         // take some time.
-        final ProgressDialog progress = new ProgressDialog(this.ctx);
+        ProgressDialog progress = new ProgressDialog(this.ctx);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setTitle(R.string.progress_adopt_title);
         progress.setMessage(String.format(this.ctx.getString(R.string.progress_adopt_body), nick));
