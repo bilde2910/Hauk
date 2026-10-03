@@ -127,7 +127,7 @@ const DEFAULTS = array(
     "password_hash"         => '$2y$10$4ZP1iY8A3dZygXoPgsXYV.S3gHzBbiT9nSfONjhWrvMxVPkcFq1Ka',
     "htpasswd_path"         => '/etc/hauk/users.htpasswd',
     "ldap_uri"              => 'ldaps://ldap.example.com:636',
-    "ldap_tls_require_cert" => 'LDAP_OPT_X_TLS_DEMAND',
+    "ldap_tls_require_cert" => LDAP_OPT_X_TLS_DEMAND,
     "ldap_start_tls"        => false,
     "ldap_base_dn"          => 'ou=People,dc=example,dc=com',
     "ldap_bind_dn"          => 'cn=admin,dc=example,dc=com',

@@ -115,7 +115,7 @@
 // LDAP_OPT_X_TLS_DEMAND
 // LDAP_OPT_X_TLS_ALLOW
 // LDAP_OPT_X_TLS_TRY
-"ldap_require_cert" => 'LDAP_OPT_X_TLS_ALLOW',
+"ldap_tls_require_cert" => LDAP_OPT_X_TLS_ALLOW,
 
 // Base DN to search for users.
 "ldap_base_dn"      => 'ou=People,dc=example,dc=com',
