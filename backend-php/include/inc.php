@@ -759,9 +759,9 @@ class Client {
 
     // Returns a list of all point arrays for this session.
     public function getPoints($sinceTime) {
-        if (is_null($sinceTime)) {
+        if (is_null($sinceTime) || $this->isEncrypted()) {
             // return all memcached points
-        return $this->sessionData["points"];
+            return $this->sessionData["points"];
         } else {
             $newPoints = [];
             // FIXME: use map instead of indices
