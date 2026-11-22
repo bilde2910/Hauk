@@ -160,4 +160,11 @@
     <string name="dialog_confirm_stop_title">Arrêter le partage \?</string>
     <string name="label_status_disconnected">Impossible de contacter le serveur</string>
     <string name="label_status_lost_gnss">Localisation en cours…</string>
+    <string name="cve_title">Alerte de sécurité</string>
+    <string name="cve_2026_130162_para1">En septembre 2026, une vulnérabilité de sécurité de gravité élevée a été signalée aux responsables de Hauk. Elle pouvait entraîner la divulgation à un attaquant d’informations extrêmement sensibles provenant de l’application Android Hauk. Le message que vous lisez actuellement est un avis ciblé destiné aux utilisateurs susceptibles, selon nous, d’être concernés par cette vulnérabilité.</string>
+    <string name="cve_2026_130162_para2">Bien que nous ne puissions pas confirmer avec certitude si vous êtes concerné, vos habitudes d’utilisation indiquent que vous remplissez tous les critères permettant d’exploiter cette vulnérabilité. Nous vous conseillons donc de partir du principe que votre sécurité a été compromise.</string>
+    <string name="cve_2026_130162_para3">Une attaque réussie aurait permis à un attaquant de suivre vos déplacements en temps réel, potentiellement depuis octobre 2019. De plus, le nom d’utilisateur et le mot de passe que vous utilisez pour Hauk auraient été divulgués à l’attaquant.</string>
+    <string name="cve_2026_130162_para4">Vous devriez immédiatement changer le mot de passe que vous utilisez pour Hauk, ainsi que le changer sur tous les autres sites où vous utilisez le même mot de passe.</string>
+    <string name="cve_2026_130162_para5">Cette vulnérabilité est référencée sous le numéro CVE-2026-130162. Pour en savoir plus, veuillez consulter l’avis de sécurité publié au lien suivant :</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

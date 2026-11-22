@@ -93,4 +93,11 @@
 \nIraungitzea: %s
 \n
 \nSaio hau berreskuratu nahi duzu\?</string>
+    <string name="cve_title">Segurtasun-alerta</string>
+    <string name="cve_2026_130162_para1">2026ko irailean, larritasun handiko segurtasun-ahultasun baten berri eman zitzaien Hauk-en mantentzaileei. Ahultasun horren ondorioz, informazio oso sentikorra Hauk-en Android aplikaziotik erasotzaile bati filtratu zekiokeen. Une honetan irakurtzen ari zaren mezua ahultasun horrek eragin diezaiekeela uste dugun erabiltzaileei zuzendutako oharra da.</string>
+    <string name="cve_2026_130162_para2">Ahultasunak zuri eragin dizun ala ez ziurtasunez frogatu ezin dugun arren, zure erabilera-ereduek adierazten dute ahultasun horren bidez erasotua izateko baldintza guztiak betetzen dituzula; beraz, zure segurtasuna urratu dela jo behar zenuke.</string>
+    <string name="cve_2026_130162_para3">Erasoak arrakasta izan balu, erasotzaile batek denbora errealean jarraitu ahal izango zituen zure mugimenduak, agian 2019ko urrira arte atzera eginda ere. Gainera, Hauk-en erabiltzen dituzun erabiltzaile-izena eta pasahitza erasotzaileari filtratuko zitzaizkion.</string>
+    <string name="cve_2026_130162_para4">Aldatu berehala Hauk-en erabiltzen duzun pasahitza, baita pasahitz bera erabili duzun beste webguneetan ere.</string>
+    <string name="cve_2026_130162_para5">Segurtasun-ahultasun hau CVE-2026-130162 kodearekin dago erregistratuta. Informazio gehiago nahi izanez gero, kontsultatu esteka honetan argitaratutako segurtasun-oharra:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

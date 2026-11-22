@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.varden.hauk">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,7 +19,6 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".system.preferences.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -28,35 +27,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="info.varden.hauk.ui.MainActivity" />
         </activity>
-
         <activity
             android:name=".ui.MainActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
             android:theme="@style/HomeTheme"
-            android:exported="true">
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".global.ui.AuthorizationActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <receiver
-            android:name=".global.Receiver"
-            android:exported="true"
-            tools:ignore="ExportedReceiver">
-            <intent-filter>
-                <action android:name="info.varden.hauk.START_ALONE_THEN_SHARE_VIA" />
-                <action android:name="info.varden.hauk.START_ALONE_THEN_MAKE_TOAST" />
-            </intent-filter>
-        </receiver>
         <receiver
             android:name=".notify.CopyLinkReceiver"
             android:exported="false">
@@ -81,6 +65,11 @@
                 <action android:name="info.varden.hauk.LOCATION_SERVICE" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".ui.Cve2026130162AlertActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

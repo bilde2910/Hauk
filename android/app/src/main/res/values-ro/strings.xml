@@ -163,4 +163,11 @@
     <string name="pref_hideLogo_off">Logoul Hauk va fi afișat în partea de sus a ecranului principal</string>
     <string name="pref_hideLogo_on">Logoul Hauk va fi ascuns de pe ecranul principal</string>
     <string name="prefs_hideLogo_title">Ascunde logoul</string>
+    <string name="cve_title">Alertă de securitate</string>
+    <string name="cve_2026_130162_para1">În septembrie 2026, o vulnerabilitate de securitate de gravitate ridicată a fost adusă la cunoștința dezvoltatorilor care întrețin Hauk. Aceasta putea permite divulgarea către un atacator a unor informații extrem de sensibile din aplicația Hauk pentru Android. Mesajul pe care îl citiți acum este o notificare adresată în mod special utilizatorilor despre care credem că ar putea fi afectați de această vulnerabilitate.</string>
+    <string name="cve_2026_130162_para2">Deși nu putem stabili cu certitudine dacă sunteți afectat, modul în care ați folosit aplicația indică faptul că îndepliniți toate condițiile necesare pentru exploatarea vulnerabilității. Prin urmare, vă recomandăm să presupuneți că datele dvs. au fost compromise.</string>
+    <string name="cve_2026_130162_para3">Un atac reușit ar fi permis unui atacator să vă urmărească deplasările în timp real, posibil începând încă din octombrie 2019. În plus, numele de utilizator și parola pe care le folosiți pentru Hauk ar fi ajuns în posesia atacatorului.</string>
+    <string name="cve_2026_130162_para4">Ar trebui să schimbați imediat parola pe care o folosiți pentru Hauk, precum și pe alte site-uri unde ați folosit aceeași parolă.</string>
+    <string name="cve_2026_130162_para5">Vulnerabilitatea este identificată prin codul CVE-2026-130162. Pentru mai multe informații, consultați avizul de securitate publicat la următorul link:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

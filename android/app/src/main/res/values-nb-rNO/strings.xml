@@ -163,4 +163,11 @@
     <string name="pref_hideLogo_off">Vis Hauk-logoen på appens startside</string>
     <string name="pref_hideLogo_on">Skjul Hauk-logoen fra appens startside</string>
     <string name="prefs_hideLogo_title">Skjul logoen på forsiden</string>
+    <string name="cve_title">Sikkerhetsvarsel</string>
+    <string name="cve_2026_130162_para1">I september 2026 ble en sårbarhet med høy alvorlighetsgrad meldt til Hauk-vedlikeholderne. Sårbarheten kunne føre til at svært sensitiv informasjon ble lekket fra Hauk-appen for Android til en angriper. Meldingen du leser nå, er et målrettet varsel til brukere som vi tror kan være berørt av denne sårbarheten.</string>
+    <string name="cve_2026_130162_para2">Selv om vi ikke kan fastslå med sikkerhet om du er berørt, tyder bruksmønsteret ditt på at alle forutsetningene for å utnytte sårbarheten er til stede. Vi anbefaler derfor at du går ut fra at du er kompromittert.</string>
+    <string name="cve_2026_130162_para3">Et vellykket angrep ville gjort det mulig for en angriper å spore bevegelsene dine i sanntid, muligens helt tilbake til oktober 2019. I tillegg ville brukernavnet og passordet du bruker for Hauk, ha blitt lekket til angriperen.</string>
+    <string name="cve_2026_130162_para4">Du bør umiddelbart endre passordet du bruker for Hauk, også på andre nettsteder der du har brukt det samme passordet.</string>
+    <string name="cve_2026_130162_para5">Sårbarheten er registrert som CVE-2026-130162. Du finner mer informasjon i sikkerhetsvarslet som er publisert på følgende lenke:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

@@ -115,4 +115,12 @@
 \n
 \nSi activeu aquesta opció i compartiu la vostra ubicació amb un grup d’amics i algú altre també vol compartir la seva ubicació, pot crear un grup compartit i afegir-lo al seu mapa, de manera que tots dos aparegueu al mateix mapa d’ubicació compartit. Això és útil si és conduir i no es pot utilitzar el telèfon, ja que l\'adopció de la seva participació per part d\'altres persones no requereix cap interacció per part seva.</string>
     <string name="err_ver_group">El servidor no admet comparticions de grup. Les accions del grup són compatibles amb la versió %s i superiors; actualment el servidor està executant la versió %s. La vostra participació s\'ha convertit en una participació individual.</string>
+
+    <string name="cve_title">Alerta de seguretat</string>
+    <string name="cve_2026_130162_para1">El setembre de 2026 es va notificar als responsables de manteniment de Hauk una vulnerabilitat de seguretat d’alta gravetat que podia permetre que un atacant obtingués informació molt sensible de l’aplicació Hauk per a Android. El missatge que esteu llegint és un avís dirigit als usuaris que creiem que podrien estar afectats per aquesta vulnerabilitat.</string>
+    <string name="cve_2026_130162_para2">Tot i que no podem confirmar del tot si us afecta, els vostres patrons d’ús indiquen que compliu tots els criteris perquè un atacant pugui explotar-la i, per tant, us recomanem que doneu per fet que heu estat víctimes d’un atac.</string>
+    <string name="cve_2026_130162_para3">Un atac amb èxit hauria permès a un atacant fer un seguiment dels vostres desplaçaments en temps real, possiblement des d’octubre de 2019. A més, l’atacant hauria obtingut el nom d’usuari i la contrasenya que feu servir per a Hauk.</string>
+    <string name="cve_2026_130162_para4">Canvieu immediatament la contrasenya que feu servir per a Hauk, també als altres llocs on hàgiu fet servir la mateixa contrasenya.</string>
+    <string name="cve_2026_130162_para5">La vulnerabilitat està registrada amb el codi CVE-2026-130162. Per obtenir més informació, consulteu l’avís de seguretat publicat a l’enllaç següent:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

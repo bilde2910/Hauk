@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Hauk</string>
     <string name="img_alt_logo" translatable="false">Hauk</string>
     <string name="action_settings">Settings</string>
@@ -6,25 +6,25 @@
     <string name="label_source_link" translatable="false">https://github.com/bilde2910/Hauk</string>
 
     <string name="label_duration">Share duration:</string>
-        <string name="sel_unit_opt_minutes">minute(s)</string>
-        <string name="sel_unit_opt_hours">hour(s)</string>
-        <string name="sel_unit_opt_days">day(s)</string>
+    <string name="sel_unit_opt_minutes">minute(s)</string>
+    <string name="sel_unit_opt_hours">hour(s)</string>
+    <string name="sel_unit_opt_days">day(s)</string>
     <string name="label_mode">Sharing mode:</string>
-        <string name="sel_mode_opt_alone">Share my own location only</string>
-        <string name="sel_mode_opt_create_group">Create a group share</string>
-        <string name="sel_mode_opt_join_group">Join a group share</string>
+    <string name="sel_mode_opt_alone">Share my own location only</string>
+    <string name="sel_mode_opt_create_group">Create a group share</string>
+    <string name="sel_mode_opt_join_group">Join a group share</string>
     <string name="label_allow_adopt">Allow adoption:</string>
-        <string name="chk_allow_adopt">Allow others to add me into a group share</string>
-        <string name="label_explain_adopt">(What\'s this?)</string>
+    <string name="chk_allow_adopt">Allow others to add me into a group share</string>
+    <string name="label_explain_adopt">(What\'s this?)</string>
     <string name="label_nickname">Nickname:</string>
     <string name="label_pin">Group PIN:</string>
     <string name="label_status">Status:</string>
-        <string name="label_status_none">Location sharing inactive</string>
-        <string name="label_status_wait">Waiting for initial GNSS fix…</string>
-        <string name="label_status_lost_gnss">Searching for location…</string>
-        <string name="label_status_coarse">Waiting for high accuracy fix…</string>
-        <string name="label_status_ok">Location sharing active!</string>
-        <string name="label_status_disconnected">Unable to reach backend server</string>
+    <string name="label_status_none">Location sharing inactive</string>
+    <string name="label_status_wait">Waiting for initial GNSS fix…</string>
+    <string name="label_status_lost_gnss">Searching for location…</string>
+    <string name="label_status_coarse">Waiting for high accuracy fix…</string>
+    <string name="label_status_ok">Location sharing active!</string>
+    <string name="label_status_disconnected">Unable to reach backend server</string>
 
     <string name="btn_start">Start sharing</string>
     <string name="btn_stop">Stop sharing [%s]</string>
@@ -79,21 +79,21 @@
     <string name="progress_new_link_body">Creating new sharing link…</string>
 
     <string name="err_client">Invalid settings</string>
-        <string name="err_malformed_url">The server URL you entered is invalid.</string>
-        <string name="err_missing_perms">Location permission is required to use this app.</string>
-        <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
-        <string name="err_server_not_configured">You haven\'t configured a backend yet. Please enter the details for your backend server in settings and try again.</string>
-        <string name="err_invalid_duration">The duration you entered is invalid. Please choose a different duration.</string>
-        <string name="err_no_nickname">You have to set a nickname before you can join group shares. Please set a nickname and try again.</string>
+    <string name="err_malformed_url">The server URL you entered is invalid.</string>
+    <string name="err_missing_perms">Location permission is required to use this app.</string>
+    <string name="err_location_disabled">Location services are disabled. Please enable high-accuracy location services to share your location.</string>
+    <string name="err_server_not_configured">You haven\'t configured a backend yet. Please enter the details for your backend server in settings and try again.</string>
+    <string name="err_invalid_duration">The duration you entered is invalid. Please choose a different duration.</string>
+    <string name="err_no_nickname">You have to set a nickname before you can join group shares. Please set a nickname and try again.</string>
     <string name="err_connect">Connection error</string>
-        <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
-        <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
+    <string name="err_proxy_failure">An error occurred when resolving the hostname of the configured proxy: %s</string>
+    <string name="err_proxy_host_resolution">The IP address of the configured proxy (%s) could not be resolved!</string>
     <string name="err_server">Server error</string>
-        <string name="err_empty">The server returned an empty response.</string>
-        <string name="err_response_code">Received HTTP %s from server!</string>
+    <string name="err_empty">The server returned an empty response.</string>
+    <string name="err_response_code">Received HTTP %s from server!</string>
     <string name="err_outdated">Server is out of date</string>
-        <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
-        <string name="err_ver_e2e">The server does not support end-to-end encryption. End-to-end encryption is supported in version %s and above; the server is currently running version %s. Your share will be created without end-to-end encryption to maintain compatibility.</string>
+    <string name="err_ver_group">The server does not support group shares. Group shares are supported in version %s and above; the server is currently running version %s. Your share has been converted to an individual share.</string>
+    <string name="err_ver_e2e">The server does not support end-to-end encryption. End-to-end encryption is supported in version %s and above; the server is currently running version %s. Your share will be created without end-to-end encryption to maintain compatibility.</string>
 
     <string name="ok_title">Connection established</string>
     <string name="ok_message">Location sharing is active! Click the share button to copy the publicly viewable URL for your share.</string>
@@ -138,41 +138,49 @@
     <string name="pref_requestLink_title">Preferred link ID</string>
     <string name="pref_requestLink_hint">&lt;randomly generated&gt;</string>
     <string name="pref_enableE2E_title">Password protect share</string>
-        <string name="pref_enableE2E_on">Enable end-to-end encryption</string>
-        <string name="pref_enableE2E_off">Disable end-to-end encryption</string>
+    <string name="pref_enableE2E_on">Enable end-to-end encryption</string>
+    <string name="pref_enableE2E_off">Disable end-to-end encryption</string>
     <string name="pref_e2ePassword_title">Encryption password</string>
     <string name="pref_proxyType_title">Proxy</string>
-        <string name="proxy_mode_default">System default</string>
-        <string name="proxy_mode_none">Do not proxy</string>
-        <string name="proxy_mode_http">HTTP</string>
-        <string name="proxy_mode_socks">SOCKS 4/5</string>
+    <string name="proxy_mode_default">System default</string>
+    <string name="proxy_mode_none">Do not proxy</string>
+    <string name="proxy_mode_http">HTTP</string>
+    <string name="proxy_mode_socks">SOCKS 4/5</string>
     <string name="pref_proxyHost_title">Proxy hostname</string>
     <string name="pref_proxyPort_title">Proxy port</string>
     <string name="pref_connectTimeout_title">Connection timeout (seconds)</string>
     <string name="pref_noGnssFallback_title">Fall back to network location if GNSS is unavailable for (seconds)</string>
     <string name="pref_tlsCertValidation_title">HTTPS certificate validation</string>
-        <string name="tls_validation_all">Always validate certificates (recommended)</string>
-        <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
-        <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
+    <string name="tls_validation_all">Always validate certificates (recommended)</string>
+    <string name="tls_validation_no_anchor_onion">Disable trust anchor validation for .onion hosts (not recommended)</string>
+    <string name="tls_validation_none_for_onion">Disable trust anchor and hostname validation for .onion hosts (not recommended)</string>
 
     <!-- Appearance settings -->
     <string name="prefs_header_appearance">Appearance</string>
     <string name="prefs_nightMode_title">Night mode</string>
-        <string name="night_mode_system">Follow system preference</string>
-        <string name="night_mode_battery">When battery saver is enabled</string>
-        <string name="night_mode_always">Always</string>
-        <string name="night_mode_never">Never</string>
+    <string name="night_mode_system">Follow system preference</string>
+    <string name="night_mode_battery">When battery saver is enabled</string>
+    <string name="night_mode_always">Always</string>
+    <string name="night_mode_never">Never</string>
     <string name="pref_confirmStop_title">Confirm before stopping shares</string>
-        <string name="pref_confirmStop_on">Prompt for confirmation when stopping shares in the app</string>
-        <string name="pref_confirmStop_off">Do not prompt for confirmation when stopping shares in the app</string>
+    <string name="pref_confirmStop_on">Prompt for confirmation when stopping shares in the app</string>
+    <string name="pref_confirmStop_off">Do not prompt for confirmation when stopping shares in the app</string>
     <string name="prefs_hideLogo_title">Hide logo on main screen</string>
-        <string name="pref_hideLogo_on">Hide the Hauk logo from the app\'s main screen</string>
-        <string name="pref_hideLogo_off">Show the Hauk logo at the top of the app\'s main screen</string>
+    <string name="pref_hideLogo_on">Hide the Hauk logo from the app\'s main screen</string>
+    <string name="pref_hideLogo_off">Show the Hauk logo at the top of the app\'s main screen</string>
 
     <!-- About section -->
     <string name="prefs_header_about">About Hauk</string>
     <string name="about_version_title">App version</string>
     <string name="about_source_code_title">Source code</string>
     <string name="about_report_issue_title">Report an issue</string>
-        <string name="link_issue_tracker" translatable="false">https://github.com/bilde2910/Hauk/issues/new</string>
+    <string name="link_issue_tracker" translatable="false">https://github.com/bilde2910/Hauk/issues/new</string>
+
+    <string name="cve_title">Security alert</string>
+    <string name="cve_2026_130162_para1">In September 2026, a high severity security vulnerability was disclosed to the Hauk maintainers wherein highly sensitive information could be leaked from the Hauk Android app to an attacker. The message you are currently reading is a targeted notice to users who we believe may be affected by this vulnerability.</string>
+    <string name="cve_2026_130162_para2">While we cannot conclusively prove whether you are affected, your usage patterns indicate that you meet all criteria for exploitation, and we therefore advise that you should assume compromise.</string>
+    <string name="cve_2026_130162_para3">A successful attack would have resulted in your movements being trackable by an attacker in real-time, possibly as far back as October 2019. Additionally, the username and password you use for Hauk would have been leaked to the attacker.</string>
+    <string name="cve_2026_130162_para4">You should change the password you use for Hauk immediately, including on other sites where you have used the same password.</string>
+    <string name="cve_2026_130162_para5" tools:ignore="TypographyDashes">The vulnerability is tracked as CVE-2026-130162. For more information, please see the security advisory published at the following link:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

@@ -157,4 +157,11 @@
     <string name="err_server">Errore server</string>
     <string name="err_response_code">Ricevuto codice HTTP %s dal server!</string>
     <string name="err_outdated">Server non aggiornato</string>
+    <string name="cve_title">Avviso di sicurezza</string>
+    <string name="cve_2026_130162_para1">Nel settembre 2026, è stata segnalata ai manutentori di Hauk una vulnerabilità di sicurezza di elevata gravità che avrebbe potuto causare la divulgazione a un aggressore di informazioni altamente sensibili contenute nell’app Hauk per Android. Il messaggio che stai leggendo è un avviso mirato rivolto agli utenti che riteniamo possano essere interessati da questa vulnerabilità.</string>
+    <string name="cve_2026_130162_para2">Non possiamo accertare con certezza se tu sia stato interessato, ma le tue modalità di utilizzo indicano che soddisfi tutti i criteri necessari affinché la vulnerabilità possa essere sfruttata. Ti consigliamo quindi di presumere di essere stato vittima di un attacco.</string>
+    <string name="cve_2026_130162_para3">Un attacco riuscito avrebbe consentito a un aggressore di tracciare in tempo reale i tuoi spostamenti, forse fin da ottobre 2019. Inoltre, il nome utente e la password che usi per Hauk sarebbero stati divulgati all’aggressore.</string>
+    <string name="cve_2026_130162_para4">Dovresti cambiare immediatamente la password che usi per Hauk, anche sugli altri siti in cui hai utilizzato la stessa password.</string>
+    <string name="cve_2026_130162_para5">La vulnerabilità è identificata dal codice CVE-2026-130162. Per ulteriori informazioni, consulta l’avviso di sicurezza pubblicato al seguente link:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

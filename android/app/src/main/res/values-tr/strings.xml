@@ -49,4 +49,11 @@
     <string name="label_duration">Paylaşım süresi:</string>
     <string name="label_heading">Açık kaynak konum paylaşımı</string>
     <string name="label_heading_links">Aktif linkler</string>
+    <string name="cve_title">Güvenlik uyarısı</string>
+    <string name="cve_2026_130162_para1">Eylül 2026\'da, Hauk Android uygulamasından bir saldırgana son derece hassas bilgilerin sızmasına yol açabilecek yüksek önem dereceli bir güvenlik açığı Hauk\'un bakımından sorumlu ekibe bildirildi. Şu anda okumakta olduğunuz mesaj, bu güvenlik açığından etkilenmiş olabileceğini düşündüğümüz kullanıcılara yönelik özel bir bildirimdir.</string>
+    <string name="cve_2026_130162_para2">Etkilenip etkilenmediğinizi kesin olarak belirleyemesek de kullanım alışkanlıklarınız, güvenlik açığından yararlanılabilmesi için gereken tüm koşulları karşıladığınızı gösteriyor. Bu nedenle güvenliğinizin ihlal edildiğini varsaymanızı öneriyoruz.</string>
+    <string name="cve_2026_130162_para3">Başarılı bir saldırı sonucunda hareketleriniz bir saldırgan tarafından gerçek zamanlı olarak, muhtemelen Ekim 2019\'a kadar uzanan bir dönem boyunca takip edilebilir hâle gelmiş olurdu. Ayrıca Hauk\'ta kullandığınız kullanıcı adı ve parola da saldırgana sızmış olurdu.</string>
+    <string name="cve_2026_130162_para4">Hauk için kullandığınız parolayı derhal değiştirin. Aynı parolayı kullandığınız diğer sitelerde de parolanızı değiştirin.</string>
+    <string name="cve_2026_130162_para5">Bu güvenlik açığı CVE-2026-130162 olarak kayda geçirilmiştir. Daha fazla bilgi için lütfen aşağıdaki bağlantıda yayımlanan güvenlik duyurusuna bakın:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

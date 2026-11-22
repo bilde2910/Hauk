@@ -65,4 +65,11 @@
     <string name="label_status_disconnected">No se puede acceder al servidor</string>
     <string name="label_status_ok">Ubicación compartida activada!</string>
     <string name="label_status_none">Ubicación compartida desactivada</string>
+    <string name="cve_title">Alerta de seguridad</string>
+    <string name="cve_2026_130162_para1">En septiembre de 2026, se informó a los responsables de Hauk sobre una vulnerabilidad de seguridad de alta gravedad que podía permitir la filtración de información muy confidencial de la aplicación Hauk para Android a un atacante. El mensaje que está leyendo es un aviso dirigido a los usuarios que, según creemos, podrían verse afectados por esta vulnerabilidad.</string>
+    <string name="cve_2026_130162_para2">Aunque no podemos confirmar de manera concluyente si usted se ha visto afectado, sus patrones de uso indican que cumple todos los criterios para que se explote la vulnerabilidad. Por ello, le recomendamos que dé por hecho que su seguridad se ha visto comprometida.</string>
+    <string name="cve_2026_130162_para3">Un ataque exitoso habría permitido que un atacante rastreara sus desplazamientos en tiempo real, posiblemente desde octubre de 2019. Además, el nombre de usuario y la contraseña que utiliza para Hauk se habrían filtrado al atacante.</string>
+    <string name="cve_2026_130162_para4">Debe cambiar de inmediato la contraseña que utiliza para Hauk, también en otros sitios donde haya usado la misma contraseña.</string>
+    <string name="cve_2026_130162_para5">La vulnerabilidad está registrada como CVE-2026-130162. Para obtener más información, consulte el aviso de seguridad publicado en el siguiente enlace:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

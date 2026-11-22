@@ -160,4 +160,11 @@
     <string name="dialog_confirm_stop_share">Bist du sicher, dass du diese Freigabe löschen willst\?</string>
     <string name="dialog_confirm_stop_body">Bist du sicher, dass du die Freigabe aufheben willst\?</string>
     <string name="label_status_lost_gnss">Standort wird ermittelt…</string>
+    <string name="cve_title">Sicherheitswarnung</string>
+    <string name="cve_2026_130162_para1">Im September 2026 wurde den Hauk-Maintainern eine Sicherheitslücke mit hohem Schweregrad gemeldet, durch die hochsensible Informationen aus der Hauk-Android-App an einen Angreifer gelangen konnten. Die Nachricht, die Sie gerade lesen, ist ein gezielter Hinweis an Nutzer, von denen wir vermuten, dass sie von dieser Sicherheitslücke betroffen sein könnten.</string>
+    <string name="cve_2026_130162_para2">Wir können zwar nicht zweifelsfrei feststellen, ob Sie betroffen sind, doch Ihre Nutzungsgewohnheiten deuten darauf hin, dass alle Voraussetzungen für eine Ausnutzung erfüllt sind. Daher raten wir Ihnen, davon auszugehen, dass Ihre Daten kompromittiert wurden.</string>
+    <string name="cve_2026_130162_para3">Bei einem erfolgreichen Angriff hätte ein Angreifer Ihre Bewegungen in Echtzeit verfolgen können, möglicherweise bereits seit Oktober 2019. Außerdem wären der Benutzername und das Passwort, die Sie für Hauk verwenden, an den Angreifer gelangt.</string>
+    <string name="cve_2026_130162_para4">Sie sollten das Passwort, das Sie für Hauk verwenden, umgehend ändern – auch auf anderen Websites, auf denen Sie dasselbe Passwort verwendet haben.</string>
+    <string name="cve_2026_130162_para5">Die Sicherheitslücke wird unter CVE-2026-130162 geführt. Weitere Informationen finden Sie in der unter folgendem Link veröffentlichten Sicherheitswarnung:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

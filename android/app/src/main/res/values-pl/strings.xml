@@ -161,4 +161,11 @@
     <string name="label_status_disconnected">Błąd serwera</string>
     <string name="label_status_lost_gnss">Szukanie lokalizacji…</string>
     <string name="label_allow_adopt">Zezwól na adopcję:</string>
+    <string name="cve_title">Alert bezpieczeństwa</string>
+    <string name="cve_2026_130162_para1">We wrześniu 2026 r. opiekunom Hauk zgłoszono lukę w zabezpieczeniach o wysokim stopniu zagrożenia, która mogła doprowadzić do wycieku bardzo wrażliwych informacji z aplikacji Hauk na Androida do rąk napastnika. Wiadomość, którą właśnie czytasz, jest powiadomieniem skierowanym do użytkowników, których naszym zdaniem ta luka mogła dotyczyć.</string>
+    <string name="cve_2026_130162_para2">Nie możemy jednoznacznie potwierdzić, czy problem dotyczy Ciebie, jednak sposób, w jaki korzystasz z aplikacji, wskazuje, że spełniasz wszystkie warunki umożliwiające wykorzystanie tej luki. Dlatego zalecamy przyjąć, że Twoje dane zostały przejęte.</string>
+    <string name="cve_2026_130162_para3">Udany atak umożliwiłby napastnikowi śledzenie Twojego przemieszczania się w czasie rzeczywistym, być może nawet od października 2019 r. Ponadto nazwa użytkownika i hasło, których używasz w Hauk, trafiłyby w ręce napastnika.</string>
+    <string name="cve_2026_130162_para4">Natychmiast zmień hasło używane w Hauk, również w innych serwisach, w których używasz tego samego hasła.</string>
+    <string name="cve_2026_130162_para5">Luka jest oznaczona identyfikatorem CVE-2026-130162. Więcej informacji znajdziesz w komunikacie dotyczącym bezpieczeństwa opublikowanym pod poniższym linkiem:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>

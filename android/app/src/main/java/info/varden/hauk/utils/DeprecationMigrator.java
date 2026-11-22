@@ -1,9 +1,12 @@
 package info.varden.hauk.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 
 import info.varden.hauk.Constants;
 import info.varden.hauk.system.preferences.PreferenceManager;
+import info.varden.hauk.ui.Cve2026130162AlertActivity;
 
 /**
  * Helper utility to migrate old, deprecated settings saved in shared preferences to modern storage.
@@ -47,6 +50,11 @@ public final class DeprecationMigrator {
             boolean enableE2E = !prefs.get(Constants.PREF_E2E_PASSWORD).isEmpty();
             Log.i("Setting E2E enabled preference to %s based on stored preferences", String.valueOf(enableE2E)); //NON-NLS
             prefs.set(Constants.PREF_ENABLE_E2E, enableE2E);
+        }
+        SharedPreferences broadcastPrefs = this.ctx.getSharedPreferences(Constants.SHARED_PREFS_AUTHORIZATIONS, Context.MODE_PRIVATE);
+        if (!broadcastPrefs.getAll().isEmpty()) {
+            Intent intent = new Intent(this.ctx, Cve2026130162AlertActivity.class);
+            this.ctx.startActivity(intent);
         }
     }
 }

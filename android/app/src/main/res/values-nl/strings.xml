@@ -160,4 +160,11 @@
     <string name="err_no_nickname">Je moet eerst een nickname instellen voordat je lid kan worden van een groep. Stel een nickname is en probeer het opnieuw.</string>
     <string name="err_invalid_duration">De opgegeven duratie is ongeldig. Geef een nieuwe duratie op.</string>
     <string name="btn_remember">Niet opnieuw tonen</string>
+    <string name="cve_title">Beveiligingswaarschuwing</string>
+    <string name="cve_2026_130162_para1">In september 2026 is bij de beheerders van Hauk een zeer ernstige beveiligingskwetsbaarheid gemeld, waardoor uiterst gevoelige informatie uit de Hauk-app voor Android kon uitlekken naar een aanvaller. Het bericht dat u nu leest, is een gerichte waarschuwing aan gebruikers van wie we vermoeden dat ze mogelijk door deze kwetsbaarheid zijn getroffen.</string>
+    <string name="cve_2026_130162_para2">Hoewel we niet met zekerheid kunnen vaststellen of u bent getroffen, wijzen uw gebruikspatronen erop dat u aan alle voorwaarden voor misbruik voldoet. Daarom raden we u aan ervan uit te gaan dat u bent getroffen.</string>
+    <string name="cve_2026_130162_para3">Bij een geslaagde aanval zouden uw verplaatsingen in realtime door een aanvaller gevolgd hebben kunnen worden, mogelijk al sinds oktober 2019. Daarnaast zouden de gebruikersnaam en het wachtwoord die u voor Hauk gebruikt, zijn uitgelekt naar de aanvaller.</string>
+    <string name="cve_2026_130162_para4">Wijzig onmiddellijk het wachtwoord dat u voor Hauk gebruikt, ook op andere websites waar u hetzelfde wachtwoord hebt gebruikt.</string>
+    <string name="cve_2026_130162_para5">De beveiligingskwetsbaarheid is geregistreerd als CVE-2026-130162. Meer informatie vindt u in het beveiligingsadvies op de volgende link:</string>
+    <string name="cve_2026_130162_link">https://github.com/bilde2910/Hauk/security/advisories/GHSA-pcq7-qjf4-wm27</string>
 </resources>
