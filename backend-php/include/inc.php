@@ -3,7 +3,7 @@
 // An include file containing constants and common functions for the Hauk
 // backend. It loads the configuration file and declares it as a constant.
 
-const BACKEND_VERSION = "1.6.3";
+const BACKEND_VERSION = "1.7.0";
 const LANGUAGES = ["ca", "de", "en", "eu", "fr", "it", "nb_NO", "nl", "nn", "ro", "ru", "tr", "uk"];
 
 // Create mode for create.php. Corresponds with the constants from the Android
@@ -181,6 +181,7 @@ function getConfig($item) {
 define("PREFIX_SESSION", "-session-");
 define("PREFIX_LOCDATA", "-locdata-");
 define("PREFIX_GROUPID", "-groupid-");
+define("PREFIX_AUTHERR", "-autherr-");
 
 // A base class for location shares. Shares contain a reference to all sessions
 // that broadcasts location data to the share, but does not contain the location
@@ -795,7 +796,7 @@ function requirePOST(...$args) {
 
 // Checks whether or not the user is correctly authenticated based on the
 // server's requirements.
-function authenticated() {
+function authenticateUser() {
     switch (getConfig("auth_method")) {
         case PASSWORD:
             // Static shared password authentication.
@@ -872,6 +873,28 @@ function authenticated() {
         default:
             return false;
     }
+}
+
+// Tries to authenticate the user, tracking login failures.
+function authenticated() {
+    $ip = $_SERVER["REMOTE_ADDR"];
+    $memcache = memConnect();
+    $ipState = $memcache->get(PREFIX_AUTHERR.$ip);
+    if ($ipState === false) {
+        $ipState = array(
+            "tries" => getConfig("auth_tries"),
+        );
+    }
+    if ($ipState["tries"] <= 0) {
+        // IP is banned
+        return false;
+    }
+    $result = authenticateUser();
+    if (!$result) {
+        $ipState["tries"]--;
+        $memcache->set(PREFIX_AUTHERR.$ip, $ipState, getConfig("auth_ban_time"));
+    }
+    return $result;
 }
 
 // Hauk maintains compatibility with both `memcache` and `memcached`, meaning we

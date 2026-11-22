@@ -66,6 +66,13 @@
 // - LDAP: Authenticate users against an LDAP server
 "auth_method"       => PASSWORD,
 
+// To prevent brute-force attacks against Hauk, failed authentication attempts
+// will eventually result in a temporary IP ban. The settings below set the max
+// number of failed attempts per IP address before that address is banned, and
+// the number of seconds that IP address is banned for.
+"auth_tries"        => 3,
+"auth_ban_time"     => 30,
+
 /*----------------------------------------------------------------------------*\
 |  PASSWORD AUTHENTICATION                                                     |
 \*----------------------------------------------------------------------------*/
