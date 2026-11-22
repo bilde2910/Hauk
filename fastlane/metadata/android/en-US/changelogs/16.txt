@@ -1,0 +1,3 @@
+This update removes support for broadcast receivers, flags exposure to CVE-2026-130162 in the Android app, and implements a fail2ban-like IP ban strategy for brute force authentication attempts against the Hauk PHP backend. Users are advised to update, as the release contains important security fixes.
+
+For the full changelog, please see https://github.com/bilde2910/Hauk/releases.
