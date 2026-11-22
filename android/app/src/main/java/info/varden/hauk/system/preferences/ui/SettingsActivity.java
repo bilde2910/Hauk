@@ -91,12 +91,14 @@ public final class SettingsActivity extends AppCompatActivity {
             setTextEditParams(manager, Constants.PREF_PROXY_HOST, new InputTypeBindListener(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI));
             setTextEditParams(manager, Constants.PREF_PROXY_PORT, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
             setTextEditParams(manager, Constants.PREF_CONNECTION_TIMEOUT, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
+            setTextEditParams(manager, Constants.PREF_NO_GNSS_FALLBACK, new InputTypeBindListener(InputType.TYPE_CLASS_NUMBER));
 
             // Set value bounds checks.
             setChangeListeners(manager, Constants.PREF_INTERVAL, new IntegerBoundChangeListener(1, Integer.MAX_VALUE));
             setChangeListeners(manager, Constants.PREF_UPDATE_DISTANCE, new FloatBoundChangeListener(0.0F, Float.MAX_VALUE));
             setChangeListeners(manager, Constants.PREF_PROXY_PORT, new IntegerBoundChangeListener(Constants.PORT_MIN, Constants.PORT_MAX));
             setChangeListeners(manager, Constants.PREF_CONNECTION_TIMEOUT, new IntegerBoundChangeListener(1, Integer.MAX_VALUE));
+            setChangeListeners(manager, Constants.PREF_NO_GNSS_FALLBACK, new IntegerBoundChangeListener(1, Integer.MAX_VALUE));
 
             // Set proxy settings disabled if proxy is set to default or none.
             setChangeListeners(manager, Constants.PREF_PROXY_TYPE, new ProxyPreferenceChangeListener(new Preference[]{
